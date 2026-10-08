@@ -9,6 +9,14 @@ export type CameraObstacleResult =
 // A JS shape description, not a collider/body registered in the physics world.
 const sphere = new Ball(CAMERA_CONFIG.obstacleRadius);
 const identity = { x: 0, y: 0, z: 0, w: 1 };
+const queryFlags = QueryFilterFlags.EXCLUDE_DYNAMIC | QueryFilterFlags.EXCLUDE_KINEMATIC | QueryFilterFlags.EXCLUDE_SENSORS;
+const safetySphere = new Ball(CAMERA_CONFIG.obstacleRadius + CAMERA_CONFIG.obstacleClearance);
+
+/** Tests the full safety envelope, including the configured clearance. */
+export function isCameraPositionBlocked(world: World, position: Vector) {
+  if (![position.x, position.y, position.z].every(Number.isFinite)) return true;
+  return world.intersectionWithShape(position, identity, safetySphere, queryFlags, COLLISION_GROUPS.player) !== null;
+}
 
 /** Sweeps from the shoulder focus to the ideal camera. Reads the world only. */
 export function detectCameraObstacle(world: World, origin: Vector, ideal: Vector): CameraObstacleResult {
@@ -21,7 +29,7 @@ export function detectCameraObstacle(world: World, origin: Vector, ideal: Vector
   // Unit velocity makes Rapier's time_of_impact a travelled distance in metres.
   const hit = world.castShape(origin, identity, { x: dx / length, y: dy / length, z: dz / length },
     sphere, CAMERA_CONFIG.obstacleClearance, length, true,
-    QueryFilterFlags.EXCLUDE_DYNAMIC | QueryFilterFlags.EXCLUDE_KINEMATIC | QueryFilterFlags.EXCLUDE_SENSORS,
+    queryFlags,
     COLLISION_GROUPS.player); // Existing mask sees map solids, not players or test cubes.
   if (!hit) return { status: 'clear', length };
   if (!Number.isFinite(hit.time_of_impact) || hit.time_of_impact < 0 || hit.time_of_impact > length) {

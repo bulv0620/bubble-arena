@@ -11,6 +11,7 @@ export const CAMERA_CONFIG = {
   maxPitch: 70 * Math.PI / 180,
   obstacleRadius: 0.2,
   obstacleClearance: 0.05,
+  obstacleContactEpsilon: 0.001,
   fov: 70,
   near: 0.1,
   far: 200,

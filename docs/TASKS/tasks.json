@@ -279,7 +279,7 @@
       "title": "镜头避障",
       "acceptance": "遇墙镜头前移至安全位置，不明显穿墙。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.4.1"

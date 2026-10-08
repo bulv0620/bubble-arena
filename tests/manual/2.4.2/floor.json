@@ -1,0 +1,20 @@
+[
+  {
+    "level": "info",
+    "message": "[camera.check] {\"target\":{\"x\":-1.9999674558639526,\"y\":0.910099983215332,\"z\":-0.00003659190042526461},\"camera\":{\"x\":-1.4499674558639526,\"y\":0.25086602342130737,\"z\":0.6981149602998928},\"angles\":{\"yaw\":-5.551115123125785e-17,\"pitch\":-1.0471975511965972},\"avoidance\":{\"status\":\"resolved\",\"focus\":{\"x\":-1.4499674558639526,\"y\":1.460099983215332,\"z\":-0.00003659190042523408},\"distance\":1.3963031044006349,\"shoulderProbe\":{\"status\":\"clear\",\"length\":0.55},\"obstruction\":{\"status\":\"hit\",\"length\":4.499999999999999,\"distance\":1.3973031044006348,\"colliderHandle\":0}},\"probeRadius\":0.2,\"distance\":1.3963031044006349,\"fov\":70}",
+    "timestamp": "2026-10-08T12:56:17.209Z",
+    "url": "http://localhost:5173/src/camera/FollowCamera.tsx?t=1791464055921"
+  },
+  {
+    "level": "info",
+    "message": "[camera.check] {\"target\":{\"x\":-1.9999674558639526,\"y\":0.910099983215332,\"z\":-0.00003659190042526461},\"camera\":{\"x\":-1.4499674558639526,\"y\":0.25086602342130737,\"z\":0.6981149602998928},\"angles\":{\"yaw\":-5.551115123125785e-17,\"pitch\":-1.0471975511965972},\"avoidance\":{\"status\":\"resolved\",\"focus\":{\"x\":-1.4499674558639526,\"y\":1.460099983215332,\"z\":-0.00003659190042523408},\"distance\":1.3963031044006349,\"shoulderProbe\":{\"status\":\"clear\",\"length\":0.55},\"obstruction\":{\"status\":\"hit\",\"length\":4.499999999999999,\"distance\":1.3973031044006348,\"colliderHandle\":0}},\"probeRadius\":0.2,\"distance\":1.3963031044006349,\"fov\":70}",
+    "timestamp": "2026-10-08T12:56:18.809Z",
+    "url": "http://localhost:5173/src/camera/FollowCamera.tsx?t=1791464055921"
+  },
+  {
+    "level": "info",
+    "message": "[camera.check] {\"target\":{\"x\":-1.9999674558639526,\"y\":0.910099983215332,\"z\":-0.00003659190042526461},\"camera\":{\"x\":-1.4499674558639526,\"y\":0.25086602342130737,\"z\":0.6981149602998928},\"angles\":{\"yaw\":-5.551115123125785e-17,\"pitch\":-1.0471975511965972},\"avoidance\":{\"status\":\"resolved\",\"focus\":{\"x\":-1.4499674558639526,\"y\":1.460099983215332,\"z\":-0.00003659190042523408},\"distance\":1.3963031044006349,\"shoulderProbe\":{\"status\":\"clear\",\"length\":0.55},\"obstruction\":{\"status\":\"hit\",\"length\":4.499999999999999,\"distance\":1.3973031044006348,\"colliderHandle\":0}},\"probeRadius\":0.2,\"distance\":1.3963031044006349,\"fov\":70}",
+    "timestamp": "2026-10-08T12:56:20.409Z",
+    "url": "http://localhost:5173/src/camera/FollowCamera.tsx?t=1791464055921"
+  }
+]
