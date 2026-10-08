@@ -135,7 +135,7 @@
       "title": "独立键盘输入",
       "acceptance": "读到 WASD 状态，失焦后清空，尚不改变玩家位置。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.4"

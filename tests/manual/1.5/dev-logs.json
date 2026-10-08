@@ -1,0 +1,86 @@
+[
+  {
+    "level": "debug",
+    "message": "[vite] connecting...",
+    "timestamp": "2026-10-08T07:38:40.311Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "debug",
+    "message": "[vite] connected.",
+    "timestamp": "2026-10-08T07:38:40.313Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T07:38:40.344Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=dbe9be0e"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:38:40.453Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":3,\"colliders\":3}",
+    "timestamp": "2026-10-08T07:38:41.278Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791444711505"
+  },
+  {
+    "level": "info",
+    "message": "[ground.check] {\"position\":{\"x\":-0.00039608238148503006,\"y\":0.49843689799308777,\"z\":-0.0005972349317744374},\"velocity\":{\"x\":0,\"y\":0,\"z\":0}}",
+    "timestamp": "2026-10-08T07:38:42.997Z",
+    "url": "http://localhost:5173/src/maps/WhiteboxMap.tsx?t=1791444711505"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:44.565Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:44.567Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:44.569Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:44.571Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:49.732Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:49.858Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:50.935Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:38:51.624Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  }
+]
