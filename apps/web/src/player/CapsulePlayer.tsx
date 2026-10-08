@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
 import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG } from '@bubble-arena/shared';
 import type { KeyboardInput } from './KeyboardInput';
@@ -8,11 +8,11 @@ interface CapsulePlayerProps {
   /** World-space capsule center, not the foot position. */
   position: [number, number, number];
   input: KeyboardInput;
+  bodyRef: RefObject<RapierRigidBody | null>;
 }
 
-export function CapsulePlayer({ position, input }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body }: CapsulePlayerProps) {
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
-  const body = useRef<RapierRigidBody>(null);
   const movement = useRef<RapierMovement | null>(null);
   const diagnostics = useRef({ ticks: 0, wasActive: false, result: undefined as ReturnType<RapierMovement['step']> });
   const { world } = useRapier();

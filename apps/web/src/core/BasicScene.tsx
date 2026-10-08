@@ -1,6 +1,8 @@
 import { Canvas } from '@react-three/fiber';
-import { Suspense } from 'react';
-import { PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { Suspense, useRef } from 'react';
+import type { RapierRigidBody } from '@react-three/rapier';
+import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { FollowCamera } from '../camera';
 import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
@@ -8,10 +10,11 @@ import { InputDiagnostics } from './InputDiagnostics';
 
 export function BasicScene() {
   const input = useKeyboardInput();
+  const playerBody = useRef<RapierRigidBody | null>(null);
   return (
     <>
       <Canvas
-        camera={{ position: [8, 6, 10], fov: 50, near: 0.1, far: 200 }}
+        camera={{ fov: CAMERA_CONFIG.fov, near: CAMERA_CONFIG.near, far: CAMERA_CONFIG.far }}
         dpr={[1, 1.5]}
         frameloop="always"
         shadows
@@ -35,11 +38,12 @@ export function BasicScene() {
         <Suspense fallback={null}>
           <PhysicsWorld>
             <WhiteboxMap />
-            <CapsulePlayer input={input} position={[
+            <CapsulePlayer input={input} bodyRef={playerBody} position={[
               WHITEBOX_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
+            <FollowCamera target={playerBody} />
           </PhysicsWorld>
         </Suspense>
       </Canvas>

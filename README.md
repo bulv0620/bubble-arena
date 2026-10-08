@@ -7,7 +7,7 @@
 1. 阅读 [完整方案](docs/spec/SPEC.md)、[游戏规则](docs/GAME_DESIGN.md)。
 2. 阅读 [工程约束](AGENTS.md)、[架构](docs/ARCHITECTURE.md)。
 3. 查看 [开发计划](docs/DEVELOPMENT_PLAN.md) 与 [任务列表](docs/TASKS/INDEX.md)。
-4. [阶段 0 工程验收](docs/reports/stage-0.md) 已通过；任务 [1.1 创建基础场景](docs/TASKS/1.1.md) 已实现，任务 [1.2 创建 Rapier 物理世界](docs/TASKS/1.2.md) 已实现，任务 [1.3 地面静态碰撞](docs/TASKS/1.3.md) 已实现，任务 [1.4 创建胶囊体玩家](docs/TASKS/1.4.md) 已实现，任务 [1.5 独立键盘输入](docs/TASKS/1.5.md) 已实现，任务 [1.6 实现水平运动](docs/TASKS/1.6.md) 已实现，任务 [1.7 添加墙体和箱子碰撞](docs/TASKS/1.7.md) 已实现，任务 [1.8 实现重力与跳跃](docs/TASKS/1.8.md) 已实现，任务 [1.9 实现接地判定](docs/TASKS/1.9.md) 已实现，任务 [1.10 配置斜坡与小台阶](docs/TASKS/1.10.md) 已实现，任务 [1.11 抽取参数配置](docs/TASKS/1.11.md) 已实现。[1.11.1 顶墙跳跃试玩修复](docs/TASKS/1.11.1.md) 已实现。阶段 1 实现已齐全，先按 [基础物理验收清单](docs/reports/stage-1.md) 完成试玩验收，再进入 [2.1 第三人称跟随镜头](docs/TASKS/2.1.md)。
+4. [阶段 0 工程验收](docs/reports/stage-0.md) 已通过；任务 [1.1 创建基础场景](docs/TASKS/1.1.md) 已实现，任务 [1.2 创建 Rapier 物理世界](docs/TASKS/1.2.md) 已实现，任务 [1.3 地面静态碰撞](docs/TASKS/1.3.md) 已实现，任务 [1.4 创建胶囊体玩家](docs/TASKS/1.4.md) 已实现，任务 [1.5 独立键盘输入](docs/TASKS/1.5.md) 已实现，任务 [1.6 实现水平运动](docs/TASKS/1.6.md) 已实现，任务 [1.7 添加墙体和箱子碰撞](docs/TASKS/1.7.md) 已实现，任务 [1.8 实现重力与跳跃](docs/TASKS/1.8.md) 已实现，任务 [1.9 实现接地判定](docs/TASKS/1.9.md) 已实现，任务 [1.10 配置斜坡与小台阶](docs/TASKS/1.10.md) 已实现，任务 [1.11 抽取参数配置](docs/TASKS/1.11.md) 已实现。[1.11.1 顶墙跳跃试玩修复](docs/TASKS/1.11.1.md) 已实现。[阶段 1 基础物理](docs/reports/stage-1.md) 已由用户试玩验收通过。[2.1 第三人称跟随镜头](docs/TASKS/2.1.md) 已实现，下一任务为 [2.2 鼠标旋转镜头](docs/TASKS/2.2.md)。
 
 人物、枪械、正式地图使用 Blender MCP 驱动 Blender 制作，保留 .blend 和脚本，再导出 GLB。详见 [Blender 流程](docs/art/BLENDER_MCP.md) 与 [资产规范](docs/art/ASSET_PIPELINE.md)。
 
@@ -37,6 +37,6 @@ M2：2v2 玩法 + 大厅房间 + 击倒救援。
 V1：2v2 + 四种武器 + 小镇/海滨两张正式地图 + 一套原创角色骨骼和动画 + 音画反馈 + 公网部署。
 V1.1：按性能结果扩展 4v4 和竞技场第三张地图。
 
-0.1 工作区、0.7 执行规范、0.2 Web 最小页面、0.3 立方体和 0.4 Drei/Rapier 依赖已实现；0.5 模块边界和 0.6 检查工具已建立。阶段 0 基线保存在本地 Git tag `stage-0-baseline`。尚未实现玩法或制作模型。规则为推荐实施基线，可通过决策记录调整；不是已试玩确认的平衡数值。
+0.1 工作区、0.7 执行规范、0.2 Web 最小页面、0.3 立方体和 0.4 Drei/Rapier 依赖已实现；0.5 模块边界和 0.6 检查工具已建立。阶段 0 基线保存在本地 Git tag `stage-0-baseline`。当前支持基础物理与第三人称跟随镜头，尚未接入战斗/联机或制作正式模型。规则为推荐实施基线，可通过决策记录调整；不是已试玩确认的平衡数值。
 
 原需求原样保存在 docs/reference/ORIGINAL_REQUIREMENTS.md；现行范围差异记录在 docs/DECISIONS.md。

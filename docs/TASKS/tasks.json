@@ -87,7 +87,7 @@
       "title": "创建基础场景",
       "acceptance": "80×80 地面、基础灯光、静态摄像机、测试立方体正常显示。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "0.7"
@@ -99,7 +99,7 @@
       "title": "创建 Rapier 物理世界",
       "acceptance": "固定步长配置生效；仅引入 Physics，不加角色。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.1"
@@ -111,7 +111,7 @@
       "title": "地面静态碰撞",
       "acceptance": "下落测试物体被地面阻挡。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.2"
@@ -123,7 +123,7 @@
       "title": "创建胶囊体玩家",
       "acceptance": "玩家位置和胶囊碰撞器对应；不控制移动。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.3"
@@ -135,7 +135,7 @@
       "title": "独立键盘输入",
       "acceptance": "读到 WASD 状态，失焦后清空，尚不改变玩家位置。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.4"
@@ -147,7 +147,7 @@
       "title": "实现水平运动",
       "acceptance": "角色控制器计算允许位移，WASD 移动且可沿墙滑动。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.5"
@@ -159,7 +159,7 @@
       "title": "添加墙体和箱子碰撞",
       "acceptance": "角色不能穿越地面、墙壁、箱体。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.6"
@@ -171,7 +171,7 @@
       "title": "实现重力与跳跃",
       "acceptance": "空格起跳、重力回落，垂直速度可配置。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.7"
@@ -183,7 +183,7 @@
       "title": "实现接地判定",
       "acceptance": "空中无法无限跳跃，落地后恢复跳跃。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.8"
@@ -195,7 +195,7 @@
       "title": "配置斜坡与小台阶",
       "acceptance": "测试角色在约定坡度、台阶高度上正常通过。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.9"
@@ -207,7 +207,7 @@
       "title": "抽取参数配置",
       "acceptance": "速度、重力、跳跃、摩擦/加减速参数不散落在 React 组件中。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.10"
@@ -219,7 +219,7 @@
       "title": "修复顶墙跳跃并核验上坡跳跃",
       "acceptance": "按住顶墙方向仍正常起跳，真实碰顶仍停止上升；验证上坡跳跃的速度和离坡间距。",
       "stage": 1,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.11"
@@ -231,7 +231,7 @@
       "title": "第三人称跟随镜头",
       "acceptance": "角色移动时镜头跟随且默认距离恒定。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.11.1"

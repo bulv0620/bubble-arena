@@ -1,6 +1,6 @@
 # 客户端模块边界
 
-任务 0.5 建立模块目录；任务 1.1 已由 core/BasicScene 装配 maps/WhiteboxMap，App 只引用 core 公共入口。player/camera/weapons/audio/network 仍为空，不预实现控制器或虚构配置。
+任务 0.5 建立模块目录；任务 1.1 已由 core/BasicScene 装配 maps/WhiteboxMap，App 只引用 core 公共入口。player 已提供胶囊和输入/移动适配，camera 已提供 2.1 跟随镜头；weapons/audio/network 仍为空。BasicScene 装配同一玩家刚体引用，camera 只读位置，禁止反向控制物理。
 
 | 模块 | 职责 | 边界 |
 | --- | --- | --- |
