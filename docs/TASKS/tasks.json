@@ -255,7 +255,7 @@
       "title": "视角上下限",
       "acceptance": "pitch 达到限制不会翻转。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.2"

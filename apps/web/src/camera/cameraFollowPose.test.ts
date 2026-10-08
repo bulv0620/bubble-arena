@@ -7,7 +7,7 @@ test('orbit rotates shoulder offset and retains distance, focus and upright orie
   const camera = new PerspectiveCamera();
   const position = { x: 2, y: 3, z: 4 };
   for (const yaw of [0, Math.PI / 2, -Math.PI, 2.8]) {
-    for (const pitch of [-CAMERA_CONFIG.poleGuard, 0, CAMERA_CONFIG.poleGuard]) {
+    for (const pitch of [CAMERA_CONFIG.minPitch, 0, CAMERA_CONFIG.maxPitch]) {
       expect(updateFollowCamera(camera, { translation: () => position }, { yaw, pitch })).toBe(true);
       const focus = new Vector3(position.x + Math.cos(yaw) * CAMERA_CONFIG.shoulderOffset,
         position.y + CAMERA_CONFIG.focusHeight, position.z - Math.sin(yaw) * CAMERA_CONFIG.shoulderOffset);

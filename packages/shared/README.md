@@ -33,6 +33,6 @@ WHITEBOX_CONFIG / WHITEBOX_SOLIDS 集中声明 80m 地面、两墙两箱、0.3m 
 
 MovementKeys 是移动意图契约；COLLISION_GROUPS 集中碰撞分组。原 1m / 5m 动态立方体参数保留供历史物理回归，已退出可玩场景。
 
-## 跟随与旋转镜头（2.1 / 2.2）
+## 跟随与旋转镜头（2.1 / 2.2 / 2.3）
 
-src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机）、右肩偏移 0.55m、观察点高于胶囊中心 0.55m；初始俯角 25°（存为弧度）、FOV 70°、近/远裁切 0.1/200m。camera 模块每渲染帧只读目标位置，相机与肩部观察点同步平移，不通过 UI 推动物理 tick。2.2 左键拖动旋转：mouseSensitivity=0.003 弧度/像素、rotationResponse=14/s（指数平滑）、poleGuard=89°（临时防翻转）；肩偏移随 yaw 旋转。正式 -60°～70° 范围留到 2.3；瞄准距离、鼠标锁定、镜头避障尚未实现。
+src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机）、右肩偏移 0.55m、观察点高于胶囊中心 0.55m；初始俯角 25°（存为弧度）、FOV 70°、近/远裁切 0.1/200m。camera 每渲染帧只读目标位置，不通过 UI 推动物理 tick。2.2 左键拖动：mouseSensitivity=0.003 弧度/像素、rotationResponse=14/s（指数平滑），肩偏移随 yaw 旋转。2.3 以 minPitch=-60°、maxPitch=70°（存为弧度）替换临时保护；正值表示相机位于观察点上方俯视，负值表示下方仰视。目标角度先限幅再平滑，越界量丢弃，反向拖动立即恢复。瞄准距离、鼠标锁定、镜头避障尚未实现。

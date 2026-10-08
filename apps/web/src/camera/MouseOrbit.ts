@@ -12,7 +12,7 @@ export class MouseOrbit {
   rotate(dx: number, dy: number) {
     if (![dx, dy].every(Number.isFinite)) return;
     this.desired.yaw = wrap(this.desired.yaw - dx * CAMERA_CONFIG.mouseSensitivity);
-    this.desired.pitch = Math.max(-CAMERA_CONFIG.poleGuard, Math.min(CAMERA_CONFIG.poleGuard,
+    this.desired.pitch = Math.max(CAMERA_CONFIG.minPitch, Math.min(CAMERA_CONFIG.maxPitch,
       this.desired.pitch + dy * CAMERA_CONFIG.mouseSensitivity));
   }
 

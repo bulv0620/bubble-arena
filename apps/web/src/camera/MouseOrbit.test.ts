@@ -19,22 +19,51 @@ test('rotation follows both axes smoothly, with frame-rate independent response'
   expect(a.step(0).pitch).toBeCloseTo(b.step(0).pitch, 10);
 });
 
-test('pole guard and yaw wrapping prevent flips; invalid input and dt retain angles', () => {
+test('pitch limits and yaw wrapping prevent flips; invalid input and dt retain angles', () => {
   const orbit = new MouseOrbit();
   orbit.rotate(100000, 100000);
   const top = orbit.step(10);
   expect(Math.abs(top.yaw)).toBeLessThanOrEqual(Math.PI);
-  expect(top.pitch).toBeCloseTo(CAMERA_CONFIG.poleGuard);
+  expect(top.pitch).toBeCloseTo(CAMERA_CONFIG.maxPitch);
   orbit.rotate(NaN, 0); orbit.rotate(0, Infinity);
   expect(orbit.step(NaN)).toEqual(top);
   expect(orbit.step(-1)).toEqual(top);
   orbit.rotate(0, -100000);
-  expect(orbit.step(10).pitch).toBeCloseTo(-CAMERA_CONFIG.poleGuard);
+  expect(orbit.step(10).pitch).toBeCloseTo(CAMERA_CONFIG.minPitch);
   const crossing = new MouseOrbit();
   crossing.rotate(-3.1 / CAMERA_CONFIG.mouseSensitivity, 0); crossing.step(10);
   crossing.rotate(-0.1 / CAMERA_CONFIG.mouseSensitivity, 0);
   const next = crossing.step(1 / 60).yaw;
   expect(Math.atan2(Math.sin(next - 3.1), Math.cos(next - 3.1))).toBeGreaterThan(0);
+});
+
+test('continuous overshoot stays within -60 to 70 degrees at every smoothed frame', () => {
+  expect(CAMERA_CONFIG.minPitch * 180 / Math.PI).toBeCloseTo(-60);
+  expect(CAMERA_CONFIG.maxPitch * 180 / Math.PI).toBeCloseTo(70);
+  const orbit = new MouseOrbit();
+  for (const dy of [10000, -10000, 10000]) {
+    for (let i = 0; i < 120; i++) {
+      orbit.rotate(30, dy);
+      const { yaw, pitch } = orbit.step(i % 2 ? 1 / 30 : 1 / 60);
+      expect(pitch).toBeGreaterThanOrEqual(CAMERA_CONFIG.minPitch);
+      expect(pitch).toBeLessThanOrEqual(CAMERA_CONFIG.maxPitch);
+      expect(Number.isFinite(yaw)).toBe(true);
+    }
+    expect(orbit.step(10).pitch).toBeCloseTo(dy > 0 ? CAMERA_CONFIG.maxPitch : CAMERA_CONFIG.minPitch);
+  }
+});
+
+test('overshoot is discarded, so a small reverse drag immediately leaves either limit', () => {
+  for (const direction of [1, -1]) {
+    const orbit = new MouseOrbit();
+    for (let i = 0; i < 100; i++) orbit.rotate(0, direction * 10000);
+    const boundary = orbit.step(10);
+    orbit.rotate(100, -direction * 10);
+    const next = orbit.step(1 / 60);
+    expect((next.pitch - boundary.pitch) * direction).toBeLessThan(0);
+    expect(next.yaw).toBeLessThan(boundary.yaw);
+    expect(orbit.step(10).pitch).toBeCloseTo(boundary.pitch - direction * 10 * CAMERA_CONFIG.mouseSensitivity);
+  }
 });
 
 test('only canvas left drag rotates; release, blur and hidden tab clear held input', () => {

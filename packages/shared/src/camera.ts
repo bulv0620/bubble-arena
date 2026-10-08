@@ -6,8 +6,9 @@ export const CAMERA_CONFIG = {
   initialPitch: 25 * Math.PI / 180,
   mouseSensitivity: 0.003,
   rotationResponse: 14,
-  // Temporary pole guard; task 2.3 defines the gameplay pitch range.
-  poleGuard: 89 * Math.PI / 180,
+  // Positive pitch places the camera above the shoulder focus (looking down).
+  minPitch: -60 * Math.PI / 180,
+  maxPitch: 70 * Math.PI / 180,
   fov: 70,
   near: 0.1,
   far: 200,
