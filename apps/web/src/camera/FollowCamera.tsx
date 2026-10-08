@@ -8,10 +8,10 @@ import { MouseOrbit } from './MouseOrbit';
 import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
-import type { AimInput } from '../input';
+import type { AimInput, CrosshairInput } from '../input';
 
-export function FollowCamera({ target, control, clearInput, view, aim }: { target: RefObject<CameraFollowTarget | null>;
-  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput }) {
+export function FollowCamera({ target, control, clearInput, view, aim, crosshair }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput }) {
   const diagnostics = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
@@ -24,6 +24,7 @@ export function FollowCamera({ target, control, clearInput, view, aim }: { targe
     (dx, dy) => orbit.rotate(dx, dy), clearInput), [canvas, orbit, control, clearInput]);
   useEffect(() => orbit.attach(canvas, window, document,
     () => control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported'), [canvas, orbit, control]);
+  useEffect(() => crosshair.attach(canvas, window, document), [canvas, crosshair]);
   useFrame(({ camera }, dt) => {
     const angles = orbit.step(dt);
     view.current.yaw = angles.yaw;

@@ -1,0 +1,18 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "developmentNormal": {
+    "x": 628,
+    "y": 348,
+    "width": 24,
+    "height": 24,
+    "pointerEvents": "none"
+  },
+  "afterProductionEscape": {
+    "normalCount": 0,
+    "aimCount": 0
+  },
+  "productionErrors": []
+}

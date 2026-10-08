@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useCallback, useRef, useState } from 'react';
-import { AimInput, AimHint } from '../input';
+import { AimInput, AimHint, CrosshairInput } from '../input';
+import { Crosshair } from '../HUD';
 import type { RapierRigidBody } from '@react-three/rapier';
 import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
@@ -14,6 +15,7 @@ export function BasicScene() {
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [pointer] = useState(() => new PointerLockInput());
   const [aim] = useState(() => new AimInput());
+  const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
   const clearInput = useCallback(() => { input.clear(); aim.clear(); }, [input, aim]);
   const view = useRef<CameraHeading>({ yaw: 0 });
   return (
@@ -48,12 +50,13 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} />
+            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} />
           </PhysicsWorld>
         </Suspense>
       </Canvas>
       <PointerLockHint control={pointer} />
       <AimHint input={aim} />
+      <Crosshair input={crosshair} />
       {import.meta.env.DEV && <InputDiagnostics input={input} />}
     </>
   );

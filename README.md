@@ -7,7 +7,7 @@
 1. 阅读 [完整方案](docs/spec/SPEC.md)、[游戏规则](docs/GAME_DESIGN.md)。
 2. 阅读 [工程约束](AGENTS.md)、[架构](docs/ARCHITECTURE.md)。
 3. 查看 [开发计划](docs/DEVELOPMENT_PLAN.md) 与 [任务列表](docs/TASKS/INDEX.md)。
-4. [阶段 0](docs/reports/stage-0.md) 和 [阶段 1](docs/reports/stage-1.md) 已验收通过。2.1～2.7 已实现，包括跟随/避障镜头、鼠标锁定、镜头相对 WASD 和角色平滑转向。本轮报告：[2.5](docs/reports/2.5.md)、[2.6](docs/reports/2.6.md)、[2.7](docs/reports/2.7.md)。[2.8 右键举枪状态](docs/reports/2.8.md) 也已实现，待试玩验收。下一任务为 [2.9 举枪横移和后退](docs/TASKS/2.9.md)。
+4. [阶段 0](docs/reports/stage-0.md) 和 [阶段 1](docs/reports/stage-1.md) 已验收通过。阶段 2 的全部任务已实现，包含第三人称镜头、避障、鼠标锁定、相机相对移动、瞄准横移/后退、独立手感参数和中心准星。先按 [阶段 2 试玩清单](docs/reports/stage-2.md) 验收；人工通过前不进入阶段 3。最新单项报告：[2.9](docs/reports/2.9.md)、[2.10](docs/reports/2.10.md)、[2.11](docs/reports/2.11.md)。
 
 人物、枪械、正式地图使用 Blender MCP 驱动 Blender 制作，保留 .blend 和脚本，再导出 GLB。详见 [Blender 流程](docs/art/BLENDER_MCP.md) 与 [资产规范](docs/art/ASSET_PIPELINE.md)。
 

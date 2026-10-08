@@ -375,7 +375,7 @@
       "title": "渲染屏幕准星",
       "acceptance": "准星随游戏输入激活状态正确显示。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.10"
