@@ -1,6 +1,6 @@
 # 客户端模块边界
 
-任务 0.5 建立模块目录；任务 1.1 已由 core/BasicScene 装配 maps/WhiteboxMap，App 只引用 core 公共入口。player 已提供胶囊和输入/移动适配，camera 已提供 2.1 跟随镜头和 2.2 左键拖动旋转；监听器由组件 effect 配对释放；weapons/audio/network 仍为空。BasicScene 装配同一玩家刚体引用，camera 只读位置，禁止反向控制物理。
+任务 0.5 建立模块目录；core/BasicScene 装配地图、物理、player 与 camera，App 只引用 core 公共入口。player 提供胶囊、输入/移动适配和视觉转向；camera 提供跟随/避障、恢复与锁定，失败时可拖动。监听器由 effect 配对释放。camera 只读位置并发布 yaw 意图，固定物理步调用共享规则计算位移；weapons/audio/network 仍为空。
 
 | 模块 | 职责 | 边界 |
 | --- | --- | --- |
@@ -17,6 +17,8 @@
 2.4.2 camera 根据查询结果收回肩偏移及镜头距离，最终安全包络复查后只写表现相机；查询失败保留上一姿态，仍不修改玩家坐标或物理世界。
 
 2.4.3 距离恢复状态由 camera 自己拥有，依据渲染 dt 规划，并在安全包络复查通过后提交。遇障碍立即收近，向外平滑恢复；目标引用变化/缺失重置，无新增物理 tick、监听器或定时器。
+
+2.5 PointerLockInput 管理鼠标锁定、释放/失败/失焦与后备互斥，Hint 只订阅低频状态。2.6 core 装配 shared/CameraHeading 引用，camera 写 yaw，player 固定物理步读取；game-core 不依赖 DOM。2.7 PlayerFacing 根据碰撞允许的水平位移更新视觉 group，胶囊碰撞体保持原方向，方向标记仅为白盒试玩辅助。
 
 ## 依赖和导出
 

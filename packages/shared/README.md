@@ -13,6 +13,7 @@
 | src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；瞄准尚未实现 |
 | 同上 | acceleration / deceleration / m/s² | 25 / 30，输入加速与松键减速 |
 | 同上 | jumpSpeed / m/s；airControl / 无量纲 | 7；0.35，空中加减速系数 |
+| 同上 | turnResponse / 1/s；turnMinSpeed / m/s | 12；0.05，仅视觉转向与接触噪声过滤，不改变速度/碰撞 |
 | 同上 | height / radius / capsuleHalfHeight / m | 1.8 / 0.35 / 0.55；半段长由 height/2-radius 推导 |
 | 同上 | maxSlopeAngle / slopeAngleTolerance / 弧度 | π/4 / 0.001，约 45° 与 0.0573° 数值容差 |
 | 同上 | maxStepHeight / minStepWidth / m | 0.3 / 0.4 |
@@ -33,6 +34,8 @@ WHITEBOX_CONFIG / WHITEBOX_SOLIDS 集中声明 80m 地面、两墙两箱、0.3m 
 
 MovementKeys 是移动意图契约；COLLISION_GROUPS 集中碰撞分组。原 1m / 5m 动态立方体参数保留供历史物理回归，已退出可玩场景。
 
+2.6 CameraHeading 只含 yaw 弧度意图，由 camera 发布后交给固定物理步计算镜头相对目标速度；pitch 不进入该接口，客户端不提交有效坐标。2.7 turnResponse/turnMinSpeed 由 player 表现适配消费，依据实际允许位移只转视觉 group，不旋转物理胶囊。
+
 ## 跟随与旋转镜头（2.1 / 2.2 / 2.3）
 
 src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机）、右肩偏移 0.55m、观察点高于胶囊中心 0.55m；初始俯角 25°（存为弧度）、FOV 70°、近/远裁切 0.1/200m。camera 每渲染帧只读目标位置，不通过 UI 推动物理 tick。2.2 左键拖动：mouseSensitivity=0.003 弧度/像素、rotationResponse=14/s（指数平滑），肩偏移随 yaw 旋转。2.3 以 minPitch=-60°、maxPitch=70°（存为弧度）替换临时保护；正值表示相机位于观察点上方俯视，负值表示下方仰视。目标角度先限幅再平滑，越界量丢弃，反向拖动立即恢复。瞄准距离、鼠标锁定、镜头避障尚未实现。
@@ -42,3 +45,5 @@ src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机�
 2.4.2 已接入即时避障：先从角色上部中心检测肩偏移并收回越墙的观察点，再沿镜头方向缩短到安全距离；obstacleContactEpsilon=0.001m 只处理接触数值误差，不重复扣除 0.05m 余量。末端复查半径+余量包络。无障碍即时回到 4.5m，2.4.3 再实现渐进恢复。极近距离允许收到 0m；不以最小距离强行穿墙。异常/中心锚点重叠拒绝更新，组件保留上一相机姿态。
 
 2.4.3 已替换上述即时恢复：recoveryResponse=5/s、recoveryDelay=0.1s、recoveryMaxDelta=0.1s、recoveryEpsilon=0.005m。距离向内立即响应，处在安全上限时刷新等待，持续放宽后指数恢复；5mm 内收敛到目标。单帧恢复时间上限用于暂停返回，30/60Hz 正常等时响应一致。状态只在碰撞复查通过后提交，目标丢失/切换和组件重建重置；不平滑物理坐标。
+
+2.5 已接入鼠标锁定，使用同一灵敏度；本机 Chrome 点击/Esc 释放实测通过，内置浏览器拒绝锁定时提示并启用后备左键拖动。瞄准尚未实现。

@@ -1,8 +1,10 @@
-import { useEffect, useRef, type RefObject } from 'react';
+import { useEffect, useRef, useState, type RefObject } from 'react';
+import type { Group } from 'three';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
-import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
+import { COLLIDER_MATERIALS, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
+import { PlayerFacing } from './PlayerFacing';
 
 interface CapsulePlayerProps {
   /** World-space capsule center, not the foot position. */
@@ -15,24 +17,29 @@ interface CapsulePlayerProps {
 export function CapsulePlayer({ position, input, bodyRef: body, view }: CapsulePlayerProps) {
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
+  const visual = useRef<Group | null>(null);
+  const [facing] = useState(() => new PlayerFacing());
   const diagnostics = useRef({ ticks: 0, wasActive: false, result: undefined as ReturnType<RapierMovement['step']> });
   const { world } = useRapier();
   useEffect(() => {
     const adapter = new RapierMovement(world);
+    facing.reset();
     movement.current = adapter;
     return () => {
       movement.current = null;
       adapter.dispose();
     };
-  }, [world]);
+  }, [world, facing]);
   useBeforePhysicsStep(() => {
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0), input.getSnapshot(), input.consumeJump(), view.current.yaw);
+      if (result) facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep);
       if (import.meta.env.DEV) diagnostics.current.result = result;
     }
   });
   useAfterPhysicsStep(() => {
+    if (visual.current) visual.current.rotation.y = facing.getYaw();
     if (!import.meta.env.DEV || !body.current) return;
     const sample = diagnostics.current;
     const active = Boolean(sample.result && (sample.result.jumped || !sample.result.grounded
@@ -40,7 +47,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view }: CapsuleP
     sample.ticks += 1;
     if (active !== sample.wasActive || (active && sample.ticks % 30 === 0)) {
       console.info('[movement.check]', JSON.stringify({
-        position: body.current.translation(), active, ...sample.result,
+        position: body.current.translation(), active, facingYaw: facing.getYaw(), ...sample.result,
       }));
     }
     sample.wasActive = active;
@@ -48,10 +55,17 @@ export function CapsulePlayer({ position, input, bodyRef: body, view }: CapsuleP
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
-      <mesh castShadow receiveShadow>
-        <capsuleGeometry args={[radius, capsuleHalfHeight * 2, 8, 16]} />
-        <meshStandardMaterial color="#ef9350" roughness={0.7} />
-      </mesh>
+      <group ref={visual}>
+        <mesh castShadow receiveShadow>
+          <capsuleGeometry args={[radius, capsuleHalfHeight * 2, 8, 16]} />
+          <meshStandardMaterial color="#ef9350" roughness={0.7} />
+        </mesh>
+        {/* Whitebox direction marker; formal character assets still use Blender MCP. */}
+        <mesh position={[0, PLAYER_CONFIG.height / 2 + 0.04, -0.12]} rotation={[-Math.PI / 2, 0, 0]} castShadow>
+          <coneGeometry args={[0.07, 0.3, 4]} />
+          <meshStandardMaterial color="#25475a" roughness={0.7} />
+        </mesh>
+      </group>
     </RigidBody>
   );
 }

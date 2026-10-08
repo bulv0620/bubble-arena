@@ -2,8 +2,24 @@ import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
 import { COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type MovementKeys } from '@bubble-arena/shared';
 import { RapierMovement } from './RapierMovement';
+import { PlayerFacing } from './PlayerFacing';
 
 const idle: MovementKeys = { forward: false, backward: false, left: false, right: false };
+
+test('visual facing follows the real wall-slide displacement without rotating the capsule collider', () => {
+  const player = setup(); const facing = new PlayerFacing();
+  for (let tick = 0; tick < 120; tick++) {
+    const result = adapter.step(player.body, player.collider, { ...idle, forward: true, right: true });
+    if (!result) throw new Error('missing adapter');
+    facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep);
+    world.step();
+  }
+  // Real contact correction adds a tiny tangential angle; validate a meaningful
+  // directional tolerance rather than requiring an exact axis in float32 physics.
+  expect(Math.abs(facing.getYaw() + Math.PI / 2)).toBeLessThan(0.01);
+  expect(player.body.rotation().y).toBe(0);
+  expect(player.body.rotation().w).toBe(1);
+});
 
 test('real capsule uses camera yaw while retaining gravity and the existing speed', () => {
   const player = setup(false);

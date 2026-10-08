@@ -88,3 +88,12 @@ test('rebind and stale cleanup do not remove the new listeners; subscriptions un
   event(f.global, 'mousemove', { movementX: 20, movementY: 20 });
   expect(f.rotate).not.toHaveBeenCalled();
 });
+
+test('a late old-canvas grant is released after switching to a different unsupported canvas', () => {
+  const f = setup(); f.click();
+  const detach = f.control.attach(new EventTarget(), f.global, f.doc, f.rotate, f.clear);
+  f.grant();
+  expect(f.doc.pointerLockElement).toBeNull();
+  expect(f.control.getSnapshot()).toBe('unsupported');
+  detach();
+});

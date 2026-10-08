@@ -8,6 +8,8 @@ export const PLAYER_CONFIG = {
   radius: RADIUS,
   capsuleHalfHeight: HEIGHT / 2 - RADIUS,
   speed: 5,
+  turnResponse: 12,
+  turnMinSpeed: 0.05,
   acceleration: 25,
   deceleration: 30,
   airControl: 0.35,

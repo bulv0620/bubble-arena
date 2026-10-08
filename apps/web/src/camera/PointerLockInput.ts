@@ -11,6 +11,7 @@ export class PointerLockInput {
   private status: PointerLockStatus = 'idle';
   private subscribers = new Set<() => void>();
   private detachCurrent?: () => void;
+  private currentCanvas: EventTarget | null = null;
   getSnapshot = () => this.status;
   subscribe = (listener: () => void) => {
     this.subscribers.add(listener);
@@ -25,6 +26,7 @@ export class PointerLockInput {
   attach(canvas: LockCanvas, global: EventTarget, doc: LockDocument,
     rotate: (dx: number, dy: number) => void, clearInput: () => void) {
     this.detachCurrent?.();
+    this.currentCanvas = canvas;
     let active = true, wanted = false, pending = false;
     const removeSettlement = () => {
       doc.removeEventListener('pointerlockchange', change);
@@ -42,7 +44,8 @@ export class PointerLockInput {
       if (!active) {
         // A late grant after unmount must not retain the cursor. A newer binding
         // requesting the same canvas may adopt the grant instead.
-        if (!this.detachCurrent || this.status === 'idle') exitOwned();
+        const canAdopt = this.currentCanvas === canvas && (this.status === 'requesting' || this.status === 'locked');
+        if (!canAdopt) exitOwned();
         removeSettlement();
         return;
       }
@@ -96,7 +99,10 @@ export class PointerLockInput {
       // Keep only settlement listeners while an un-cancellable legacy request
       // is pending, to release a late grant; remove them when it settles.
       if (!pending) removeSettlement();
-      if (this.detachCurrent === detach) this.detachCurrent = undefined;
+      if (this.detachCurrent === detach) {
+        this.detachCurrent = undefined;
+        this.currentCanvas = null;
+      }
     };
     this.detachCurrent = detach;
     return detach;
