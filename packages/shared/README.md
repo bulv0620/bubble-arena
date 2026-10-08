@@ -1,15 +1,34 @@
 # Shared
 
-协议、运行时校验、配置和资源 ID；不依赖 React、DOM 或服务端。
+协议、运行时校验、配置和资源 ID；不依赖 React、DOM 或服务端。当前入口 src/index.ts 供 Vite/Vitest/TypeScript 消费；Node 20 服务端需 TS loader 或构建器，尚未提供发布 JS 产物。
 
-任务 1.2 建立 @bubble-arena/shared 工作区包，公开 PHYSICS_CONFIG：米/秒、Y 向上，60Hz、1/60 秒、重力 [0,-20,0]。timeStep 由 tickRate 单一常量推导，客户端与后续 Node 服务端使用同一配置。
+## 基础物理参数（1.11）
 
-当前源入口为 src/index.ts，供 Vite/Vitest/TypeScript 消费。Node 20 不直接运行此 TS 文件；服务端任务需要使用 TS loader 或构建器，不能将源入口误认为已发布的 Node JS 构建产物。
+规则基线见 ../../docs/GAME_DESIGN.md；调参改这里的源码，不在 React 组件里重复写数值。
 
-任务 1.3 新增 WHITEBOX_CONFIG：80m 地面、1m 厚碰撞、顶面 y=0、1m 测试立方体、初始高度 5m。地图视觉和碰撞，以及真实 Rapier 集成测试引用同一配置。
+| 配置位置 | 参数 / 单位 | 当前值与用途 |
+| --- | --- | --- |
+| src/physics.ts · PHYSICS_CONFIG | tickRate / Hz；timeStep / 秒 | 60；由 1/tickRate 推导，物理世界与纯运动规则共用 |
+| 同上 | gravity / m/s² | [0,-20,0]，Y 向上；垂直规则复用 Y 分量 |
+| src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；瞄准尚未实现 |
+| 同上 | acceleration / deceleration / m/s² | 25 / 30，输入加速与松键减速 |
+| 同上 | jumpSpeed / m/s；airControl / 无量纲 | 7；0.35，空中加减速系数 |
+| 同上 | height / radius / capsuleHalfHeight / m | 1.8 / 0.35 / 0.55；半段长由 height/2-radius 推导 |
+| 同上 | maxSlopeAngle / slopeAngleTolerance / 弧度 | π/4 / 0.001，约 45° 与 0.0573° 数值容差 |
+| 同上 | maxStepHeight / minStepWidth / m | 0.3 / 0.4 |
+| 同上 | groundSnapDistance / m | 0.3，仅已接地且未起跳的斜面运动使用 |
+| 同上 | controllerOffset / groundProbeDistance / spawnClearance / m | 0.01 / 0.02 / 0.02；后两者由 offset 推导；实际垂直探测为 probe/cos(maxSlopeAngle)≈0.0283 |
+| 同上 | slopeSnapMinNormalY / slopeSnapMaxNormalY | 0.5 / 0.99，仅选择吸附，不授予接地资格 |
+| 同上 | ceilingDisplacementTolerance / m | 0.00001，向上受阻判断容差 |
+| src/physics.ts · COLLIDER_MATERIALS | ground friction / restitution | 0.8 / 0，地面原覆盖值 |
+| 同上 | solid、player friction / restitution | 各 0.5 / 0，显式保留 Rapier 原默认值 |
 
-任务 1.6 添加 MovementKeys 输入契约与 COLLISION_GROUPS；PLAYER_CONFIG 汇集水平速度 5m/s、加速 25m/s²、减速 30m/s²、控制器间隙 0.01m；水平原型出生离地 0.02m 避开接触误差，重力任务随后接入。WHITEBOX_CONFIG 添加一面滑动验证墙的位置/尺寸，视觉与碰撞共用。
+摩擦是碰撞体接触系数，角色松键减速由 deceleration 控制；运动学控制器的目标位移不是靠摩擦系数积分生成。改变摩擦不能代替调整加减速。
 
-任务 1.7 将静态白盒障碍集中为 WHITEBOX_SOLIDS（两墙两箱）。WHITEBOX_COLLISION 为 schemaVersion=1 的可序列化碰撞声明，WHITEBOX_COLLISION_HASH 通过固定字段顺序 JSON 的 UTF-8 内容计算 FNV-1a 64 位标识，当前 fnv1a64:f100071d20585698；材质颜色和历史动态测试立方体不参与哈希。尚未接入联机地图版本拒绝流程。原测试立方体尺寸保留供历史物理回归，已退出可玩场景。
+消费位置：PhysicsWorld 用 PHYSICS_CONFIG，game-core 用 PHYSICS_CONFIG / PLAYER_CONFIG；WhiteboxMap 地面/障碍与 CapsulePlayer 使用 COLLIDER_MATERIALS；RapierMovement 用 PLAYER_CONFIG 配置控制器和容差。颜色、灯光、网格、日志采样频率属于表现或诊断配置，本任务不抽取。
 
-任务 1.8 添加 jumpSpeed=7m/s、airControl=0.35，重力复用 PHYSICS_CONFIG.gravity 的 Y 分量 -20m/s²。出生中心仍为 y=0.92，随后由重力落稳至约 y=0.91；spawnClearance 是初始间隙，不再锁定角色高度。
+## 地图与输入
+
+WHITEBOX_CONFIG / WHITEBOX_SOLIDS 集中声明 80m 地面、两墙两箱、0.3m 台阶和 45° 坡；台阶高度和坡角引用 PLAYER_CONFIG，视觉与碰撞共用尺寸/旋转。WHITEBOX_COLLISION 的 schemaVersion=2，固定字段顺序 JSON 的 UTF-8 内容生成 FNV-1a 64 位标识，当前 fnv1a64:4abdb29633dc2d14。颜色与历史动态立方体不参与几何哈希，材质系数在共享物理配置中。改尺寸/旋转会改变哈希；联机版本拒绝流程尚未实现。
+
+MovementKeys 是移动意图契约；COLLISION_GROUPS 集中碰撞分组。原 1m / 5m 动态立方体参数保留供历史物理回归，已退出可玩场景。

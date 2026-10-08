@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
-import { PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { COLLIDER_MATERIALS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
 import { CapsuleGeometry } from 'three';
 
 let world: RAPIER.World | undefined;
@@ -41,7 +41,7 @@ function dropCube(x: number, withGround = true) {
     simulation.createCollider(
       RAPIER.ColliderDesc.cuboid(groundSize / 2, groundThickness / 2, groundSize / 2)
         .setTranslation(0, groundTopY - groundThickness / 2, 0)
-        .setFriction(0.8).setRestitution(0),
+        .setFriction(COLLIDER_MATERIALS.ground.friction).setRestitution(COLLIDER_MATERIALS.ground.restitution),
       ground,
     );
   }

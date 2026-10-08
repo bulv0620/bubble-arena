@@ -30,6 +30,6 @@ export class VerticalMovement {
 
   resolve(desiredY: number, allowedY: number, grounded: boolean) {
     this.grounded = grounded && desiredY <= 0;
-    if (this.grounded || (desiredY > 0 && allowedY < desiredY - 0.00001)) this.velocityY = 0;
+    if (this.grounded || (desiredY > 0 && allowedY < desiredY - PLAYER_CONFIG.ceilingDisplacementTolerance)) this.velocityY = 0;
   }
 }

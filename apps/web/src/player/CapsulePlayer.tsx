@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
-import { COLLISION_GROUPS, PLAYER_CONFIG } from '@bubble-arena/shared';
+import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG } from '@bubble-arena/shared';
 import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 
@@ -46,7 +46,7 @@ export function CapsulePlayer({ position, input }: CapsulePlayerProps) {
   });
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
-      <CapsuleCollider args={[capsuleHalfHeight, radius]} collisionGroups={COLLISION_GROUPS.player} />
+      <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
       <mesh castShadow receiveShadow>
         <capsuleGeometry args={[radius, capsuleHalfHeight * 2, 8, 16]} />
         <meshStandardMaterial color="#ef9350" roughness={0.7} />

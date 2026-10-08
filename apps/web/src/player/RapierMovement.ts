@@ -35,8 +35,8 @@ export class RapierMovement {
       const normal = this.controller.computedCollision(i)?.normal1;
       // Ground eligibility comes from Rapier's configured slope limit. This loose
       // normal check only selects snapping, tolerating noisy capsule face contacts.
-      if (normal && normal.y > 0.5
-        && normal.y < 0.99) onSlope = true;
+      if (normal && normal.y > PLAYER_CONFIG.slopeSnapMinNormalY
+        && normal.y < PLAYER_CONFIG.slopeSnapMaxNormalY) onSlope = true;
     }
     const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : PLAYER_CONFIG.airControl);
     const vertical = this.vertical.step(jumpPressed);

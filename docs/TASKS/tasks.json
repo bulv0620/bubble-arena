@@ -207,7 +207,7 @@
       "title": "抽取参数配置",
       "acceptance": "速度、重力、跳跃、摩擦/加减速参数不散落在 React 组件中。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.10"

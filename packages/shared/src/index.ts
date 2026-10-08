@@ -1,4 +1,4 @@
-export { PHYSICS_CONFIG } from './physics';
+export { PHYSICS_CONFIG, COLLIDER_MATERIALS } from './physics';
 export { WHITEBOX_CONFIG, WHITEBOX_SOLIDS, WHITEBOX_COLLISION, WHITEBOX_COLLISION_HASH, whiteboxCollisionHash, type WhiteboxSolid } from './whitebox';
 export { PLAYER_CONFIG } from './player';
 export { COLLISION_GROUPS } from './collision';
