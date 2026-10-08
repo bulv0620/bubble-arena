@@ -363,7 +363,7 @@
       "title": "移动手感调参",
       "acceptance": "加减速、空中控制、转向均可独立调，不修改物理接口。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.9"

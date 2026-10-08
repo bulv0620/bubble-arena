@@ -60,3 +60,12 @@ test('aim yaw wraps smoothly, invalid aim holds, release resumes actual movement
   for (let i = 0; i < 120; i++) facing.step(0, 0.05, 1 / 60);
   expect(Math.abs(facing.getYaw())).toBeCloseTo(Math.PI, 8);
 });
+
+test('turn response and noise threshold tune independently from movement configuration', () => {
+  const slow = new PlayerFacing({ turnResponse: 3 }), fast = new PlayerFacing({ turnResponse: 20 });
+  expect(Math.abs(slow.step(0.02, 0, 1 / 60))).toBeLessThan(Math.abs(fast.step(0.02, 0, 1 / 60)));
+  const filtered = new PlayerFacing({ turnMinSpeed: 2 });
+  expect(filtered.step(0.02, 0, 1 / 60)).toBe(0);
+  expect(filtered.step(0, 0, 1 / 60, 1)).toBeGreaterThan(0); // Aim is not displacement-noise gated.
+  expect(() => new PlayerFacing({ turnResponse: NaN })).toThrow(RangeError);
+});

@@ -75,3 +75,33 @@ test('direction reversal remains bounded and independent of render grouping', ()
   }
   expect(a).toBeCloseTo(b, 8);
 });
+
+test('acceleration and deceleration tune independently without changing speed or fixed-step interface', () => {
+  const slow = new HorizontalMovement({ acceleration: 10 });
+  const fastBrake = new HorizontalMovement({ deceleration: 60 });
+  expect(slow.step({ ...idle, right: true }).x / PHYSICS_CONFIG.timeStep).toBeCloseTo(10 / 60);
+  expect(fastBrake.step({ ...idle, right: true }).x / PHYSICS_CONFIG.timeStep).toBeCloseTo(25 / 60);
+  for (let i = 0; i < 60; i++) { slow.step({ ...idle, right: true }); fastBrake.step({ ...idle, right: true }); }
+  expect(slow.step(idle).x / PHYSICS_CONFIG.timeStep).toBeCloseTo(5 - 30 / 60);
+  expect(fastBrake.step(idle).x / PHYSICS_CONFIG.timeStep).toBeCloseTo(5 - 60 / 60);
+});
+
+test('aim speed transition accelerates/decelerates continuously; diagonal aim is normalized', () => {
+  const movement = new HorizontalMovement();
+  for (let i = 0; i < 60; i++) movement.step({ ...idle, right: true });
+  const firstAim = movement.step({ ...idle, right: true, aiming: true });
+  expect(firstAim.x / PHYSICS_CONFIG.timeStep).toBeCloseTo(5 - 25 / 60);
+  let delta = firstAim;
+  for (let i = 0; i < 60; i++) delta = movement.step({ ...idle, right: true, forward: true, aiming: true }, 1, 0.8);
+  expect(Math.hypot(delta.x, delta.z) / PHYSICS_CONFIG.timeStep).toBeCloseTo(3.5);
+  for (let i = 0; i < 60; i++) delta = movement.step({ ...idle, right: true });
+  expect(Math.hypot(delta.x, delta.z) / PHYSICS_CONFIG.timeStep).toBeCloseTo(5);
+});
+
+test('invalid or negative control scale cannot corrupt velocity; scales above one are bounded', () => {
+  for (const scale of [NaN, Infinity, -1, 0]) {
+    expect(new HorizontalMovement().step({ ...idle, right: true }, scale)).toEqual({ x: 0, y: 0, z: 0 });
+  }
+  expect(new HorizontalMovement().step({ ...idle, right: true }, 2))
+    .toEqual(new HorizontalMovement().step({ ...idle, right: true }, 1));
+});

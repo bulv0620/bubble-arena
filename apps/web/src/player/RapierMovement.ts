@@ -1,15 +1,18 @@
 import { HorizontalMovement, VerticalMovement } from '@bubble-arena/game-core';
-import { COLLISION_GROUPS, PLAYER_CONFIG, type MovementKeys } from '@bubble-arena/shared';
+import { COLLISION_GROUPS, PLAYER_CONFIG, createMovementTuning, type MovementKeys, type MovementTuning } from '@bubble-arena/shared';
 import { QueryFilterFlags, type Collider, type RigidBody, type World } from '@dimforge/rapier3d-compat';
 
 /** Owns a controller in an existing world. Only static map obstacles participate. */
 export class RapierMovement {
-  private readonly intent = new HorizontalMovement();
+  private readonly intent: HorizontalMovement;
+  private readonly tuning: MovementTuning;
   private readonly vertical = new VerticalMovement();
   private readonly controller;
   private disposed = false;
 
-  constructor(private readonly world: World) {
+  constructor(private readonly world: World, tuning: Partial<MovementTuning> = {}) {
+    this.tuning = createMovementTuning(tuning);
+    this.intent = new HorizontalMovement(this.tuning);
     this.controller = world.createCharacterController(PLAYER_CONFIG.controllerOffset);
     this.controller.setSlideEnabled(true);
     this.controller.setApplyImpulsesToDynamicBodies(false);
@@ -38,7 +41,7 @@ export class RapierMovement {
       if (normal && normal.y > PLAYER_CONFIG.slopeSnapMinNormalY
         && normal.y < PLAYER_CONFIG.slopeSnapMaxNormalY) onSlope = true;
     }
-    const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : PLAYER_CONFIG.airControl, cameraYaw);
+    const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : this.tuning.airControl, cameraYaw);
     const vertical = this.vertical.step(jumpPressed);
     // Follow descending slopes while supported, preserving ordinary flat/wall motion.
     if (onSlope && this.vertical.getState().grounded && vertical.y <= 0) {
@@ -59,7 +62,7 @@ export class RapierMovement {
     }
     this.vertical.resolve(desired.y, allowed.y, this.controller.computedGrounded(), ceilingContact);
     body.setNextKinematicTranslation({ x: current.x + allowed.x, y: current.y + allowed.y, z: current.z + allowed.z });
-    return { desired, allowed, cameraYaw: Number.isFinite(cameraYaw) ? cameraYaw : 0,
+    return { desired, allowed, aiming: keys.aiming === true, cameraYaw: Number.isFinite(cameraYaw) ? cameraYaw : 0,
       jumped: vertical.jumped, ...this.vertical.getState() };
   }
 

@@ -40,7 +40,7 @@ let adapter: RapierMovement;
 beforeAll(async () => { await RAPIER.init(); });
 afterEach(() => { adapter?.dispose(); world?.free(); });
 
-function setup(withWall = true) {
+function setup(withWall = true, tuning: ConstructorParameters<typeof RapierMovement>[1] = {}) {
   const [x, y, z] = PHYSICS_CONFIG.gravity;
   world = new RAPIER.World({ x, y, z });
   world.timestep = PHYSICS_CONFIG.timeStep;
@@ -57,7 +57,7 @@ function setup(withWall = true) {
     .setTranslation(playerSpawnXZ[0], groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance, playerSpawnXZ[1]));
   const collider = world.createCollider(RAPIER.ColliderDesc.capsule(PLAYER_CONFIG.capsuleHalfHeight, PLAYER_CONFIG.radius)
     .setCollisionGroups(COLLISION_GROUPS.player), body);
-  adapter = new RapierMovement(world);
+  adapter = new RapierMovement(world, tuning);
   world.step(); // Populate broad phase, as the live world does before the first input.
   return { body, collider };
 }
@@ -149,7 +149,7 @@ test.each(['right', 'backward'] as const)('aim %s moves relative to camera while
   const player = setup(false), facing = new PlayerFacing();
   const start = player.body.translation(), yaw = 0.8;
   for (let tick = 0; tick < 60; tick++) {
-    const result = adapter.step(player.body, player.collider, { ...idle, [action]: true }, false, yaw);
+    const result = adapter.step(player.body, player.collider, { ...idle, [action]: true, aiming: true }, false, yaw);
     if (!result) throw new Error('missing adapter');
     facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep, yaw);
     world.step();
@@ -157,8 +157,19 @@ test.each(['right', 'backward'] as const)('aim %s moves relative to camera while
   const end = player.body.translation(), dx = end.x - start.x, dz = end.z - start.z;
   const expectedX = action === 'right' ? Math.cos(yaw) : Math.sin(yaw);
   const expectedZ = action === 'right' ? -Math.sin(yaw) : Math.cos(yaw);
-  expect(dx * expectedX + dz * expectedZ).toBeGreaterThan(4.4);
+  expect(dx * expectedX + dz * expectedZ).toBeGreaterThan(3.1);
+  expect(dx * expectedX + dz * expectedZ).toBeLessThan(3.5);
   expect(Math.abs(dx * expectedZ - dz * expectedX)).toBeLessThan(0.03);
   expect(facing.getYaw()).toBeCloseTo(yaw, 4);
   expect(player.body.rotation()).toEqual({ x: 0, y: 0, z: 0, w: 1 });
+});
+
+test.each([0, 0.35, 1])('air control %s changes only airborne steering, using same controller interface', airControl => {
+  const player = setup(false, { airControl });
+  player.body.setTranslation({ x: -2, y: 5, z: 0 }, true); world.step();
+  const result = adapter.step(player.body, player.collider, { ...idle, right: true });
+  if (!result) throw new Error('missing adapter');
+  expect(result.grounded).toBe(false);
+  expect(result.desired.x / PHYSICS_CONFIG.timeStep).toBeCloseTo(25 / 60 * airControl);
+  expect(result.desired.y).toBeLessThan(0);
 });

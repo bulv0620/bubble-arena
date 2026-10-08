@@ -35,7 +35,8 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim }: Cap
   useBeforePhysicsStep(() => {
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
-      const result = movement.current?.step(rigidBody, rigidBody.collider(0), input.getSnapshot(), input.consumeJump(), view.current.yaw);
+      const result = movement.current?.step(rigidBody, rigidBody.collider(0),
+        { ...input.getSnapshot(), aiming: aim.getSnapshot() }, input.consumeJump(), view.current.yaw);
       if (result) facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep,
         aim.getSnapshot() ? view.current.yaw : undefined);
       if (import.meta.env.DEV) diagnostics.current.result = result;

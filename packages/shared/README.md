@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | src/physics.ts · PHYSICS_CONFIG | tickRate / Hz；timeStep / 秒 | 60；由 1/tickRate 推导，物理世界与纯运动规则共用 |
 | 同上 | gravity / m/s² | [0,-20,0]，Y 向上；垂直规则复用 Y 分量 |
-| src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；瞄准速度尚未接入 |
+| src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；aimSpeed=3.5 瞄准速度已接入 |
 | 同上 | acceleration / deceleration / m/s² | 25 / 30，输入加速与松键减速 |
 | 同上 | jumpSpeed / m/s；airControl / 无量纲 | 7；0.35，空中加减速系数 |
 | 同上 | turnResponse / 1/s；turnMinSpeed / m/s | 12；0.05，仅视觉转向与接触噪声过滤，不改变速度/碰撞 |
@@ -49,3 +49,5 @@ src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机�
 2.5 已接入鼠标锁定，使用同一灵敏度；本机 Chrome 点击/Esc 释放实测通过，内置浏览器拒绝锁定时提示并启用后备左键拖动。2.8 已接入瞄准镜头。
 
 2.8 右键持按的瞄准意图选择 aimDistance=2.5m、aimFov=55°、aimShoulderOffset=0.8m（推荐试玩初值）；松开回普通配置。肩偏移/FOV 即时切换，距离沿用向内即时、向外安全渐进恢复；两种模式共用完整肩偏移和轨道避障。当前不修改移动速度或角色朝向。
+
+2.10 createMovementTuning(overrides) 创建不可变、独立快照：speed/aimSpeed/acceleration/deceleration/turnResponse 有限且 >0，airControl 在 [0,1]，turnMinSpeed 有限且 >=0。默认值只有 PLAYER_CONFIG 一处；无效值在模拟创建前抛 RangeError。MovementKeys.aiming 为可选意图，省略则普通；不是客户端有效速度。HorizontalMovement/RapierMovement 构造可传覆盖参数，PlayerFacing 构造仅接受转向参数；既有物理 step/碰撞接口不改。
