@@ -1,5 +1,7 @@
 import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
 import { WhiteboxMap } from '../maps';
+import { PhysicsWorld } from './PhysicsWorld';
 
 export function BasicScene() {
   return (
@@ -25,7 +27,11 @@ export function BasicScene() {
         shadow-camera-far={50}
         shadow-normalBias={0.02}
       />
-      <WhiteboxMap />
+      <Suspense fallback={null}>
+        <PhysicsWorld>
+          <WhiteboxMap />
+        </PhysicsWorld>
+      </Suspense>
     </Canvas>
   );
 }

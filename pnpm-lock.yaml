@@ -38,6 +38,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@bubble-arena/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@dimforge/rapier3d-compat':
         specifier: 0.19.2
         version: 0.19.2
@@ -81,6 +84,8 @@ importers:
       vite:
         specifier: 8.3.3
         version: 8.3.3(@types/node@20.19.0)
+
+  packages/shared: {}
 
 packages:
 

@@ -99,7 +99,7 @@
       "title": "创建 Rapier 物理世界",
       "acceptance": "固定步长配置生效；仅引入 Physics，不加角色。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.1"

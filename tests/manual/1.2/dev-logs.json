@@ -1,0 +1,86 @@
+[
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:00:29.524Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":0,\"colliders\":0}",
+    "timestamp": "2026-10-08T07:00:30.357Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T07:00:36.573Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=dbe9be0e"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:00:36.669Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":0,\"colliders\":0}",
+    "timestamp": "2026-10-08T07:00:37.545Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:01:19.170Z",
+    "url": "http://localhost:4173/assets/index-CxvucWlt.js"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T07:01:47.102Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=dbe9be0e"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:01:47.188Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":0,\"colliders\":0}",
+    "timestamp": "2026-10-08T07:01:48.040Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791442901302"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":0,\"colliders\":0}",
+    "timestamp": "2026-10-08T07:02:14.686Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791442934159"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:02:23.865Z",
+    "url": "http://localhost:4173/assets/index-Da9jBLQP.js"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T07:03:05.011Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=dbe9be0e"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:03:05.089Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":0,\"colliders\":0}",
+    "timestamp": "2026-10-08T07:03:05.938Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791442934159"
+  }
+]

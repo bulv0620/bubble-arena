@@ -16,7 +16,8 @@
     "@react-three/rapier": "2.2.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "three": "0.182.0"
+    "three": "0.182.0",
+    "@bubble-arena/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "20.19.0",

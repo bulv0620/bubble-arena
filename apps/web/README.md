@@ -21,3 +21,5 @@ pnpm preview
 任务 0.6 在根目录提供 pnpm lint/test/test:watch/check。类型检查同时覆盖应用、Vite 配置和测试工具 TS 文件；Vitest 当前使用 Node 环境，不代表 WebGL 或浏览器交互测试。详见 [0.6 报告](../../docs/reports/0.6.md)。
 
 任务 1.1 已由 core/BasicScene 装配 maps/WhiteboxMap：80×80 地面、1m 测试立方体、灯光和静态镜头；没有物理模拟。详见 [1.1 报告](../../docs/reports/1.1.md)。
+
+任务 1.2 已接入空 Rapier 世界：共享 60Hz 固定步长，独立于 demand 渲染推进；当前无刚体/碰撞体，场景仍只是视觉地面与立方体。详见 [1.2 报告](../../docs/reports/1.2.md)。
