@@ -22,6 +22,7 @@ export const PLAYER_CONFIG = {
   slopeSnapMinNormalY: 0.5,
   slopeSnapMaxNormalY: 0.99,
   ceilingDisplacementTolerance: 0.00001,
+  ceilingMaxNormalY: -0.5,
   controllerOffset: CONTROLLER_OFFSET,
   // Base contact probe distance; the adapter scales it for the maximum slope.
   groundProbeDistance: CONTROLLER_OFFSET * 2,

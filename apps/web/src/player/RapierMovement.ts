@@ -52,7 +52,12 @@ export class RapierMovement {
     );
     const allowed = this.controller.computedMovement();
     const current = body.translation();
-    this.vertical.resolve(desired.y, allowed.y, this.controller.computedGrounded());
+    let ceilingContact = false;
+    for (let i = 0; i < this.controller.numComputedCollisions(); i += 1) {
+      const normal = this.controller.computedCollision(i)?.normal1;
+      if (normal && normal.y < PLAYER_CONFIG.ceilingMaxNormalY) ceilingContact = true;
+    }
+    this.vertical.resolve(desired.y, allowed.y, this.controller.computedGrounded(), ceilingContact);
     body.setNextKinematicTranslation({ x: current.x + allowed.x, y: current.y + allowed.y, z: current.z + allowed.z });
     return { desired, allowed, jumped: vertical.jumped, ...this.vertical.getState() };
   }

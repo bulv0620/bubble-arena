@@ -1,0 +1,218 @@
+[
+  {
+    "level": "debug",
+    "message": "[vite] connecting...",
+    "timestamp": "2026-10-08T12:04:10.313Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "debug",
+    "message": "[vite] connected.",
+    "timestamp": "2026-10-08T12:04:10.320Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T12:04:10.443Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=e910afd1"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T12:04:10.581Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2,\"y\":0.9144444465637207,\"z\":0},\"active\":true,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0,\"y\":-0.0055555556900799274,\"z\":0},\"jumped\":false,\"velocityY\":-0.3333333333333333,\"grounded\":false}",
+    "timestamp": "2026-10-08T12:04:10.904Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2,\"y\":0.9100984930992126,\"z\":5.362614174941882e-8},\"active\":false,\"desired\":{\"x\":0,\"y\":-0.01111111111111111,\"z\":0},\"allowed\":{\"x\":1.4763964273356578e-8,\"y\":-0.004345940425992012,\"z\":5.362614174941882e-8},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:10.905Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":8,\"colliders\":8,\"mapHash\":\"fnv1a64:4abdb29633dc2d14\"}",
+    "timestamp": "2026-10-08T12:04:11.410Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T12:04:16.861Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-1.9999173879623413,\"y\":0.9106691479682922,\"z\":-0.006931017618626356},\"active\":true,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.006944444444444446},\"allowed\":{\"x\":0.00005001932368031703,\"y\":0.0005691854748874903,\"z\":-0.006894425489008427},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:16.876Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-1.999941110610962,\"y\":0.910057783126831,\"z\":-0.04163198173046112},\"active\":true,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.020833333333333336},\"allowed\":{\"x\":0.000036470944905886427,\"y\":-0.0002449330931995064,\"z\":-0.020843753591179848},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:16.903Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2.0000452995300293,\"y\":0.9069170951843262,\"z\":-2.291736602783203},\"active\":true,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.08333333333333333},\"allowed\":{\"x\":4.948897753820347e-7,\"y\":0.00009854340896708891,\"z\":-0.08333343267440796},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:17.411Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T12:04:17.869Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2.0006790161132812,\"y\":0.9078289270401001,\"z\":-2.3901267051696777},\"active\":true,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.058333333333333334},\"allowed\":{\"x\":0.0000529018507222645,\"y\":2.3122132120079186e-7,\"z\":-2.1468440536409616e-7},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:17.904Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2.0004820823669434,\"y\":0.9083488583564758,\"z\":-2.389927864074707},\"active\":false,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":5.977117134570165e-10,\"y\":0.00009999894973589107,\"z\":0.00010000104521168396},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:18.026Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T12:04:18.081Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2.000476121902466,\"y\":1.0197348594665527,\"z\":-2.389519214630127},\"active\":true,\"desired\":{\"x\":0,\"y\":0.11111111111111112,\"z\":-0.006944444444444446},\"allowed\":{\"x\":0.000004366866960481275,\"y\":0.11108589172363281,\"z\":0.00041138811502605677},\"jumped\":true,\"velocityY\":6.666666666666667,\"grounded\":false}",
+    "timestamp": "2026-10-08T12:04:18.090Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T12:04:18.308Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2.0002987384796143,\"y\":2.0750935077667236,\"z\":-2.3900210857391357},\"active\":true,\"desired\":{\"x\":0,\"y\":0.0055555555555555905,\"z\":-0.021041666666666667},\"allowed\":{\"x\":0.000014907711374689825,\"y\":0.0055555556900799274,\"z\":-0.00002662178303580731},\"jumped\":false,\"velocityY\":0.3333333333333354,\"grounded\":false}",
+    "timestamp": "2026-10-08T12:04:18.412Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2.000331163406372,\"y\":0.9110719561576843,\"z\":-2.388195037841797},\"active\":false,\"desired\":{\"x\":0,\"y\":-0.11111111111111104,\"z\":0},\"allowed\":{\"x\":-3.74897233257343e-8,\"y\":-0.1085171177983284,\"z\":-2.9158673697793347e-8},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:18.756Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "debug",
+    "message": "[vite] connecting...",
+    "timestamp": "2026-10-08T12:04:40.311Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "debug",
+    "message": "[vite] connected.",
+    "timestamp": "2026-10-08T12:04:40.313Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T12:04:40.321Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=e910afd1"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T12:04:40.423Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T12:04:40.436Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-1.9975694417953491,\"y\":0.9144444465637207,\"z\":0},\"active\":true,\"desired\":{\"x\":0.0024305555555555556,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0.0024305556435137987,\"y\":-0.0055555556900799274,\"z\":0},\"jumped\":false,\"velocityY\":-0.3333333333333333,\"grounded\":false}",
+    "timestamp": "2026-10-08T12:04:40.745Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-0.014854684472084045,\"y\":0.9101000428199768,\"z\":0.000682044483255595},\"active\":true,\"desired\":{\"x\":0.08333333333333333,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0.0833333358168602,\"y\":-1.6603735275566578e-8,\"z\":0},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:40.775Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":2.4843640327453613,\"y\":0.9100999236106873,\"z\":0.000057548837503418326},\"active\":true,\"desired\":{\"x\":0.08333333333333333,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0.0833333358168602,\"y\":-0.0005371735896915197,\"z\":0},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:41.271Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":8,\"colliders\":8,\"mapHash\":\"fnv1a64:4abdb29633dc2d14\"}",
+    "timestamp": "2026-10-08T12:04:41.271Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":4.655301570892334,\"y\":1.199483871459961,\"z\":-0.0026551075279712677},\"active\":true,\"desired\":{\"x\":0.08333333333333333,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0.038888778537511826,\"y\":0.03888899087905884,\"z\":0},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:41.776Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T12:04:42.192Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":5.583195686340332,\"y\":2.1272921562194824,\"z\":-0.002642012434080243},\"active\":true,\"desired\":{\"x\":0.041666666666666664,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0.018154848366975784,\"y\":0.01806831918656826,\"z\":-0.00001980928391276393},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:42.270Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":5.613831520080566,\"y\":2.1578726768493652,\"z\":-0.0025852408725768328},\"active\":false,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-0.00007072717562550679,\"y\":-0.000212043960345909,\"z\":2.978743296466746e-8},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T12:04:42.429Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T12:04:42.545Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":5.614532947540283,\"y\":2.262827157974243,\"z\":-0.0025850795209407806},\"active\":true,\"desired\":{\"x\":0.006944444444444446,\"y\":0.11111111111111112,\"z\":0},\"allowed\":{\"x\":0.0069444444961845875,\"y\":0.1111111119389534,\"z\":0},\"jumped\":true,\"velocityY\":6.666666666666667,\"grounded\":false}",
+    "timestamp": "2026-10-08T12:04:42.562Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T12:04:42.714Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":5.872519493103027,\"y\":3.201716184616089,\"z\":-0.0025850795209407806},\"active\":true,\"desired\":{\"x\":0.017152777777777774,\"y\":0.03888888888888892,\"z\":0},\"allowed\":{\"x\":0.017152776941657066,\"y\":0.03888889029622078,\"z\":0},\"jumped\":false,\"velocityY\":2.3333333333333353,\"grounded\":false}",
+    "timestamp": "2026-10-08T12:04:42.777Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx"
+  }
+]

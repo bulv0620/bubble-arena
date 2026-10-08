@@ -215,6 +215,18 @@
       "file": "docs/TASKS/1.11.md"
     },
     {
+      "id": "1.11.1",
+      "title": "修复顶墙跳跃并核验上坡跳跃",
+      "acceptance": "按住顶墙方向仍正常起跳，真实碰顶仍停止上升；验证上坡跳跃的速度和离坡间距。",
+      "stage": 1,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "1.11"
+      ],
+      "file": "docs/TASKS/1.11.1.md"
+    },
+    {
       "id": "2.1",
       "title": "第三人称跟随镜头",
       "acceptance": "角色移动时镜头跟随且默认距离恒定。",
@@ -222,7 +234,7 @@
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
-        "1.11"
+        "1.11.1"
       ],
       "file": "docs/TASKS/2.1.md"
     },

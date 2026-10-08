@@ -19,7 +19,7 @@
 | 同上 | groundSnapDistance / m | 0.3，仅已接地且未起跳的斜面运动使用 |
 | 同上 | controllerOffset / groundProbeDistance / spawnClearance / m | 0.01 / 0.02 / 0.02；后两者由 offset 推导；实际垂直探测为 probe/cos(maxSlopeAngle)≈0.0283 |
 | 同上 | slopeSnapMinNormalY / slopeSnapMaxNormalY | 0.5 / 0.99，仅选择吸附，不授予接地资格 |
-| 同上 | ceilingDisplacementTolerance / m | 0.00001，向上受阻判断容差 |
+| 同上 | ceilingDisplacementTolerance / m；ceilingMaxNormalY | 0.00001；-0.5，向上受阻且有向下障碍法线才视为碰顶 |
 | src/physics.ts · COLLIDER_MATERIALS | ground friction / restitution | 0.8 / 0，地面原覆盖值 |
 | 同上 | solid、player friction / restitution | 各 0.5 / 0，显式保留 Rapier 原默认值 |
 

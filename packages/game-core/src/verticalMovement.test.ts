@@ -16,7 +16,7 @@ test('launch uses configurable jump speed and gravity; collision feedback resets
   const first = movement.step(true);
   expect(first.jumped).toBe(true);
   expect(first.y / PHYSICS_CONFIG.timeStep).toBeCloseTo(9 - 18 * PHYSICS_CONFIG.timeStep, 6);
-  movement.resolve(first.y, 0, false); // Upward motion blocked by a ceiling.
+  movement.resolve(first.y, 0, false, true); // Upward motion blocked by a ceiling.
   expect(movement.getState().velocityY).toBe(0);
   expect(movement.step(false).y).toBeLessThan(0);
   movement.resolve(-0.01, 0, true);
@@ -53,4 +53,12 @@ test('support refresh removes stale eligibility and cannot re-ground a rising pl
   movement.refreshSupport(true);
   expect(movement.getState().grounded).toBe(false);
   expect(movement.step(true).jumped).toBe(false);
+});
+
+test('shortened upward displacement without a ceiling does not cancel jump velocity', () => {
+  const movement = new VerticalMovement();
+  movement.refreshSupport(true);
+  const launch = movement.step(true);
+  movement.resolve(launch.y, launch.y - 0.001, false);
+  expect(movement.getState().velocityY).toBeCloseTo(PLAYER_CONFIG.jumpSpeed + PHYSICS_CONFIG.gravity[1] * PHYSICS_CONFIG.timeStep);
 });

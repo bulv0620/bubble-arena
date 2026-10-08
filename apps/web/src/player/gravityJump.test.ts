@@ -38,6 +38,28 @@ function tick(player: ReturnType<typeof setup>, jump = false, keys: MovementKeys
   return { ...result, position: player.body.translation() };
 }
 
+test.each([
+  ['wall', { ...idle, forward: true }],
+  ['corner', { ...idle, forward: true, left: true }],
+] as const)('holding movement against a %s does not cancel upward jump velocity', (_name, keys) => {
+  const player = setup();
+  for (let i = 0; i < 120; i += 1) tick(player, false, keys);
+  const start = player.body.translation().y;
+  expect(tick(player, true, keys).jumped).toBe(true);
+  let peak = start;
+  for (let i = 0; i < 60; i += 1) {
+    const result = tick(player, false, keys);
+    peak = Math.max(peak, result.position.y);
+    world.colliders.forEach(obstacle => {
+      if (obstacle.handle === player.collider.handle) return;
+      const contact = player.collider.contactCollider(obstacle, 0.03);
+      if (contact) expect(contact.distance).toBeGreaterThanOrEqual(-0.001);
+    });
+  }
+  expect(peak - start).toBeGreaterThan(1.1);
+  expect(peak - start).toBeLessThan(1.3);
+});
+
 test('real Space tap launches, rises about 1.2m, falls and settles on the physical floor', () => {
   const player = setup();
   for (let i = 0; i < 10; i += 1) tick(player);

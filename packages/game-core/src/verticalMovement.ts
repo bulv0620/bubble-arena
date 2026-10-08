@@ -28,8 +28,9 @@ export class VerticalMovement {
     return { y: this.velocityY * PHYSICS_CONFIG.timeStep, jumped };
   }
 
-  resolve(desiredY: number, allowedY: number, grounded: boolean) {
+  resolve(desiredY: number, allowedY: number, grounded: boolean, ceilingContact = false) {
     this.grounded = grounded && desiredY <= 0;
-    if (this.grounded || (desiredY > 0 && allowedY < desiredY - PLAYER_CONFIG.ceilingDisplacementTolerance)) this.velocityY = 0;
+    if (this.grounded || (ceilingContact && desiredY > 0
+      && allowedY < desiredY - PLAYER_CONFIG.ceilingDisplacementTolerance)) this.velocityY = 0;
   }
 }

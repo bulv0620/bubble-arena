@@ -95,6 +95,36 @@ test('jumping from a slope detaches immediately and cannot be restarted in the a
   expect(player.body.translation().y).toBeGreaterThan(start + 0.8);
 });
 
+test.each([30, 45])('jumping while moving up a %s degree slope preserves launch velocity', angle => {
+  const player = setup(0, angle);
+  for (let i = 0; i < 45; i += 1) tick(player, { ...idle, right: true });
+  const launch = tick(player, { ...idle, right: true }, true);
+  expect(launch.jumped).toBe(true);
+  expect(launch.velocityY).toBeCloseTo(PLAYER_CONFIG.jumpSpeed + PHYSICS_CONFIG.gravity[1] * PHYSICS_CONFIG.timeStep, 5);
+  expect(launch.grounded).toBe(false);
+});
+
+test.each([30, 45])('moving uphill on a %s degree slope still creates a positive air gap', angle => {
+  const player = setup(0, angle);
+  const radians = angle * Math.PI / 180;
+  for (let i = 0; i < 45; i += 1) tick(player, { ...idle, right: true });
+  const gap = () => {
+    const { x, y } = player.body.translation();
+    // Signed distance from the lower capsule sphere to the tilted top plane.
+    return Math.cos(radians) * (y - PLAYER_CONFIG.capsuleHalfHeight) - Math.sin(radians) * x
+      - 0.1 * Math.sin(radians) ** 2 - PLAYER_CONFIG.radius;
+  };
+  const initial = gap();
+  expect(tick(player, { ...idle, right: true }, true).jumped).toBe(true);
+  let peak = gap();
+  for (let i = 0; i < 16; i += 1) {
+    tick(player, { ...idle, right: true });
+    peak = Math.max(peak, gap());
+  }
+  expect(peak - initial).toBeGreaterThan(angle === 45 ? 0.04 : 0.2);
+  expect(peak - initial).toBeLessThan(angle === 45 ? 0.15 : 0.6);
+});
+
 test('autostep refuses a platform when the ceiling leaves insufficient headroom', () => {
   const player = setup(0.3);
   obstacles.push(world.createCollider(RAPIER.ColliderDesc.cuboid(2, 0.2, 1)
