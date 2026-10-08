@@ -4,6 +4,35 @@ import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
 import { CAMERA_CONFIG, COLLISION_GROUPS, WHITEBOX_CONFIG, WHITEBOX_SOLIDS } from '@bubble-arena/shared';
 import { avoidCameraObstacles } from './cameraAvoidance';
 import { cameraFocus, updateFollowCamera } from './cameraFollowPose';
+import { CameraDistanceRecovery } from './CameraDistanceRecovery';
+
+test('removing and restoring a real wall recovers gradually, then immediately contracts safely', () => {
+  setup();
+  let wall = box(0, 1, 2, 1, 1, 0.1); world.step();
+  const recovery = new CameraDistanceRecovery(), camera = new PerspectiveCamera();
+  const position = { x: -0.55, y: 0.45, z: 0 };
+  const frame = (dt: number) => {
+    updateFollowCamera(camera, { translation: () => position }, { yaw: 0, pitch: 0 });
+    const result = avoidCameraObstacles(world, camera, { x: -0.55, y: 1, z: 0 }, cameraFocus(position, 0), recovery, dt);
+    if (result.status !== 'resolved') throw new Error('expected resolved');
+    expectOutside(camera);
+    return result.distance;
+  };
+  let distance = frame(0);
+  world.removeCollider(wall, false); world.step();
+  for (let i = 0; i < 30; i++) {
+    const next = frame(1 / 60);
+    expect(next).toBeGreaterThanOrEqual(distance);
+    expect(next).toBeLessThan(4.5);
+    distance = next;
+  }
+  expect(distance).toBeGreaterThan(3.9);
+  wall = box(0, 1, 1, 1, 1, 0.1); world.step();
+  expect(frame(1 / 60)).toBeLessThan(0.65);
+  world.removeCollider(wall, false); world.step();
+  for (let i = 0; i < 180; i++) distance = frame(1 / 60);
+  expect(distance).toBe(4.5);
+});
 
 let world: RAPIER.World;
 beforeAll(async () => { await RAPIER.init(); });
