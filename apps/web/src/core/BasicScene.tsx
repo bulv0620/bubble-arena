@@ -1,6 +1,8 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
+import { PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
 import { WhiteboxMap } from '../maps';
+import { CapsulePlayer } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 
 export function BasicScene() {
@@ -30,6 +32,11 @@ export function BasicScene() {
       <Suspense fallback={null}>
         <PhysicsWorld>
           <WhiteboxMap />
+          <CapsulePlayer position={[
+            WHITEBOX_CONFIG.playerSpawnXZ[0],
+            WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2,
+            WHITEBOX_CONFIG.playerSpawnXZ[1],
+          ]} />
         </PhysicsWorld>
       </Suspense>
     </Canvas>

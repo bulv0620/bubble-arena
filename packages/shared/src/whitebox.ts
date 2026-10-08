@@ -5,4 +5,5 @@ export const WHITEBOX_CONFIG = {
   groundTopY: 0,
   testCubeSize: 1,
   testCubeStartY: 5,
+  playerSpawnXZ: [-2, 0] as [number, number],
 };

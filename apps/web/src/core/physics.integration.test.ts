@@ -1,6 +1,7 @@
 import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
-import { PHYSICS_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { CapsuleGeometry } from 'three';
 
 let world: RAPIER.World | undefined;
 
@@ -69,4 +70,38 @@ test('removing the ground allows the same cube to fall through y=0', () => {
 
 test('outside the finite 80m ground the cube is not supported by an invisible floor', () => {
   expect(dropCube(WHITEBOX_CONFIG.groundSize / 2 + 2).translation().y).toBeLessThan(-10);
+});
+
+test('capsule visual bounds and real collider agree at the translated spawn', () => {
+  const simulation = createWorld();
+  const { height, radius, capsuleHalfHeight } = PLAYER_CONFIG;
+  const [x, z] = WHITEBOX_CONFIG.playerSpawnXZ;
+  const y = WHITEBOX_CONFIG.groundTopY + height / 2;
+  const body = simulation.createRigidBody(
+    RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(x, y, z),
+  );
+  const collider = simulation.createCollider(RAPIER.ColliderDesc.capsule(capsuleHalfHeight, radius), body);
+  const geometry = new CapsuleGeometry(radius, capsuleHalfHeight * 2, 8, 16);
+  try {
+    geometry.computeBoundingBox();
+    expect(geometry.boundingBox!.min.y + y).toBeCloseTo(WHITEBOX_CONFIG.groundTopY, 6);
+    expect(geometry.boundingBox!.max.y + y).toBeCloseTo(WHITEBOX_CONFIG.groundTopY + height, 6);
+    expect(geometry.boundingBox!.max.x).toBeCloseTo(radius, 6);
+    simulation.step();
+    // Real shape queries verify the capsule top and side, including world offset.
+    expect(collider.castRay(new RAPIER.Ray({ x, y: y + 2, z }, { x: 0, y: -1, z: 0 }), 4, true))
+      .toBeCloseTo(2 - height / 2, 5);
+    expect(collider.castRay(new RAPIER.Ray({ x: x + 2, y, z }, { x: -1, y: 0, z: 0 }), 4, true))
+      .toBeCloseTo(2 - radius, 5);
+    expect(collider.castRay(new RAPIER.Ray({ x: x + radius + 0.01, y: y + 2, z }, { x: 0, y: -1, z: 0 }), 4, true))
+      .toBe(-1);
+    for (let tick = 0; tick < PHYSICS_CONFIG.tickRate * 5; tick += 1) simulation.step();
+    expect(body.translation()).toEqual({ x, y: expect.closeTo(y, 6), z });
+    expect(body.linvel()).toEqual({ x: 0, y: 0, z: 0 });
+    simulation.removeRigidBody(body);
+    expect(simulation.bodies.len()).toBe(0);
+    expect(simulation.colliders.len()).toBe(0);
+  } finally {
+    geometry.dispose();
+  }
 });

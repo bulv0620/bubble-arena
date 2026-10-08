@@ -123,7 +123,7 @@
       "title": "创建胶囊体玩家",
       "acceptance": "玩家位置和胶囊碰撞器对应；不控制移动。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.3"
