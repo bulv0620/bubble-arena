@@ -1,5 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useRef, useState } from 'react';
+import { Suspense, useCallback, useRef, useState } from 'react';
+import { AimInput, AimHint } from '../input';
 import type { RapierRigidBody } from '@react-three/rapier';
 import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
@@ -12,6 +13,8 @@ export function BasicScene() {
   const input = useKeyboardInput();
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [pointer] = useState(() => new PointerLockInput());
+  const [aim] = useState(() => new AimInput());
+  const clearInput = useCallback(() => { input.clear(); aim.clear(); }, [input, aim]);
   const view = useRef<CameraHeading>({ yaw: 0 });
   return (
     <>
@@ -45,11 +48,12 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <FollowCamera target={playerBody} control={pointer} clearInput={input.clear} view={view} />
+            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} />
           </PhysicsWorld>
         </Suspense>
       </Canvas>
       <PointerLockHint control={pointer} />
+      <AimHint input={aim} />
       {import.meta.env.DEV && <InputDiagnostics input={input} />}
     </>
   );

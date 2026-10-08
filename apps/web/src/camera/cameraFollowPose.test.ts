@@ -53,3 +53,23 @@ test('missing or invalid target retains the last valid camera pose; remount uses
   expect(updateFollowCamera(camera, { translation: () => ({ x: 20, y: 1, z: -30 }) })).toBe(true);
   expect(camera.position.x).toBeCloseTo(20 + CAMERA_CONFIG.shoulderOffset);
 });
+
+test('aim profile changes shoulder, distance and FOV; release restores ordinary profile', () => {
+  const camera = new PerspectiveCamera(CAMERA_CONFIG.fov);
+  const position = { x: 2, y: 1, z: 4 }, target = { translation: () => position };
+  for (const yaw of [0, Math.PI / 2, -Math.PI]) {
+    for (const aiming of [false, true, false]) {
+      expect(updateFollowCamera(camera, target, { yaw, pitch: 0.3 }, aiming)).toBe(true);
+      const offset = aiming ? CAMERA_CONFIG.aimShoulderOffset : CAMERA_CONFIG.shoulderOffset;
+      const focus = new Vector3(position.x + Math.cos(yaw) * offset,
+        position.y + CAMERA_CONFIG.focusHeight, position.z - Math.sin(yaw) * offset);
+      expect(camera.position.distanceTo(focus)).toBeCloseTo(aiming ? CAMERA_CONFIG.aimDistance : CAMERA_CONFIG.distance, 10);
+      expect(camera.fov).toBe(aiming ? CAMERA_CONFIG.aimFov : CAMERA_CONFIG.fov);
+      expect(camera.getWorldDirection(new Vector3()).distanceTo(focus.sub(camera.position).normalize())).toBeLessThan(1e-10);
+    }
+  }
+  const projection = camera.projectionMatrix.clone();
+  expect(updateFollowCamera(camera, null, { yaw: 0, pitch: 0 }, true)).toBe(false);
+  expect(camera.fov).toBe(CAMERA_CONFIG.fov); expect(camera.projectionMatrix).toEqual(projection);
+  expect(position).toEqual({ x: 2, y: 1, z: 4 });
+});

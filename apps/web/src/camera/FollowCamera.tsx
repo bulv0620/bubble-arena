@@ -8,9 +8,10 @@ import { MouseOrbit } from './MouseOrbit';
 import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
+import type { AimInput } from '../input';
 
-export function FollowCamera({ target, control, clearInput, view }: { target: RefObject<CameraFollowTarget | null>;
-  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading> }) {
+export function FollowCamera({ target, control, clearInput, view, aim }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput }) {
   const diagnostics = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
@@ -18,6 +19,7 @@ export function FollowCamera({ target, control, clearInput, view }: { target: Re
   const [previous] = useState(() => ({ position: new Vector3(), rotation: new Quaternion() }));
   const [recovery] = useState(() => new CameraDistanceRecovery());
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
+  useEffect(() => aim.attach(canvas, window, document), [aim, canvas]);
   useEffect(() => control.attach(canvas, window, document,
     (dx, dy) => orbit.rotate(dx, dy), clearInput), [canvas, orbit, control, clearInput]);
   useEffect(() => orbit.attach(canvas, window, document,
@@ -31,9 +33,10 @@ export function FollowCamera({ target, control, clearInput, view }: { target: Re
     }
     previous.position.copy(camera.position);
     previous.rotation.copy(camera.quaternion);
-    if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles)) return;
+    const aiming = aim.getSnapshot();
+    if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles, aiming)) return;
     const position = target.current!.translation();
-    const focus = cameraFocus(position, angles.yaw);
+    const focus = cameraFocus(position, angles.yaw, aiming);
     const avoidance = avoidCameraObstacles(world, camera,
       { x: position.x, y: position.y + CAMERA_CONFIG.focusHeight, z: position.z }, focus, recovery, dt);
     if (avoidance.status !== 'resolved') {
@@ -48,7 +51,8 @@ export function FollowCamera({ target, control, clearInput, view }: { target: Re
         || (recovering && diagnostics.current % 6 === 0)) {
         console.info('[camera.check]', JSON.stringify({
           target: position, camera: camera.position,
-          angles, avoidance, probeRadius: CAMERA_CONFIG.obstacleRadius,
+          angles, aiming, shoulderOffset: aiming ? CAMERA_CONFIG.aimShoulderOffset : CAMERA_CONFIG.shoulderOffset,
+          avoidance, probeRadius: CAMERA_CONFIG.obstacleRadius,
           distance: avoidance.status === 'resolved' ? avoidance.distance : null,
           fov: camera.fov,
         }));

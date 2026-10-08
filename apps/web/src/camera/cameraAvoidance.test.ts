@@ -135,3 +135,20 @@ test('full-map wall, corner, box and ramp poses remain outside geometry over yaw
   expect(world.bodies.len()).toBe(bodies);
   expect(world.colliders.len()).toBe(colliders);
 });
+
+test('aim shoulder and shortened orbit remain protected by real wall sweeps across hold and release', () => {
+  setup(); box(0.7, 1, 0, 0.1, 2, 10); world.step();
+  const camera = new PerspectiveCamera(), recovery = new CameraDistanceRecovery();
+  const position = { x: 0, y: 0.45, z: 0 };
+  for (const aiming of [false, true, false]) {
+    updateFollowCamera(camera, { translation: () => position }, { yaw: 0, pitch: 0 }, aiming);
+    const result = avoidCameraObstacles(world, camera, { x: 0, y: 1, z: 0 },
+      cameraFocus(position, 0, aiming), recovery, 1 / 60);
+    expect(result.status).toBe('resolved');
+    if (result.status !== 'resolved') throw new Error('expected resolved');
+    expect(result.shoulderProbe.status).toBe('hit');
+    expect(result.distance).toBeLessThanOrEqual(aiming ? CAMERA_CONFIG.aimDistance : CAMERA_CONFIG.distance);
+    expectOutside(camera);
+    expect(position).toEqual({ x: 0, y: 0.45, z: 0 });
+  }
+});

@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | src/physics.ts · PHYSICS_CONFIG | tickRate / Hz；timeStep / 秒 | 60；由 1/tickRate 推导，物理世界与纯运动规则共用 |
 | 同上 | gravity / m/s² | [0,-20,0]，Y 向上；垂直规则复用 Y 分量 |
-| src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；瞄准尚未实现 |
+| src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；瞄准速度尚未接入 |
 | 同上 | acceleration / deceleration / m/s² | 25 / 30，输入加速与松键减速 |
 | 同上 | jumpSpeed / m/s；airControl / 无量纲 | 7；0.35，空中加减速系数 |
 | 同上 | turnResponse / 1/s；turnMinSpeed / m/s | 12；0.05，仅视觉转向与接触噪声过滤，不改变速度/碰撞 |
@@ -38,7 +38,7 @@ MovementKeys 是移动意图契约；COLLISION_GROUPS 集中碰撞分组。原 1
 
 ## 跟随与旋转镜头（2.1 / 2.2 / 2.3）
 
-src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机）、右肩偏移 0.55m、观察点高于胶囊中心 0.55m；初始俯角 25°（存为弧度）、FOV 70°、近/远裁切 0.1/200m。camera 每渲染帧只读目标位置，不通过 UI 推动物理 tick。2.2 左键拖动：mouseSensitivity=0.003 弧度/像素、rotationResponse=14/s（指数平滑），肩偏移随 yaw 旋转。2.3 以 minPitch=-60°、maxPitch=70°（存为弧度）替换临时保护；正值表示相机位于观察点上方俯视，负值表示下方仰视。目标角度先限幅再平滑，越界量丢弃，反向拖动立即恢复。瞄准距离、鼠标锁定、镜头避障尚未实现。
+src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机）、右肩偏移 0.55m、观察点高于胶囊中心 0.55m；初始俯角 25°（存为弧度）、FOV 70°、近/远裁切 0.1/200m。camera 每渲染帧只读目标位置，不通过 UI 推动物理 tick。2.2 左键拖动：mouseSensitivity=0.003 弧度/像素、rotationResponse=14/s（指数平滑），肩偏移随 yaw 旋转。2.3 以 minPitch=-60°、maxPitch=70°（存为弧度）替换临时保护；正值表示相机位于观察点上方俯视，负值表示下方仰视。目标角度先限幅再平滑，越界量丢弃，反向拖动立即恢复。后续 2.4～2.8 已接入避障、锁定和瞄准，见下文。
 
 2.4.1 球形扫描使用 obstacleRadius=0.2m、obstacleClearance=0.05m。扫描从肩部观察点到理想相机，单位方向让 Rapier TOI 表示米；命中距离是球心移动到球面距障碍保留 clearance 的距离，不是表面射线距离。只查询现有静态地图碰撞体，排除角色/动态物体/传感器，不添加球碰撞体、不调整相机；缩短与恢复留到 2.4.2/2.4.3。
 
@@ -46,4 +46,6 @@ src/camera.ts 的 CAMERA_CONFIG：普通距离 4.5m（肩部观察点至相机�
 
 2.4.3 已替换上述即时恢复：recoveryResponse=5/s、recoveryDelay=0.1s、recoveryMaxDelta=0.1s、recoveryEpsilon=0.005m。距离向内立即响应，处在安全上限时刷新等待，持续放宽后指数恢复；5mm 内收敛到目标。单帧恢复时间上限用于暂停返回，30/60Hz 正常等时响应一致。状态只在碰撞复查通过后提交，目标丢失/切换和组件重建重置；不平滑物理坐标。
 
-2.5 已接入鼠标锁定，使用同一灵敏度；本机 Chrome 点击/Esc 释放实测通过，内置浏览器拒绝锁定时提示并启用后备左键拖动。瞄准尚未实现。
+2.5 已接入鼠标锁定，使用同一灵敏度；本机 Chrome 点击/Esc 释放实测通过，内置浏览器拒绝锁定时提示并启用后备左键拖动。2.8 已接入瞄准镜头。
+
+2.8 右键持按的瞄准意图选择 aimDistance=2.5m、aimFov=55°、aimShoulderOffset=0.8m（推荐试玩初值）；松开回普通配置。肩偏移/FOV 即时切换，距离沿用向内即时、向外安全渐进恢复；两种模式共用完整肩偏移和轨道避障。当前不修改移动速度或角色朝向。

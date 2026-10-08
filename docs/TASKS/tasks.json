@@ -339,7 +339,7 @@
       "title": "右键举枪状态",
       "acceptance": "按住右键进入、松开退出瞄准；改变镜头肩部偏移。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.7"
