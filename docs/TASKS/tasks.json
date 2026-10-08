@@ -267,7 +267,7 @@
       "title": "镜头障碍物检测",
       "acceptance": "可获得角色与理想摄像机间的命中距离，暂不改变镜头。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.3"

@@ -9,6 +9,8 @@ export const CAMERA_CONFIG = {
   // Positive pitch places the camera above the shoulder focus (looking down).
   minPitch: -60 * Math.PI / 180,
   maxPitch: 70 * Math.PI / 180,
+  obstacleRadius: 0.2,
+  obstacleClearance: 0.05,
   fov: 70,
   near: 0.1,
   far: 200,
