@@ -243,7 +243,7 @@
       "title": "鼠标旋转镜头",
       "acceptance": "鼠标水平/垂直输入改变 yaw/pitch，平滑且无翻转。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.1"

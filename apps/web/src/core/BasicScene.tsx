@@ -47,6 +47,10 @@ export function BasicScene() {
           </PhysicsWorld>
         </Suspense>
       </Canvas>
+      <output style={{ position: 'absolute', bottom: 12, left: 12, pointerEvents: 'none',
+        padding: '8px 12px', background: '#ffffffdd', borderRadius: 8 }}>
+        按住鼠标左键拖动：旋转镜头 · WASD：移动 · Space：跳跃
+      </output>
       {import.meta.env.DEV && <InputDiagnostics input={input} />}
     </>
   );
