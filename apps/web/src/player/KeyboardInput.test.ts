@@ -37,7 +37,7 @@ test('repeat and unknown keys do not publish redundant state or steal shortcuts'
   const subscriber = vi.fn();
   const unsubscribe = input.subscribe(subscriber);
   const initial = input.getSnapshot();
-  expect(key('keydown', 'Space').defaultPrevented).toBe(false);
+  expect(key('keydown', 'KeyR').defaultPrevented).toBe(false);
   key('keydown', 'toString');
   expect(input.getSnapshot()).toBe(initial);
   key('keydown', 'KeyW');
@@ -95,4 +95,38 @@ test('detach removes listeners, clears state and supports StrictMode reattachmen
   keys.dispatchEvent(new Event('blur'));
   expect(input.getSnapshot().right).toBe(false);
   detachAgain();
+});
+
+test('short Space tap survives keyup until the next physics tick and is consumed once', () => {
+  expect(key('keydown', 'Space').defaultPrevented).toBe(true);
+  key('keyup', 'Space');
+  expect(input.consumeJump()).toBe(true);
+  expect(input.consumeJump()).toBe(false);
+});
+
+test('holding Space and browser repeats cannot queue repeated jumps', () => {
+  key('keydown', 'Space'); expect(input.consumeJump()).toBe(true);
+  key('keydown', 'Space', { repeat: true }); key('keydown', 'Space');
+  expect(input.consumeJump()).toBe(false);
+  key('keyup', 'Space'); key('keydown', 'Space');
+  expect(input.consumeJump()).toBe(true);
+});
+
+test('blur or hidden-tab clearing cancels pending jump intent and repeat after return is ignored', () => {
+  key('keydown', 'Space'); keys.dispatchEvent(new Event('blur'));
+  expect(input.consumeJump()).toBe(false);
+  key('keydown', 'Space', { repeat: true });
+  expect(input.consumeJump()).toBe(false);
+  key('keyup', 'Space'); key('keydown', 'Space');
+  visibility.visibilityState = 'hidden'; visibility.dispatchEvent(new Event('visibilitychange'));
+  expect(input.consumeJump()).toBe(false);
+});
+
+test('Space shortcuts, composition and editor typing do not queue jumps', () => {
+  key('keydown', 'Space', { ctrlKey: true }); key('keydown', 'Space', { isComposing: true });
+  expect(input.consumeJump()).toBe(false);
+  const editableKeys = Object.assign(new EventTarget(), { closest: () => ({}) });
+  input.attach(editableKeys, visibility);
+  expect(key('keydown', 'Space', {}, editableKeys).defaultPrevented).toBe(false);
+  expect(input.consumeJump()).toBe(false);
 });

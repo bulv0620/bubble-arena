@@ -22,6 +22,8 @@ export class KeyboardInput {
   private snapshot = RELEASED;
   private readonly subscribers = new Set<() => void>();
   private detach: (() => void) | undefined;
+  private jumpHeld = false;
+  private jumpQueued = false;
 
   getSnapshot = (): MovementKeys => this.snapshot;
 
@@ -36,7 +38,17 @@ export class KeyboardInput {
     for (const subscriber of this.subscribers) subscriber();
   }
 
-  clear = () => { this.publish(RELEASED); };
+  consumeJump = () => {
+    const queued = this.jumpQueued;
+    this.jumpQueued = false;
+    return queued;
+  };
+
+  clear = () => {
+    this.jumpHeld = false;
+    this.jumpQueued = false;
+    this.publish(RELEASED);
+  };
 
   attach(keyTarget: EventTarget, visibilityTarget: EventTarget & Pick<Document, 'visibilityState'>) {
     this.detach?.();
@@ -44,13 +56,21 @@ export class KeyboardInput {
     const onKeyDown = (event: Event) => {
       const key = event as KeyboardEvent;
       const action = getAction(key.code);
-      if (!action || key.isComposing || key.ctrlKey || key.metaKey || key.altKey || isEditable(key.target)
+      if ((!action && key.code !== 'Space') || key.isComposing || key.ctrlKey || key.metaKey || key.altKey || isEditable(key.target)
         || visibilityTarget.visibilityState === 'hidden') return;
       key.preventDefault();
+      if (key.code === 'Space') {
+        if (!key.repeat && !this.jumpHeld) this.jumpQueued = true;
+        this.jumpHeld = true;
+        return;
+      }
+      if (!action) return;
       this.publish({ ...this.snapshot, [action]: true });
     };
     const onKeyUp = (event: Event) => {
-      const action = getAction((event as KeyboardEvent).code);
+      const code = (event as KeyboardEvent).code;
+      if (code === 'Space') this.jumpHeld = false;
+      const action = getAction(code);
       // Always release, even if focus or modifiers changed since keydown.
       if (action) this.publish({ ...this.snapshot, [action]: false });
     };

@@ -1,0 +1,68 @@
+[
+  {
+    "level": "debug",
+    "message": "[vite] connected.",
+    "timestamp": "2026-10-08T08:19:10.426Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T08:19:10.491Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=48e455c8"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T08:19:10.611Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T08:19:10.622Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791446953777"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T08:19:10.623Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791446953777"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2,\"y\":0.9144444465637207,\"z\":0},\"active\":true,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0,\"y\":-0.0055555556900799274,\"z\":0},\"jumped\":false,\"velocityY\":-0.3333333333333333,\"grounded\":false}",
+    "timestamp": "2026-10-08T08:19:10.932Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791447517183"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2,\"y\":0.9100984930992126,\"z\":5.362614174941882e-8},\"active\":false,\"desired\":{\"x\":0,\"y\":-0.01111111111111111,\"z\":0},\"allowed\":{\"x\":1.4763964273356578e-8,\"y\":-0.004345940425992012,\"z\":5.362614174941882e-8},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T08:19:10.934Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791447517183"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":6,\"colliders\":6,\"mapHash\":\"fnv1a64:f100071d20585698\"}",
+    "timestamp": "2026-10-08T08:19:11.428Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791447175999"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-1.9999674558639526,\"y\":1.0212111473083496,\"z\":-0.00003659190042526461},\"active\":true,\"desired\":{\"x\":0,\"y\":0.11111111111111112,\"z\":0},\"allowed\":{\"x\":0,\"y\":0.1111111119389534,\"z\":0},\"jumped\":true,\"velocityY\":6.666666666666667,\"grounded\":false}",
+    "timestamp": "2026-10-08T08:19:46.248Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791447517183"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-1.9999674558639526,\"y\":1.8767666816711426,\"z\":-0.00003659190042526461},\"active\":true,\"desired\":{\"x\":0,\"y\":0.05000000000000004,\"z\":0},\"allowed\":{\"x\":0,\"y\":0.05000000074505806,\"z\":0},\"jumped\":false,\"velocityY\":3.000000000000002,\"grounded\":false}",
+    "timestamp": "2026-10-08T08:19:46.458Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791447517183"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-1.9999674558639526,\"y\":0.9102275371551514,\"z\":-0.000036591558455256745},\"active\":false,\"desired\":{\"x\":0,\"y\":-0.11111111111111104,\"z\":0},\"allowed\":{\"x\":-6.833005689044214e-11,\"y\":-0.11098361760377884,\"z\":3.416502913911046e-10},\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-08T08:19:46.915Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791447517183"
+  }
+]

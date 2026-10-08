@@ -27,14 +27,15 @@ export function CapsulePlayer({ position, input }: CapsulePlayerProps) {
   useBeforePhysicsStep(() => {
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
-      const result = movement.current?.step(rigidBody, rigidBody.collider(0), input.getSnapshot());
+      const result = movement.current?.step(rigidBody, rigidBody.collider(0), input.getSnapshot(), input.consumeJump());
       if (import.meta.env.DEV) diagnostics.current.result = result;
     }
   });
   useAfterPhysicsStep(() => {
     if (!import.meta.env.DEV || !body.current) return;
     const sample = diagnostics.current;
-    const active = Boolean(sample.result && Math.hypot(sample.result.desired.x, sample.result.desired.z) > 0.000001);
+    const active = Boolean(sample.result && (sample.result.jumped || !sample.result.grounded
+      || Math.hypot(sample.result.desired.x, sample.result.desired.z) > 0.000001));
     sample.ticks += 1;
     if (active !== sample.wasActive || (active && sample.ticks % 30 === 0)) {
       console.info('[movement.check]', JSON.stringify({

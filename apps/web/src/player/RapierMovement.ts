@@ -1,10 +1,11 @@
-import { HorizontalMovement } from '@bubble-arena/game-core';
+import { HorizontalMovement, VerticalMovement } from '@bubble-arena/game-core';
 import { COLLISION_GROUPS, PLAYER_CONFIG, type MovementKeys } from '@bubble-arena/shared';
 import { QueryFilterFlags, type Collider, type RigidBody, type World } from '@dimforge/rapier3d-compat';
 
 /** Owns a controller in an existing world. Only static map obstacles participate. */
 export class RapierMovement {
   private readonly intent = new HorizontalMovement();
+  private readonly vertical = new VerticalMovement();
   private readonly controller;
   private disposed = false;
 
@@ -16,9 +17,11 @@ export class RapierMovement {
     this.controller.disableSnapToGround();
   }
 
-  step(body: RigidBody, collider: Collider, keys: MovementKeys) {
+  step(body: RigidBody, collider: Collider, keys: MovementKeys, jumpPressed = false) {
     if (this.disposed) return;
-    const desired = this.intent.step(keys);
+    const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : PLAYER_CONFIG.airControl);
+    const vertical = this.vertical.step(jumpPressed);
+    const desired = { ...horizontal, y: vertical.y };
     this.controller.computeColliderMovement(
       collider, desired,
       QueryFilterFlags.EXCLUDE_DYNAMIC | QueryFilterFlags.EXCLUDE_KINEMATIC | QueryFilterFlags.EXCLUDE_SENSORS,
@@ -26,8 +29,9 @@ export class RapierMovement {
     );
     const allowed = this.controller.computedMovement();
     const current = body.translation();
-    body.setNextKinematicTranslation({ x: current.x + allowed.x, y: current.y, z: current.z + allowed.z });
-    return { desired, allowed: { x: allowed.x, y: 0, z: allowed.z } };
+    this.vertical.resolve(desired.y, allowed.y, this.controller.computedGrounded());
+    body.setNextKinematicTranslation({ x: current.x + allowed.x, y: current.y + allowed.y, z: current.z + allowed.z });
+    return { desired, allowed, jumped: vertical.jumped, ...this.vertical.getState() };
   }
 
   dispose() {

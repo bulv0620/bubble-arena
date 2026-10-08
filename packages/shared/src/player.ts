@@ -10,7 +10,9 @@ export const PLAYER_CONFIG = {
   speed: 5,
   acceleration: 25,
   deceleration: 30,
+  airControl: 0.35,
+  jumpSpeed: 7,
   controllerOffset: CONTROLLER_OFFSET,
-  // Horizontal-only prototype starts clear of floor contact tolerance.
+  // Start clear of floor contact tolerance; gravity settles onto the controller gap.
   spawnClearance: CONTROLLER_OFFSET * 2,
 };

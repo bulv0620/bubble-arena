@@ -4,7 +4,7 @@ import { PHYSICS_CONFIG, PLAYER_CONFIG, type MovementKeys } from '@bubble-arena/
 export class HorizontalMovement {
   private velocity = { x: 0, z: 0 };
 
-  step(keys: MovementKeys) {
+  step(keys: MovementKeys, controlScale = 1) {
     const x = Number(keys.right) - Number(keys.left);
     const z = Number(keys.backward) - Number(keys.forward);
     const length = Math.hypot(x, z);
@@ -14,7 +14,7 @@ export class HorizontalMovement {
     const differenceZ = targetZ - this.velocity.z;
     const difference = Math.hypot(differenceX, differenceZ);
     const maximumChange = (length ? PLAYER_CONFIG.acceleration : PLAYER_CONFIG.deceleration)
-      * PHYSICS_CONFIG.timeStep;
+      * PHYSICS_CONFIG.timeStep * controlScale;
     const fraction = difference ? Math.min(1, maximumChange / difference) : 0;
     this.velocity.x += differenceX * fraction;
     this.velocity.z += differenceZ * fraction;
