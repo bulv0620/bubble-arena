@@ -1,0 +1,1717 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    {
+      "id": "0.1",
+      "title": "初始化仓库和 pnpm workspace",
+      "acceptance": "根目录、workspace、gitignore、README 和 Git 仓库存在；pnpm check:workspace 通过。游戏 build 从 0.2 开始。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [],
+      "file": "docs/TASKS/0.1.md"
+    },
+    {
+      "id": "0.2",
+      "title": "创建 web/Vite/React/TS",
+      "acceptance": "pnpm dev 可打开页面，TypeScript 类型检查通过。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [
+        "0.1",
+        "0.7"
+      ],
+      "file": "docs/TASKS/0.2.md"
+    },
+    {
+      "id": "0.3",
+      "title": "安装并验证 R3F",
+      "acceptance": "仅显示 Canvas 和立方体，控制台无相关错误。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [
+        "0.2"
+      ],
+      "file": "docs/TASKS/0.3.md"
+    },
+    {
+      "id": "0.4",
+      "title": "加入 Drei 与 Rapier 依赖",
+      "acceptance": "构建通过；暂无移动和碰撞逻辑。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [
+        "0.3"
+      ],
+      "file": "docs/TASKS/0.4.md"
+    },
+    {
+      "id": "0.5",
+      "title": "划分目录与模块约束",
+      "acceptance": "创建 core/player/camera/weapons/maps/audio/network 空模块及索引，不预实现功能。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [
+        "0.4"
+      ],
+      "file": "docs/TASKS/0.5.md"
+    },
+    {
+      "id": "0.6",
+      "title": "建立检查脚本",
+      "acceptance": "typecheck、build、test、lint（按需）可单独运行。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [
+        "0.5"
+      ],
+      "file": "docs/TASKS/0.6.md"
+    },
+    {
+      "id": "0.7",
+      "title": "建立 AGENTS 与任务模板",
+      "acceptance": "规定单任务边界、验收/报告格式及禁止越界事项。",
+      "stage": 0,
+      "status": "accepted",
+      "milestone": "M0",
+      "dependencies": [],
+      "file": "docs/TASKS/0.7.md"
+    },
+    {
+      "id": "1.1",
+      "title": "创建基础场景",
+      "acceptance": "80×80 地面、基础灯光、静态摄像机、测试立方体正常显示。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "0.7"
+      ],
+      "file": "docs/TASKS/1.1.md"
+    },
+    {
+      "id": "1.2",
+      "title": "创建 Rapier 物理世界",
+      "acceptance": "固定步长配置生效；仅引入 Physics，不加角色。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.1"
+      ],
+      "file": "docs/TASKS/1.2.md"
+    },
+    {
+      "id": "1.3",
+      "title": "地面静态碰撞",
+      "acceptance": "下落测试物体被地面阻挡。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.2"
+      ],
+      "file": "docs/TASKS/1.3.md"
+    },
+    {
+      "id": "1.4",
+      "title": "创建胶囊体玩家",
+      "acceptance": "玩家位置和胶囊碰撞器对应；不控制移动。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.3"
+      ],
+      "file": "docs/TASKS/1.4.md"
+    },
+    {
+      "id": "1.5",
+      "title": "独立键盘输入",
+      "acceptance": "读到 WASD 状态，失焦后清空，尚不改变玩家位置。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.4"
+      ],
+      "file": "docs/TASKS/1.5.md"
+    },
+    {
+      "id": "1.6",
+      "title": "实现水平运动",
+      "acceptance": "角色控制器计算允许位移，WASD 移动且可沿墙滑动。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.5"
+      ],
+      "file": "docs/TASKS/1.6.md"
+    },
+    {
+      "id": "1.7",
+      "title": "添加墙体和箱子碰撞",
+      "acceptance": "角色不能穿越地面、墙壁、箱体。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.6"
+      ],
+      "file": "docs/TASKS/1.7.md"
+    },
+    {
+      "id": "1.8",
+      "title": "实现重力与跳跃",
+      "acceptance": "空格起跳、重力回落，垂直速度可配置。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.7"
+      ],
+      "file": "docs/TASKS/1.8.md"
+    },
+    {
+      "id": "1.9",
+      "title": "实现接地判定",
+      "acceptance": "空中无法无限跳跃，落地后恢复跳跃。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.8"
+      ],
+      "file": "docs/TASKS/1.9.md"
+    },
+    {
+      "id": "1.10",
+      "title": "配置斜坡与小台阶",
+      "acceptance": "测试角色在约定坡度、台阶高度上正常通过。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.9"
+      ],
+      "file": "docs/TASKS/1.10.md"
+    },
+    {
+      "id": "1.11",
+      "title": "抽取参数配置",
+      "acceptance": "速度、重力、跳跃、摩擦/加减速参数不散落在 React 组件中。",
+      "stage": 1,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.10"
+      ],
+      "file": "docs/TASKS/1.11.md"
+    },
+    {
+      "id": "2.1",
+      "title": "第三人称跟随镜头",
+      "acceptance": "角色移动时镜头跟随且默认距离恒定。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "1.11"
+      ],
+      "file": "docs/TASKS/2.1.md"
+    },
+    {
+      "id": "2.2",
+      "title": "鼠标旋转镜头",
+      "acceptance": "鼠标水平/垂直输入改变 yaw/pitch，平滑且无翻转。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.1"
+      ],
+      "file": "docs/TASKS/2.2.md"
+    },
+    {
+      "id": "2.3",
+      "title": "视角上下限",
+      "acceptance": "pitch 达到限制不会翻转。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.2"
+      ],
+      "file": "docs/TASKS/2.3.md"
+    },
+    {
+      "id": "2.4.1",
+      "title": "镜头障碍物检测",
+      "acceptance": "可获得角色与理想摄像机间的命中距离，暂不改变镜头。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.3"
+      ],
+      "file": "docs/TASKS/2.4.1.md"
+    },
+    {
+      "id": "2.4.2",
+      "title": "镜头避障",
+      "acceptance": "遇墙镜头前移至安全位置，不明显穿墙。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.4.1"
+      ],
+      "file": "docs/TASKS/2.4.2.md"
+    },
+    {
+      "id": "2.4.3",
+      "title": "镜头距离平滑恢复",
+      "acceptance": "离墙后镜头渐进恢复，不剧烈抖动。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.4.2"
+      ],
+      "file": "docs/TASKS/2.4.3.md"
+    },
+    {
+      "id": "2.5",
+      "title": "鼠标锁定与释放",
+      "acceptance": "点击游戏锁定鼠标，Esc 释放并正确处理失焦。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.4.3"
+      ],
+      "file": "docs/TASKS/2.5.md"
+    },
+    {
+      "id": "2.6",
+      "title": "镜头相对 WASD",
+      "acceptance": "前进方向基于摄像机水平角；不受 pitch 影响。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.5"
+      ],
+      "file": "docs/TASKS/2.6.md"
+    },
+    {
+      "id": "2.7",
+      "title": "角色平滑转向",
+      "acceptance": "普通移动状态下朝移动方向转身。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.6"
+      ],
+      "file": "docs/TASKS/2.7.md"
+    },
+    {
+      "id": "2.8",
+      "title": "右键举枪状态",
+      "acceptance": "按住右键进入、松开退出瞄准；改变镜头肩部偏移。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.7"
+      ],
+      "file": "docs/TASKS/2.8.md"
+    },
+    {
+      "id": "2.9",
+      "title": "举枪横移和后退",
+      "acceptance": "瞄准时角色朝准星水平朝向，WASD 可横移/后退。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.8"
+      ],
+      "file": "docs/TASKS/2.9.md"
+    },
+    {
+      "id": "2.10",
+      "title": "移动手感调参",
+      "acceptance": "加减速、空中控制、转向均可独立调，不修改物理接口。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.9"
+      ],
+      "file": "docs/TASKS/2.10.md"
+    },
+    {
+      "id": "2.11",
+      "title": "渲染屏幕准星",
+      "acceptance": "准星随游戏输入激活状态正确显示。",
+      "stage": 2,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.10"
+      ],
+      "file": "docs/TASKS/2.11.md"
+    },
+    {
+      "id": "3.1",
+      "title": "定义武器配置 Schema",
+      "acceptance": "ID、伤害、射速、弹匣、备弹、射程、换弹时长受类型约束。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "2.11"
+      ],
+      "file": "docs/TASKS/3.1.md"
+    },
+    {
+      "id": "3.2",
+      "title": "装备步枪占位模型",
+      "acceptance": "步枪组件与角色位置正确关联。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.1"
+      ],
+      "file": "docs/TASKS/3.2.md"
+    },
+    {
+      "id": "3.3",
+      "title": "采集开火输入",
+      "acceptance": "左键单击/按住触发意图，暂不扣弹药。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.2"
+      ],
+      "file": "docs/TASKS/3.3.md"
+    },
+    {
+      "id": "3.4",
+      "title": "射速与弹药状态",
+      "acceptance": "射速受时间约束，每次有效开火消耗一发。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.3"
+      ],
+      "file": "docs/TASKS/3.4.md"
+    },
+    {
+      "id": "3.5",
+      "title": "换弹状态机",
+      "acceptance": "R 键换弹；换弹中不射击，满弹匣和无备弹规则正确。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.4"
+      ],
+      "file": "docs/TASKS/3.5.md"
+    },
+    {
+      "id": "3.6",
+      "title": "屏幕中心瞄准射线",
+      "acceptance": "获得准星命中目标点；空场景也能给出方向。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.5"
+      ],
+      "file": "docs/TASKS/3.6.md"
+    },
+    {
+      "id": "3.7",
+      "title": "枪口实际射线",
+      "acceptance": "近墙遮挡正确，不能穿墙命中。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.6"
+      ],
+      "file": "docs/TASKS/3.7.md"
+    },
+    {
+      "id": "3.8",
+      "title": "创建带生命值靶子",
+      "acceptance": "测试目标能显示生命值，命中时调用独立受击接口。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.7"
+      ],
+      "file": "docs/TASKS/3.8.md"
+    },
+    {
+      "id": "3.9",
+      "title": "伤害与命中反馈",
+      "acceptance": "有效命中才扣血；未命中不扣血。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.8"
+      ],
+      "file": "docs/TASKS/3.9.md"
+    },
+    {
+      "id": "3.10",
+      "title": "弹药和生命值 HUD",
+      "acceptance": "读游戏状态，正确显示弹匣/备弹/自身生命值。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.9"
+      ],
+      "file": "docs/TASKS/3.10.md"
+    },
+    {
+      "id": "3.11",
+      "title": "枪口与命中特效占位",
+      "acceptance": "开火和命中时有简单可见反馈，销毁时不泄漏对象。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.10"
+      ],
+      "file": "docs/TASKS/3.11.md"
+    },
+    {
+      "id": "3.12",
+      "title": "基础后坐力",
+      "acceptance": "枪口/摄像机响应可调，结束后回落，不破坏瞄准方向。",
+      "stage": 3,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.11"
+      ],
+      "file": "docs/TASKS/3.12.md"
+    },
+    {
+      "id": "4.1",
+      "title": "定义玩家生命状态机",
+      "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12"
+      ],
+      "file": "docs/TASKS/4.1.md"
+    },
+    {
+      "id": "4.2",
+      "title": "实现击倒状态",
+      "acceptance": "生命值耗尽转为 downed 而非直接重生。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.1"
+      ],
+      "file": "docs/TASKS/4.2.md"
+    },
+    {
+      "id": "4.3",
+      "title": "限制倒地操作",
+      "acceptance": "倒地无法正常射击/奔跑；显示提示。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.2"
+      ],
+      "file": "docs/TASKS/4.3.md"
+    },
+    {
+      "id": "4.4.1",
+      "title": "救援判定",
+      "acceptance": "验证队伍、距离、角色状态和交互对象。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.3"
+      ],
+      "file": "docs/TASKS/4.4.1.md"
+    },
+    {
+      "id": "4.4.2",
+      "title": "救援进度",
+      "acceptance": "长按交互累计进度；移出距离可中断。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.4.1"
+      ],
+      "file": "docs/TASKS/4.4.2.md"
+    },
+    {
+      "id": "4.4.3",
+      "title": "救援完成",
+      "acceptance": "达成条件恢复正常状态和约定生命值。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.4.2"
+      ],
+      "file": "docs/TASKS/4.4.3.md"
+    },
+    {
+      "id": "4.5",
+      "title": "淘汰与倒地计时",
+      "acceptance": "到时淘汰或满足补刀规则时淘汰，状态不会重复触发。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.4.3"
+      ],
+      "file": "docs/TASKS/4.5.md"
+    },
+    {
+      "id": "4.6",
+      "title": "复活与出生点",
+      "acceptance": "延时复活、恢复生命/弹药，出生点合法。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.5"
+      ],
+      "file": "docs/TASKS/4.6.md"
+    },
+    {
+      "id": "4.7",
+      "title": "队伍与计分",
+      "acceptance": "红蓝队 ID 与积分事件统一，不因重复事件重复得分。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.6"
+      ],
+      "file": "docs/TASKS/4.7.md"
+    },
+    {
+      "id": "4.8",
+      "title": "比赛计时与状态",
+      "acceptance": "waiting/countdown/playing/finished 转换可测。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.7"
+      ],
+      "file": "docs/TASKS/4.8.md"
+    },
+    {
+      "id": "4.9",
+      "title": "胜负与结算页面",
+      "acceptance": "到时间/分数上限触发结算；平局处理明确。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.8"
+      ],
+      "file": "docs/TASKS/4.9.md"
+    },
+    {
+      "id": "4.10",
+      "title": "完整重开",
+      "acceptance": "计时、玩家、目标、得分重置，不残留上一局状态。",
+      "stage": 4,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.9"
+      ],
+      "file": "docs/TASKS/4.10.md"
+    },
+    {
+      "id": "5.1",
+      "title": "创建 Colyseus 服务",
+      "acceptance": "独立服务启动、健康检测、控制台日志可读。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "4.10"
+      ],
+      "file": "docs/TASKS/5.1.md"
+    },
+    {
+      "id": "5.2",
+      "title": "客户端连接和断开",
+      "acceptance": "连接成功、失败、主动断开均有明确状态。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.1"
+      ],
+      "file": "docs/TASKS/5.2.md"
+    },
+    {
+      "id": "5.3",
+      "title": "双人加入测试 Room",
+      "acceptance": "浏览器 A/B 共享 roomId 并能观察双方加入。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.2"
+      ],
+      "file": "docs/TASKS/5.3.md"
+    },
+    {
+      "id": "5.4",
+      "title": "成员与 sessionId 生命周期",
+      "acceptance": "加入、退出后无残留状态，同名玩家可区分。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.3"
+      ],
+      "file": "docs/TASKS/5.4.md"
+    },
+    {
+      "id": "5.5",
+      "title": "同步静态玩家位置",
+      "acceptance": "A/B 可互相看到胶囊体，不做运动预测。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.4"
+      ],
+      "file": "docs/TASKS/5.5.md"
+    },
+    {
+      "id": "5.6",
+      "title": "共享输入协议与校验",
+      "acceptance": "客户端发送移动和操作序号；无效参数在服务端被拒绝。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.5"
+      ],
+      "file": "docs/TASKS/5.6.md"
+    },
+    {
+      "id": "5.7.1",
+      "title": "服务端 Rapier 初始化",
+      "acceptance": "服务端创建白盒碰撞和两位玩家碰撞体。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.6"
+      ],
+      "file": "docs/TASKS/5.7.1.md"
+    },
+    {
+      "id": "5.7.2",
+      "title": "服务端移动与跳跃",
+      "acceptance": "服务端根据输入模拟位置；客户端传坐标无效。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.7.1"
+      ],
+      "file": "docs/TASKS/5.7.2.md"
+    },
+    {
+      "id": "5.7.3",
+      "title": "固定 tick 与快照",
+      "acceptance": "快照带 tick/ackSeq，客户端可识别顺序。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.7.2"
+      ],
+      "file": "docs/TASKS/5.7.3.md"
+    },
+    {
+      "id": "5.8",
+      "title": "本地玩家输入预测",
+      "acceptance": "本机移动无需等待网络往返。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.7.3"
+      ],
+      "file": "docs/TASKS/5.8.md"
+    },
+    {
+      "id": "5.9",
+      "title": "服务端状态校正",
+      "acceptance": "人为注入预测偏差后能逐步回到权威位置。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.8"
+      ],
+      "file": "docs/TASKS/5.9.md"
+    },
+    {
+      "id": "5.10",
+      "title": "其他玩家位置插值",
+      "acceptance": "A/B 远端角色运动不因广播间隔频繁瞬移。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.9"
+      ],
+      "file": "docs/TASKS/5.10.md"
+    },
+    {
+      "id": "5.11",
+      "title": "权威射速和弹药",
+      "acceptance": "快速伪造连续开火不能超过服务器允许射速。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.10"
+      ],
+      "file": "docs/TASKS/5.11.md"
+    },
+    {
+      "id": "5.12.1",
+      "title": "服务端枪口射线判定",
+      "acceptance": "有掩体时无法击中墙后玩家。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.11"
+      ],
+      "file": "docs/TASKS/5.12.1.md"
+    },
+    {
+      "id": "5.12.2",
+      "title": "权威伤害广播",
+      "acceptance": "双方看到相同生命值，客户端伪造伤害无效。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.12.1"
+      ],
+      "file": "docs/TASKS/5.12.2.md"
+    },
+    {
+      "id": "5.13",
+      "title": "同步击倒/救援/复活",
+      "acceptance": "两客户端一致地显示状态切换。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.12.2"
+      ],
+      "file": "docs/TASKS/5.13.md"
+    },
+    {
+      "id": "5.14",
+      "title": "同步计时/得分/结算",
+      "acceptance": "服务器结束对局，两客户端比分一致。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.13"
+      ],
+      "file": "docs/TASKS/5.14.md"
+    },
+    {
+      "id": "5.15",
+      "title": "断线清理和重连规则",
+      "acceptance": "刷新/断网不产生幽灵玩家；重连策略记录明确。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.14"
+      ],
+      "file": "docs/TASKS/5.15.md"
+    },
+    {
+      "id": "5.16",
+      "title": "双人整局回归",
+      "acceptance": "独立浏览器可从开局玩到结算并重开。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.15"
+      ],
+      "file": "docs/TASKS/5.16.md"
+    },
+    {
+      "id": "6.1",
+      "title": "游客昵称入口",
+      "acceptance": "昵称合法性校验，进入大厅。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "5.17"
+      ],
+      "file": "docs/TASKS/6.1.md"
+    },
+    {
+      "id": "6.2",
+      "title": "大厅基础布局",
+      "acceptance": "房间列表区、创建入口和状态提示渲染正确。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.1"
+      ],
+      "file": "docs/TASKS/6.2.md"
+    },
+    {
+      "id": "6.3",
+      "title": "房间列表实时查询",
+      "acceptance": "创建/解散房间后列表更新。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.2"
+      ],
+      "file": "docs/TASKS/6.3.md"
+    },
+    {
+      "id": "6.4",
+      "title": "创建房间配置",
+      "acceptance": "名称、人数限制、可选密码校验生效。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.3"
+      ],
+      "file": "docs/TASKS/6.4.md"
+    },
+    {
+      "id": "6.5",
+      "title": "加入/退出房间",
+      "acceptance": "满员/密码错误提示；退出释放席位。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.4"
+      ],
+      "file": "docs/TASKS/6.5.md"
+    },
+    {
+      "id": "6.6",
+      "title": "房间成员信息",
+      "acceptance": "玩家昵称、房主、队伍、准备状态同步。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.5"
+      ],
+      "file": "docs/TASKS/6.6.md"
+    },
+    {
+      "id": "6.7",
+      "title": "红蓝换队",
+      "acceptance": "超员禁止切换；不同客户端同步。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.6"
+      ],
+      "file": "docs/TASKS/6.7.md"
+    },
+    {
+      "id": "6.8",
+      "title": "房主地图/规则选择",
+      "acceptance": "只允许房主操作，选择在房间内同步。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.7"
+      ],
+      "file": "docs/TASKS/6.8.md"
+    },
+    {
+      "id": "6.9",
+      "title": "准备/取消准备",
+      "acceptance": "按钮和全部成员准备状态同步。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.8"
+      ],
+      "file": "docs/TASKS/6.9.md"
+    },
+    {
+      "id": "6.10",
+      "title": "开局准入校验",
+      "acceptance": "人数、队伍、准备状态满足时可开局；重复点击无多局。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.9"
+      ],
+      "file": "docs/TASKS/6.10.md"
+    },
+    {
+      "id": "6.11",
+      "title": "资源加载与进入对局",
+      "acceptance": "成员进入正确地图，加载失败可以反馈。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.10"
+      ],
+      "file": "docs/TASKS/6.11.md"
+    },
+    {
+      "id": "6.12",
+      "title": "结算返回房间",
+      "acceptance": "返回原房间，准备状态重置。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.11"
+      ],
+      "file": "docs/TASKS/6.12.md"
+    },
+    {
+      "id": "6.13",
+      "title": "房主离开与异常路径",
+      "acceptance": "转移房主或关闭房间，状态明确无卡死。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "6.12"
+      ],
+      "file": "docs/TASKS/6.13.md"
+    },
+    {
+      "id": "7.1",
+      "title": "GLB 资源加载/错误回退",
+      "acceptance": "模型可加载、复用并可处理不存在的资源。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "6.13"
+      ],
+      "file": "docs/TASKS/7.1.md"
+    },
+    {
+      "id": "7.2",
+      "title": "正式角色模型绑定",
+      "acceptance": "模型跟随胶囊体，不影响物理尺寸与移动。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.1",
+        "B.3"
+      ],
+      "file": "docs/TASKS/7.2.md"
+    },
+    {
+      "id": "7.3",
+      "title": "站立/跑步/跳跃动画",
+      "acceptance": "动画状态按移动状态切换，无明显重复重启。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.2"
+      ],
+      "file": "docs/TASKS/7.3.md"
+    },
+    {
+      "id": "7.4",
+      "title": "举枪/射击/换弹动画",
+      "acceptance": "动作与武器操作一致，手部和枪口位置校准。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.3"
+      ],
+      "file": "docs/TASKS/7.4.md"
+    },
+    {
+      "id": "7.5",
+      "title": "步枪 GLB 模型",
+      "acceptance": "持枪骨骼绑定和枪口定位准确。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.4",
+        "B.4"
+      ],
+      "file": "docs/TASKS/7.5.md"
+    },
+    {
+      "id": "7.6.1",
+      "title": "霰弹枪配置和散射",
+      "acceptance": "单次有效开火生成多射线；伤害受服务器控制。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.5"
+      ],
+      "file": "docs/TASKS/7.6.1.md"
+    },
+    {
+      "id": "7.6.2",
+      "title": "霰弹枪模型/反馈",
+      "acceptance": "模型、开火反馈接入，不影响步枪。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.6.1",
+        "B.5"
+      ],
+      "file": "docs/TASKS/7.6.2.md"
+    },
+    {
+      "id": "7.7.1",
+      "title": "狙击枪开镜",
+      "acceptance": "独立 FOV/准星，进出镜状态正常。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.6.2"
+      ],
+      "file": "docs/TASKS/7.7.1.md"
+    },
+    {
+      "id": "7.7.2",
+      "title": "狙击枪单发机制",
+      "acceptance": "射速、弹匣、服务端命中正确。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.7.1",
+        "B.6"
+      ],
+      "file": "docs/TASKS/7.7.2.md"
+    },
+    {
+      "id": "7.8.1",
+      "title": "泡泡投射物模拟",
+      "acceptance": "固定步长飞行、碰撞与生命周期正确。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.7.2"
+      ],
+      "file": "docs/TASKS/7.8.1.md"
+    },
+    {
+      "id": "7.8.2",
+      "title": "泡泡范围控制效果",
+      "acceptance": "服务端判定影响对象，客户端仅显示效果。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.8.1",
+        "B.7"
+      ],
+      "file": "docs/TASKS/7.8.2.md"
+    },
+    {
+      "id": "7.9",
+      "title": "房间武器选择和切换",
+      "acceptance": "武器 ID 合法，切换后数据和视觉同步。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.8.2"
+      ],
+      "file": "docs/TASKS/7.9.md"
+    },
+    {
+      "id": "7.10.1",
+      "title": "小镇地图白盒布局",
+      "acceptance": "双队出生点、左右路线、中心掩体通过初测。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.9"
+      ],
+      "file": "docs/TASKS/7.10.1.md"
+    },
+    {
+      "id": "7.10.2",
+      "title": "小镇 GLB 与简化碰撞",
+      "acceptance": "视觉模型与物理碰撞匹配，无法穿墙。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.10.1",
+        "B.8"
+      ],
+      "file": "docs/TASKS/7.10.2.md"
+    },
+    {
+      "id": "7.10.3",
+      "title": "小镇联机与性能验收",
+      "acceptance": "两端出生正确，对战无阻断问题。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.10.2"
+      ],
+      "file": "docs/TASKS/7.10.3.md"
+    },
+    {
+      "id": "7.11.1",
+      "title": "海滨地图白盒布局",
+      "acceptance": "可行走区、平台、路线和出生点可试玩。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.10.3"
+      ],
+      "file": "docs/TASKS/7.11.1.md"
+    },
+    {
+      "id": "7.11.2",
+      "title": "海滨模型和碰撞",
+      "acceptance": "GLB 导入、台阶/斜坡与边界验证。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.11.1",
+        "B.9"
+      ],
+      "file": "docs/TASKS/7.11.2.md"
+    },
+    {
+      "id": "7.11.3",
+      "title": "海滨联机与性能验收",
+      "acceptance": "双人整局通关，没有主要碰撞缺陷。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.11.2"
+      ],
+      "file": "docs/TASKS/7.11.3.md"
+    },
+    {
+      "id": "7.12.1",
+      "title": "竞技场地图白盒布局",
+      "acceptance": "路线、掩体和出生点合理，至少双人可试玩。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1.1",
+      "dependencies": [
+        "7.11.3"
+      ],
+      "file": "docs/TASKS/7.12.1.md"
+    },
+    {
+      "id": "7.12.2",
+      "title": "竞技场模型和碰撞",
+      "acceptance": "正式资产与静态碰撞加载正确。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1.1",
+      "dependencies": [
+        "7.12.1"
+      ],
+      "file": "docs/TASKS/7.12.2.md"
+    },
+    {
+      "id": "7.12.3",
+      "title": "竞技场联机与性能验收",
+      "acceptance": "双人整局可完成，无明显地图阻断。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1.1",
+      "dependencies": [
+        "7.12.2"
+      ],
+      "file": "docs/TASKS/7.12.3.md"
+    },
+    {
+      "id": "7.13",
+      "title": "房间切图与资源切换",
+      "acceptance": "选择地图与客户端实际加载一致，旧场景资源被释放。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.11.3"
+      ],
+      "file": "docs/TASKS/7.13.md"
+    },
+    {
+      "id": "7.14",
+      "title": "全武器×全地图回归",
+      "acceptance": "4 把武器在全部地图中能开火、命中、结算。",
+      "stage": 7,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.13"
+      ],
+      "file": "docs/TASKS/7.14.md"
+    },
+    {
+      "id": "8.1",
+      "title": "音频管理器",
+      "acceptance": "统一 play/stop/音量/预加载接口；用户交互后可启动音频。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "7.14"
+      ],
+      "file": "docs/TASKS/8.1.md"
+    },
+    {
+      "id": "8.2",
+      "title": "大厅/房间 BGM",
+      "acceptance": "切换页面音乐正确，循环无明显断点。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.1"
+      ],
+      "file": "docs/TASKS/8.2.md"
+    },
+    {
+      "id": "8.3",
+      "title": "四种武器音效",
+      "acceptance": "武器对应正确音色；连射变体不会错误叠加。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.2"
+      ],
+      "file": "docs/TASKS/8.3.md"
+    },
+    {
+      "id": "8.4",
+      "title": "脚步/起跳/落地音效",
+      "acceptance": "声音跟动作节奏匹配，不按网络 tick 重复播放。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.3"
+      ],
+      "file": "docs/TASKS/8.4.md"
+    },
+    {
+      "id": "8.5",
+      "title": "受击/泡泡/救援音效",
+      "acceptance": "事件只触发一次，状态回滚时避免重放。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.4"
+      ],
+      "file": "docs/TASKS/8.5.md"
+    },
+    {
+      "id": "8.6",
+      "title": "敌人空间枪声",
+      "acceptance": "监听者随镜头更新，远近/左右方向基本可辨。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.5"
+      ],
+      "file": "docs/TASKS/8.6.md"
+    },
+    {
+      "id": "8.7",
+      "title": "UI 和结算提示音",
+      "acceptance": "准备/倒计时/胜败音乐不冲突。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.6"
+      ],
+      "file": "docs/TASKS/8.7.md"
+    },
+    {
+      "id": "8.8",
+      "title": "音量设置与持久化",
+      "acceptance": "总音量、BGM、SFX 分开调节，刷新后配置保留。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.7"
+      ],
+      "file": "docs/TASKS/8.8.md"
+    },
+    {
+      "id": "8.9",
+      "title": "战斗粒子与反馈",
+      "acceptance": "枪口、命中、泡泡效果对象复用或正确释放。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.8"
+      ],
+      "file": "docs/TASKS/8.9.md"
+    },
+    {
+      "id": "8.10",
+      "title": "界面视觉统一",
+      "acceptance": "大厅、房间、HUD、结算遵循同一色彩字体和组件规范。",
+      "stage": 8,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.9"
+      ],
+      "file": "docs/TASKS/8.10.md"
+    },
+    {
+      "id": "9.1",
+      "title": "双人自动/手动回归集",
+      "acceptance": "从加入房间到结算重开可重复执行。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "8.10"
+      ],
+      "file": "docs/TASKS/9.1.md"
+    },
+    {
+      "id": "9.2",
+      "title": "2v2 队伍与规则验证",
+      "acceptance": "不同队伍击倒救援与比分正确。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.1"
+      ],
+      "file": "docs/TASKS/9.2.md"
+    },
+    {
+      "id": "9.3",
+      "title": "4v4 同局负载测试",
+      "acceptance": "八人正常同场，记录服务端 CPU、网络与客户端帧率。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1.1",
+      "dependencies": [
+        "9.2"
+      ],
+      "file": "docs/TASKS/9.3.md"
+    },
+    {
+      "id": "9.4",
+      "title": "场景渲染剖析",
+      "acceptance": "根据性能记录优化 draw call/阴影/贴图，而非盲目降低质量。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.2"
+      ],
+      "file": "docs/TASKS/9.4.md"
+    },
+    {
+      "id": "9.5",
+      "title": "资源加载优化",
+      "acceptance": "记录首次加载体积、失败回退和缓存表现。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.4"
+      ],
+      "file": "docs/TASKS/9.5.md"
+    },
+    {
+      "id": "9.6",
+      "title": "网络延迟/丢包测试",
+      "acceptance": "记录低/中/高延迟下移动、命中与校正现象。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.5",
+        "9.6.2"
+      ],
+      "file": "docs/TASKS/9.6.md"
+    },
+    {
+      "id": "9.7",
+      "title": "失焦/刷新/重连",
+      "acceptance": "浏览器刷新或断网不会长期占用幽灵席位。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.6"
+      ],
+      "file": "docs/TASKS/9.7.md"
+    },
+    {
+      "id": "9.8",
+      "title": "生产构建与环境配置",
+      "acceptance": "前端可构建；服务端配置由环境变量管理且无密钥进仓库。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.7"
+      ],
+      "file": "docs/TASKS/9.8.md"
+    },
+    {
+      "id": "9.9",
+      "title": "Docker、HTTPS/WSS 部署",
+      "acceptance": "公网域名可访问游戏与 WebSocket，健康检查可用。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.8"
+      ],
+      "file": "docs/TASKS/9.9.md"
+    },
+    {
+      "id": "9.10",
+      "title": "跨网络整局验收",
+      "acceptance": "不同网络设备完成入房、整局、结算、返回房间。",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.9"
+      ],
+      "file": "docs/TASKS/9.10.md"
+    },
+    {
+      "id": "5.17",
+      "title": "提前验证真实 2v2 协作",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "5.16"
+      ],
+      "file": "docs/TASKS/5.17.md",
+      "acceptance": "四个独立客户端，两队各两人，同步击倒/3s 救援/中断/补刀/复活/计分，完整结算重开；禁止假队友代替真实客户端。"
+    },
+    {
+      "id": "B.1",
+      "title": "接入 Blender MCP 与导出烟测",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [],
+      "file": "docs/TASKS/B.1.md",
+      "acceptance": "实际 MCP 读取场景、创建 1m 方块、截图、保存 .blend、导出并回读 GLB；记录插件/server/Blender 版本，验证 LFS。"
+    },
+    {
+      "id": "B.2",
+      "title": "锁定 Blender 风格与资产尺寸样稿",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.1",
+        "2.11"
+      ],
+      "file": "docs/TASKS/B.2.md",
+      "acceptance": "原创人物/枪/地图模块各一个粗样，三视图/轮廓/颜色/尺寸截图，用户确认风格；不完成整套正式资产。"
+    },
+    {
+      "id": "B.3",
+      "title": "制作角色基础体、骨架与动画源",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.2",
+        "6.13"
+      ],
+      "file": "docs/TASKS/B.3.md",
+      "acceptance": "角色 1.8m，原点/weapon_socket/全部基础 clip 符合规范，保存源/脚本/GLB，回读查骨骼、材质和预算。"
+    },
+    {
+      "id": "B.4",
+      "title": "制作步枪模型",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.2",
+        "6.13"
+      ],
+      "file": "docs/TASKS/B.4.md",
+      "acceptance": "主/副握把、muzzle +Z、尺寸、材质和预算正确，源/脚本/GLB 与截图齐全。"
+    },
+    {
+      "id": "B.5",
+      "title": "制作霰弹枪模型",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.4"
+      ],
+      "file": "docs/TASKS/B.5.md",
+      "acceptance": "与步枪轮廓有差异且风格一致，握把/枪口/预算可回读验证。"
+    },
+    {
+      "id": "B.6",
+      "title": "制作狙击枪模型",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.5"
+      ],
+      "file": "docs/TASKS/B.6.md",
+      "acceptance": "狙击轮廓/瞄准镜/握把/枪口一致，导出无未支持材质。"
+    },
+    {
+      "id": "B.7",
+      "title": "制作泡泡发射器模型",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.6"
+      ],
+      "file": "docs/TASKS/B.7.md",
+      "acceptance": "圆润原创发射器、清晰枪口，节点/预算/导出回读通过。"
+    },
+    {
+      "id": "B.8",
+      "title": "制作小镇正式地图与碰撞导出",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.2",
+        "7.10.1"
+      ],
+      "file": "docs/TASKS/B.8.md",
+      "acceptance": "在已验收白盒尺寸上制作 VISUAL/COLLISION/SPAWNS，导出 GLB+碰撞 JSON/hash，无源/导出尺寸偏差。"
+    },
+    {
+      "id": "B.9",
+      "title": "制作海滨正式地图与碰撞导出",
+      "stage": "B",
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "B.8",
+        "7.11.1"
+      ],
+      "file": "docs/TASKS/B.9.md",
+      "acceptance": "平台/坡/边界和出生点匹配白盒；GLB/简化碰撞/许可/预算齐全。"
+    },
+    {
+      "id": "9.6.1",
+      "title": "实现有限历史命中回溯",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.5"
+      ],
+      "file": "docs/TASKS/9.6.1.md",
+      "acceptance": "hitscan 150ms 上限、历史胶囊查询不修改物理世界、枪口及静态墙遮挡一致，泡泡不回溯。"
+    },
+    {
+      "id": "9.6.2",
+      "title": "验证命中回溯安全与体验边界",
+      "stage": 9,
+      "status": "todo",
+      "milestone": "V1",
+      "dependencies": [
+        "9.6.1"
+      ],
+      "file": "docs/TASKS/9.6.2.md",
+      "acceptance": "测试伪造时间/超窗/乱序/重复射击和近墙；低中高延迟记录对照，不重复计伤/得分。"
+    }
+  ]
+}

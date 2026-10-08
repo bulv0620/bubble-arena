@@ -1,0 +1,29 @@
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #18263a;
+  background: #f4f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+#root {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+}
+
+.fallback {
+  margin: 0;
+  padding: 24px;
+  line-height: 1.7;
+}

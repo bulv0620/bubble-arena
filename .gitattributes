@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.blend binary
+*.glb binary
+*.png binary
+*.jpg binary
+*.wav binary
+*.ogg binary
+# Before adding large binary assets, enable Git LFS in task B.1.
