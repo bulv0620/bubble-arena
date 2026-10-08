@@ -1,13 +1,13 @@
 # Bubble Arena 工作区
 
-原创 3D 卡通第三人称房间制射击游戏。当前已完成最小 3D Canvas 与立方体验证，尚无可运行游戏。
+原创 3D 卡通第三人称房间制射击游戏。当前已完成 80×80 地面的基础白盒场景，尚无可运行游戏。
 
 ## 从这里开始
 
 1. 阅读 [完整方案](docs/spec/SPEC.md)、[游戏规则](docs/GAME_DESIGN.md)。
 2. 阅读 [工程约束](AGENTS.md)、[架构](docs/ARCHITECTURE.md)。
 3. 查看 [开发计划](docs/DEVELOPMENT_PLAN.md) 与 [任务列表](docs/TASKS/INDEX.md)。
-4. [阶段 0 工程验收](docs/reports/stage-0.md) 已通过；下一任务为 [1.1 创建基础场景](docs/TASKS/1.1.md)。
+4. [阶段 0 工程验收](docs/reports/stage-0.md) 已通过；任务 [1.1 创建基础场景](docs/TASKS/1.1.md) 已实现，下一任务为 [1.2 创建 Rapier 物理世界](docs/TASKS/1.2.md)。
 
 人物、枪械、正式地图使用 Blender MCP 驱动 Blender 制作，保留 .blend 和脚本，再导出 GLB。详见 [Blender 流程](docs/art/BLENDER_MCP.md) 与 [资产规范](docs/art/ASSET_PIPELINE.md)。
 

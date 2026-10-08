@@ -87,7 +87,7 @@
       "title": "创建基础场景",
       "acceptance": "80×80 地面、基础灯光、静态摄像机、测试立方体正常显示。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "0.7"

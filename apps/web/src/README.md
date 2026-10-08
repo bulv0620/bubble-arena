@@ -1,6 +1,6 @@
 # 客户端模块边界
 
-任务 0.5 只创建空目录与 index.ts；当前立方体仍在 App.tsx。模块尚无运行时 API，不创建占位类、控制器或虚构配置。
+任务 0.5 建立模块目录；任务 1.1 已由 core/BasicScene 装配 maps/WhiteboxMap，App 只引用 core 公共入口。player/camera/weapons/audio/network 仍为空，不预实现控制器或虚构配置。
 
 | 模块 | 职责 | 边界 |
 | --- | --- | --- |
