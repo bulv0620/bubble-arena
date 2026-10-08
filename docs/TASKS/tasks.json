@@ -183,7 +183,7 @@
       "title": "实现接地判定",
       "acceptance": "空中无法无限跳跃，落地后恢复跳跃。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.8"

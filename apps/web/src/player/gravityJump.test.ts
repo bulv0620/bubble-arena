@@ -122,3 +122,92 @@ test('horizontal movement and a jump remain blocked by the shared wall while air
   expect(airborneAtWall).toBe(true);
   expect(player.body.translation().z).toBeLessThan(-2.35);
 });
+
+test('repeated airborne requests cannot restart a jump; landing restores eligibility', () => {
+  const player = setup();
+  for (let i = 0; i < 10; i += 1) tick(player);
+  expect(tick(player, true).jumped).toBe(true);
+  let landed = false;
+  for (let i = 0; i < 100; i += 1) {
+    const result = tick(player, true);
+    expect(result.jumped).toBe(false);
+    if (result.grounded) { landed = true; break; }
+  }
+  expect(landed).toBe(true);
+  expect(tick(player, true).jumped).toBe(true);
+});
+
+test('removing the supporting box invalidates last tick grounding before jump input', () => {
+  const player = setup([1.75, 2.42, 1.5]);
+  for (let i = 0; i < 10; i += 1) tick(player);
+  expect(tick(player).grounded).toBe(true);
+  const box = [...world.colliders.getAll()].find(c => c.translation().x === 1.75 && c.translation().y === 0.75)!;
+  world.removeCollider(box, false);
+  world.step();
+  const result = tick(player, true);
+  expect(result.jumped).toBe(false);
+  expect(result.grounded).toBe(false);
+  expect(result.velocityY).toBeLessThan(0);
+});
+
+test('walking off a box cannot grant an airborne jump along its vertical side', () => {
+  const player = setup([1.75, 2.42, 1.5]);
+  for (let i = 0; i < 10; i += 1) tick(player);
+  let leftSupport = false;
+  for (let i = 0; i < 90; i += 1) {
+    const result = tick(player, false, { ...idle, right: true });
+    if (!result.grounded && result.position.y > 1.3) {
+      leftSupport = true;
+      expect(tick(player, true).jumped).toBe(false);
+      break;
+    }
+  }
+  expect(leftSupport).toBe(true);
+});
+
+test('wall and ceiling contact never restore an airborne jump', () => {
+  const player = setup([-2, 1.7, -2.39]);
+  world.createCollider(RAPIER.ColliderDesc.cuboid(2, 0.25, 2)
+    .setTranslation(-2, 2.85, -2.39).setCollisionGroups(COLLISION_GROUPS.map));
+  world.step();
+  for (let i = 0; i < 8; i += 1) {
+    const result = tick(player, true, { ...idle, forward: true });
+    expect(result.jumped).toBe(false);
+    expect(result.grounded).toBe(false);
+  }
+});
+
+test.each(['dynamic', 'kinematic', 'sensor'] as const)('%s objects cannot supply jump support', kind => {
+  const player = setup([-2, 4.42, 0]);
+  const desc = RAPIER.ColliderDesc.cuboid(1, 0.5, 1).setCollisionGroups(COLLISION_GROUPS.map);
+  if (kind === 'sensor') world.createCollider(desc.setTranslation(-2, 3, 0).setSensor(true));
+  else {
+    const bodyDesc = kind === 'dynamic' ? RAPIER.RigidBodyDesc.dynamic() : RAPIER.RigidBodyDesc.kinematicPositionBased();
+    const support = world.createRigidBody(bodyDesc.setTranslation(-2, 3, 0));
+    if (kind === 'dynamic') support.setGravityScale(0, false);
+    world.createCollider(desc, support);
+  }
+  world.step();
+  expect(tick(player, true).jumped).toBe(false);
+  expect(tick(player, true).grounded).toBe(false);
+});
+
+test('holding Space across landing does not auto-jump; releasing and pressing again does', () => {
+  const player = setup();
+  for (let i = 0; i < 10; i += 1) tick(player);
+  const input = new KeyboardInput();
+  const keys = new EventTarget();
+  const detach = input.attach(keys, Object.assign(new EventTarget(), { visibilityState: 'visible' as const }));
+  const send = (type: string, repeat = false) => keys.dispatchEvent(Object.assign(new Event(type, { cancelable: true }), { code: 'Space', repeat }));
+  try {
+    send('keydown');
+    expect(tick(player, input.consumeJump()).jumped).toBe(true);
+    for (let i = 0; i < 120; i += 1) {
+      send('keydown', true);
+      expect(tick(player, input.consumeJump()).jumped).toBe(false);
+    }
+    expect(tick(player).grounded).toBe(true);
+    send('keyup'); send('keydown');
+    expect(tick(player, input.consumeJump()).jumped).toBe(true);
+  } finally { detach(); }
+});

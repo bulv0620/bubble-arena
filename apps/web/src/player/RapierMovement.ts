@@ -19,6 +19,14 @@ export class RapierMovement {
 
   step(body: RigidBody, collider: Collider, keys: MovementKeys, jumpPressed = false) {
     if (this.disposed) return;
+    // Recheck the current capsule pose before accepting input. Last tick's support
+    // may have disappeared, and a rising capsule must never regain jump eligibility.
+    this.controller.computeColliderMovement(
+      collider, { x: 0, y: -PLAYER_CONFIG.groundProbeDistance, z: 0 },
+      QueryFilterFlags.EXCLUDE_DYNAMIC | QueryFilterFlags.EXCLUDE_KINEMATIC | QueryFilterFlags.EXCLUDE_SENSORS,
+      COLLISION_GROUPS.player,
+    );
+    this.vertical.refreshSupport(this.controller.computedGrounded());
     const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : PLAYER_CONFIG.airControl);
     const vertical = this.vertical.step(jumpPressed);
     const desired = { ...horizontal, y: vertical.y };

@@ -13,6 +13,8 @@ export const PLAYER_CONFIG = {
   airControl: 0.35,
   jumpSpeed: 7,
   controllerOffset: CONTROLLER_OFFSET,
+  // Probe only the controller's contact gap, without granting a ledge grace period.
+  groundProbeDistance: CONTROLLER_OFFSET * 2,
   // Start clear of floor contact tolerance; gravity settles onto the controller gap.
   spawnClearance: CONTROLLER_OFFSET * 2,
 };

@@ -14,6 +14,10 @@ export class VerticalMovement {
 
   getState() { return { velocityY: this.velocityY, grounded: this.grounded }; }
 
+  refreshSupport(supported: boolean) {
+    this.grounded = supported && this.velocityY <= 0;
+  }
+
   step(jumpPressed: boolean) {
     const jumped = jumpPressed && this.grounded;
     if (jumped) {

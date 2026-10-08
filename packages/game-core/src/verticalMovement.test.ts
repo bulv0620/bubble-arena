@@ -42,3 +42,15 @@ test('invalid vertical parameters fail before corrupting the simulation', () => 
     { gravity: -20, jumpSpeed: -1 }, { gravity: -20, jumpSpeed: Infinity },
   ]) expect(() => new VerticalMovement(settings)).toThrow(RangeError);
 });
+
+test('support refresh removes stale eligibility and cannot re-ground a rising player', () => {
+  const movement = new VerticalMovement();
+  movement.refreshSupport(true);
+  movement.refreshSupport(false);
+  expect(movement.step(true).jumped).toBe(false);
+  movement.resolve(-0.01, 0, true);
+  expect(movement.step(true).jumped).toBe(true);
+  movement.refreshSupport(true);
+  expect(movement.getState().grounded).toBe(false);
+  expect(movement.step(true).jumped).toBe(false);
+});
