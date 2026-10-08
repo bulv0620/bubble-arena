@@ -25,3 +25,5 @@
 详见 [2.5](reports/2.5.md)、[2.6](reports/2.6.md)、[2.7 与批次收尾](reports/2.7.md) 和 [阶段 1 验收记录](reports/stage-1.md)。
 
 2.8 详情见 [实现报告](reports/2.8.md)。本地提交 feat: add held right-button aim camera，未推送。
+
+本轮用户授权完成阶段 2 剩余 2.9～2.11：2.9 已实现（实际位移转向与 aimYaw 转向互斥、原地也转向瞄准）；验证/证据见 [2.9](reports/2.9.md)，继续 2.10，不进入阶段 3。

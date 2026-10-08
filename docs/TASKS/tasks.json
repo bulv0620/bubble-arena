@@ -351,7 +351,7 @@
       "title": "举枪横移和后退",
       "acceptance": "瞄准时角色朝准星水平朝向，WASD 可横移/后退。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.8"

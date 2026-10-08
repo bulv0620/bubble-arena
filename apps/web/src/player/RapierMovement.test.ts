@@ -144,3 +144,21 @@ test('controller disposal is idempotent and a disposed adapter cannot move a bod
   world.step();
   expect(player.body.translation()).toEqual(start);
 });
+
+test.each(['right', 'backward'] as const)('aim %s moves relative to camera while visual keeps aim yaw', action => {
+  const player = setup(false), facing = new PlayerFacing();
+  const start = player.body.translation(), yaw = 0.8;
+  for (let tick = 0; tick < 60; tick++) {
+    const result = adapter.step(player.body, player.collider, { ...idle, [action]: true }, false, yaw);
+    if (!result) throw new Error('missing adapter');
+    facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep, yaw);
+    world.step();
+  }
+  const end = player.body.translation(), dx = end.x - start.x, dz = end.z - start.z;
+  const expectedX = action === 'right' ? Math.cos(yaw) : Math.sin(yaw);
+  const expectedZ = action === 'right' ? -Math.sin(yaw) : Math.cos(yaw);
+  expect(dx * expectedX + dz * expectedZ).toBeGreaterThan(4.4);
+  expect(Math.abs(dx * expectedZ - dz * expectedX)).toBeLessThan(0.03);
+  expect(facing.getYaw()).toBeCloseTo(yaw, 4);
+  expect(player.body.rotation()).toEqual({ x: 0, y: 0, z: 0, w: 1 });
+});

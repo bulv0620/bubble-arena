@@ -41,3 +41,22 @@ test('constant actual velocity gives equal-time response at 30 and 60Hz', () => 
   });
   expect(angles[0]).toBeCloseTo(angles[1], 10);
 });
+
+test('aim heading overrides strafe/backward/blocked/air displacement, including standing still', () => {
+  for (const [dx, dz] of [[0.05, 0], [0, 0.05], [0, 0], [-0.03, 0.02]]) {
+    const facing = new PlayerFacing();
+    for (let i = 0; i < 120; i++) facing.step(dx, dz, 1 / 60, 0.8);
+    expect(facing.getYaw()).toBeCloseTo(0.8, 8);
+  }
+});
+
+test('aim yaw wraps smoothly, invalid aim holds, release resumes actual movement facing', () => {
+  const facing = new PlayerFacing();
+  facing.step(0, 0, 10, 3.1);
+  const next = facing.step(0, 0, 1 / 60, -3.1);
+  expect(Math.atan2(Math.sin(next - 3.1), Math.cos(next - 3.1))).toBeGreaterThan(0);
+  const saved = facing.getYaw();
+  for (const invalid of [NaN, Infinity, -Infinity]) expect(facing.step(1, 0, 1 / 60, invalid)).toBe(saved);
+  for (let i = 0; i < 120; i++) facing.step(0, 0.05, 1 / 60);
+  expect(Math.abs(facing.getYaw())).toBeCloseTo(Math.PI, 8);
+});
