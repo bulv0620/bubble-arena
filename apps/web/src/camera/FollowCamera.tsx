@@ -1,7 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { CAMERA_CONFIG } from '@bubble-arena/shared';
+import { CAMERA_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { useRapier } from '@react-three/rapier';
 import { cameraFocus, updateFollowCamera, type CameraFollowTarget } from './cameraFollowPose';
 import { MouseOrbit } from './MouseOrbit';
@@ -9,8 +9,8 @@ import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
 
-export function FollowCamera({ target, control, clearInput }: { target: RefObject<CameraFollowTarget | null>;
-  control: PointerLockInput; clearInput: () => void }) {
+export function FollowCamera({ target, control, clearInput, view }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading> }) {
   const diagnostics = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
@@ -24,6 +24,7 @@ export function FollowCamera({ target, control, clearInput }: { target: RefObjec
     () => control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported'), [canvas, orbit, control]);
   useFrame(({ camera }, dt) => {
     const angles = orbit.step(dt);
+    view.current.yaw = angles.yaw;
     if (recoveryTarget.current !== target.current) {
       recovery.reset();
       recoveryTarget.current = target.current;

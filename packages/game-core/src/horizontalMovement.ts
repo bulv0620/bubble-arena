@@ -4,9 +4,12 @@ import { PHYSICS_CONFIG, PLAYER_CONFIG, type MovementKeys } from '@bubble-arena/
 export class HorizontalMovement {
   private velocity = { x: 0, z: 0 };
 
-  step(keys: MovementKeys, controlScale = 1) {
-    const x = Number(keys.right) - Number(keys.left);
-    const z = Number(keys.backward) - Number(keys.forward);
+  step(keys: MovementKeys, controlScale = 1, cameraYaw = 0) {
+    const yaw = Number.isFinite(cameraYaw) ? cameraYaw : 0;
+    const localX = Number(keys.right) - Number(keys.left);
+    const localZ = Number(keys.backward) - Number(keys.forward);
+    const x = localX * Math.cos(yaw) + localZ * Math.sin(yaw);
+    const z = -localX * Math.sin(yaw) + localZ * Math.cos(yaw);
     const length = Math.hypot(x, z);
     const targetX = length ? x / length * PLAYER_CONFIG.speed : 0;
     const targetZ = length ? z / length * PLAYER_CONFIG.speed : 0;

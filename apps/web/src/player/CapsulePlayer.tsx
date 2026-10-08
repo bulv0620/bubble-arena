@@ -1,6 +1,6 @@
 import { useEffect, useRef, type RefObject } from 'react';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
-import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG } from '@bubble-arena/shared';
+import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 
@@ -9,9 +9,10 @@ interface CapsulePlayerProps {
   position: [number, number, number];
   input: KeyboardInput;
   bodyRef: RefObject<RapierRigidBody | null>;
+  view: RefObject<CameraHeading>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view }: CapsulePlayerProps) {
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
   const diagnostics = useRef({ ticks: 0, wasActive: false, result: undefined as ReturnType<RapierMovement['step']> });
@@ -27,7 +28,7 @@ export function CapsulePlayer({ position, input, bodyRef: body }: CapsulePlayerP
   useBeforePhysicsStep(() => {
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
-      const result = movement.current?.step(rigidBody, rigidBody.collider(0), input.getSnapshot(), input.consumeJump());
+      const result = movement.current?.step(rigidBody, rigidBody.collider(0), input.getSnapshot(), input.consumeJump(), view.current.yaw);
       if (import.meta.env.DEV) diagnostics.current.result = result;
     }
   });

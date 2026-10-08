@@ -4,3 +4,5 @@ export interface MovementKeys {
   readonly left: boolean;
   readonly right: boolean;
 }
+/** View intent in radians; contains no authoritative coordinates. */
+export interface CameraHeading { yaw: number }

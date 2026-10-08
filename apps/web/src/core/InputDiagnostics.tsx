@@ -12,7 +12,7 @@ export function InputDiagnostics({ input }: { input: KeyboardInput }) {
       background: '#ffffffdd', borderRadius: 8, pointerEvents: 'none', fontSize: 14,
     }}>
       WASD 输入 · W:{Number(keys.forward)} A:{Number(keys.left)} S:{Number(keys.backward)} D:{Number(keys.right)}
-      <br />W/S：−Z/+Z · A/D：−X/+X · Space：跳跃
+      <br />WASD：跟随镜头水平朝向 · Space：跳跃
     </output>
   );
 }

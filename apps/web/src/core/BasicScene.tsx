@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useRef, useState } from 'react';
 import type { RapierRigidBody } from '@react-three/rapier';
-import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
 import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
@@ -12,6 +12,7 @@ export function BasicScene() {
   const input = useKeyboardInput();
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [pointer] = useState(() => new PointerLockInput());
+  const view = useRef<CameraHeading>({ yaw: 0 });
   return (
     <>
       <Canvas
@@ -39,12 +40,12 @@ export function BasicScene() {
         <Suspense fallback={null}>
           <PhysicsWorld>
             <WhiteboxMap />
-            <CapsulePlayer input={input} bodyRef={playerBody} position={[
+            <CapsulePlayer input={input} bodyRef={playerBody} view={view} position={[
               WHITEBOX_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <FollowCamera target={playerBody} control={pointer} clearInput={input.clear} />
+            <FollowCamera target={playerBody} control={pointer} clearInput={input.clear} view={view} />
           </PhysicsWorld>
         </Suspense>
       </Canvas>

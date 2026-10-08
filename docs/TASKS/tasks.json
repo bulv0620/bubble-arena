@@ -315,7 +315,7 @@
       "title": "镜头相对 WASD",
       "acceptance": "前进方向基于摄像机水平角；不受 pitch 影响。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.5"

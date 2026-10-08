@@ -4,6 +4,38 @@ import { HorizontalMovement } from './horizontalMovement';
 
 const idle: MovementKeys = { forward: false, backward: false, left: false, right: false };
 
+test.each([
+  [0, 0, -1], [-Math.PI / 2, 1, 0], [Math.PI / 2, -1, 0], [Math.PI, 0, 1],
+])('W follows yaw %s in the horizontal plane', (yaw, x, z) => {
+  const movement = new HorizontalMovement(); let delta = { x: 0, y: 0, z: 0 };
+  for (let i = 0; i < 60; i++) delta = movement.step({ ...idle, forward: true }, 1, yaw);
+  expect(delta.x / PHYSICS_CONFIG.timeStep).toBeCloseTo(x * PLAYER_CONFIG.speed);
+  expect(delta.z / PHYSICS_CONFIG.timeStep).toBeCloseTo(z * PLAYER_CONFIG.speed);
+  expect(delta.y).toBe(0);
+});
+
+test('rotated diagonal, cancellation and invalid heading preserve normalization and safety', () => {
+  for (const yaw of [-2.7, 0.5, NaN, Infinity]) {
+    const movement = new HorizontalMovement(); let delta = { x: 0, y: 0, z: 0 };
+    for (let i = 0; i < 60; i++) delta = movement.step({ ...idle, forward: true, right: true }, 1, yaw);
+    expect(Math.hypot(delta.x, delta.z) / PHYSICS_CONFIG.timeStep).toBeCloseTo(5);
+    for (let i = 0; i < 30; i++) delta = movement.step({ forward: true, backward: true, right: true, left: true }, 1, yaw);
+    expect(Math.hypot(delta.x, delta.z)).toBeCloseTo(0);
+  }
+  expect(new HorizontalMovement().step({ ...idle, forward: true }, 1, NaN))
+    .toEqual(new HorizontalMovement().step({ ...idle, forward: true }));
+});
+
+test('turning the camera changes the target velocity rather than rotating accumulated momentum', () => {
+  const movement = new HorizontalMovement();
+  for (let i = 0; i < 60; i++) movement.step({ ...idle, forward: true });
+  const next = movement.step({ ...idle, forward: true }, 1, -Math.PI / 2);
+  expect(next.x).toBeGreaterThan(0);
+  expect(next.z).toBeLessThan(0);
+  expect(Math.hypot(next.x, next.z + 5 * PHYSICS_CONFIG.timeStep) / PHYSICS_CONFIG.timeStep)
+    .toBeCloseTo(PLAYER_CONFIG.acceleration * PHYSICS_CONFIG.timeStep);
+});
+
 test('acceleration reaches 5m/s without diagonal speed advantage', () => {
   for (const keys of [{ ...idle, forward: true }, { ...idle, forward: true, right: true }]) {
     const movement = new HorizontalMovement();

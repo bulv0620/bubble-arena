@@ -4,6 +4,21 @@ import { COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type 
 import { RapierMovement } from './RapierMovement';
 
 const idle: MovementKeys = { forward: false, backward: false, left: false, right: false };
+
+test('real capsule uses camera yaw while retaining gravity and the existing speed', () => {
+  const player = setup(false);
+  const start = player.body.translation();
+  for (let tick = 0; tick < 60; tick++) {
+    adapter.step(player.body, player.collider, { ...idle, forward: true }, false, -Math.PI / 2);
+    world.step();
+  }
+  const position = player.body.translation();
+  expect(position.x - start.x).toBeGreaterThan(4.4);
+  expect(position.x - start.x).toBeLessThan(5);
+  expect(Math.abs(position.z - start.z)).toBeLessThan(0.03);
+  expect(position.y).toBeGreaterThanOrEqual(PLAYER_CONFIG.height / 2);
+  expect(position.y).toBeLessThan(PLAYER_CONFIG.height / 2 + 0.03);
+});
 let world: RAPIER.World;
 let adapter: RapierMovement;
 beforeAll(async () => { await RAPIER.init(); });
