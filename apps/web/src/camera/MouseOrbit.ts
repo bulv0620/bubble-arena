@@ -25,20 +25,21 @@ export class MouseOrbit {
     return { ...this.shown };
   }
 
-  attach(canvas: EventTarget, global: EventTarget, visibility: EventTarget & { hidden?: boolean }) {
+  attach(canvas: EventTarget, global: EventTarget, visibility: EventTarget & { hidden?: boolean },
+    enabled = () => true) {
     this.detachCurrent?.();
     let last: { x: number; y: number } | null = null;
     const clear = () => { last = null; };
     const down = (event: Event) => {
       const e = event as MouseEvent;
-      if (e.button !== 0 || e.altKey || e.ctrlKey || e.metaKey || visibility.hidden) return;
+      if (!enabled() || e.button !== 0 || e.altKey || e.ctrlKey || e.metaKey || visibility.hidden) return;
       last = { x: e.clientX, y: e.clientY };
       e.preventDefault();
     };
     const move = (event: Event) => {
       const e = event as MouseEvent;
       if (!last) return;
-      if (!(e.buttons & 1) || visibility.hidden) return clear();
+      if (!enabled() || !(e.buttons & 1) || visibility.hidden) return clear();
       this.rotate(e.clientX - last.x, e.clientY - last.y);
       last = { x: e.clientX, y: e.clientY };
     };

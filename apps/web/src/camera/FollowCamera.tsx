@@ -7,8 +7,10 @@ import { cameraFocus, updateFollowCamera, type CameraFollowTarget } from './came
 import { MouseOrbit } from './MouseOrbit';
 import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
+import type { PointerLockInput } from './PointerLockInput';
 
-export function FollowCamera({ target }: { target: RefObject<CameraFollowTarget | null> }) {
+export function FollowCamera({ target, control, clearInput }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void }) {
   const diagnostics = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
@@ -16,7 +18,10 @@ export function FollowCamera({ target }: { target: RefObject<CameraFollowTarget 
   const [previous] = useState(() => ({ position: new Vector3(), rotation: new Quaternion() }));
   const [recovery] = useState(() => new CameraDistanceRecovery());
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
-  useEffect(() => orbit.attach(canvas, window, document), [canvas, orbit]);
+  useEffect(() => control.attach(canvas, window, document,
+    (dx, dy) => orbit.rotate(dx, dy), clearInput), [canvas, orbit, control, clearInput]);
+  useEffect(() => orbit.attach(canvas, window, document,
+    () => control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported'), [canvas, orbit, control]);
   useFrame(({ camera }, dt) => {
     const angles = orbit.step(dt);
     if (recoveryTarget.current !== target.current) {

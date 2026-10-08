@@ -6,6 +6,22 @@ const mouse = (target: EventTarget, type: string, values: Record<string, number 
   target.dispatchEvent(Object.assign(new Event(type, { cancelable: true }), values));
 };
 
+test('fallback drag is disabled when pointer lock owns rotation', () => {
+  const canvas = new EventTarget(), global = new EventTarget(), visibility = new EventTarget();
+  const orbit = new MouseOrbit(); let enabled = false;
+  const detach = orbit.attach(canvas, global, visibility, () => enabled);
+  mouse(canvas, 'mousedown', { button: 0, clientX: 0, clientY: 0 });
+  mouse(global, 'mousemove', { buttons: 1, clientX: 100, clientY: 0 });
+  expect(orbit.step(10).yaw).toBe(0);
+  enabled = true;
+  mouse(canvas, 'mousedown', { button: 0, clientX: 0, clientY: 0 });
+  mouse(global, 'mousemove', { buttons: 1, clientX: 100, clientY: 0 });
+  expect(orbit.step(10).yaw).toBeCloseTo(-0.3);
+  enabled = false;
+  mouse(global, 'mousemove', { buttons: 1, clientX: 500, clientY: 0 });
+  expect(orbit.step(10).yaw).toBeCloseTo(-0.3); detach();
+});
+
 test('rotation follows both axes smoothly, with frame-rate independent response', () => {
   const a = new MouseOrbit(), b = new MouseOrbit();
   a.rotate(100, 80); b.rotate(100, 80);

@@ -1,8 +1,8 @@
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useRef } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import type { RapierRigidBody } from '@react-three/rapier';
 import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG } from '@bubble-arena/shared';
-import { FollowCamera } from '../camera';
+import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
 import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
@@ -11,6 +11,7 @@ import { InputDiagnostics } from './InputDiagnostics';
 export function BasicScene() {
   const input = useKeyboardInput();
   const playerBody = useRef<RapierRigidBody | null>(null);
+  const [pointer] = useState(() => new PointerLockInput());
   return (
     <>
       <Canvas
@@ -43,14 +44,11 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <FollowCamera target={playerBody} />
+            <FollowCamera target={playerBody} control={pointer} clearInput={input.clear} />
           </PhysicsWorld>
         </Suspense>
       </Canvas>
-      <output style={{ position: 'absolute', bottom: 12, left: 12, pointerEvents: 'none',
-        padding: '8px 12px', background: '#ffffffdd', borderRadius: 8 }}>
-        按住鼠标左键拖动：旋转镜头 · WASD：移动 · Space：跳跃
-      </output>
+      <PointerLockHint control={pointer} />
       {import.meta.env.DEV && <InputDiagnostics input={input} />}
     </>
   );

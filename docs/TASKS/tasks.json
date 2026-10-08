@@ -303,7 +303,7 @@
       "title": "鼠标锁定与释放",
       "acceptance": "点击游戏锁定鼠标，Esc 释放并正确处理失焦。",
       "stage": 2,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.4.3"
