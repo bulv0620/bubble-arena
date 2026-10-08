@@ -8,7 +8,7 @@ export function BasicScene() {
     <Canvas
       camera={{ position: [8, 6, 10], fov: 50, near: 0.1, far: 200 }}
       dpr={[1, 1.5]}
-      frameloop="demand"
+      frameloop="always"
       shadows
       fallback={<p className="fallback">当前浏览器无法显示 3D 场景，请启用 WebGL。</p>}
     >

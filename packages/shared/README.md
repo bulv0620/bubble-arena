@@ -5,3 +5,5 @@
 任务 1.2 建立 @bubble-arena/shared 工作区包，公开 PHYSICS_CONFIG：米/秒、Y 向上，60Hz、1/60 秒、重力 [0,-20,0]。timeStep 由 tickRate 单一常量推导，客户端与后续 Node 服务端使用同一配置。
 
 当前源入口为 src/index.ts，供 Vite/Vitest/TypeScript 消费。Node 20 不直接运行此 TS 文件；服务端任务需要使用 TS loader 或构建器，不能将源入口误认为已发布的 Node JS 构建产物。
+
+任务 1.3 新增 WHITEBOX_CONFIG：80m 地面、1m 厚碰撞、顶面 y=0、1m 测试立方体、初始高度 5m。地图视觉和碰撞，以及真实 Rapier 集成测试引用同一配置。

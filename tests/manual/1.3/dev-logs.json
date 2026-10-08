@@ -1,0 +1,32 @@
+[
+  {
+    "level": "info",
+    "message": "[ground.check] {\"position\":{\"x\":0.0002213598636444658,\"y\":0.49843692779541016,\"z\":0.000339104124577716},\"velocity\":{\"x\":0,\"y\":0,\"z\":0}}",
+    "timestamp": "2026-10-08T07:14:21.919Z",
+    "url": "http://localhost:5173/src/maps/WhiteboxMap.tsx?t=1791443641685"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T07:14:31.041Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=dbe9be0e"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:14:31.176Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":2,\"colliders\":2}",
+    "timestamp": "2026-10-08T07:14:32.001Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791443641688"
+  },
+  {
+    "level": "info",
+    "message": "[ground.check] {\"position\":{\"x\":-0.00039608238148503006,\"y\":0.49843689799308777,\"z\":-0.0005972349317744374},\"velocity\":{\"x\":0,\"y\":0,\"z\":0}}",
+    "timestamp": "2026-10-08T07:14:33.721Z",
+    "url": "http://localhost:5173/src/maps/WhiteboxMap.tsx?t=1791443641685"
+  }
+]

@@ -111,7 +111,7 @@
       "title": "地面静态碰撞",
       "acceptance": "下落测试物体被地面阻挡。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.2"
