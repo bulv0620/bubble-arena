@@ -1,3 +1,24 @@
+export interface WhiteboxSolid {
+  id: string;
+  kind: 'wall' | 'box';
+  position: [number, number, number];
+  size: [number, number, number];
+  color: string;
+}
+
+const movementTestWall: WhiteboxSolid = {
+  id: 'north-wall', kind: 'wall',
+  position: [1, 1.5, -3], size: [8, 3, 0.5], color: '#8f9eaa',
+};
+
+// Axis-aligned prototype solids; mesh and explicit collider share these dimensions.
+export const WHITEBOX_SOLIDS: readonly WhiteboxSolid[] = [
+  movementTestWall,
+  { id: 'west-wall', kind: 'wall', position: [-3.25, 1.5, -1], size: [0.5, 3, 4.5], color: '#8f9eaa' },
+  { id: 'small-box', kind: 'box', position: [1.75, 0.75, 1.5], size: [1.5, 1.5, 1.5], color: '#bba27d' },
+  { id: 'large-box', kind: 'box', position: [-0.75, 1, 3.5], size: [2, 2, 1.5], color: '#ae9269' },
+];
+
 // Initial map dimensions; used by both the visual mesh and Rapier collider.
 export const WHITEBOX_CONFIG = {
   groundSize: 80,
@@ -6,8 +27,27 @@ export const WHITEBOX_CONFIG = {
   testCubeSize: 1,
   testCubeStartY: 5,
   playerSpawnXZ: [-2, 0] as [number, number],
-  movementTestWall: {
-    position: [1, 1.5, -3] as [number, number, number],
-    size: [8, 3, 0.5] as [number, number, number],
-  },
+  movementTestWall,
 };
+
+// Canonical serializable collision data excludes material colors and demonstration bodies.
+export const WHITEBOX_COLLISION = {
+  schemaVersion: 1,
+  ground: {
+    size: WHITEBOX_CONFIG.groundSize,
+    thickness: WHITEBOX_CONFIG.groundThickness,
+    topY: WHITEBOX_CONFIG.groundTopY,
+  },
+  solids: WHITEBOX_SOLIDS.map(({ id, kind, position, size }) => ({ id, kind, position, size })),
+};
+
+/** Deterministic 64-bit FNV-1a content identity, usable in browser and Node. */
+export function whiteboxCollisionHash(data: typeof WHITEBOX_COLLISION) {
+  let hash = 0xcbf29ce484222325n;
+  for (const byte of new TextEncoder().encode(JSON.stringify(data))) {
+    hash = BigInt.asUintN(64, (hash ^ BigInt(byte)) * 0x100000001b3n);
+  }
+  return `fnv1a64:${hash.toString(16).padStart(16, '0')}`;
+}
+
+export const WHITEBOX_COLLISION_HASH = whiteboxCollisionHash(WHITEBOX_COLLISION);

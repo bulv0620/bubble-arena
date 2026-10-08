@@ -159,7 +159,7 @@
       "title": "添加墙体和箱子碰撞",
       "acceptance": "角色不能穿越地面、墙壁、箱体。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.6"

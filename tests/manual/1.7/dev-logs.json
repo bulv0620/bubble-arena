@@ -1,0 +1,44 @@
+[
+  {
+    "level": "debug",
+    "message": "[vite] connecting...",
+    "timestamp": "2026-10-08T08:00:34.104Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "debug",
+    "message": "[vite] connected.",
+    "timestamp": "2026-10-08T08:00:34.106Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+    "timestamp": "2026-10-08T08:00:34.133Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=48e455c8"
+  },
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T08:00:34.245Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T08:00:34.262Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791446213664"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T08:00:34.263Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791446213664"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":6,\"colliders\":6,\"mapHash\":\"fnv1a64:f100071d20585698\"}",
+    "timestamp": "2026-10-08T08:00:35.068Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791446213670"
+  }
+]

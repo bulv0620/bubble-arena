@@ -9,3 +9,5 @@
 任务 1.3 新增 WHITEBOX_CONFIG：80m 地面、1m 厚碰撞、顶面 y=0、1m 测试立方体、初始高度 5m。地图视觉和碰撞，以及真实 Rapier 集成测试引用同一配置。
 
 任务 1.6 添加 MovementKeys 输入契约与 COLLISION_GROUPS；PLAYER_CONFIG 汇集水平速度 5m/s、加速 25m/s²、减速 30m/s²、控制器间隙 0.01m；水平原型出生离地 0.02m 避开接触误差，重力任务随后接入。WHITEBOX_CONFIG 添加一面滑动验证墙的位置/尺寸，视觉与碰撞共用。
+
+任务 1.7 将静态白盒障碍集中为 WHITEBOX_SOLIDS（两墙两箱）。WHITEBOX_COLLISION 为 schemaVersion=1 的可序列化碰撞声明，WHITEBOX_COLLISION_HASH 通过固定字段顺序 JSON 的 UTF-8 内容计算 FNV-1a 64 位标识，当前 fnv1a64:f100071d20585698；材质颜色和历史动态测试立方体不参与哈希。尚未接入联机地图版本拒绝流程。原测试立方体尺寸保留供历史物理回归，已退出可玩场景。
