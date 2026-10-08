@@ -195,7 +195,7 @@
       "title": "配置斜坡与小台阶",
       "acceptance": "测试角色在约定坡度、台阶高度上正常通过。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.9"

@@ -12,6 +12,12 @@ export const PLAYER_CONFIG = {
   deceleration: 30,
   airControl: 0.35,
   jumpSpeed: 7,
+  maxSlopeAngle: Math.PI / 4,
+  // Allow float32 contact normals at the inclusive 45-degree boundary.
+  slopeAngleTolerance: 0.001,
+  maxStepHeight: 0.3,
+  minStepWidth: 0.4,
+  groundSnapDistance: 0.3,
   controllerOffset: CONTROLLER_OFFSET,
   // Probe only the controller's contact gap, without granting a ledge grace period.
   groundProbeDistance: CONTROLLER_OFFSET * 2,

@@ -8,7 +8,13 @@ test('whitebox declarations have unique IDs, positive finite dimensions and rest
   for (const solid of WHITEBOX_SOLIDS) {
     expect(solid.size.every((dimension) => Number.isFinite(dimension) && dimension > 0)).toBe(true);
     expect(solid.position.every(Number.isFinite)).toBe(true);
-    expect(solid.position[1] - solid.size[1] / 2).toBe(WHITEBOX_CONFIG.groundTopY);
+    expect(Number.isFinite(solid.rotationZ ?? 0)).toBe(true);
+    if (solid.kind !== 'ramp') expect(solid.position[1] - solid.size[1] / 2).toBe(WHITEBOX_CONFIG.groundTopY);
+    else {
+      const angle = solid.rotationZ!;
+      expect(solid.position[1] - Math.sin(angle) * solid.size[0] / 2 + Math.cos(angle) * solid.size[1] / 2)
+        .toBeCloseTo(WHITEBOX_CONFIG.groundTopY, 8);
+    }
   }
 });
 
@@ -24,4 +30,7 @@ test('collision identity survives JSON transfer and changes with geometry or sch
   schemaChanged.schemaVersion += 1;
   expect(whiteboxCollisionHash(schemaChanged)).not.toBe(WHITEBOX_COLLISION_HASH);
   expect(JSON.stringify(WHITEBOX_COLLISION)).not.toContain('color');
+  const rotated = structuredClone(WHITEBOX_COLLISION);
+  rotated.solids.at(-1)!.rotationZ += 0.01;
+  expect(whiteboxCollisionHash(rotated)).not.toBe(WHITEBOX_COLLISION_HASH);
 });

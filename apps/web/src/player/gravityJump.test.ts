@@ -21,6 +21,7 @@ function setup(position: [number, number, number] = [-2, 0.92, 0]) {
     const [sx, sy, sz] = solid.size;
     const [px, py, pz] = solid.position;
     world.createCollider(RAPIER.ColliderDesc.cuboid(sx / 2, sy / 2, sz / 2)
+      .setRotation({ x: 0, y: 0, z: Math.sin(solid.rotationZ / 2), w: Math.cos(solid.rotationZ / 2) })
       .setTranslation(px, py, pz).setCollisionGroups(COLLISION_GROUPS.map));
   }
   const body = world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(...position));

@@ -26,6 +26,7 @@ function setup(x: number, z: number, omitId?: string, y = PLAYER_CONFIG.height /
     const [sx, sy, sz] = solid.size;
     const [px, py, pz] = solid.position;
     mapColliders.push(world.createCollider(RAPIER.ColliderDesc.cuboid(sx / 2, sy / 2, sz / 2)
+      .setRotation({ x: 0, y: 0, z: Math.sin(solid.rotationZ / 2), w: Math.cos(solid.rotationZ / 2) })
       .setTranslation(px, py, pz).setCollisionGroups(COLLISION_GROUPS.map)));
   }
   const body = world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(x, y, z));
@@ -96,4 +97,18 @@ test('real capsule sweep is blocked by the physical ground during a downward que
   } finally {
     world.removeCharacterController(controller);
   }
+});
+
+test('shared visible 30cm step and rotated 45-degree ramp both support walking', () => {
+  const step = WHITEBOX_SOLIDS.find(solid => solid.id === 'step-30cm')!;
+  const player = setup(step.position[0] - step.size[0] / 2 - 1, step.position[2]);
+  const top = run(player, { ...idle, right: true }, 35);
+  expect(top.x).toBeGreaterThan(step.position[0] - 0.5);
+  expect(top.y).toBeCloseTo(PLAYER_CONFIG.height / 2 + 0.01 + step.size[1], 2);
+  adapter.dispose(); world.free();
+  const ramp = WHITEBOX_SOLIDS.find(solid => solid.id === 'ramp-45deg')!;
+  const climber = setup(ramp.position[0] - ramp.size[0] * Math.cos(ramp.rotationZ!) / 2 - 1, ramp.position[2]);
+  const high = run(climber, { ...idle, right: true }, 65);
+  expect(high.x).toBeGreaterThan(ramp.position[0] - 0.5);
+  expect(high.y).toBeGreaterThan(2);
 });

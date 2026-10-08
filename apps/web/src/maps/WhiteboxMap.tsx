@@ -20,7 +20,7 @@ export function WhiteboxMap() {
         </mesh>
       </RigidBody>
       {WHITEBOX_SOLIDS.map((solid) => (
-        <RigidBody key={solid.id} type="fixed" colliders={false} position={solid.position}>
+        <RigidBody key={solid.id} type="fixed" colliders={false} position={solid.position} rotation={[0, 0, solid.rotationZ ?? 0]}>
           <CuboidCollider
             args={solid.size.map((size) => size / 2) as [number, number, number]}
             collisionGroups={COLLISION_GROUPS.map}
