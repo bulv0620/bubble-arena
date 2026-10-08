@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { CuboidCollider, RigidBody, type RapierRigidBody } from '@react-three/rapier';
-import { WHITEBOX_CONFIG } from '@bubble-arena/shared';
+import { COLLISION_GROUPS, WHITEBOX_CONFIG } from '@bubble-arena/shared';
 
 const { groundSize, groundThickness, groundTopY, testCubeSize, testCubeStartY } = WHITEBOX_CONFIG;
 
@@ -15,10 +15,21 @@ export function WhiteboxMap() {
           position={[0, groundTopY - groundThickness / 2, 0]}
           friction={0.8}
           restitution={0}
+          collisionGroups={COLLISION_GROUPS.map}
         />
         <mesh position={[0, groundTopY, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
           <planeGeometry args={[groundSize, groundSize]} />
           <meshStandardMaterial color="#dbe4df" roughness={1} />
+        </mesh>
+      </RigidBody>
+      <RigidBody type="fixed" colliders={false} position={WHITEBOX_CONFIG.movementTestWall.position}>
+        <CuboidCollider
+          args={WHITEBOX_CONFIG.movementTestWall.size.map((size) => size / 2) as [number, number, number]}
+          collisionGroups={COLLISION_GROUPS.map}
+        />
+        <mesh castShadow receiveShadow>
+          <boxGeometry args={WHITEBOX_CONFIG.movementTestWall.size} />
+          <meshStandardMaterial color="#8f9eaa" roughness={0.9} />
         </mesh>
       </RigidBody>
       <gridHelper
@@ -40,7 +51,7 @@ export function WhiteboxMap() {
           }
         }}
       >
-        <CuboidCollider args={[testCubeSize / 2, testCubeSize / 2, testCubeSize / 2]} restitution={0} />
+        <CuboidCollider args={[testCubeSize / 2, testCubeSize / 2, testCubeSize / 2]} restitution={0} collisionGroups={COLLISION_GROUPS.testCube} />
         <mesh castShadow receiveShadow>
           <boxGeometry args={[testCubeSize, testCubeSize, testCubeSize]} />
           <meshStandardMaterial color="#36a6c5" roughness={0.6} />

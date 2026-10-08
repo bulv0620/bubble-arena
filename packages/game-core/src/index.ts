@@ -1,0 +1,1 @@
+export { HorizontalMovement } from './horizontalMovement';

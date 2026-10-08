@@ -12,7 +12,7 @@ export function InputDiagnostics({ input }: { input: KeyboardInput }) {
       background: '#ffffffdd', borderRadius: 8, pointerEvents: 'none', fontSize: 14,
     }}>
       WASD 输入 · W:{Number(keys.forward)} A:{Number(keys.left)} S:{Number(keys.backward)} D:{Number(keys.right)}
-      <br />本步只读取输入，玩家保持静止
+      <br />W/S：−Z/+Z · A/D：−X/+X · 灰墙可阻挡并滑动
     </output>
   );
 }

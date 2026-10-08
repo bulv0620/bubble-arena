@@ -6,4 +6,8 @@ export const WHITEBOX_CONFIG = {
   testCubeSize: 1,
   testCubeStartY: 5,
   playerSpawnXZ: [-2, 0] as [number, number],
+  movementTestWall: {
+    position: [1, 1.5, -3] as [number, number, number],
+    size: [8, 3, 0.5] as [number, number, number],
+  },
 };

@@ -1,0 +1,1136 @@
+[
+  {
+    "level": "warn",
+    "message": "using deprecated parameters for the initialization function; pass a single object instead",
+    "timestamp": "2026-10-08T07:45:35.648Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":4,\"colliders\":4}",
+    "timestamp": "2026-10-08T07:45:36.464Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791445497980"
+  },
+  {
+    "level": "info",
+    "message": "[ground.check] {\"position\":{\"x\":-0.00039608238148503006,\"y\":0.49843689799308777,\"z\":-0.0005972349317744374},\"velocity\":{\"x\":0,\"y\":0,\"z\":0}}",
+    "timestamp": "2026-10-08T07:45:38.187Z",
+    "url": "http://localhost:5173/src/maps/WhiteboxMap.tsx?t=1791445497980"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:39.667Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:39.762Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:45.899Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:46.091Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:46.241Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:46.391Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:47.685Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:47.854Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:48.004Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:48.174Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:45:50.207Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:50.363Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:45:50.652Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:50.899Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:51.255Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:45:51.659Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:52.629Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:52.910Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:53.012Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:53.535Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:53.723Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:53.792Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:45:53.829Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:54.202Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:54.242Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:54.549Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:54.628Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:55.083Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:55.671Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:55.840Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:55.915Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:56.088Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:57.149Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:57.262Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:57.406Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:57.510Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:45:57.696Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:57.816Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:58.565Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:58.683Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:59.073Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:59.187Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:45:59.363Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:59.513Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:45:59.697Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:00.006Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:00.044Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:00.317Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:00.354Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:00.623Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:00.739Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:01.457Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:01.710Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:02.468Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:02.698Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:03.300Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:03.970Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:04.455Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:04.551Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:04.648Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:05.151Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:05.405Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:05.473Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:05.876Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:06.101Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:06.498Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:06.621Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:06.833Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:07.379Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:07.876Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:08.021Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:08.098Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:08.593Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:09.085Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:09.099Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:09.193Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:09.794Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:10.072Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:10.086Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:10.236Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:10.633Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:11.076Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:11.140Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:11.247Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:11.688Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:11.966Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:12.063Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:12.184Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:12.497Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:12.966Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:13.527Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:13.980Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:14.728Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:15.140Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:15.533Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:16.077Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":true}",
+    "timestamp": "2026-10-08T07:46:16.596Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:17.050Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":true,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:17.261Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:17.599Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":true,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:17.639Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:18.035Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:32.578Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:32.579Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.128Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2,\"y\":0.9200000166893005,\"z\":-0.0069444444961845875},\"active\":true,\"desired\":{\"x\":0,\"y\":0,\"z\":-0.006944444444444446},\"allowed\":{\"x\":0,\"y\":0,\"z\":-0.0069444444961845875}}",
+    "timestamp": "2026-10-08T07:46:43.129Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791445587190"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.131Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.137Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.138Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.143Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.144Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.149Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.150Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.154Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.155Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-2,\"y\":0.9200000166893005,\"z\":-0.02638888917863369},\"active\":false,\"desired\":{\"x\":0,\"y\":0,\"z\":0},\"allowed\":{\"x\":0,\"y\":0,\"z\":0}}",
+    "timestamp": "2026-10-08T07:46:43.159Z",
+    "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791445587190"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.159Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.160Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.164Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.164Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.166Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.167Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.169Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.169Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.172Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.173Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.176Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.176Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.178Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.179Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.181Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.181Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.183Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.183Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.186Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.187Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.189Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.190Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.192Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.192Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.194Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.194Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.196Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.197Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.200Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.201Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.203Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.203Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.205Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.205Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.207Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.208Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.209Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.210Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.212Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.212Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.216Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.216Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.218Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.219Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.221Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.222Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.224Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.225Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.228Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.229Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.231Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.231Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.233Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.233Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.235Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.235Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.238Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.239Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.242Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.243Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.245Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.245Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.247Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.247Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.249Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.250Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.253Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.254Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":true,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.256Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  },
+  {
+    "level": "info",
+    "message": "[input.check] {\"forward\":false,\"backward\":false,\"left\":false,\"right\":false}",
+    "timestamp": "2026-10-08T07:46:43.257Z",
+    "url": "http://localhost:5173/src/core/InputDiagnostics.tsx?t=1791445347512"
+  }
+]

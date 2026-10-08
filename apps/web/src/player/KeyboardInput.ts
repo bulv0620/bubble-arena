@@ -1,9 +1,5 @@
-export interface MovementKeys {
-  readonly forward: boolean;
-  readonly backward: boolean;
-  readonly left: boolean;
-  readonly right: boolean;
-}
+import type { MovementKeys } from '@bubble-arena/shared';
+export type { MovementKeys } from '@bubble-arena/shared';
 
 const RELEASED: MovementKeys = Object.freeze({ forward: false, backward: false, left: false, right: false });
 const BINDINGS: Readonly<Record<string, keyof MovementKeys>> = {

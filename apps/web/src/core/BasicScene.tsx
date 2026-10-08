@@ -35,9 +35,9 @@ export function BasicScene() {
         <Suspense fallback={null}>
           <PhysicsWorld>
             <WhiteboxMap />
-            <CapsulePlayer position={[
+            <CapsulePlayer input={input} position={[
               WHITEBOX_CONFIG.playerSpawnXZ[0],
-              WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2,
+              WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
           </PhysicsWorld>

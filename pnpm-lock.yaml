@@ -38,6 +38,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@bubble-arena/game-core':
+        specifier: workspace:*
+        version: link:../../packages/game-core
       '@bubble-arena/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -84,6 +87,12 @@ importers:
       vite:
         specifier: 8.3.3
         version: 8.3.3(@types/node@20.19.0)
+
+  packages/game-core:
+    dependencies:
+      '@bubble-arena/shared':
+        specifier: workspace:*
+        version: link:../shared
 
   packages/shared: {}
 

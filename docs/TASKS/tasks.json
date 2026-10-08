@@ -147,7 +147,7 @@
       "title": "实现水平运动",
       "acceptance": "角色控制器计算允许位移，WASD 移动且可沿墙滑动。",
       "stage": 1,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "1.5"
