@@ -58,7 +58,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
     if (import.meta.env.DEV) {
       diagnostics.current += 1;
       if ((recoilOffset > 0 || previousRecoil.current > 0) && (diagnostics.current % 6 === 0 || recoilOffset === 0)) {
-        console.info('[recoil.check]', JSON.stringify({ offset: recoilOffset, basePitch: baseAngles.pitch, pitch: angles.pitch }));
+        console.info('[recoil.check]', JSON.stringify({ offset: recoilOffset, ...recoil.getState(), basePitch: baseAngles.pitch, pitch: angles.pitch }));
       }
       previousRecoil.current = recoilOffset;
       const recovering = avoidance.status === 'resolved'

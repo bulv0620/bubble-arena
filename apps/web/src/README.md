@@ -73,3 +73,5 @@
 3.12.10：CapsulePlayer以result.jumped || !result.grounded发布空中状态；RifleMotion与核心rifleSpreadAngle共同使用水平速度或空中状态，起跳/顶点/下落扩大，落地停稳恢复。UI与实际接受射击读取同一角度，不新增UI计时器；reset释放空中状态。
 
 3.12.11：RifleMotion拥有核心RifleAccuracy，RifleSimulation每物理步调用step(accepted)获得本发kick前散布；HUD读kick后下一发角度，连续张开/收缩，拒绝射击不加bloom。rifleSpreadDirection明确使用中心偏重样本。RifleRecoil增加recoveryDelay，使8/s连射积累至6°，仍在最终相机避障前应用偏移，不改变鼠标基础朝向。
+
+3.12.12：BasicScene只在开发调试复选框打开时装配AimTargetMarker/MuzzleAimDiagnostics。RifleRecoil区分riseAngle与pulseAngle，累计上限不阻止新脉冲；pulse按帧dt立即衰减，hold timer有界以免长失焦dt溢出；FollowCamera只step一次并将总偏移应用到相机，开发日志包含分量。

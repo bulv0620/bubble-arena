@@ -60,6 +60,7 @@ export function BasicScene() {
 
 function SceneSession({ session, revision, pointer, enabled, sensitivity }: { session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
   const input = useKeyboardInput(enabled);
+  const [showAimDiagnostics, setShowAimDiagnostics] = useState(false);
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [aim] = useState(() => new AimInput());
   const [fire] = useState(() => new FireInput(pointer, aim));
@@ -109,7 +110,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
             <RifleSimulation input={fire} motion={motion} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <ShotEffects feedback={feedback} />
             <FollowCamera enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
-            {import.meta.env.DEV && <>
+            {import.meta.env.DEV && showAimDiagnostics && <>
               <AimTargetMarker target={aimTarget} />
               <MuzzleAimDiagnostics body={playerBody} yaw={facingYaw} target={aimTarget} />
             </>}
@@ -124,7 +125,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <TrainingTargetHint range={range} />
       <Crosshair input={crosshair} motion={motion} />
       <ReloadProgress rifle={rifle} />
-      {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><FireInputHint input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
+      {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><label><input type="checkbox" checked={showAimDiagnostics} onChange={event => setShowAimDiagnostics(event.target.checked)} />显示瞄准调试点</label><FireInputHint input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
 
     </>
   );
