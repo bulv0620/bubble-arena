@@ -635,6 +635,18 @@
       "acceptance": "空匣自动2秒装填、最后一发正常、无限训练备弹/HUD∞、R/重置/有限规则回归和浏览器检查通过。"
     },
     {
+      "id": "3.12.9",
+      "title": "头顶血条随距离缩放",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.8"
+      ],
+      "file": "docs/TASKS/3.12.9.md",
+      "acceptance": "人物/假人头顶血条透视缩放，近远实际宽度验证，边缘HUD固定，重置三靶正常与检查报告齐全。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

@@ -4,6 +4,7 @@ import { PLAYER_CONFIG, TRAINING_TARGET_CONFIG } from '@bubble-arena/shared';
 import type { PlayerVitals } from '@bubble-arena/game-core';
 import type { LocalTrainingTarget } from '../weapons';
 import { DAMAGE_NUMBER_CONFIG, type DamageNumbers } from '../effects/DamageNumbers';
+import { OVERHEAD_HEALTH_CONFIG } from './overheadHealthConfig';
 import './gameHud.css';
 
 function HealthPlate({ label, hp, maxHp, self = false }: { label: string; hp: number; maxHp: number; self?: boolean }) {
@@ -25,13 +26,13 @@ function FloatingDamage({ queue }: { queue: DamageNumbers }) {
   </span>)}</div>;
 }
 export function PlayerOverheadHealth({ player }: { player: PlayerVitals }) {
-  return <Html center position={[0, PLAYER_CONFIG.height / 2 + 0.32, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
+  return <Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + 0.32, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
     <HealthPlate label="YOU" hp={player.hp} maxHp={player.maxHp} self />
   </Html>;
 }
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {
   const state = useSyncExternalStore(target.subscribe, target.getSnapshot);
-  return <Html center occlude position={[0, PLAYER_CONFIG.height / 2 + 0.38, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
+  return <Html center occlude distanceFactor={OVERHEAD_HEALTH_CONFIG.targetDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + 0.38, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
     <HealthPlate label={state.hp === 0 ? `${label} · ${TRAINING_TARGET_CONFIG.restoreDuration}s恢复` : label} hp={state.hp} maxHp={state.maxHp} />
     <FloatingDamage queue={target.damageNumbers} />
   </Html>;
