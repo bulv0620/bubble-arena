@@ -1,0 +1,67 @@
+[
+  {
+    "tick": 1870,
+    "sequence": 1,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1878,
+    "sequence": 2,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1885,
+    "sequence": 3,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1893,
+    "sequence": 4,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1900,
+    "sequence": 5,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1908,
+    "sequence": 6,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1915,
+    "sequence": 7,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1923,
+    "sequence": 8,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1930,
+    "sequence": 9,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1938,
+    "sequence": 10,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1945,
+    "sequence": 11,
+    "spreadDegrees": 3.0
+  },
+  {
+    "tick": 1953,
+    "sequence": 12,
+    "spreadDegrees": 2.0
+  },
+  {
+    "tick": 1960,
+    "sequence": 13,
+    "spreadDegrees": 3.0
+  }
+]

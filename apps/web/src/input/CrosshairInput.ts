@@ -9,7 +9,7 @@ export class CrosshairInput {
   private mode: CrosshairMode = 'hidden';
   private subscribers = new Set<() => void>();
   private detachCurrent?: () => void;
-  constructor(private readonly pointer: PointerLockInput, private readonly aim: AimInput) {}
+  constructor(private readonly pointer: PointerLockInput, private readonly aim: AimInput, private readonly aimChangesMode = true) {}
   getSnapshot = () => this.mode;
   subscribe = (listener: () => void) => {
     this.subscribers.add(listener);
@@ -24,7 +24,7 @@ export class CrosshairInput {
     this.detachCurrent?.();
     let active = this.pointer.getSnapshot() === 'locked', attached = true;
     const update = () => {
-      const lock = this.pointer.getSnapshot(), aiming = this.aim.getSnapshot();
+      const lock = this.pointer.getSnapshot(), aiming = this.aimChangesMode && this.aim.getSnapshot();
       const eligible = lock === 'locked' || aiming || lock === 'error' || lock === 'unsupported';
       this.publish(active && !doc.hidden && eligible ? aiming ? 'aiming' : 'normal' : 'hidden');
     };
@@ -45,7 +45,7 @@ export class CrosshairInput {
     });
     const unAim = this.aim.subscribe(() => {
       // AimInput admits only a fresh right press in the owned canvas.
-      if (this.aim.getSnapshot()) active = true;
+      if (this.aimChangesMode && this.aim.getSnapshot()) active = true;
       update();
     });
     canvas.addEventListener('mousedown', activate);

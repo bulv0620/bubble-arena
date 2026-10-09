@@ -14,3 +14,4 @@ export { TrainingTargets } from './TrainingTargets';
 export { LocalTrainingTarget } from './LocalTrainingTarget';
 export { RifleRecoil, applyRecoilPitch } from './RifleRecoil';
 export { LocalTrainingRange } from './LocalTrainingRange';
+export { RifleMotion } from './RifleMotion';

@@ -1,3 +1,11 @@
+import { RIFLE_SPREAD_CONFIG } from '@bubble-arena/shared';
+
+/** Authority uses measured horizontal speed, not client key flags or aim mode. */
+export function rifleSpreadAngle(horizontalSpeed: number): number {
+  if (!Number.isFinite(horizontalSpeed) || horizontalSpeed < 0) throw new RangeError('Expected finite nonnegative horizontal speed');
+  return RIFLE_SPREAD_CONFIG.normal * (horizontalSpeed >= RIFLE_SPREAD_CONFIG.movementSpeedThreshold ? RIFLE_SPREAD_CONFIG.movingMultiplier : 1);
+}
+
 interface Vector { readonly x: number; readonly y: number; readonly z: number }
 /** Uniform solid-angle cone sampling. Random samples are provided by the simulation authority. */
 export function spreadDirection(direction: Vector, halfAngle: number, radial: number, azimuth: number): Vector | null {

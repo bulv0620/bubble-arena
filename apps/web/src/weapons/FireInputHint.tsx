@@ -8,6 +8,6 @@ export function FireInputHint({ input, pointer }: { input: FireInput; pointer: P
   const label = fire.held ? '按住' : fire.pressed ? '单击待处理' : '未按下';
   return <output aria-live="polite" style={{ position: 'absolute', right: 12, bottom: 12,
     pointerEvents: 'none', padding: '8px 12px', background: '#ffffffdd', borderRadius: 8 }}>
-    开火意图：{label} · {lock === 'error' || lock === 'unsupported' ? '后备：右键瞄准时按左键' : '锁定后按左键'}
+    开火意图：{label} · {lock === 'error' || lock === 'unsupported' ? '后备：按住右键时左键射击' : '锁定后按左键'}
   </output>;
 }

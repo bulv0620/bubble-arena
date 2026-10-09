@@ -2,6 +2,7 @@ import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
 import { COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type MovementKeys } from '@bubble-arena/shared';
 import { RapierMovement } from './RapierMovement';
+import { RifleMotion } from '../weapons/RifleMotion';
 import { PlayerFacing } from './PlayerFacing';
 
 const idle: MovementKeys = { forward: false, backward: false, left: false, right: false };
@@ -172,4 +173,17 @@ test.each([0, 0.35, 1])('air control %s changes only airborne steering, using sa
   expect(result.grounded).toBe(false);
   expect(result.desired.x / PHYSICS_CONFIG.timeStep).toBeCloseTo(25 / 60 * airControl);
   expect(result.desired.y).toBeLessThan(0);
+});
+
+test('actual wall movement expands spread while pressing into a blocked wall stays stationary', () => {
+  const player = setup(), motion = new RifleMotion();
+  let moved = false;
+  for (let i = 0; i < 180; i++) {
+    const result = adapter.step(player.body, player.collider, { ...idle, forward: true });
+    if (!result) throw new Error('missing movement');
+    motion.setSpeed(Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep);
+    moved ||= motion.getSnapshot() > 2 * Math.PI / 180;
+    world.step();
+  }
+  expect(moved).toBe(true); expect(motion.getSnapshot()).toBeCloseTo(2 * Math.PI / 180, 12);
 });

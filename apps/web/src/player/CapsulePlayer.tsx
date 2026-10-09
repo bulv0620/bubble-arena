@@ -2,15 +2,14 @@ import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Vector3, type Group } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
-import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
+import { COLLIDER_MATERIALS, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
-import type { AimInput } from '../input';
 import { BlockAvatar } from '../visuals';
 import type { PlayerVitals } from '@bubble-arena/game-core';
 import { PlayerOverheadHealth } from '../HUD/OverheadHealth';
-import { RiflePlaceholder } from '../weapons';
+import { RiflePlaceholder, type RifleMotion } from '../weapons';
 
 interface CapsulePlayerProps {
   playerVitals: PlayerVitals;
@@ -19,16 +18,16 @@ interface CapsulePlayerProps {
   input: KeyboardInput;
   bodyRef: RefObject<RapierRigidBody | null>;
   view: RefObject<CameraHeading>;
-  aim: AimInput;
+  motion: RifleMotion;
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facingYaw, playerVitals }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerVitals }: CapsulePlayerProps) {
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
   const visual = useRef<Group | null>(null);
   const [facing] = useState(() => new PlayerFacing());
-  const diagnostics = useRef({ ticks: 0, wasActive: false, wasAiming: false, result: undefined as ReturnType<RapierMovement['step']> });
+  const diagnostics = useRef({ ticks: 0, wasActive: false, result: undefined as ReturnType<RapierMovement['step']> });
   const { world } = useRapier();
   useEffect(() => {
     const adapter = new RapierMovement(world);
@@ -36,19 +35,22 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facin
     facingYaw.current = 0;
     movement.current = adapter;
     return () => {
+      motion.reset();
       movement.current = null;
       adapter.dispose();
     };
-  }, [world, facing, facingYaw]);
+  }, [world, facing, facingYaw, motion]);
   useBeforePhysicsStep(() => {
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
-        { ...input.getSnapshot(), aiming: aim.getSnapshot() }, input.consumeJump(), view.current.yaw);
+        { ...input.getSnapshot(), aiming: false }, input.consumeJump(), view.current.yaw);
+      const speed = result ? Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep : 0;
+      motion.setSpeed(speed);
       facing.step(view.current.yaw);
       facingYaw.current = facing.getYaw();
       if (import.meta.env.DEV) diagnostics.current.result = result;
-    }
+    } else motion.reset();
   });
   const [forward] = useState(() => new Vector3());
   useFrame(({ camera }) => {
@@ -63,14 +65,12 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facin
     const active = Boolean(sample.result && (sample.result.jumped || !sample.result.grounded
       || Math.hypot(sample.result.desired.x, sample.result.desired.z) > 0.000001));
     sample.ticks += 1;
-    const aiming = aim.getSnapshot();
-    if (active !== sample.wasActive || aiming !== sample.wasAiming || ((active || aiming) && sample.ticks % 30 === 0)) {
+    if (active !== sample.wasActive || (active && sample.ticks % 30 === 0)) {
       console.info('[movement.check]', JSON.stringify({
-        position: body.current.translation(), active, aiming, facingYaw: facing.getYaw(), ...sample.result,
+        position: body.current.translation(), active, spreadAngle: motion.getSnapshot(), facingYaw: facing.getYaw(), ...sample.result,
       }));
     }
     sample.wasActive = active;
-    sample.wasAiming = aiming;
   });
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>

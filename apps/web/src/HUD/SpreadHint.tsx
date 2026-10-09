@@ -1,0 +1,7 @@
+import { useSyncExternalStore } from 'react';
+import { RIFLE_SPREAD_CONFIG } from '@bubble-arena/shared';
+import type { RifleMotion } from '../weapons';
+export function SpreadHint({ motion }: { motion: RifleMotion }) {
+  const angle = useSyncExternalStore(motion.subscribe, motion.getSnapshot);
+  return <output className="aim-mode">{angle > RIFLE_SPREAD_CONFIG.normal ? '↔ 移动射击 · 散布增大' : '○ 步枪 · 稳定射击'}</output>;
+}

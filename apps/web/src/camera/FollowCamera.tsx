@@ -42,7 +42,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
     view.current.yaw = angles.yaw;
     previous.position.copy(camera.position);
     previous.rotation.copy(camera.quaternion);
-    const aiming = aim.getSnapshot();
+    const aiming = false; // Ordinary rifle has no right-button camera mode.
     if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles, aiming)) return;
     const position = target.current!.translation();
     const focus = cameraFocus(position, angles.yaw, aiming);

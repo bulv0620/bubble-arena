@@ -1,0 +1,19 @@
+import { expect, test, vi } from 'vitest';
+import { RIFLE_SPREAD_CONFIG } from '@bubble-arena/shared';
+import { RifleMotion } from './RifleMotion';
+
+test('motion snapshot notifies only on spread changes, stops safely and releases subscriptions', () => {
+  const motion = new RifleMotion(), notify = vi.fn(), release = motion.subscribe(notify);
+  expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal);
+  motion.setSpeed(0.001); expect(notify).not.toHaveBeenCalled();
+  motion.setSpeed(5); const moving = motion.getSnapshot(); motion.setSpeed(4);
+  expect(notify).toHaveBeenCalledTimes(1); expect(motion.getSnapshot()).toBe(moving);
+  motion.setSpeed(0.5); expect(motion.getSnapshot()).toBe(moving); // Coast/braking still moves.
+  motion.setSpeed(0); expect(notify).toHaveBeenCalledTimes(2);
+  motion.setSpeed(5); motion.reset(); motion.reset(); expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal);
+  release(); release(); const count = notify.mock.calls.length; motion.setSpeed(5); expect(notify).toHaveBeenCalledTimes(count);
+});
+test('invalid physical samples fall back to stationary without leaking a stale wider reticle', () => {
+  const motion = new RifleMotion();
+  for (const value of [NaN, Infinity, -1]) { motion.setSpeed(5); motion.setSpeed(value); expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal); }
+});

@@ -6,14 +6,14 @@ import { CrosshairInput } from './CrosshairInput';
 function event(target: EventTarget, type: string, values = {}) {
   target.dispatchEvent(Object.assign(new Event(type), values));
 }
-function setup(supported = true) {
+function setup(supported = true, aimChangesMode = true) {
   const canvas = Object.assign(new EventTarget(), supported ? { requestPointerLock: () => {} } : {});
   const global = new EventTarget(), aim = new AimInput(), pointer = new PointerLockInput();
   const doc = Object.assign(new EventTarget(), { hidden: false, pointerLockElement: null as EventTarget | null,
     exitPointerLock: () => { doc.pointerLockElement = null; event(doc, 'pointerlockchange'); } });
   const unAim = aim.attach(canvas, global, doc);
   const unPointer = pointer.attach(canvas, global, doc, () => {}, () => aim.clear());
-  const input = new CrosshairInput(pointer, aim), changed = vi.fn(), unsubscribe = input.subscribe(changed);
+  const input = new CrosshairInput(pointer, aim, aimChangesMode), changed = vi.fn(), unsubscribe = input.subscribe(changed);
   const detach = input.attach(canvas, global, doc);
   const click = () => { event(canvas, 'mousedown', { button: 0 }); event(canvas, 'click', { button: 0 }); };
   const grant = () => { doc.pointerLockElement = canvas; event(doc, 'pointerlockchange'); };
@@ -80,4 +80,16 @@ test('unsubscribe, rebind, stale cleanup and detached events do not leak HUD sta
   f.unsubscribe(); f.changed.mockClear(); detach(); detach();
   f.click(); event(f.canvas, 'mousedown', { button: 2 });
   expect(f.input.getSnapshot()).toBe('hidden'); expect(f.changed).not.toHaveBeenCalled(); f.cleanup();
+});
+
+test('ordinary rifle right click never enters a compact aim mode, while explicit fallback remains usable', () => {
+  const f = setup(true, false);
+  event(f.canvas, 'mousedown', { button: 2 }); expect(f.input.getSnapshot()).toBe('hidden');
+  event(f.global, 'mouseup', { button: 2 }); f.click(); f.grant();
+  event(f.canvas, 'mousedown', { button: 2 }); expect(f.input.getSnapshot()).toBe('normal');
+  event(f.global, 'mouseup', { button: 2 }); expect(f.input.getSnapshot()).toBe('normal');
+  event(f.global, 'keydown', { code: 'Escape' }); f.cleanup();
+  const fallback = setup(false, false); fallback.click();
+  event(fallback.canvas, 'mousedown', { button: 2 }); expect(fallback.input.getSnapshot()).toBe('normal');
+  fallback.cleanup();
 });
