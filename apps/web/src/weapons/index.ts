@@ -5,3 +5,5 @@ export { FireInputHint } from './FireInputHint';
 export { LocalRifle } from './LocalRifle';
 export { RifleSimulation } from './RifleSimulation';
 export { ReloadInput } from './ReloadInput';
+export { createScreenAimRay, queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
+export { AimTargetMarker } from './AimTargetMarker';

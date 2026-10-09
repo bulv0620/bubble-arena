@@ -9,7 +9,7 @@ import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { InputDiagnostics } from './InputDiagnostics';
-import { ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
+import { AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
 
 export function BasicScene() {
   const input = useKeyboardInput();
@@ -22,6 +22,7 @@ export function BasicScene() {
   const [rifle] = useState(() => new LocalRifle());
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
   const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
+  const aimTarget = useRef<ScreenAimTarget | null>(null);
   const view = useRef<CameraHeading>({ yaw: 0 });
   return (
     <>
@@ -56,7 +57,8 @@ export function BasicScene() {
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
             <RifleSimulation input={fire} rifle={rifle} reload={reload} />
-            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} />
+            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} />
+            {import.meta.env.DEV && <AimTargetMarker target={aimTarget} />}
           </PhysicsWorld>
         </Suspense>
       </Canvas>

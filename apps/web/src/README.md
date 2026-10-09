@@ -1,5 +1,8 @@
 # 客户端模块边界
 
+3.6 weapons/screenAimRay 从最终透视镜头世界姿态计算单位射线和地图最近交点/远端点；FollowCamera 避障后写入场景 aimTarget ref，目标丢失/非法帧/卸载清空，无 React 每帧状态更新或物理 tick。AimTargetMarker 仅开发可见且无碰撞；后续枪口遮挡/伤害另做。
+
+
 3.5 ReloadInput 采集 R 按下沿，过滤自动重复/文字编辑/修饰键，Esc/失焦/隐藏/卸载清空待处理输入。BasicScene 仅装配生命周期；RifleSimulation 在既有物理步消费换弹意图。LocalRifle 仅在扣弹、换弹开始/结束通知，AmmoHint 显示共享配置耗时；无 UI 计时器。
 
 

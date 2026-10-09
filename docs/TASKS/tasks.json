@@ -459,7 +459,7 @@
       "title": "屏幕中心瞄准射线",
       "acceptance": "获得准星命中目标点；空场景也能给出方向。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.5"
