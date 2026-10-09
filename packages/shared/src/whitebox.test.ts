@@ -3,7 +3,7 @@ import { WHITEBOX_COLLISION, WHITEBOX_COLLISION_HASH, WHITEBOX_CONFIG, WHITEBOX_
 
 test('whitebox declarations have unique IDs, positive finite dimensions and rest on the ground', () => {
   expect(new Set(WHITEBOX_SOLIDS.map((solid) => solid.id)).size).toBe(WHITEBOX_SOLIDS.length);
-  expect(WHITEBOX_SOLIDS.filter((solid) => solid.kind === 'wall')).toHaveLength(2);
+  expect(WHITEBOX_SOLIDS.filter((solid) => solid.kind === 'wall')).toHaveLength(3);
   expect(WHITEBOX_SOLIDS.filter((solid) => solid.kind === 'box')).toHaveLength(2);
   for (const solid of WHITEBOX_SOLIDS) {
     expect(solid.size.every((dimension) => Number.isFinite(dimension) && dimension > 0)).toBe(true);

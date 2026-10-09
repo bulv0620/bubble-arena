@@ -1,5 +1,7 @@
 # Shared
 
+3.12.1训练靶配置version2，TRAINING_TARGET_LAYOUT为左右中三个唯一ID/位置，TRAINING_RANGE_CONFIG声明训练区出生点；whitebox新增range-backdrop并分散箱/台阶/坡位置，视觉与碰撞同源。当前碰撞hash为fnv1a64:5c84d22467198a7b；下文旧哈希是历史记录。
+
 3.10 PLAYER_VITALS_CONFIG定义自身初始100HP。3.12 RIFLE_RECOIL_CONFIG采用单发1°/最大4°/回落7/s，createRifleRecoilTuning校验有限非负角度、最大角大于等于单发且不超过90°、正回落响应；独立冻结配置支持0关闭反馈。只决定表现，生命转换和服务器规则在后续阶段接入。
 
 3.3 FireIntent 是只读操作意图接口：held 表示持续按住，pressed 表示上次读取后合并的按下沿；不携带坐标、伤害、弹药或客户端判定。当前尚未进入网络协议，后续网络入口需运行时消息验证。

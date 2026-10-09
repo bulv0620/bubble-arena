@@ -4,6 +4,9 @@ import { COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_COLLISION, ty
 import { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 
+const supportBox = WHITEBOX_COLLISION.solids.find(solid => solid.id === 'small-box')!;
+const boxSpawn: [number, number, number] = [supportBox.position[0],
+  supportBox.position[1] + supportBox.size[1] / 2 + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance, supportBox.position[2]];
 const idle = { forward: false, backward: false, left: false, right: false };
 let world: RAPIER.World;
 let movement: RapierMovement;
@@ -161,10 +164,10 @@ test('repeated airborne requests cannot restart a jump; landing restores eligibi
 });
 
 test('removing the supporting box invalidates last tick grounding before jump input', () => {
-  const player = setup([1.75, 2.42, 1.5]);
+  const player = setup(boxSpawn);
   for (let i = 0; i < 10; i += 1) tick(player);
   expect(tick(player).grounded).toBe(true);
-  const box = [...world.colliders.getAll()].find(c => c.translation().x === 1.75 && c.translation().y === 0.75)!;
+  const box = [...world.colliders.getAll()].find(c => c.translation().x === supportBox.position[0] && c.translation().y === supportBox.position[1])!;
   world.removeCollider(box, false);
   world.step();
   const result = tick(player, true);
@@ -174,8 +177,9 @@ test('removing the supporting box invalidates last tick grounding before jump in
 });
 
 test('walking off a box cannot grant an airborne jump along its vertical side', () => {
-  const player = setup([1.75, 2.42, 1.5]);
+  const player = setup(boxSpawn);
   for (let i = 0; i < 10; i += 1) tick(player);
+  expect(tick(player).grounded).toBe(true);
   let leftSupport = false;
   for (let i = 0; i < 90; i += 1) {
     const result = tick(player, false, { ...idle, right: true });

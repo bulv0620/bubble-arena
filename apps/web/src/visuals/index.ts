@@ -1,0 +1,1 @@
+export { BlockAvatar } from './BlockAvatar';

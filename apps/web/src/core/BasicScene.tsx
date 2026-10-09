@@ -5,13 +5,13 @@ import { Suspense, useEffect, useCallback, useRef, useState } from 'react';
 import { AimInput, AimHint, CrosshairInput } from '../input';
 import { Crosshair, AmmoHint, TrainingTargetHint, HealthHint } from '../HUD';
 import type { RapierRigidBody } from '@react-three/rapier';
-import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type CameraHeading } from '@bubble-arena/shared';
+import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, TRAINING_RANGE_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
 import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { InputDiagnostics } from './InputDiagnostics';
-import { RifleRecoil, TrainingTarget, TrainingTargets, LocalTrainingTarget, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
+import { RifleRecoil, TrainingTarget, TrainingTargets, LocalTrainingRange, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
 
 export function BasicScene() {
   const input = useKeyboardInput();
@@ -21,7 +21,7 @@ export function BasicScene() {
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   useEffect(() => reload.attach(window, document), [reload]);
-  const [trainingTarget] = useState(() => new LocalTrainingTarget());
+  const [range] = useState(() => new LocalTrainingRange());
   const [targets] = useState(() => new TrainingTargets());
   const [playerVitals] = useState(() => createPlayerVitals());
   const [recoil] = useState(() => new RifleRecoil());
@@ -60,11 +60,11 @@ export function BasicScene() {
         <Suspense fallback={null}>
           <PhysicsWorld>
             <WhiteboxMap />
-            <TrainingTarget registry={targets} target={trainingTarget} />
+            {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} position={entry.position} />)}
             <CapsulePlayer input={input} bodyRef={playerBody} view={view} aim={aim} facingYaw={facingYaw} position={[
-              WHITEBOX_CONFIG.playerSpawnXZ[0],
+              TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
-              WHITEBOX_CONFIG.playerSpawnXZ[1],
+              TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
             ]} />
             <RifleSimulation input={fire} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <ShotEffects feedback={feedback} />
@@ -80,7 +80,7 @@ export function BasicScene() {
       <AimHint input={aim} />
       <HealthHint player={playerVitals} />
       <AmmoHint rifle={rifle} />
-      <TrainingTargetHint target={trainingTarget} />
+      <TrainingTargetHint range={range} />
       <Crosshair input={crosshair} />
       <FireInputHint input={fire} pointer={pointer} />
       {import.meta.env.DEV && <InputDiagnostics input={input} />}

@@ -6,6 +6,7 @@ import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
 import type { AimInput } from '../input';
+import { BlockAvatar } from '../visuals';
 import { RiflePlaceholder } from '../weapons';
 
 interface CapsulePlayerProps {
@@ -67,15 +68,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facin
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
       <group ref={visual}>
         <RiflePlaceholder />
-        <mesh castShadow receiveShadow>
-          <capsuleGeometry args={[radius, capsuleHalfHeight * 2, 8, 16]} />
-          <meshStandardMaterial color="#ef9350" roughness={0.7} />
-        </mesh>
-        {/* Whitebox direction marker; formal character assets still use Blender MCP. */}
-        <mesh position={[0, PLAYER_CONFIG.height / 2 + 0.04, -0.12]} rotation={[-Math.PI / 2, 0, 0]} castShadow>
-          <coneGeometry args={[0.07, 0.3, 4]} />
-          <meshStandardMaterial color="#25475a" roughness={0.7} />
-        </mesh>
+        <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
       </group>
     </RigidBody>
   );

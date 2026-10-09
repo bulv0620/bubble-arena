@@ -2,7 +2,14 @@ import { PLAYER_CONFIG } from './player';
 
 /** Separate engineering test fixture, not a formal map or player life state. */
 export const TRAINING_TARGET_CONFIG = Object.freeze({
-  id: 'training-target-1', version: 1, maxHp: 100,
-  position: Object.freeze([-1.45, 1.35, -1.6] as const),
+  version: 2, maxHp: 100,
   radius: PLAYER_CONFIG.radius, capsuleHalfHeight: PLAYER_CONFIG.capsuleHalfHeight,
 });
+
+/** Three independently shootable fixtures in front of the range backdrop. */
+export const TRAINING_TARGET_LAYOUT = Object.freeze([
+  { id: 'training-target-left', label: '左靶', position: Object.freeze([9, 0.9, -7] as const) },
+  { id: 'training-target-center', label: '中靶', position: Object.freeze([12, 0.9, -7] as const) },
+  { id: 'training-target-right', label: '右靶', position: Object.freeze([15, 0.9, -7] as const) },
+].map(entry => Object.freeze(entry)));
+export const TRAINING_RANGE_CONFIG = Object.freeze({ playerSpawnXZ: Object.freeze([11.45, 0] as const) });
