@@ -1,0 +1,124 @@
+Window: "DevTools - localhost:5173/", App: Google Chrome.
+0 标准窗口 DevTools - localhost:5173/, Secondary Actions: Raise, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@b859317bf11f6be47f9b7799ec690a0a42a1fb33/&targetType=tab&can_dock=true&panel=console
+	1 container DevTools - localhost:5173/, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@b859317bf11f6be47f9b7799ec690a0a42a1fb33/&targetType=tab&can_dock=true&panel=console
+		2 container
+			3 container
+				4 滚动区
+					5 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@b859317bf11f6be47f9b7799ec690a0a42a1fb33/&targetType=tab&can_dock=true&panel=console
+						6 container
+							7 container
+								8 container
+									9 container Main toolbar
+										10 工具栏
+											11 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+												12 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+											13 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+												14 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+										15 container
+											16 标签页组 Panels
+												17 标签 (settable, integer) Elements, Value: 0
+												18 标签 (selected) Console, Value: 1
+												19 标签 (settable, integer) Sources, Value: 0
+												20 标签 (settable, integer) Network, Value: 0
+												21 标签 (settable, integer) Performance, Value: 0
+												22 标签 (settable, integer) Memory, Value: 0
+												23 标签 (settable, integer) Application, Value: 0
+												24 标签 (settable, integer) Security, Value: 0
+												25 标签 (settable, integer) Lighthouse, Value: 0
+												26 标签 (settable, integer) Recorder, Value: 0
+										27 工具栏
+											28 container Open Console to view 1 warning
+												29 按钮 Open Console to view 1 warning
+											30 container Settings, Help: Settings - F1 - ⇧ ?
+												31 按钮 Settings - F1 - ⇧ ?
+											32 弹出式按钮 Customize and control DevTools
+												33 按钮 Customize and control DevTools
+									34 container Console panel
+										35 container console
+											36 container
+												37 工具栏
+													38 container Show Console sidebar
+														39 按钮 Show Console sidebar
+													40 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+														41 按钮 Clear console - Ctrl L - ⌘ K
+													42 container Collapse all
+														43 按钮 Collapse all
+													44 按钮 JavaScript context: top
+													45 container Create live expression
+														46 按钮 Create live expression
+													47 container
+														48 文本输入区 (settable) Filter, Value: shot.ray
+															49 文本 shot.ray
+														50 container Clear
+															51 按钮 Clear
+													52 弹出式按钮 Log level: Default levels
+														53 文本 Default levels
+													54 container Some problems no longer generate console messages, but are surfaced in the Issues tab. Click to go to the Issues tab
+														55 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab. Click to go to the Issues tab
+													56 文本 100 hidden
+													57 container Console settings
+														58 切换按钮 Console settings, Value: 0
+													59 container 1 messages in console
+												60 container
+													61 container [shot.ray]
+														62 container  [shot.ray] {"tick":657,"sequence":1,"muzzle":{"x":-1.550631380047156,"y":1.2600989699363707,"z":-3.059988857752684},"result":{"status":"blocked-muzzle","origin":{"x":-2.0006775856018066,"y":0.9100989699363708,"z":-2.3900198936462402},"direction":{"x":0.5115813234373462,"y":0.39785573346274566,"z":-0.7615742674624151},"point":{"x":-1.7588638732528001,"y":1.0981569921517693,"z":-2.7500000031764036},"distance":0.47267892956733704,"colliderHandle":5e-324}} Stack table collapsed
+															63 container
+																64 按钮 RifleSimulation.tsx:29, Help: http://localhost:5173/src/weapons/RifleSimulation.tsx:29
+																65 text [shot.ray] {"tick":657,"sequence":1,"muzzle":{"x":-1.550631380047156,"y":1.2600989699363707,"z":-3.059988857752684},"result":{"status":"blocked-muzzle","origin":{"x":-2.0006775856018066,"y":0.9100989699363708,"z":-2.3900198936462402},"direction":{"x":0.5115813234373462,"y":0.39785573346274566,"z":-0.7615742674624151},"point":{"x":-1.7588638732528001,"y":1.0981569921517693,"z":-2.7500000031764036},"distance":0.47267892956733704,"colliderHandle":5e-324}}
+													66 container
+														67 container
+															68 文本输入区 (settable) Console prompt, Value: 
+
+								69 container Drawer
+									70 container
+										71 工具栏
+											72 弹出式按钮 More tools
+												73 按钮 More tools
+										74 标签页组
+											75 标签 (settable, integer) Console, Value: 0
+											76 标签 (settable, integer) AI assistance, Value: 0
+											77 标签 (selected) What’s new, Value: 1
+										78 工具栏
+											79 container Toggle drawer orientation
+												80 按钮 Toggle drawer orientation
+											81 container Minimize drawer
+												82 按钮 Minimize drawer
+											83 container Close drawer
+												84 按钮 Close drawer
+										85 container What’s new panel
+											86 container whats-new
+												87 container
+													88 文本 New in DevTools (October 2026)
+													89 按钮 See all new features
+													90 标题 DevTools for agents, Value: 3
+														91 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-october-2026/#mcp
+															92 文本 DevTools for agents
+													93 container
+														94 text Configure  --no-javascript-evaluation  or disable execution tools to inspect pages safely without running scripts. Agents can also inspect heap snapshots directly with  query_heapsnapshot  and analyze memory retained by execution contexts.
+													95 标题 CPU performance tier overrides and modernized device presets, Value: 3
+														96 链接 CPU performance tier overrides and modernized device presets, Help: https://developer.chrome.com/blog/new-in-devtools-october-2026/#performance
+															97 文本 CPU performance tier overrides and modernized device presets
+													98 文本 Configure and dispatch calibrated CPU performance tier overrides over CDP in the Performance panel to test device performance reproducibly. Emulated device presets are now grouped by form factor and updated with modern hardware.
+													99 标题 Edit and resend as fetch in Console, Value: 3
+														100 链接 Edit and resend as fetch in Console, Help: https://developer.chrome.com/blog/new-in-devtools-october-2026/#edit-and-resend-as-fetch-in-co
+															101 文本 Edit and resend as fetch in Console
+													102 container
+														103 text Copy any network request as an editable  fetch()  expression directly into the Console to modify parameters before resending.
+							104 文本 DevTools is undocked 
+	105 关闭按钮
+	106 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	107 最小化按钮
+	108 文本 DevTools - localhost:5173/
+109 menu bar
+	110 Chrome
+	111 文件
+	112 编辑
+	113 显示
+	114 历史记录
+	115 书签
+	116 个人资料
+	117 标签页
+	118 窗口
+	119 帮助
+
+The focused UI element is 48 文本输入区 (settable) Filter, Value: shot.ray

@@ -2,7 +2,9 @@
 
 更新时间：2026-10-09。
 
-当前 3.6 implemented：从最终镜头姿态计算屏幕中心单位射线，Rapier 静态地图最近交点或70m远端点，排除自身和非地图碰撞；无效姿态清空结果。开发无碰撞小黄球及 aim 日志，生产只保留查询接口，不决定伤害。27 文件237测试、pnpm check全通过；内置浏览器普通/瞄准墙面标记、天空 clear=70、生产/Esc/error=[]实测；8刚体/8碰撞体和地图hash保留。报告 [3.6](reports/3.6.md)，本地提交 feat: query screen-center aim targets，未推送，待人工验收。下一任务3.7，本轮停止。
+当前3.7 implemented：共享占位枪口尺寸，按本步物理中心/朝向计算；角色中心→枪口安全段阻止枪口穿墙起射，通过后枪口→准星方向查询最近地图交点，实际射程70m。已接受开火在物理步后输出结果，受阻仍扣弹，开发红点/preview与实际shot.ray分开。28文件246测试、pnpm check全通过。内置靠墙预览blocked-muzzle，桌面Chrome锁定/W靠墙/单击29弹，并从真实DevTools读取tick657、sequence1、blocked-muzzle、交点z≈-2.75。报告 [3.7](reports/3.7.md)，本地提交 feat: resolve muzzle rays with close-wall protection，未推送；待人工验收。下一任务3.8，本轮停止。
+
+历史 3.6 implemented：从最终镜头姿态计算屏幕中心单位射线，Rapier 静态地图最近交点或70m远端点，排除自身和非地图碰撞；无效姿态清空结果。开发无碰撞小黄球及 aim 日志，生产只保留查询接口，不决定伤害。27 文件237测试、pnpm check全通过；内置浏览器普通/瞄准墙面标记、天空 clear=70、生产/Esc/error=[]实测；8刚体/8碰撞体和地图hash保留。报告 [3.6](reports/3.6.md)，本地提交 feat: query screen-center aim targets，未推送，待人工验收。下一任务3.7，本轮停止。
 
 历史 3.5 implemented：R 单次沿触发步枪 2s/120 tick 换弹；换弹中禁止射击/重启，完成时从有限备弹转入缺弹量，满匣/无备弹忽略。输入取消不取消已接受换弹，HUD 仅在开始/结束和扣弹更新。26 文件 229 测试、pnpm check 全通过。桌面 Chrome 本轮已可操作，生产版实测锁定、29/120→换弹中→30/119、换弹期间点击不扣弹、第二次完成30/118及 Esc 释放；内置满匣 R/错误日志也检查。截图与步骤见 [3.5](reports/3.5.md)。本地提交 feat: implement fixed-step rifle reload，未推送；尚待人工试玩验收。下一任务 3.6，本轮停止。
 

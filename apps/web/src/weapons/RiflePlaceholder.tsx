@@ -1,8 +1,8 @@
-import { PLAYER_CONFIG } from '@bubble-arena/shared';
+import { RIFLE_PLACEHOLDER_POSE } from './riflePose';
 
 // Engineering whitebox, not a Blender asset. Socket is relative to capsule center.
 // The weapon uses asset-standard +Z forward; the current whitebox player faces -Z.
-const socket = { x: PLAYER_CONFIG.radius + 0.1, y: 0.2, z: -0.08 };
+const { socket, front } = RIFLE_PLACEHOLDER_POSE;
 
 export function RiflePlaceholder() {
   return <group name="weapon_socket" position={[socket.x, socket.y, socket.z]} rotation={[0, Math.PI, 0]}>
@@ -23,8 +23,8 @@ export function RiflePlaceholder() {
         <cylinderGeometry args={[0.07, 0.07, 0.28, 12]} />
         <meshStandardMaterial color="#e9bd5d" roughness={0.6} />
       </mesh>
-      <mesh name="rifle-front" position={[0, 0.15, 0.58]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.045, 0.045, 0.02, 12]} />
+      <mesh name="rifle-front" position={[0, front.y, front.z]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[0.045, 0.045, front.depth, 12]} />
         <meshStandardMaterial color="#25475a" roughness={0.7} />
       </mesh>
     </group>

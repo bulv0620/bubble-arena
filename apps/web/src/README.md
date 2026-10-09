@@ -1,5 +1,8 @@
 # 客户端模块边界
 
+3.7 weapons/riflePose 与 RiflePlaceholder 共用枪口尺寸；CapsulePlayer发布本步facingYaw，RifleSimulation在接受开火后于useAfterPhysicsStep读取最新中心，安全段保护枪口穿墙，再做70m地图射线。shotRay仅是最近一次结果参考，不是可每帧重复消费的伤害事件；清理时清空。开发MuzzleAimDiagnostics连续红点预览，无物理tick/碰撞/伤害；生产隐藏。
+
+
 3.6 weapons/screenAimRay 从最终透视镜头世界姿态计算单位射线和地图最近交点/远端点；FollowCamera 避障后写入场景 aimTarget ref，目标丢失/非法帧/卸载清空，无 React 每帧状态更新或物理 tick。AimTargetMarker 仅开发可见且无碰撞；后续枪口遮挡/伤害另做。
 
 

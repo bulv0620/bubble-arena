@@ -7,3 +7,5 @@ export { RifleSimulation } from './RifleSimulation';
 export { ReloadInput } from './ReloadInput';
 export { createScreenAimRay, queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
 export { AimTargetMarker } from './AimTargetMarker';
+export { queryMuzzleRay, type MuzzleRayResult } from './muzzleRay';
+export { MuzzleAimDiagnostics } from './MuzzleAimDiagnostics';

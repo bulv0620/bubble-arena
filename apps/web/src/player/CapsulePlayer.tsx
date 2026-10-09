@@ -15,9 +15,10 @@ interface CapsulePlayerProps {
   bodyRef: RefObject<RapierRigidBody | null>;
   view: RefObject<CameraHeading>;
   aim: AimInput;
+  facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, aim }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facingYaw }: CapsulePlayerProps) {
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
   const visual = useRef<Group | null>(null);
@@ -27,12 +28,13 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim }: Cap
   useEffect(() => {
     const adapter = new RapierMovement(world);
     facing.reset();
+    facingYaw.current = 0;
     movement.current = adapter;
     return () => {
       movement.current = null;
       adapter.dispose();
     };
-  }, [world, facing]);
+  }, [world, facing, facingYaw]);
   useBeforePhysicsStep(() => {
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
@@ -40,6 +42,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim }: Cap
         { ...input.getSnapshot(), aiming: aim.getSnapshot() }, input.consumeJump(), view.current.yaw);
       if (result) facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep,
         aim.getSnapshot() ? view.current.yaw : undefined);
+      facingYaw.current = facing.getYaw();
       if (import.meta.env.DEV) diagnostics.current.result = result;
     }
   });

@@ -471,7 +471,7 @@
       "title": "枪口实际射线",
       "acceptance": "近墙遮挡正确，不能穿墙命中。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.6"

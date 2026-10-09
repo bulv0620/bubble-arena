@@ -9,7 +9,7 @@ import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { InputDiagnostics } from './InputDiagnostics';
-import { AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
+import { MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
 
 export function BasicScene() {
   const input = useKeyboardInput();
@@ -22,6 +22,8 @@ export function BasicScene() {
   const [rifle] = useState(() => new LocalRifle());
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
   const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
+  const facingYaw = useRef(0);
+  const shotRay = useRef<MuzzleRayResult | null>(null);
   const aimTarget = useRef<ScreenAimTarget | null>(null);
   const view = useRef<CameraHeading>({ yaw: 0 });
   return (
@@ -51,14 +53,17 @@ export function BasicScene() {
         <Suspense fallback={null}>
           <PhysicsWorld>
             <WhiteboxMap />
-            <CapsulePlayer input={input} bodyRef={playerBody} view={view} aim={aim} position={[
+            <CapsulePlayer input={input} bodyRef={playerBody} view={view} aim={aim} facingYaw={facingYaw} position={[
               WHITEBOX_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation input={fire} rifle={rifle} reload={reload} />
+            <RifleSimulation input={fire} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} />
             <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} />
-            {import.meta.env.DEV && <AimTargetMarker target={aimTarget} />}
+            {import.meta.env.DEV && <>
+              <AimTargetMarker target={aimTarget} />
+              <MuzzleAimDiagnostics body={playerBody} yaw={facingYaw} target={aimTarget} />
+            </>}
           </PhysicsWorld>
         </Suspense>
       </Canvas>
