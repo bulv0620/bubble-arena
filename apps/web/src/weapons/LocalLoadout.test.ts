@@ -43,3 +43,21 @@ test('bubble empty magazine auto reloads its four-shot capacity with unlimited t
   for (let i = 0; i < 150; i++) loadout.step(idle);
   expect(loadout.getSnapshot().ammo).toMatchObject({ magazine: 4, reloading: false });
 });
+test('sniper shot uses scoped accuracy then closes; cooldown blocks scope and rejects early fire without restarting progress', () => {
+  const loadout = new LocalLoadout('sniper'); loadout.setScoped(true);
+  expect(loadout.step(press)).toMatchObject({ angle: 0, weapon: 'sniper' });
+  expect(loadout.getSnapshot()).toMatchObject({ scoped: false, cooldownProgress: 0, cooldownRemaining: 1.25 });
+  loadout.setScoped(true); expect(loadout.getSnapshot().scoped).toBe(false);
+  expect(loadout.step(press)).toBeNull(); expect(loadout.getSnapshot().cooldownProgress).toBeCloseTo(1 / 75);
+  for (let tick = 2; tick < 75; tick++) loadout.step(idle);
+  expect(loadout.canScope()).toBe(false); loadout.step(idle); expect(loadout.canScope()).toBe(true);
+  expect(loadout.getSnapshot().scoped).toBe(false); // No automatic reopen.
+  loadout.setScoped(true); expect(loadout.getSnapshot().scoped).toBe(true);
+  loadout.step(idle, true); expect(loadout.getSnapshot().scoped).toBe(false); expect(loadout.canScope()).toBe(false);
+});
+test('switching never bypasses sniper cooldown and only semi-auto HUD exposes cooldown', () => {
+  const loadout = new LocalLoadout('sniper'); loadout.step(press); loadout.select(2);
+  for (let i = 0; i < 10; i++) loadout.step(idle);
+  loadout.select(1); expect(loadout.getSnapshot().cooldownProgress).toBeCloseTo(10 / 75); expect(loadout.canScope()).toBe(false);
+  loadout.setPrimary('rifle'); loadout.step(press); expect(loadout.getSnapshot().cooldownProgress).toBeNull();
+});

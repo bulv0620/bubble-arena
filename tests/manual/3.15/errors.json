@@ -1,0 +1,38 @@
+[
+  {
+    "level": "error",
+    "message": "TypeError: Cannot read properties of undefined (reading 'subscribe')\n    at FireInputHint (http://localhost:5173/src/weapons/FireInputHint.tsx?t=1791551168359:9:46)\n    at Object.react_stack_bottom_frame (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:13895:12)\n    at renderWithHooks (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:4153:19)\n    at updateFunctionComponent (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:5528:16)\n    at beginWork (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:6144:20)\n    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:697:66)\n    at performUnitOfWork (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:8901:92)\n    at workLoopSync (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:8797:37)\n    at renderRootSync (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:8781:6)\n    at performWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:8468:27)",
+    "timestamp": "2026-10-09T13:06:08.391Z",
+    "url": "http://localhost:5173/src/weapons/FireInputHint.tsx?t=1791551168359"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-09T13:06:08.588Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-09T13:06:08.588Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-09T13:06:08.589Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-09T13:06:08.589Z",
+    "url": "http://localhost:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "NotFoundError: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.\n    at removeChildFromContainer (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:11160:123)\n    at runWithFiberInDEV (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:697:66)\n    at commitDeletionEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:7456:7)\n    at recursivelyTraverseMutationEffects (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:7582:5)\n    at commitMutationEffectsOnFiber (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:7714:6)\n    at flushMutationEffects (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:9129:7)\n    at commitRoot (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:9087:390)\n    at completeRoot (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:9052:5)\n    at completeRootWhenReady (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:8553:4)\n    at performWorkOnRoot (http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98:8525:8)",
+    "timestamp": "2026-10-09T13:07:29.041Z",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=2ea32c98"
+  }
+]

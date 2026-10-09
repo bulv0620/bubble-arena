@@ -36,9 +36,9 @@ test('sniper scope selects accurate stationary/moving/airborne cones and its dam
 });
 test('shotgun has eight pellets with fast distance falloff; bubble has no head bonus', () => {
   expect(WEAPON_HANDLING.shotgun.pellets).toBe(8);
-  expect(calculateWeaponDamage(8, WEAPON_DAMAGE_PROFILES.shotgun, 'body', 5) * 8).toBe(64);
-  expect(calculateWeaponDamage(8, WEAPON_DAMAGE_PROFILES.shotgun, 'head', 5) * 8).toBe(96);
-  expect(calculateWeaponDamage(8, WEAPON_DAMAGE_PROFILES.shotgun, 'body', 25)).toBe(2);
+  expect(calculateWeaponDamage(WEAPON_CONFIGS.shotgun.damage, WEAPON_DAMAGE_PROFILES.shotgun, 'body', 5) * 8).toBe(112);
+  expect(calculateWeaponDamage(WEAPON_CONFIGS.shotgun.damage, WEAPON_DAMAGE_PROFILES.shotgun, 'head', 5) * 8).toBe(168);
+  expect(calculateWeaponDamage(WEAPON_CONFIGS.shotgun.damage, WEAPON_DAMAGE_PROFILES.shotgun, 'body', 25)).toBe(3);
   expect(calculateWeaponDamage(25, WEAPON_DAMAGE_PROFILES.bubble, 'head', 40)).toBe(25);
 });
 test('ground movement reaches each held-weapon speed without recreating movement or changing jump rules', () => {

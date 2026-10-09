@@ -3,7 +3,7 @@ interface AimDocument extends EventTarget {
   pointerLockElement: EventTarget | null;
 }
 
-/** Held intent only; no weapon, movement or authoritative simulation. */
+/** Held fallback or click-toggle intent; the simulation supplies the scope eligibility gate. */
 export class AimInput {
   private aiming = false;
   private subscribers = new Set<() => void>();
@@ -20,30 +20,36 @@ export class AimInput {
   }
   clear = () => this.set(false);
 
-  attach(canvas: EventTarget, global: EventTarget, doc: AimDocument, enabled = () => true) {
+  attach(canvas: EventTarget, global: EventTarget, doc: AimDocument, enabled = () => true, toggle = () => false, canAim = () => true) {
     this.detachCurrent?.();
+    let rightHeld = false;
     const down = (event: Event) => {
       const e = event as MouseEvent;
       if (!enabled() || e.button !== 2 || e.ctrlKey || e.metaKey || e.altKey || doc.hidden
         || (doc.pointerLockElement && doc.pointerLockElement !== canvas)) return;
       e.preventDefault();
-      this.set(true);
+      if (toggle()) {
+        if (rightHeld) return;
+        rightHeld = true;
+        this.set(this.aiming ? false : canAim());
+      } else this.set(true);
     };
-    const up = (event: Event) => { if ((event as MouseEvent).button === 2) this.clear(); };
-    const move = (event: Event) => { if (!((event as MouseEvent).buttons & 2)) this.clear(); };
-    const key = (event: Event) => { if ((event as KeyboardEvent).code === 'Escape') this.clear(); };
-    const hidden = () => { if (doc.hidden) this.clear(); };
-    const lock = () => { if (doc.pointerLockElement !== canvas) this.clear(); };
+    const up = (event: Event) => { if ((event as MouseEvent).button === 2) { rightHeld = false; if (!toggle()) this.clear(); } };
+    const move = (event: Event) => { if (!toggle() && !((event as MouseEvent).buttons & 2)) this.clear(); };
+    const cancel = () => { rightHeld = false; this.clear(); };
+    const key = (event: Event) => { if ((event as KeyboardEvent).code === 'Escape') cancel(); };
+    const hidden = () => { if (doc.hidden) cancel(); };
+    const lock = () => { if (doc.pointerLockElement !== canvas) cancel(); };
     const menu = (event: Event) => event.preventDefault();
     canvas.addEventListener('mousedown', down);
     canvas.addEventListener('contextmenu', menu);
     global.addEventListener('mouseup', up);
     global.addEventListener('mousemove', move);
     global.addEventListener('keydown', key);
-    global.addEventListener('blur', this.clear);
+    global.addEventListener('blur', cancel);
     doc.addEventListener('visibilitychange', hidden);
     doc.addEventListener('pointerlockchange', lock);
-    doc.addEventListener('pointerlockerror', this.clear);
+    doc.addEventListener('pointerlockerror', cancel);
     let active = true;
     const detach = () => {
       if (!active) return;
@@ -53,10 +59,10 @@ export class AimInput {
       global.removeEventListener('mouseup', up);
       global.removeEventListener('mousemove', move);
       global.removeEventListener('keydown', key);
-      global.removeEventListener('blur', this.clear);
+      global.removeEventListener('blur', cancel);
       doc.removeEventListener('visibilitychange', hidden);
       doc.removeEventListener('pointerlockchange', lock);
-      doc.removeEventListener('pointerlockerror', this.clear);
+      doc.removeEventListener('pointerlockerror', cancel);
       this.clear();
       if (this.detachCurrent === detach) this.detachCurrent = undefined;
     };

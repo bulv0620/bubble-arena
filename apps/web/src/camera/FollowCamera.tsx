@@ -24,7 +24,7 @@ export function FollowCamera({ loadout, target, control, clearInput, view, aim, 
   const [recovery] = useState(() => new CameraDistanceRecovery());
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
   useEffect(() => () => { aimTarget.current = null; recoil.reset(); }, [aimTarget, recoil]);
-  useEffect(() => aim.attach(canvas, window, document, enabled), [aim, canvas, enabled]);
+  useEffect(() => aim.attach(canvas, window, document, enabled, () => loadout.getSnapshot().active === 'sniper', loadout.canScope), [aim, canvas, enabled, loadout]);
   useEffect(() => control.attach(canvas, window, document,
     (dx, dy) => orbit.rotate(dx, dy, sensitivity()), clearInput, () => enabled() && !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim, enabled, sensitivity]);
   useEffect(() => orbit.attach(canvas, window, document,

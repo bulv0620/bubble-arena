@@ -28,10 +28,23 @@ test('eight real shotgun rays aggregate mixed head/body pellets into one HP even
     const pellets = [head, head, ...Array.from({ length: 6 }, () => body)];
     const shot = { tick: 0, sequence: 1 };
     expect(registry.receiveVolley(world, shot, pellets, 'shotgun')).not.toBeNull();
-    expect(entry.target.getSnapshot()).toMatchObject({ hp: 28, lastDamage: 72, hitCount: 1 });
-    expect(entry.target.damageNumbers.getSnapshot().map(n => n.damage)).toEqual([72]);
+    expect(entry.target.getSnapshot()).toMatchObject({ hp: 0, lastDamage: 100, hitCount: 1 });
+    expect(entry.target.damageNumbers.getSnapshot().map(n => n.damage)).toEqual([100]);
     expect(registry.receiveVolley(world, shot, pellets, 'shotgun')).toBeNull();
-    expect(entry.target.getSnapshot().hp).toBe(28);
+    expect(entry.target.getSnapshot().hp).toBe(0);
+  } finally { world.free(); }
+});
+test('close full body volley kills but one missing pellet leaves two HP; visual endpoints stop at actual sensors', () => {
+  const world = new RAPIER.World({ x: 0, y: 0, z: 0 });
+  try {
+    const registry = new TrainingTargets(), full = dummy(world, registry, -1), partial = dummy(world, registry, 1); world.step();
+    const body = ray(world, registry, 'body', 25, -1), partialBody = ray(world, registry, 'body', 25, 1);
+    const resolved = registry.resolveVolley(world, { tick: 0, sequence: 1 }, Array.from({ length: 8 }, () => body), 'shotgun');
+    expect(full.target.getSnapshot()).toMatchObject({ hp: 0, lastDamage: 100, hitCount: 1 });
+    expect(resolved.pellets).toHaveLength(8); expect(resolved.pellets.every(p => p.hit && p.point.z > -3)).toBe(true);
+    registry.receiveVolley(world, { tick: 60, sequence: 2 }, [...Array.from({ length: 7 }, () => partialBody), null], 'shotgun');
+    expect(partial.target.getSnapshot()).toMatchObject({ hp: 2, lastDamage: 98 });
+    expect(registry.resolveVolley(world, { tick: 60, sequence: 2 }, Array.from({ length: 8 }, () => body), 'shotgun').pellets).toEqual([]);
   } finally { world.free(); }
 });
 test('shotgun can hit two targets but each target receives only its own summed damage', () => {
@@ -40,7 +53,7 @@ test('shotgun can hit two targets but each target receives only its own summed d
     const registry = new TrainingTargets(), left = dummy(world, registry, -1), right = dummy(world, registry, 1); world.step();
     registry.receiveVolley(world, { tick: 0, sequence: 1 }, [...Array.from({ length: 4 }, () => ray(world, registry, 'body', 25, -1)),
       ...Array.from({ length: 4 }, () => ray(world, registry, 'body', 25, 1))], 'shotgun');
-    for (const entry of [left, right]) expect(entry.target.getSnapshot()).toMatchObject({ hp: 68, hitCount: 1, lastDamage: 32 });
+    for (const entry of [left, right]) expect(entry.target.getSnapshot()).toMatchObject({ hp: 44, hitCount: 1, lastDamage: 56 });
   } finally { world.free(); }
 });
 test.each([-3, -96])('sniper head at z=%s clears full HP with no falloff, body remains 80', z => {

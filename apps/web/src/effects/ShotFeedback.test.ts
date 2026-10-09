@@ -24,3 +24,18 @@ test('invalid events cannot publish and long frame expires visuals without linge
   expect(feedback.step(NaN).muzzle).toEqual(p); expect(feedback.step(-1).muzzle).toEqual(p);
   expect(feedback.step(60)).toEqual({ muzzle: null, impact: null });
 });
+test('pellet visuals retain all actual points, expire traces before impacts and clear without object accumulation', () => {
+  const feedback = new ShotFeedback(), pellets = Array.from({ length: 8 }, (_, i) => ({ point: { x: i, y: 1, z: -3 }, hit: i < 7 }));
+  feedback.emit({ sequence: 1, muzzle: p, impact: null, pellets }); pellets[0].point.x = 99;
+  expect(feedback.getPelletState().pellets).toHaveLength(8); expect(feedback.getPelletState().pellets[0].point.x).toBe(0);
+  feedback.step(.26); expect(feedback.getPelletState().showTraces).toBe(false); expect(feedback.getPelletState().pellets).toHaveLength(8);
+  feedback.step(.2); expect(feedback.getPelletState().pellets).toEqual([]);
+  for (let sequence = 2; sequence < 100; sequence++) feedback.emit({ sequence, muzzle: p, impact: null, pellets });
+  expect(feedback.getPelletState().pellets).toHaveLength(8); feedback.clear(); expect(feedback.getPelletState().pellets).toEqual([]);
+});
+test('invalid or oversized pellet arrays reject before publishing', () => {
+  const feedback = new ShotFeedback();
+  expect(() => feedback.emit({ sequence: 1, muzzle: p, impact: null, pellets: Array.from({ length: 17 }, () => ({ point: p, hit: true })) })).toThrow(TypeError);
+  expect(() => feedback.emit({ sequence: 1, muzzle: p, impact: null, pellets: [{ point: { ...p, x: NaN }, hit: true }] })).toThrow(TypeError);
+  expect(feedback.getPelletState().pellets).toEqual([]);
+});

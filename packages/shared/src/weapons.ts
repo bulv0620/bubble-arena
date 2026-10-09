@@ -54,7 +54,7 @@ export function parseWeaponConfig(value: unknown): WeaponConfig {
 // Shotgun damage is per pellet; pellet count/spread belong to later firing rules.
 export const WEAPON_CONFIGS: Readonly<Record<WeaponId, WeaponConfig>> = Object.freeze({
   rifle: parseWeaponConfig({ id: 'rifle', damage: 20, fireRate: 8, magazineSize: 30, reserveAmmo: 120, range: 70, reloadDuration: 2 }),
-  shotgun: parseWeaponConfig({ id: 'shotgun', damage: 8, fireRate: 1, magazineSize: 6, reserveAmmo: 30, range: 25, reloadDuration: 2.8 }),
+  shotgun: parseWeaponConfig({ id: 'shotgun', damage: 14, fireRate: 1, magazineSize: 6, reserveAmmo: 30, range: 25, reloadDuration: 2.8 }),
   sniper: parseWeaponConfig({ id: 'sniper', damage: 80, fireRate: 0.8, magazineSize: 5, reserveAmmo: 20, range: 100, reloadDuration: 3 }),
   bubble: parseWeaponConfig({ id: 'bubble', damage: 25, fireRate: 1, magazineSize: 4, reserveAmmo: 16, range: 40, reloadDuration: 2.5 }),
 });

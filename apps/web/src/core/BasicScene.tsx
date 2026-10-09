@@ -13,13 +13,14 @@ import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { SpreadHint } from '../HUD/SpreadHint';
+import { FireCooldownProgress } from '../HUD/FireCooldownProgress';
 import { ReloadProgress } from '../HUD/ReloadProgress';
 import '../HUD/gameHud.css';
 import { InputDiagnostics } from './InputDiagnostics';
 import { TrainingTarget, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, RifleSimulation } from '../weapons';
 import { WeaponSwitchInput } from '../weapons/WeaponSwitchInput';
 import { BubbleVisuals } from '../weapons/BubbleVisuals';
-import { WEAPON_HANDLING } from '@bubble-arena/shared';
+import { bindWeaponChanges, clearWeaponActions } from './bindWeaponChanges';
 
 export function BasicScene() {
   const [pointer] = useState(() => new PointerLockInput());
@@ -74,16 +75,9 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   useEffect(() => switchInput.attach(window, document, enabled), [switchInput, enabled]);
   const { range, targets, playerVitals, recoil, feedback, motion, loadout, bubbles } = session;
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
-  const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); switchInput.clear(); }, [input, aim, fire, reload, switchInput]);
-  useEffect(() => {
-    let active = loadout.getSnapshot().active;
-    recoil.setTuning(WEAPON_HANDLING[active].recoil);
-    return loadout.subscribe(() => {
-      const next = loadout.getSnapshot().active;
-      if (next !== active) { active = next; clearInput(); recoil.setTuning(WEAPON_HANDLING[next].recoil); }
-      motion.refresh();
-    });
-  }, [loadout, clearInput, recoil, motion]);
+  const clearWeaponInput = useCallback(() => clearWeaponActions({ aim, fire, reload, switchInput }), [aim, fire, reload, switchInput]);
+  const clearInput = useCallback(() => { input.clear(); clearWeaponInput(); }, [input, clearWeaponInput]);
+  useEffect(() => bindWeaponChanges(loadout, { aim, fire, reload, switchInput }, motion, recoil), [loadout, aim, fire, reload, switchInput, recoil, motion]);
   const facingYaw = useRef(0);
   const shotRay = useRef<MuzzleRayResult | null>(null);
   const aimTarget = useRef<ScreenAimTarget | null>(null);
@@ -122,7 +116,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
+            <RifleSimulation aim={aim} bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <ShotEffects feedback={feedback} />
             <BubbleVisuals bubbles={bubbles} />
             <FollowCamera loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
@@ -141,7 +135,8 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <TrainingTargetHint range={range} />
       <Crosshair loadout={loadout} input={crosshair} motion={motion} />
       <ReloadProgress loadout={loadout} />
-      {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><label><input type="checkbox" checked={showAimDiagnostics} onChange={event => setShowAimDiagnostics(event.target.checked)} />显示瞄准调试点</label><FireInputHint input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
+      <FireCooldownProgress loadout={loadout} />
+      {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><label><input type="checkbox" checked={showAimDiagnostics} onChange={event => setShowAimDiagnostics(event.target.checked)} />显示瞄准调试点</label><FireInputHint loadout={loadout} input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
 
     </>
   );

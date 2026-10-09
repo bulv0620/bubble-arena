@@ -2,7 +2,7 @@ import { WeaponAccuracy, WeaponFireState, type RifleAmmoState } from '@bubble-ar
 import { WEAPON_IDS, WEAPON_CONFIGS, WEAPON_HANDLING, TRAINING_RIFLE_AMMO_POLICY, weaponGroundSpeed, isPrimaryWeaponId,
   type PrimaryWeaponId, type WeaponId, type FireIntent } from '@bubble-arena/shared';
 export type WeaponSlot = 1 | 2;
-export interface LoadoutSnapshot { readonly primary: PrimaryWeaponId; readonly active: WeaponId; readonly scoped: boolean; readonly ammo: RifleAmmoState; readonly progress: number | null }
+export interface LoadoutSnapshot { readonly primary: PrimaryWeaponId; readonly active: WeaponId; readonly scoped: boolean; readonly ammo: RifleAmmoState; readonly progress: number | null; readonly cooldownProgress: number | null; readonly cooldownRemaining: number }
 export interface EquippedShot { readonly tick: number; readonly sequence: number; readonly weapon: WeaponId; readonly angle: number }
 const RELEASED = Object.freeze({ held: false, pressed: false });
 
@@ -26,11 +26,16 @@ export class LocalLoadout {
     this.primary = primary; this.active = primary;
     this.snapshot = this.buildSnapshot();
   }
-  private buildSnapshot(): LoadoutSnapshot { return Object.freeze({ primary: this.primary, active: this.active, scoped: this.scoped,
-    ammo: this.rules[this.active].getState(), progress: this.rules[this.active].getReloadProgress() }); }
+  private buildSnapshot(): LoadoutSnapshot {
+    const cooldown = WEAPON_HANDLING[this.active].fireMode === 'semi' ? this.rules[this.active].getFireCooldown() : null;
+    return Object.freeze({ primary: this.primary, active: this.active, scoped: this.scoped,
+      ammo: this.rules[this.active].getState(), progress: this.rules[this.active].getReloadProgress(),
+      cooldownProgress: cooldown?.progress ?? null, cooldownRemaining: cooldown?.remaining ?? 0 });
+  }
   private publish() {
     const next = this.buildSnapshot(), old = this.snapshot;
-    if (next.primary === old.primary && next.active === old.active && next.scoped === old.scoped && next.ammo === old.ammo && next.progress === old.progress) return;
+    if (next.primary === old.primary && next.active === old.active && next.scoped === old.scoped && next.ammo === old.ammo && next.progress === old.progress
+      && next.cooldownProgress === old.cooldownProgress && next.cooldownRemaining === old.cooldownRemaining) return;
     this.snapshot = next; for (const listener of this.listeners) listener();
   }
   getSnapshot = () => this.snapshot;
@@ -38,6 +43,8 @@ export class LocalLoadout {
   getSpeed = () => weaponGroundSpeed(this.active, this.scoped);
   getAngle = () => this.accuracy[this.active].getAngle();
   getTick = () => this.tick - 1;
+  canScope = () => this.active === 'sniper' && this.rules.sniper.getFireCooldown() === null
+    && !this.rules.sniper.getState().reloading && this.rules.sniper.getState().magazine > 0;
   getWeaponAmmo = (id: WeaponId) => { if (!this.rules[id]) throw new TypeError('Invalid weapon'); return this.rules[id].getState(); };
   setMotion(speed: number, airborne: boolean) {
     if (!Number.isFinite(speed) || speed < 0 || typeof airborne !== 'boolean') throw new RangeError('Invalid loadout motion');
@@ -46,7 +53,7 @@ export class LocalLoadout {
   }
   setScoped(value: boolean) {
     if (typeof value !== 'boolean') throw new TypeError('Invalid scope intent');
-    this.scoped = value && this.active === 'sniper';
+    this.scoped = value && this.canScope();
     this.accuracy[this.active].setMotion(this.speed, this.airborne, this.scoped);
     this.publish();
   }
@@ -77,6 +84,10 @@ export class LocalLoadout {
       const shot = this.rules[id].step(active ? intent : RELEASED, active && reloadNow);
       const angle = this.accuracy[id].step(shot !== null);
       if (shot) accepted = Object.freeze({ tick, sequence: ++this.sequence, weapon: id, angle });
+    }
+    // Capture this shot's scoped accuracy first, then close the lens and block reopening.
+    if (this.active === 'sniper' && !this.canScope()) {
+      this.scoped = false; this.accuracy.sniper.setMotion(this.speed, this.airborne, false);
     }
     this.publish(); return accepted;
   }

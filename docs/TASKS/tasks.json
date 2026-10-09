@@ -743,6 +743,42 @@
       "acceptance": "4发单击副武器，固定步长扫掠、碰撞爆开与范围遮挡伤害/减速、有限生命周期/重置清理；综合试玩证据齐全。"
     },
     {
+      "id": "3.15.1",
+      "title": "非连发冷却进度与点击式狙击镜",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.14.4"
+      ],
+      "file": "docs/TASKS/3.15.1.md",
+      "acceptance": "真实固定tick冷却进度，右键点击切镜/射后关镜，冷却和换弹期间拒绝开镜，不自动重开；输入释放/重置回归。"
+    },
+    {
+      "id": "3.15.2",
+      "title": "霰弹逐弹丸反馈与贴脸压制",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.15.1"
+      ],
+      "file": "docs/TASKS/3.15.2.md",
+      "acceptance": "八颗实际弹丸轨迹/落点可见、有界清理；近距离14/21每丸，全中身体112清空100HP；未命中/遮挡不扣血。"
+    },
+    {
+      "id": "3.15.3",
+      "title": "切枪保留移动与跳跃意图",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.15.2"
+      ],
+      "file": "docs/TASKS/3.15.3.md",
+      "acceptance": "持方向键切主副不停止，保留跳跃队列/移动适配器与动量；旧枪火/瞄准/换弹仍清理，Esc/失焦清全输入。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

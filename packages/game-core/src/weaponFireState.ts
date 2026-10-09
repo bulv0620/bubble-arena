@@ -19,6 +19,7 @@ export class WeaponFireState {
   private tick = 0;
   private nextShotTick = 0;
   private wasFiring = false;
+  private lastShotTick: number | null = null;
   private state: RifleAmmoState;
 
   constructor(config: WeaponConfig = WEAPON_CONFIGS.rifle, policy: RifleAmmoPolicy = DEFAULT_RIFLE_AMMO_POLICY, private readonly fireMode: 'auto' | 'semi' = 'auto') {
@@ -38,6 +39,14 @@ export class WeaponFireState {
     this.state = Object.freeze({ reloading: false, magazine: validated.magazineSize, reserve: validated.reserveAmmo, shotsFired: 0 });
   }
   getState = () => this.state;
+  /** Progress at the last simulated tick, not a UI timer. Null means ready/no shot yet. */
+  getFireCooldown = (): { readonly progress: number; readonly remaining: number } | null => {
+    if (this.lastShotTick === null) return null;
+    const remainingTicks = Math.max(0, Math.ceil(this.nextShotTick - (this.tick - 1)));
+    if (remainingTicks === 0) return null;
+    const durationTicks = Math.ceil(this.nextShotTick - this.lastShotTick);
+    return Object.freeze({ progress: Math.max(0, Math.min(1, 1 - remainingTicks / durationTicks)), remaining: remainingTicks / PHYSICS_CONFIG.tickRate });
+  };
   /** Progress after the last processed fixed tick; null means no accepted reload. */
   getReloadProgress = (): number | null => this.state.reloading
     ? Math.max(0, Math.min(1, 1 - (this.reloadEndTick - (this.tick - 1)) / this.reloadTicks)) : null;
@@ -77,6 +86,7 @@ export class WeaponFireState {
       // Idle periods start a fresh phase; never catch up missed shots after a pause.
       const phase = this.wasFiring && tick - this.nextShotTick < 1 ? this.nextShotTick : tick;
       this.nextShotTick = phase + this.periodTicks;
+      this.lastShotTick = tick;
       this.state = Object.freeze({ ...this.state, magazine: this.state.magazine - 1,
         shotsFired: this.state.shotsFired + 1 });
       shot = Object.freeze({ tick, sequence: this.state.shotsFired });

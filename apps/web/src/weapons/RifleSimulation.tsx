@@ -14,9 +14,11 @@ import type { TrainingTargets } from './TrainingTargets';
 import type { LocalLoadout, EquippedShot } from './LocalLoadout';
 import type { WeaponSwitchInput } from './WeaponSwitchInput';
 import type { LocalBubbleFlight } from './LocalBubbleFlight';
+import type { AimInput } from '../input';
 
 /** Existing fixed physics callbacks drive every weapon, never UI/render timers. */
-export function RifleSimulation({ input, motion, loadout, switchInput, bubbles, reload, body, yaw, target, shotRay, targets, feedback, recoil }: {
+export function RifleSimulation({ aim, input, motion, loadout, switchInput, bubbles, reload, body, yaw, target, shotRay, targets, feedback, recoil }: {
+  aim: AimInput;
   input: FireInput; motion: RifleMotion; loadout: LocalLoadout; switchInput: WeaponSwitchInput; bubbles: LocalBubbleFlight; reload: ReloadInput;
   body: RefObject<RapierRigidBody | null>; yaw: RefObject<number>; target: RefObject<ScreenAimTarget | null>;
   shotRay: RefObject<MuzzleRayResult | null>; targets: TrainingTargets; feedback: ShotFeedback; recoil: RifleRecoil;
@@ -28,6 +30,7 @@ export function RifleSimulation({ input, motion, loadout, switchInput, bubbles, 
     const slot = switchInput.consume();
     if (slot && loadout.select(slot)) { input.clear(); reload.clear(); }
     const shot = loadout.step(input.consume(), reload.consume());
+    if (loadout.getSnapshot().active === 'sniper' && !loadout.canScope()) aim.clear();
     motion.refresh();
     pending.current = shot ? { shot, target: target.current,
       samples: Array.from({ length: WEAPON_HANDLING[shot.weapon].pellets }, () => ({ radial: Math.random(), azimuth: Math.random() })) } : null;
@@ -47,11 +50,17 @@ export function RifleSimulation({ input, motion, loadout, switchInput, bubbles, 
       });
       shotRay.current = results[0] ?? null;
       let impact = null;
+      let pellets: ReturnType<TrainingTargets['resolveVolley']>['pellets'] = [];
       if (shot.weapon === 'bubble') {
         const result = results[0];
         if (muzzle && result && result.status !== 'blocked-muzzle') bubbles.flight.spawn(shot.sequence, muzzle, result.direction);
-      } else impact = targets.receiveVolley(world, shot, results, shot.weapon);
-      if (muzzle) feedback.emit({ sequence: shot.sequence, muzzle, impact: impact ?? (shot.weapon !== 'bubble' && shotRay.current?.status === 'hit' ? shotRay.current.point : null) });
+      } else {
+        const resolved = targets.resolveVolley(world, shot, results, shot.weapon);
+        impact = resolved.impact; pellets = resolved.pellets;
+      }
+      if (muzzle) feedback.emit({ sequence: shot.sequence, muzzle,
+        impact: shot.weapon === 'shotgun' ? null : impact ?? (shot.weapon !== 'bubble' && shotRay.current?.status === 'hit' ? shotRay.current.point : null),
+        ...(shot.weapon === 'shotgun' ? { pellets } : {}) });
       if (import.meta.env.DEV) console.info('[shot.ray]', JSON.stringify({ ...shot, muzzle, pellets: results.length, result: shotRay.current }));
     }
     bubbles.step(world, loadout.getTick());

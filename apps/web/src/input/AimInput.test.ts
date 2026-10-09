@@ -61,3 +61,16 @@ test('detach clears, removes listeners, rebind/stale cleanup and unsubscribe are
   f.unsubscribe(); f.changed.mockClear(); detach();
   expect(f.input.getSnapshot()).toBe(false); expect(f.changed).not.toHaveBeenCalled();
 });
+test('click-toggle survives release/motion, closes on second click, respects readiness and never queues a blocked reopen', () => {
+  const canvas = new EventTarget(), global = new EventTarget(), doc = Object.assign(new EventTarget(), { hidden: false, pointerLockElement: null });
+  const input = new AimInput(); let ready = true;
+  const detach = input.attach(canvas, global, doc, () => true, () => true, () => ready);
+  const click = () => { event(canvas, 'mousedown', { button: 2 }); event(global, 'mouseup', { button: 2 }); };
+  click(); event(global, 'mousemove', { buttons: 0 }); expect(input.getSnapshot()).toBe(true);
+  click(); expect(input.getSnapshot()).toBe(false);
+  ready = false; click(); expect(input.getSnapshot()).toBe(false);
+  ready = true; event(global, 'mousemove', { buttons: 0 }); expect(input.getSnapshot()).toBe(false);
+  click(); expect(input.getSnapshot()).toBe(true); event(global, 'blur'); expect(input.getSnapshot()).toBe(false);
+  click(); event(global, 'keydown', { code: 'Escape' }); expect(input.getSnapshot()).toBe(false);
+  detach(); click(); expect(input.getSnapshot()).toBe(false);
+});

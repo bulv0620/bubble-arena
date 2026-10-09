@@ -52,15 +52,24 @@ export class TrainingTargets {
   }
   /** One accepted shot identity; each target receives its summed pellets exactly once. */
   receiveVolley(world: World, shot: TrainingHit, results: readonly (MuzzleRayResult | null)[], weapon: WeaponId) {
+    return this.resolveVolley(world, shot, results, weapon).impact;
+  }
+  resolveVolley(world: World, shot: TrainingHit, results: readonly (MuzzleRayResult | null)[], weapon: WeaponId) {
     if (!shot || !Number.isSafeInteger(shot.tick) || shot.tick < 0 || !Number.isSafeInteger(shot.sequence) || shot.sequence <= 0
       || !WEAPON_CONFIGS[weapon] || !Array.isArray(results) || results.length !== WEAPON_HANDLING[weapon].pellets) throw new TypeError('Invalid local shot/volley');
-    if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return null;
+    if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return { impact: null, pellets: [] };
     this.lastShotSequence = shot.sequence; this.lastShotTick = shot.tick;
     const damageByTarget = new Map<LocalTrainingTarget, { damage: number; point: ScreenAimTarget['point'] }>();
+    const pellets: { point: ScreenAimTarget['point']; hit: boolean }[] = [];
     for (const result of results) {
       if (!result || result.status === 'blocked-muzzle') continue;
       const hit = this.query(world, { origin: result.origin, direction: result.direction, range: Math.min(result.distance, WEAPON_CONFIGS[weapon].range) });
-      if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) continue;
+      if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) {
+        if (result.point && [result.point.x, result.point.y, result.point.z].every(Number.isFinite))
+          pellets.push({ point: result.point, hit: result.status === 'hit' });
+        continue;
+      }
+      pellets.push({ point: hit.point, hit: true });
       const entry = this.entries.get(hit.handle);
       if (!entry) continue;
       const damage = calculateWeaponDamage(WEAPON_CONFIGS[weapon].damage, WEAPON_DAMAGE_PROFILES[weapon], entry.region, hit.distance);
@@ -71,7 +80,7 @@ export class TrainingTargets {
     let point: ScreenAimTarget['point'] | null = null;
     const resolved = { tick: shot.tick, sequence: ++this.hitSequence };
     for (const [target, hit] of damageByTarget) if (target.receiveHit(resolved, hit.damage)) point ??= hit.point;
-    return point;
+    return { impact: point, pellets: Object.freeze(pellets) };
   }
   /** Arrival order differs from emission order; assign a separate monotonic hit identity. */
   receiveExplosion(world: World, shot: TrainingHit, point: ScreenAimTarget['point']) {
