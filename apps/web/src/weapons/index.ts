@@ -12,3 +12,4 @@ export { MuzzleAimDiagnostics } from './MuzzleAimDiagnostics';
 export { TrainingTarget } from './TrainingTarget';
 export { TrainingTargets } from './TrainingTargets';
 export { LocalTrainingTarget } from './LocalTrainingTarget';
+export { RifleRecoil, applyRecoilPitch } from './RifleRecoil';

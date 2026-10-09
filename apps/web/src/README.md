@@ -1,5 +1,7 @@
 # 客户端模块边界
 
+3.10～3.12：自身HUD读取game-core独立初始PlayerVitals，尚无敌方攻击。ShotFeedback消费接受射击，两个ShotEffects网格固定复用，350/650ms隐藏，R3F卸载释放，无计时器/新物理体。RifleRecoil按接受sequence唯一脉冲，在FollowCamera基础鼠标pitch外叠加可回落偏移，再走原避障并查询最终aim；不改鼠标desired方向，不回溯本发伤害。阶段3全部implemented，等待人工手感验收。
+
 3.9 TrainingTargetHint订阅有效受击快照，显示实际HP与受击数；按hitCount重建中心黄色命中标记与lastDamage数字，CSS在700ms淡出。miss/归零拒绝不通知、不重启动画；订阅由useSyncExternalStore释放，没有定时器或UI物理tick。归零靶子仍保留工程胶囊用于瞄准，刷新场景才重置，无倒地/复活/得分。下文3.8为历史接口记录。
 
 3.8 TrainingTarget 注册独立sensor胶囊，R3F负责释放；TrainingTargets注册表结合地图遮挡、最近目标查询和一次射击身份去重，将已接受枪口查询路由到LocalTrainingTarget.receiveHit。FollowCamera选择靶子目标；HUD订阅100HP/受击数。当前只记录受击，无扣血/闪烁/音效；开发红点和shotRay仍表示地图遮挡界限，黄色准星目标可选靶子。

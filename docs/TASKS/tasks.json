@@ -531,7 +531,7 @@
       "title": "基础后坐力",
       "acceptance": "枪口/摄像机响应可调，结束后回落，不破坏瞄准方向。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.11"

@@ -1,0 +1,230 @@
+Window: "DevTools - localhost:5173/", App: Google Chrome.
+0 标准窗口 DevTools - localhost:5173/, Secondary Actions: Raise, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@b859317bf11f6be47f9b7799ec690a0a42a1fb33/&targetType=tab&can_dock=true&panel=console
+	1 container DevTools - localhost:5173/, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@b859317bf11f6be47f9b7799ec690a0a42a1fb33/&targetType=tab&can_dock=true&panel=console
+		2 container
+			3 container
+				4 滚动区
+					5 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@b859317bf11f6be47f9b7799ec690a0a42a1fb33/&targetType=tab&can_dock=true&panel=console
+						6 container
+							7 container
+								8 container
+									9 container Main toolbar
+										10 工具栏
+											11 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+												12 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+											13 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+												14 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+										15 container
+											16 标签页组 Panels
+												17 标签 (settable, integer) Elements, Value: 0
+												18 标签 (selected) Console, Value: 1
+												19 标签 (settable, integer) Sources, Value: 0
+												20 标签 (settable, integer) Network, Value: 0
+												21 标签 (settable, integer) Performance, Value: 0
+												22 标签 (settable, integer) Memory, Value: 0
+												23 标签 (settable, integer) Application, Value: 0
+												24 标签 (settable, integer) Security, Value: 0
+												25 标签 (settable, integer) Lighthouse, Value: 0
+												26 标签 (settable, integer) Recorder, Value: 0
+										27 工具栏
+											28 container Open Console to view 1 warning
+												29 按钮 Open Console to view 1 warning
+											30 container Settings, Help: Settings - F1 - ⇧ ?
+												31 按钮 Settings - F1 - ⇧ ?
+											32 弹出式按钮 Customize and control DevTools
+												33 按钮 Customize and control DevTools
+									34 container Console panel
+										35 container console
+											36 container
+												37 工具栏
+													38 container Show Console sidebar
+														39 按钮 Show Console sidebar
+													40 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+														41 按钮 Clear console - Ctrl L - ⌘ K
+													42 container Collapse all
+														43 按钮 Collapse all
+													44 按钮 JavaScript context: top
+													45 container Create live expression
+														46 按钮 Create live expression
+													47 container
+														48 文本输入区 (settable) Filter, Value: recoil.check
+															49 文本 recoil.check
+														50 container Clear
+															51 按钮 Clear
+													52 弹出式按钮 Log level: Default levels
+														53 文本 Default levels
+													54 container Some problems no longer generate console messages, but are surfaced in the Issues tab. Click to go to the Issues tab
+														55 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab. Click to go to the Issues tab
+													56 文本 102 hidden
+													57 container Console settings
+														58 切换按钮 Console settings, Value: 0
+													59 container 22 messages in console
+												60 container
+													61 container
+														62 container [recoil.check]
+															63 container  [recoil.check] {"offset":0.013264991059629633,"basePitch":0.13962634015954636,"pitch":0.12636134909991673} Stack table collapsed
+																64 container
+																	65 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	66 text [recoil.check] {"offset":0.013264991059629633,"basePitch":0.13962634015954636,"pitch":0.12636134909991673}
+														67 container [recoil.check]
+															68 container  [recoil.check] {"offset":0.007582388941405581,"basePitch":0.13962634015954636,"pitch":0.13204395121814078} Stack table collapsed
+																69 container
+																	70 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	71 text [recoil.check] {"offset":0.007582388941405581,"basePitch":0.13962634015954636,"pitch":0.13204395121814078}
+														72 container [recoil.check]
+															73 container  [recoil.check] {"offset":0.015347178535927496,"basePitch":0.13962634015954636,"pitch":0.12427916162361886} Stack table collapsed
+																74 container
+																	75 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	76 text [recoil.check] {"offset":0.015347178535927496,"basePitch":0.13962634015954636,"pitch":0.12427916162361886}
+														77 container [recoil.check]
+															78 container  [recoil.check] {"offset":0.021966599080708082,"basePitch":0.13962634015954636,"pitch":0.11765974107883828} Stack table collapsed
+																79 container
+																	80 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	81 text [recoil.check] {"offset":0.021966599080708082,"basePitch":0.13962634015954636,"pitch":0.11765974107883828}
+														82 container [recoil.check]
+															83 container  [recoil.check] {"offset":0.012451275605283805,"basePitch":0.13962634015954636,"pitch":0.12717506455426256} Stack table collapsed
+																84 container
+																	85 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	86 text [recoil.check] {"offset":0.012451275605283805,"basePitch":0.13962634015954636,"pitch":0.12717506455426256}
+														87 container [recoil.check]
+															88 container  [recoil.check] {"offset":0.01790281921999796,"basePitch":0.13962634015954636,"pitch":0.1217235209395484} Stack table collapsed
+																89 container
+																	90 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	91 text [recoil.check] {"offset":0.01790281921999796,"basePitch":0.13962634015954636,"pitch":0.1217235209395484}
+														92 container [recoil.check]
+															93 container  [recoil.check] {"offset":0.024831081944307533,"basePitch":0.13962634015954636,"pitch":0.11479525821523884} Stack table collapsed
+																94 container
+																	95 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	96 text [recoil.check] {"offset":0.024831081944307533,"basePitch":0.13962634015954636,"pitch":0.11479525821523884}
+														97 container [recoil.check]
+															98 container  [recoil.check] {"offset":0.014134182759145754,"basePitch":0.13962634015954636,"pitch":0.12549215740040062} Stack table collapsed
+																99 container
+																	100 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	101 text [recoil.check] {"offset":0.014134182759145754,"basePitch":0.13962634015954636,"pitch":0.12549215740040062}
+														102 container [recoil.check]
+															103 container  [recoil.check] {"offset":0.020063738263872994,"basePitch":0.13962634015954636,"pitch":0.11956260189567337} Stack table collapsed
+																104 container
+																	105 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	106 text [recoil.check] {"offset":0.020063738263872994,"basePitch":0.13962634015954636,"pitch":0.11956260189567337}
+														107 container [recoil.check]
+															108 container  [recoil.check] {"offset":0.02755140993806369,"basePitch":0.13962634015954636,"pitch":0.11207493022148267} Stack table collapsed
+																109 container
+																	110 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	111 text [recoil.check] {"offset":0.02755140993806369,"basePitch":0.13962634015954636,"pitch":0.11207493022148267}
+														112 container [recoil.check]
+															113 container  [recoil.check] {"offset":0.015737615078436296,"basePitch":0.13962634015954636,"pitch":0.12388872508111007} Stack table collapsed
+																114 container
+																	115 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	116 text [recoil.check] {"offset":0.015737615078436296,"basePitch":0.13962634015954636,"pitch":0.12388872508111007}
+														117 container [recoil.check]
+															118 container  [recoil.check] {"offset":0.022044013866938588,"basePitch":0.13962634015954636,"pitch":0.11758232629260777} Stack table collapsed
+																119 container
+																	120 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	121 text [recoil.check] {"offset":0.022044013866938588,"basePitch":0.13962634015954636,"pitch":0.11758232629260777}
+														122 container [recoil.check]
+															123 container  [recoil.check] {"offset":0.012627046801489357,"basePitch":0.13962634015954636,"pitch":0.126999293358057} Stack table collapsed
+																124 container
+																	125 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	126 text [recoil.check] {"offset":0.012627046801489357,"basePitch":0.13962634015954636,"pitch":0.126999293358057}
+														127 container [recoil.check]
+															128 container  [recoil.check] {"offset":0.007192516317172158,"basePitch":0.13962634015954636,"pitch":0.1324338238423742} Stack table collapsed
+																129 container
+																	130 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	131 text [recoil.check] {"offset":0.007192516317172158,"basePitch":0.13962634015954636,"pitch":0.1324338238423742}
+														132 container [recoil.check]
+															133 container  [recoil.check] {"offset":0.00410268273596985,"basePitch":0.13962634015954636,"pitch":0.13552365742357653} Stack table collapsed
+																134 container
+																	135 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	136 text [recoil.check] {"offset":0.00410268273596985,"basePitch":0.13962634015954636,"pitch":0.13552365742357653}
+														137 container [recoil.check]
+															138 container  [recoil.check] {"offset":0.002348416063197983,"basePitch":0.13962634015954636,"pitch":0.13727792409634837} Stack table collapsed
+																139 container
+																	140 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	141 text [recoil.check] {"offset":0.002348416063197983,"basePitch":0.13962634015954636,"pitch":0.13727792409634837}
+														142 container [recoil.check]
+															143 container  [recoil.check] {"offset":0.0013395598433768724,"basePitch":0.13962634015954636,"pitch":0.13828678031616948} Stack table collapsed
+																144 container
+																	145 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	146 text [recoil.check] {"offset":0.0013395598433768724,"basePitch":0.13962634015954636,"pitch":0.13828678031616948}
+														147 container [recoil.check]
+															148 container  [recoil.check] {"offset":0.0007657045298495197,"basePitch":0.13962634015954636,"pitch":0.13886063562969683} Stack table collapsed
+																149 container
+																	150 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	151 text [recoil.check] {"offset":0.0007657045298495197,"basePitch":0.13962634015954636,"pitch":0.13886063562969683}
+														152 container [recoil.check]
+															153 container  [recoil.check] {"offset":0.0004395257762304648,"basePitch":0.13962634015954636,"pitch":0.1391868143833159} Stack table collapsed
+																154 container
+																	155 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	156 text [recoil.check] {"offset":0.0004395257762304648,"basePitch":0.13962634015954636,"pitch":0.1391868143833159}
+														157 container [recoil.check]
+															158 container  [recoil.check] {"offset":0.000249659094152877,"basePitch":0.13962634015954636,"pitch":0.1393766810653935} Stack table collapsed
+																159 container
+																	160 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	161 text [recoil.check] {"offset":0.000249659094152877,"basePitch":0.13962634015954636,"pitch":0.1393766810653935}
+														162 container [recoil.check]
+															163 container  [recoil.check] {"offset":0.00014250774720202123,"basePitch":0.13962634015954636,"pitch":0.13948383241234436} Stack table collapsed
+																164 container
+																	165 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	166 text [recoil.check] {"offset":0.00014250774720202123,"basePitch":0.13962634015954636,"pitch":0.13948383241234436}
+														167 container [recoil.check]
+															168 container  [recoil.check] {"offset":0,"basePitch":0.13962634015954636,"pitch":0.13962634015954636} Stack table collapsed
+																169 container
+																	170 按钮 FollowCamera.tsx:60, Help: http://localhost:5173/src/camera/FollowCamera.tsx:60
+																	171 text [recoil.check] {"offset":0,"basePitch":0.13962634015954636,"pitch":0.13962634015954636}
+													172 container
+														173 container
+															174 文本输入区 (settable) Console prompt, Value: 
+
+								175 container Drawer
+									176 container
+										177 工具栏
+											178 弹出式按钮 More tools
+												179 按钮 More tools
+										180 标签页组
+											181 标签 (settable, integer) Console, Value: 0
+											182 标签 (settable, integer) AI assistance, Value: 0
+											183 标签 (selected) What’s new, Value: 1
+										184 工具栏
+											185 container Toggle drawer orientation
+												186 按钮 Toggle drawer orientation
+											187 container Minimize drawer
+												188 按钮 Minimize drawer
+											189 container Close drawer
+												190 按钮 Close drawer
+										191 container What’s new panel
+											192 container whats-new
+												193 container
+													194 文本 New in DevTools (October 2026)
+													195 按钮 See all new features
+													196 标题 DevTools for agents, Value: 3
+														197 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-october-2026/#mcp
+															198 文本 DevTools for agents
+													199 container
+														200 text Configure  --no-javascript-evaluation  or disable execution tools to inspect pages safely without running scripts. Agents can also inspect heap snapshots directly with  query_heapsnapshot  and analyze memory retained by execution contexts.
+													201 标题 CPU performance tier overrides and modernized device presets, Value: 3
+														202 链接 CPU performance tier overrides and modernized device presets, Help: https://developer.chrome.com/blog/new-in-devtools-october-2026/#performance
+															203 文本 CPU performance tier overrides and modernized device presets
+													204 文本 Configure and dispatch calibrated CPU performance tier overrides over CDP in the Performance panel to test device performance reproducibly. Emulated device presets are now grouped by form factor and updated with modern hardware.
+													205 标题 Edit and resend as fetch in Console, Value: 3
+														206 链接 Edit and resend as fetch in Console, Help: https://developer.chrome.com/blog/new-in-devtools-october-2026/#edit-and-resend-as-fetch-in-co
+															207 文本 Edit and resend as fetch in Console
+													208 container
+														209 text Copy any network request as an editable  fetch()  expression directly into the Console to modify parameters before resending.
+							210 文本 DevTools is undocked 
+	211 关闭按钮
+	212 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	213 最小化按钮
+	214 文本 DevTools - localhost:5173/
+215 menu bar
+	216 Chrome
+	217 文件
+	218 编辑
+	219 显示
+	220 历史记录
+	221 书签
+	222 个人资料
+	223 标签页
+	224 窗口
+	225 帮助
+
+The focused UI element is 48 文本输入区 (settable) Filter, Value: recoil.check

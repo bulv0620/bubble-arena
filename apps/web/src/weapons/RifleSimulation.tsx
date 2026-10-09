@@ -5,18 +5,19 @@ import type { RifleShot } from '@bubble-arena/game-core';
 import type { ScreenAimTarget } from './screenAimRay';
 import { queryMuzzleRay, type MuzzleRayResult } from './muzzleRay';
 import { rifleMuzzlePosition } from './riflePose';
+import type { RifleRecoil } from './RifleRecoil';
 import type { FireInput } from './FireInput';
 import type { ReloadInput } from './ReloadInput';
 import type { TrainingTargets } from './TrainingTargets';
 import type { LocalRifle } from './LocalRifle';
 
 /** Uses the existing physics callback, never a render dt or UI-owned timer. */
-export function RifleSimulation({ input, rifle, reload, body, yaw, target, shotRay, targets, feedback }: { input: FireInput; rifle: LocalRifle; reload: ReloadInput;
+export function RifleSimulation({ input, rifle, reload, body, yaw, target, shotRay, targets, feedback, recoil }: { input: FireInput; rifle: LocalRifle; reload: ReloadInput;
   body: RefObject<RapierRigidBody | null>; yaw: RefObject<number>; target: RefObject<ScreenAimTarget | null>;
-  shotRay: RefObject<MuzzleRayResult | null>; targets: TrainingTargets; feedback: ShotFeedback }) {
+  shotRay: RefObject<MuzzleRayResult | null>; targets: TrainingTargets; feedback: ShotFeedback; recoil: RifleRecoil }) {
   const pending = useRef<{ shot: RifleShot; target: ScreenAimTarget | null } | null>(null);
   const { world } = useRapier();
-  useEffect(() => () => { pending.current = null; shotRay.current = null; feedback.clear(); }, [shotRay, feedback]);
+  useEffect(() => () => { pending.current = null; shotRay.current = null; feedback.clear(); recoil.reset(); }, [shotRay, feedback, recoil]);
   useBeforePhysicsStep(() => {
     const shot = rifle.step(input.consume(), reload.consume());
     pending.current = shot ? { shot, target: target.current } : null;
@@ -26,6 +27,7 @@ export function RifleSimulation({ input, rifle, reload, body, yaw, target, shotR
     const accepted = pending.current;
     pending.current = null;
     if (!accepted) return;
+    recoil.kick(accepted.shot.sequence);
     const center = body.current?.translation(), muzzle = center && rifleMuzzlePosition(center, yaw.current);
     shotRay.current = center && muzzle && accepted.target ? queryMuzzleRay(world, center, muzzle, accepted.target) : null;
     const impact = targets.receiveShotImpact(world, accepted.shot, shotRay.current);

@@ -9,18 +9,19 @@ import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
 import type { AimInput, CrosshairInput } from '../input';
-import { createScreenAimRay, type TrainingTargets, type ScreenAimTarget, type FireInput } from '../weapons';
+import { RifleRecoil, applyRecoilPitch, createScreenAimRay, type TrainingTargets, type ScreenAimTarget, type FireInput } from '../weapons';
 
-export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets }: { target: RefObject<CameraFollowTarget | null>;
-  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets }) {
+export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets; recoil: RifleRecoil }) {
   const diagnostics = useRef(0);
+  const previousRecoil = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
   const { world } = useRapier();
   const [previous] = useState(() => ({ position: new Vector3(), rotation: new Quaternion() }));
   const [recovery] = useState(() => new CameraDistanceRecovery());
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
-  useEffect(() => () => { aimTarget.current = null; }, [aimTarget]);
+  useEffect(() => () => { aimTarget.current = null; recoil.reset(); }, [aimTarget, recoil]);
   useEffect(() => aim.attach(canvas, window, document), [aim, canvas]);
   useEffect(() => control.attach(canvas, window, document,
     (dx, dy) => orbit.rotate(dx, dy), clearInput, () => !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim]);
@@ -30,12 +31,15 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
   useEffect(() => fire.attach(canvas, window, document), [canvas, fire]);
   useFrame(({ camera }, dt) => {
     aimTarget.current = null;
-    const angles = orbit.step(dt);
-    view.current.yaw = angles.yaw;
     if (recoveryTarget.current !== target.current) {
       recovery.reset();
+      recoil.reset();
       recoveryTarget.current = target.current;
     }
+    const baseAngles = orbit.step(dt);
+    const recoilOffset = recoil.step(dt);
+    const angles = applyRecoilPitch(baseAngles, recoilOffset);
+    view.current.yaw = angles.yaw;
     previous.position.copy(camera.position);
     previous.rotation.copy(camera.quaternion);
     const aiming = aim.getSnapshot();
@@ -52,6 +56,10 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
     aimTarget.current = ray ? targets.aim(world, ray) : null;
     if (import.meta.env.DEV) {
       diagnostics.current += 1;
+      if ((recoilOffset > 0 || previousRecoil.current > 0) && (diagnostics.current % 6 === 0 || recoilOffset === 0)) {
+        console.info('[recoil.check]', JSON.stringify({ offset: recoilOffset, basePitch: baseAngles.pitch, pitch: angles.pitch }));
+      }
+      previousRecoil.current = recoilOffset;
       const recovering = avoidance.status === 'resolved'
         && avoidance.safeDistance - avoidance.distance > CAMERA_CONFIG.recoveryEpsilon;
       if (diagnostics.current === 1 || diagnostics.current % 120 === 0

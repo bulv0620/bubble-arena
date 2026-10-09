@@ -1,5 +1,7 @@
 # Game core
 
+3.10 createPlayerVitals提供校验、冻结的自身初始HP快照；与练习靶状态独立，不包含阶段4生命状态转换。
+
 3.9 TrainingTargetState默认读取WEAPON_CONFIGS.rifle.damage=20，接受唯一命中时扣血至最小0；lastDamage记录实际扣血量，归零后拒绝进一步受击并保持快照身份。构造校验HP/伤害，调用只提供射击身份，客户端事件不携带授权伤害。单机练习靶尚不包含阶段4倒地/复活；以后由服务端运行同一规则。下文3.8为历史边界。
 
 3.8 TrainingTargetState提供不可变初始100HP快照和receiveHit({tick,sequence})接口，校验射击身份，忽略重复/过期事件，记录受击次数；不做3.9伤害或阶段4生命状态。无DOM/React/网络依赖，单机单步枪实例内身份去重，未来多玩家事件需要权威身份。

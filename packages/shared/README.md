@@ -1,5 +1,7 @@
 # Shared
 
+3.10 PLAYER_VITALS_CONFIG定义自身初始100HP。3.12 RIFLE_RECOIL_CONFIG采用单发1°/最大4°/回落7/s，createRifleRecoilTuning校验有限非负角度、最大角大于等于单发且不超过90°、正回落响应；独立冻结配置支持0关闭反馈。只决定表现，生命转换和服务器规则在后续阶段接入。
+
 3.3 FireIntent 是只读操作意图接口：held 表示持续按住，pressed 表示上次读取后合并的按下沿；不携带坐标、伤害、弹药或客户端判定。当前尚未进入网络协议，后续网络入口需运行时消息验证。
 
 3.1 已提供 weapons.ts：WeaponId、只读 WeaponConfig、isWeaponId、parseWeaponConfig 和 WEAPON_CONFIGS。伤害为正有限数值（霰弹按单粒）；fireRate 为次/秒，range 为米，reloadDuration 为秒；magazineSize 为正安全整数，reserveAmmo 为非负安全整数。解析拒绝缺失/额外字段、非法 ID、强制转换值和访问器，返回冻结副本；四武器基础默认值与 GAME_DESIGN 对齐，无弹药状态、射击机制或客户端伤害授权。
