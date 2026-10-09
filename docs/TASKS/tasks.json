@@ -611,6 +611,18 @@
       "acceptance": "Esc 打开并释放鼠标/屏蔽输入，返回游戏用户点击请求锁定，重置训练并留在面板，灵敏度校验/本地保存/异常释放及浏览器验证。"
     },
     {
+      "id": "3.12.7",
+      "title": "修复重置后的左靶血条",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.6"
+      ],
+      "file": "docs/TASKS/3.12.7.md",
+      "acceptance": "复现并修复重建时血条遮挡，连续重置三靶可见，保留实际遮挡，检查/报告齐全。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

@@ -1,0 +1,20 @@
+[
+  {
+    "reset": 1,
+    "left": true,
+    "middle": true,
+    "right": true
+  },
+  {
+    "reset": 2,
+    "left": true,
+    "middle": true,
+    "right": true
+  },
+  {
+    "reset": 3,
+    "left": true,
+    "middle": true,
+    "right": true
+  }
+]

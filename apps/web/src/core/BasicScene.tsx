@@ -1,7 +1,7 @@
 import { SettingsPanel } from '../settings/SettingsPanel';
 import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from '../settings/mouseSettings';
-import { createPlayerVitals } from '@bubble-arena/game-core';
-import { ShotFeedback, ShotEffects } from '../effects';
+import { createTrainingSession } from './trainingSession';
+import { ShotEffects } from '../effects';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useCallback, useRef, useState } from 'react';
 import { AimInput, CrosshairInput } from '../input';
@@ -16,13 +16,14 @@ import { SpreadHint } from '../HUD/SpreadHint';
 import { ReloadProgress } from '../HUD/ReloadProgress';
 import '../HUD/gameHud.css';
 import { InputDiagnostics } from './InputDiagnostics';
-import { RifleMotion, RifleRecoil, TrainingTarget, TrainingTargets, LocalTrainingRange, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
+import { TrainingTarget, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, RifleSimulation } from '../weapons';
 
 export function BasicScene() {
   const [pointer] = useState(() => new PointerLockInput());
   const [open, setOpen] = useState(false);
   const opened = useRef(false);
   const [revision, setRevision] = useState(0);
+  const [session, setSession] = useState(createTrainingSession);
   const [speed, setSpeed] = useState(() => {
     try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
   });
@@ -45,32 +46,26 @@ export function BasicScene() {
     return () => { window.removeEventListener('keydown', key); unsubscribe(); };
   }, [pointer, openSettings]);
   return <>
-    <SceneSession key={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
+    <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
     {open && <SettingsPanel speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
-    }} onReset={() => { pointer.release(); setRevision(value => value + 1); }} onReturn={() => {
+    }} onReset={() => { pointer.release(); setSession(createTrainingSession()); setRevision(value => value + 1); }} onReturn={() => {
       opened.current = false; setOpen(false);
       pointer.request(); // Must run directly in this user gesture, before React effects.
     }} />}
   </>;
 }
 
-function SceneSession({ pointer, enabled, sensitivity }: { pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
+function SceneSession({ session, revision, pointer, enabled, sensitivity }: { session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
   const input = useKeyboardInput(enabled);
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [aim] = useState(() => new AimInput());
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   useEffect(() => reload.attach(window, document, enabled), [reload, enabled]);
-  const [range] = useState(() => new LocalTrainingRange());
-  const [targets] = useState(() => new TrainingTargets());
-  const [playerVitals] = useState(() => createPlayerVitals());
-  const [recoil] = useState(() => new RifleRecoil());
-  const [feedback] = useState(() => new ShotFeedback());
-  const [motion] = useState(() => new RifleMotion());
-  const [rifle] = useState(() => new LocalRifle());
+  const { range, targets, playerVitals, recoil, feedback, motion, rifle } = session;
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
   const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
   const facingYaw = useRef(0);
@@ -102,7 +97,8 @@ function SceneSession({ pointer, enabled, sensitivity }: { pointer: PointerLockI
           shadow-normalBias={0.02}
         />
         <Suspense fallback={null}>
-          <PhysicsWorld>
+          {/* Keep Canvas and its HTML portal host mounted while resetting training. */}
+          <PhysicsWorld key={revision}>
             <WhiteboxMap />
             {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
             <CapsulePlayer playerVitals={playerVitals} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
