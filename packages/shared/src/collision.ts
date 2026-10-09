@@ -3,5 +3,7 @@
 export const COLLISION_GROUPS = {
   map: (1 << 16) | 2 | 4,
   player: (2 << 16) | 1,
+  trainingTarget: (8 << 16) | 16,
+  targetQuery: (16 << 16) | 8,
   testCube: (4 << 16) | 1,
 };

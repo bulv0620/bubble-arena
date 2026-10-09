@@ -5,3 +5,4 @@ export { CAMERA_CONFIG } from './camera';
 export { COLLISION_GROUPS } from './collision';
 export type { MovementKeys, CameraHeading, FireIntent } from './input';
 export { WEAPON_IDS, WEAPON_CONFIGS, isWeaponId, parseWeaponConfig, type WeaponId, type WeaponConfig } from './weapons';
+export { TRAINING_TARGET_CONFIG } from './trainingTarget';

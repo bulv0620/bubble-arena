@@ -483,7 +483,7 @@
       "title": "创建带生命值靶子",
       "acceptance": "测试目标能显示生命值，命中时调用独立受击接口。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.7"

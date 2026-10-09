@@ -1,5 +1,8 @@
 # Game core
 
+3.8 TrainingTargetState提供不可变初始100HP快照和receiveHit({tick,sequence})接口，校验射击身份，忽略重复/过期事件，记录受击次数；不做3.9伤害或阶段4生命状态。无DOM/React/网络依赖，单机单步枪实例内身份去重，未来多玩家事件需要权威身份。
+
+
 3.5 RifleFireState.step(FireIntent, reloadPressed=false) 接受布尔换弹意图，快照增加 reloading。步枪共享 2s 对应 120 tick，期间禁止开火/重启，完成时按缺弹量和有限备弹转入；开始/结束 tick 均不射击，后续持按可恢复但不积压短点击。满匣/无备弹不启动。清空输入不取消已经接受的换弹，死亡取消待生命阶段。
 
 

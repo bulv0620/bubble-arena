@@ -1,0 +1,4 @@
+The following is a diff from the previous accessibility tree for Window: "Bubble Arena" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~								60 text 步枪弹药： 29  /  120  · R 换弹
+~								62 text 练习靶 HP： 100  /  100  · 受击： 1
+The focused UI element is 54 HTML 内容 Bubble Arena, URL: localhost:4173/

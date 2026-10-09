@@ -9,3 +9,6 @@ export { createScreenAimRay, queryScreenAimTarget, type ScreenAimRay, type Scree
 export { AimTargetMarker } from './AimTargetMarker';
 export { queryMuzzleRay, type MuzzleRayResult } from './muzzleRay';
 export { MuzzleAimDiagnostics } from './MuzzleAimDiagnostics';
+export { TrainingTarget } from './TrainingTarget';
+export { TrainingTargets } from './TrainingTargets';
+export { LocalTrainingTarget } from './LocalTrainingTarget';

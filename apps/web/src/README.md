@@ -1,5 +1,8 @@
 # 客户端模块边界
 
+3.8 TrainingTarget 注册独立sensor胶囊，R3F负责释放；TrainingTargets注册表结合地图遮挡、最近目标查询和一次射击身份去重，将已接受枪口查询路由到LocalTrainingTarget.receiveHit。FollowCamera选择靶子目标；HUD订阅100HP/受击数。当前只记录受击，无扣血/闪烁/音效；开发红点和shotRay仍表示地图遮挡界限，黄色准星目标可选靶子。
+
+
 3.7 weapons/riflePose 与 RiflePlaceholder 共用枪口尺寸；CapsulePlayer发布本步facingYaw，RifleSimulation在接受开火后于useAfterPhysicsStep读取最新中心，安全段保护枪口穿墙，再做70m地图射线。shotRay仅是最近一次结果参考，不是可每帧重复消费的伤害事件；清理时清空。开发MuzzleAimDiagnostics连续红点预览，无物理tick/碰撞/伤害；生产隐藏。
 
 

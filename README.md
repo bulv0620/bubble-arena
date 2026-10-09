@@ -1,6 +1,6 @@
 # Bubble Arena 工作区
 
-阶段 2 已验收关闭。3.1～3.7 已实现：步枪射速/弹药、换弹、准星目标和枪口遮挡查询；尚无靶子或命中伤害。报告：[3.7](docs/reports/3.7.md)。下一任务为 [3.8 创建带生命值靶子](docs/TASKS/3.8.md)。
+阶段 2 已验收关闭。3.1～3.8 已实现：步枪射速/弹药、换弹、射线遮挡和练习靶受击接口；靶子显示100HP并记录受击，扣血留给下一项。报告：[3.8](docs/reports/3.8.md)。下一任务为 [3.9 伤害与命中反馈](docs/TASKS/3.9.md)。
 
 原创 3D 卡通第三人称房间制射击游戏。当前白盒原型支持 WASD 移动、空格跳跃和地面/墙箱碰撞，尚未接入战斗与联机。
 
@@ -9,7 +9,7 @@
 1. 阅读 [完整方案](docs/spec/SPEC.md)、[游戏规则](docs/GAME_DESIGN.md)。
 2. 阅读 [工程约束](AGENTS.md)、[架构](docs/ARCHITECTURE.md)。
 3. 查看 [开发计划](docs/DEVELOPMENT_PLAN.md) 与 [任务列表](docs/TASKS/INDEX.md)。
-4. [阶段 0](docs/reports/stage-0.md)、[阶段 1](docs/reports/stage-1.md)、[阶段 2](docs/reports/stage-2.md) 已验收通过。阶段 2 包含第三人称镜头、避障、鼠标锁定、相机相对移动、瞄准横移/后退、独立手感参数与圆环准星；本地验收回退点为 stage-2-accepted。当前阶段 3 已建立共享武器配置，尚未接入射击玩法。
+4. [阶段 0](docs/reports/stage-0.md)、[阶段 1](docs/reports/stage-1.md)、[阶段 2](docs/reports/stage-2.md) 已验收通过。阶段 2 包含第三人称镜头、避障、鼠标锁定、相机相对移动、瞄准横移/后退、独立手感参数与圆环准星；本地验收回退点为 stage-2-accepted。当前阶段 3 支持射击输入、弹药、换弹、射线查询和靶子受击路由，尚未接入伤害。
 
 人物、枪械、正式地图使用 Blender MCP 驱动 Blender 制作，保留 .blend 和脚本，再导出 GLB。详见 [Blender 流程](docs/art/BLENDER_MCP.md) 与 [资产规范](docs/art/ASSET_PIPELINE.md)。
 

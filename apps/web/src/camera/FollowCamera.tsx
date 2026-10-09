@@ -9,10 +9,10 @@ import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
 import type { AimInput, CrosshairInput } from '../input';
-import { createScreenAimRay, queryScreenAimTarget, type ScreenAimTarget, type FireInput } from '../weapons';
+import { createScreenAimRay, type TrainingTargets, type ScreenAimTarget, type FireInput } from '../weapons';
 
-export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget }: { target: RefObject<CameraFollowTarget | null>;
-  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null> }) {
+export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets }) {
   const diagnostics = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
@@ -49,7 +49,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
       camera.quaternion.copy(previous.rotation);
     }
     const ray = createScreenAimRay(camera);
-    aimTarget.current = ray ? queryScreenAimTarget(world, ray) : null;
+    aimTarget.current = ray ? targets.aim(world, ray) : null;
     if (import.meta.env.DEV) {
       diagnostics.current += 1;
       const recovering = avoidance.status === 'resolved'
