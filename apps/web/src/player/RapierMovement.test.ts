@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
-import { RIFLE_SPREAD_CONFIG, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type MovementKeys } from '@bubble-arena/shared';
+import { weaponGroundSpeed, RIFLE_SPREAD_CONFIG, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type MovementKeys } from '@bubble-arena/shared';
 import { RapierMovement } from './RapierMovement';
 import { RifleMotion } from '../weapons/RifleMotion';
 import { PlayerFacing } from './PlayerFacing';
@@ -186,4 +186,16 @@ test('actual wall movement expands spread while pressing into a blocked wall sta
     world.step();
   }
   expect(moved).toBe(true); expect(motion.getSnapshot()).toBeCloseTo(RIFLE_SPREAD_CONFIG.normal, 12);
+});
+
+test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('real capsule reaches %s weighted ground speed on a flat floor', id => {
+  const player = setup(false);
+  let result: ReturnType<RapierMovement['step']>;
+  for (let tick = 0; tick < 90; tick++) {
+    result = adapter.step(player.body, player.collider, { ...idle, backward: true }, false, 0, weaponGroundSpeed(id) / PLAYER_CONFIG.speed);
+    world.step();
+  }
+  // Rapier float32 contact separation adds up to a few mm/s on this flat fixture.
+  expect(Math.abs(Math.hypot(result!.allowed.x, result!.allowed.z) / PHYSICS_CONFIG.timeStep - weaponGroundSpeed(id))).toBeLessThan(.02);
+  expect(result!.grounded).toBe(true);
 });

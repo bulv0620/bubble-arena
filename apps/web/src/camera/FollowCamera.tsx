@@ -10,8 +10,10 @@ import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
 import type { AimInput, CrosshairInput } from '../input';
 import { RifleRecoil, applyRecoilPitch, createScreenAimRay, type TrainingTargets, type ScreenAimTarget, type FireInput } from '../weapons';
+import { SNIPER_SCOPE_CONFIG, WEAPON_CONFIGS } from '@bubble-arena/shared';
+import type { LocalLoadout } from '../weapons/LocalLoadout';
 
-export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity }: { enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
+export function FollowCamera({ loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity }: { loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
   control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets; recoil: RifleRecoil }) {
   const diagnostics = useRef(0);
   const previousRecoil = useRef(0);
@@ -22,7 +24,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
   const [recovery] = useState(() => new CameraDistanceRecovery());
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
   useEffect(() => () => { aimTarget.current = null; recoil.reset(); }, [aimTarget, recoil]);
-  useEffect(() => aim.attach(canvas, window, document), [aim, canvas]);
+  useEffect(() => aim.attach(canvas, window, document, enabled), [aim, canvas, enabled]);
   useEffect(() => control.attach(canvas, window, document,
     (dx, dy) => orbit.rotate(dx, dy, sensitivity()), clearInput, () => enabled() && !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim, enabled, sensitivity]);
   useEffect(() => orbit.attach(canvas, window, document,
@@ -30,6 +32,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
   useEffect(() => crosshair.attach(canvas, window, document), [canvas, crosshair]);
   useEffect(() => fire.attach(canvas, window, document), [canvas, fire]);
   useFrame(({ camera }, dt) => {
+    loadout.setScoped(enabled() && aim.getSnapshot());
     aimTarget.current = null;
     if (recoveryTarget.current !== target.current) {
       recovery.reset();
@@ -42,8 +45,8 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
     view.current.yaw = angles.yaw;
     previous.position.copy(camera.position);
     previous.rotation.copy(camera.quaternion);
-    const aiming = false; // Ordinary rifle has no right-button camera mode.
-    if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles, aiming)) return;
+    const aiming = loadout.getSnapshot().scoped;
+    if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles, aiming, aiming ? SNIPER_SCOPE_CONFIG.fov : undefined)) return;
     const position = target.current!.translation();
     const focus = cameraFocus(position, angles.yaw, aiming);
     const avoidance = avoidCameraObstacles(world, camera,
@@ -52,7 +55,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
       camera.position.copy(previous.position);
       camera.quaternion.copy(previous.rotation);
     }
-    const ray = createScreenAimRay(camera);
+    const ray = createScreenAimRay(camera, WEAPON_CONFIGS[loadout.getSnapshot().active].range);
     if (ray) view.current.yaw = Math.atan2(-ray.direction.x, -ray.direction.z);
     aimTarget.current = ray ? targets.aim(world, ray) : null;
     if (import.meta.env.DEV) {

@@ -6,14 +6,15 @@ export class HorizontalMovement {
   private readonly tuning: MovementTuning;
   constructor(tuning: Partial<MovementTuning> = {}) { this.tuning = createMovementTuning(tuning); }
 
-  step(keys: MovementKeys, controlScale = 1, cameraYaw = 0) {
+  step(keys: MovementKeys, controlScale = 1, cameraYaw = 0, speedScale = 1) {
     const yaw = Number.isFinite(cameraYaw) ? cameraYaw : 0;
     const localX = Number(keys.right) - Number(keys.left);
     const localZ = Number(keys.backward) - Number(keys.forward);
     const x = localX * Math.cos(yaw) + localZ * Math.sin(yaw);
     const z = -localX * Math.sin(yaw) + localZ * Math.cos(yaw);
     const length = Math.hypot(x, z);
-    const speed = keys.aiming === true ? this.tuning.aimSpeed : this.tuning.speed;
+    const speed = (keys.aiming === true ? this.tuning.aimSpeed : this.tuning.speed)
+      * (Number.isFinite(speedScale) ? Math.max(0, Math.min(2, speedScale)) : 0);
     const targetX = length ? x / length * speed : 0;
     const targetZ = length ? z / length * speed : 0;
     const differenceX = targetX - this.velocity.x;

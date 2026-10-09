@@ -58,3 +58,16 @@
 .reload-reticle { position: absolute; z-index: 50; top: 50%; left: 50%; width: 88px; height: 88px; transform: translate(-50%, -50%); pointer-events: none; user-select: none; }
 .reload-reticle svg { display: block; filter: drop-shadow(0 1px 2px #132b4680); }
 .reload-reticle > span { position: absolute; top: 92px; left: 50%; transform: translateX(-50%); font: 700 11px 'PingFang SC', sans-serif; color: #e4fff7; white-space: nowrap; text-shadow: 0 1px 3px #17364b, 0 0 2px #17364b; }
+
+.weapon-slots { display: flex; gap: 8px; margin-top: 10px; font-size: 11px; }
+.weapon-slots span { padding: 5px 9px; border-radius: 7px; border: 1px solid #81b2cf44; color: #a2b9cc; }
+.weapon-slots .selected { color: #e5fff6; background: #60b8a544; border-color: #80efd6; }
+.weapon-weight { display: block; margin-top: 8px; color: #a4c2d4; font-size: 10px; }
+.sniper-scope { position: absolute; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; display: grid; place-items: center; }
+.scope-lens { width: 80vmin; height: 80vmin; border: 3px solid #142634; border-radius: 50%; box-shadow: 0 0 0 200vmax #06101bee; position: relative; }
+.scope-horizontal, .scope-vertical { position: absolute; background: #152a35; }
+.scope-horizontal { left: 0; right: 0; height: 1px; top: 50%; }
+.scope-vertical { top: 0; bottom: 0; width: 1px; left: 50%; }
+.scope-lens b { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #d0fff4; text-shadow: 0 0 3px #102b26; font-size: 16px; font-weight: 400; }
+
+.target-slow { display: block; text-align: center; color: #bcfff3; background: #166a75b0; border-radius: 4px; font-size: 10px; margin-top: 4px; padding: 3px; }

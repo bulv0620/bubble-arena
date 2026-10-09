@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
 import { Vector3, type Group } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
@@ -10,9 +10,11 @@ import { BlockAvatar } from '../visuals';
 import type { PlayerVitals } from '@bubble-arena/game-core';
 import { PlayerOverheadHealth } from '../HUD/OverheadHealth';
 import { RiflePlaceholder, type RifleMotion } from '../weapons';
+import type { LocalLoadout } from '../weapons/LocalLoadout';
 
 interface CapsulePlayerProps {
   playerVitals: PlayerVitals;
+  loadout: LocalLoadout;
   /** World-space capsule center, not the foot position. */
   position: [number, number, number];
   input: KeyboardInput;
@@ -22,7 +24,8 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerVitals }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerVitals, loadout }: CapsulePlayerProps) {
+  const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
   const visual = useRef<Group | null>(null);
@@ -44,7 +47,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
-        { ...input.getSnapshot(), aiming: false }, input.consumeJump(), view.current.yaw);
+        { ...input.getSnapshot(), aiming: false }, input.consumeJump(), view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed);
       const speed = result ? Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep : 0;
       motion.setSpeed(speed, Boolean(result && (result.jumped || !result.grounded)));
       facing.step(view.current.yaw);
@@ -67,7 +70,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     sample.ticks += 1;
     if (active !== sample.wasActive || (active && sample.ticks % 30 === 0)) {
       console.info('[movement.check]', JSON.stringify({
-        position: body.current.translation(), active, spreadAngle: motion.getSnapshot(), facingYaw: facing.getYaw(), ...sample.result,
+        position: body.current.translation(), active, weapon: loadout.getSnapshot().active, groundSpeed: loadout.getSpeed(), spreadAngle: motion.getSnapshot(), facingYaw: facing.getYaw(), ...sample.result,
       }));
     }
     sample.wasActive = active;
@@ -75,9 +78,9 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
-      <PlayerOverheadHealth player={playerVitals} />
-      <group ref={visual}>
-        <RiflePlaceholder />
+      <PlayerOverheadHealth player={playerVitals} hidden={scoped} />
+      <group ref={visual} visible={!scoped}>
+        <RiflePlaceholder loadout={loadout} />
         <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
       </group>
     </RigidBody>

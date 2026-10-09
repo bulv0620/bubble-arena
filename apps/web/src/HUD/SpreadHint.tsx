@@ -1,7 +1,9 @@
 import { useSyncExternalStore } from 'react';
-import { RIFLE_SPREAD_CONFIG } from '@bubble-arena/shared';
+import { WEAPON_HANDLING } from '@bubble-arena/shared';
 import type { RifleMotion } from '../weapons';
-export function SpreadHint({ motion }: { motion: RifleMotion }) {
+import type { LocalLoadout } from '../weapons/LocalLoadout';
+export function SpreadHint({ motion, loadout }: { motion: RifleMotion; loadout: LocalLoadout }) {
   const angle = useSyncExternalStore(motion.subscribe, motion.getSnapshot);
-  return <output className="aim-mode">{angle > RIFLE_SPREAD_CONFIG.normal ? '↗ 散布增大 · 停火后恢复' : '○ 步枪 · 稳定射击'}</output>;
+  const { active, scoped } = useSyncExternalStore(loadout.subscribe, loadout.getSnapshot);
+  return <output className="aim-mode">{scoped ? '⊕ 狙击开镜' : `${WEAPON_HANDLING[active].label} · ${angle > WEAPON_HANDLING[active].spread.normal ? '散布增大' : '稳定射击'}`}</output>;
 }

@@ -17,13 +17,14 @@ export function cameraFocus(position: { x: number; y: number; z: number }, yaw: 
 
 /** Updates only presentation; never writes back to the target or physics world. */
 export function updateFollowCamera(camera: PerspectiveCamera, target: CameraFollowTarget | null,
-  angles: OrbitAngles = { yaw: 0, pitch: CAMERA_CONFIG.initialPitch }, aiming = false) {
+  angles: OrbitAngles = { yaw: 0, pitch: CAMERA_CONFIG.initialPitch }, aiming = false, fovOverride?: number) {
   if (!target) return false;
   const position = target.translation();
   if (![position.x, position.y, position.z, angles.yaw, angles.pitch].every(Number.isFinite)) return false;
   const { x: focusX, y: focusY, z: focusZ } = cameraFocus(position, angles.yaw, aiming);
   const distance = aiming ? CAMERA_CONFIG.aimDistance : CAMERA_CONFIG.distance;
-  const fov = aiming ? CAMERA_CONFIG.aimFov : CAMERA_CONFIG.fov;
+  const fov = fovOverride ?? (aiming ? CAMERA_CONFIG.aimFov : CAMERA_CONFIG.fov);
+  if (!Number.isFinite(fov) || fov <= 0 || fov >= 180) return false;
   if (camera.fov !== fov) { camera.fov = fov; camera.updateProjectionMatrix(); }
   const horizontal = Math.cos(angles.pitch) * distance;
   camera.position.set(

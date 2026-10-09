@@ -25,15 +25,17 @@ function FloatingDamage({ queue }: { queue: DamageNumbers }) {
     −{entry.damage}
   </span>)}</div>;
 }
-export function PlayerOverheadHealth({ player }: { player: PlayerVitals }) {
-  return <Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + 0.32, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
+export function PlayerOverheadHealth({ player, hidden = false }: { player: PlayerVitals; hidden?: boolean }) {
+  return <Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + 0.32, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none', display: hidden ? 'none' : undefined }}>
     <HealthPlate label="YOU" hp={player.hp} maxHp={player.maxHp} self />
   </Html>;
 }
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {
   const state = useSyncExternalStore(target.subscribe, target.getSnapshot);
+  const slow = useSyncExternalStore(target.subscribe, target.getSlowSnapshot);
   return <Html center occlude distanceFactor={OVERHEAD_HEALTH_CONFIG.targetDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + 0.38, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
     <HealthPlate label={state.hp === 0 ? `${label} · ${TRAINING_TARGET_CONFIG.restoreDuration}s恢复` : label} hp={state.hp} maxHp={state.maxHp} />
     <FloatingDamage queue={target.damageNumbers} />
+    {slow < 1 && <span className="target-slow">减速 50%</span>}
   </Html>;
 }

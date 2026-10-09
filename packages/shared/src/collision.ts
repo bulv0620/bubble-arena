@@ -5,5 +5,6 @@ export const COLLISION_GROUPS = {
   player: (2 << 16) | 1,
   trainingTarget: (8 << 16) | 16,
   targetQuery: (16 << 16) | 8,
+  projectileQuery: ((2 | 16) << 16) | 1 | 8,
   testCube: (4 << 16) | 1,
 };

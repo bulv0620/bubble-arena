@@ -26,7 +26,10 @@ export function parseWeaponDamageProfile(value: unknown): WeaponDamageProfile {
   return Object.freeze({ headMultiplier: profile.headMultiplier, bodyMultiplier: profile.bodyMultiplier,
     falloffStart: profile.falloffStart, falloffEnd: profile.falloffEnd, minDamageMultiplier: profile.minDamageMultiplier });
 }
-/** Only the playable rifle has a tuned profile; other weapons are not implicitly enabled. */
+/** Damage tuning per weapon; bubble explosion deliberately has no region bonus. */
 export const WEAPON_DAMAGE_PROFILES = Object.freeze({
   rifle: parseWeaponDamageProfile({ headMultiplier: 2, bodyMultiplier: 1, falloffStart: 20, falloffEnd: 60, minDamageMultiplier: .5 }),
+  shotgun: parseWeaponDamageProfile({ headMultiplier: 1.5, bodyMultiplier: 1, falloffStart: 5, falloffEnd: 25, minDamageMultiplier: .2 }),
+  sniper: parseWeaponDamageProfile({ headMultiplier: 2, bodyMultiplier: 1, falloffStart: 0, falloffEnd: 100, minDamageMultiplier: 1 }),
+  bubble: parseWeaponDamageProfile({ headMultiplier: 1, bodyMultiplier: 1, falloffStart: 0, falloffEnd: 40, minDamageMultiplier: 1 }),
 });

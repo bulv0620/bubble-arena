@@ -1,4 +1,5 @@
 .training-hit {
+  z-index: 45;
   position: absolute;
   left: 50%;
   top: 50%;

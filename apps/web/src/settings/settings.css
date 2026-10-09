@@ -13,3 +13,5 @@
 .settings-actions button:hover { filter: brightness(1.12); }
 .settings-panel :focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 .settings-panel small { display: block; font-size: 11px; color: #a1bbcf; margin-top: 16px; }
+.settings-panel .settings-weapon-label { margin-top: 24px; }
+.settings-panel select { width: 100%; margin-top: 12px; padding: 12px; border: 1px solid #88b4d85c; border-radius: 10px; color: #e2f3ff; background: #264461; font: inherit; }

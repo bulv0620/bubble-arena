@@ -3,7 +3,7 @@ import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from 
 import { createTrainingSession } from './trainingSession';
 import { ShotEffects } from '../effects';
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useEffect, useCallback, useRef, useState } from 'react';
+import { Suspense, useEffect, useCallback, useRef, useState, useSyncExternalStore } from 'react';
 import { AimInput, CrosshairInput } from '../input';
 import { Crosshair, AmmoHint, TrainingTargetHint, HealthHint } from '../HUD';
 import type { RapierRigidBody } from '@react-three/rapier';
@@ -17,6 +17,9 @@ import { ReloadProgress } from '../HUD/ReloadProgress';
 import '../HUD/gameHud.css';
 import { InputDiagnostics } from './InputDiagnostics';
 import { TrainingTarget, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, RifleSimulation } from '../weapons';
+import { WeaponSwitchInput } from '../weapons/WeaponSwitchInput';
+import { BubbleVisuals } from '../weapons/BubbleVisuals';
+import { WEAPON_HANDLING } from '@bubble-arena/shared';
 
 export function BasicScene() {
   const [pointer] = useState(() => new PointerLockInput());
@@ -24,6 +27,7 @@ export function BasicScene() {
   const opened = useRef(false);
   const [revision, setRevision] = useState(0);
   const [session, setSession] = useState(createTrainingSession);
+  const primary = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().primary);
   const [speed, setSpeed] = useState(() => {
     try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
   });
@@ -47,11 +51,11 @@ export function BasicScene() {
   }, [pointer, openSettings]);
   return <>
     <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel speed={speed} onSpeed={value => {
+    {open && <SettingsPanel primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
-    }} onReset={() => { pointer.release(); setSession(createTrainingSession()); setRevision(value => value + 1); }} onReturn={() => {
+    }} onReset={() => { pointer.release(); setSession(createTrainingSession(session.loadout.getSnapshot().primary)); setRevision(value => value + 1); }} onReturn={() => {
       opened.current = false; setOpen(false);
       pointer.request(); // Must run directly in this user gesture, before React effects.
     }} />}
@@ -65,10 +69,21 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [aim] = useState(() => new AimInput());
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
+  const [switchInput] = useState(() => new WeaponSwitchInput());
   useEffect(() => reload.attach(window, document, enabled), [reload, enabled]);
-  const { range, targets, playerVitals, recoil, feedback, motion, rifle } = session;
+  useEffect(() => switchInput.attach(window, document, enabled), [switchInput, enabled]);
+  const { range, targets, playerVitals, recoil, feedback, motion, loadout, bubbles } = session;
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
-  const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
+  const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); switchInput.clear(); }, [input, aim, fire, reload, switchInput]);
+  useEffect(() => {
+    let active = loadout.getSnapshot().active;
+    recoil.setTuning(WEAPON_HANDLING[active].recoil);
+    return loadout.subscribe(() => {
+      const next = loadout.getSnapshot().active;
+      if (next !== active) { active = next; clearInput(); recoil.setTuning(WEAPON_HANDLING[next].recoil); }
+      motion.refresh();
+    });
+  }, [loadout, clearInput, recoil, motion]);
   const facingYaw = useRef(0);
   const shotRay = useRef<MuzzleRayResult | null>(null);
   const aimTarget = useRef<ScreenAimTarget | null>(null);
@@ -102,29 +117,30 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
           <PhysicsWorld key={revision}>
             <WhiteboxMap />
             {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
-            <CapsulePlayer playerVitals={playerVitals} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
+            <CapsulePlayer loadout={loadout} playerVitals={playerVitals} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
               TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation input={fire} motion={motion} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
+            <RifleSimulation bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <ShotEffects feedback={feedback} />
-            <FollowCamera enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
+            <BubbleVisuals bubbles={bubbles} />
+            <FollowCamera loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
             {import.meta.env.DEV && showAimDiagnostics && <>
               <AimTargetMarker target={aimTarget} />
-              <MuzzleAimDiagnostics body={playerBody} yaw={facingYaw} target={aimTarget} />
+              <MuzzleAimDiagnostics loadout={loadout} body={playerBody} yaw={facingYaw} target={aimTarget} />
             </>}
           </PhysicsWorld>
         </Suspense>
       </Canvas>
       <div className="hud-brand"><i>BA</i><span>BUBBLE ARENA<small>训练模式</small></span></div>
       <PointerLockHint control={pointer} />
-      <SpreadHint motion={motion} />
+      <SpreadHint loadout={loadout} motion={motion} />
       <HealthHint player={playerVitals} />
-      <AmmoHint rifle={rifle} />
+      <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />
-      <Crosshair input={crosshair} motion={motion} />
-      <ReloadProgress rifle={rifle} />
+      <Crosshair loadout={loadout} input={crosshair} motion={motion} />
+      <ReloadProgress loadout={loadout} />
       {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><label><input type="checkbox" checked={showAimDiagnostics} onChange={event => setShowAimDiagnostics(event.target.checked)} />显示瞄准调试点</label><FireInputHint input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
 
     </>

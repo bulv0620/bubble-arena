@@ -695,6 +695,54 @@
       "acceptance": "头/身分区与占位外形一致；枪口距离决定线性衰减；实际扣血/浮字一致，遮挡、去重、恢复与重置回归通过。"
     },
     {
+      "id": "3.14.1",
+      "title": "多武器共享配置与通用射击规则",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.13"
+      ],
+      "file": "docs/TASKS/3.14.1.md",
+      "acceptance": "四武器数值、重量/移速、伤害/散布/后坐力配置校验；自动/半自动及换弹核心回归。"
+    },
+    {
+      "id": "3.14.2",
+      "title": "双武器装备与设置切换",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.14.1"
+      ],
+      "file": "docs/TASKS/3.14.2.md",
+      "acceptance": "设置选择三主枪，泡泡固定副武器，1/2切换；独立弹药/冷却，重量移速、HUD/输入/重置完整。"
+    },
+    {
+      "id": "3.14.3",
+      "title": "霰弹散射与狙击开镜伤害",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.14.2"
+      ],
+      "file": "docs/TASKS/3.14.3.md",
+      "acceptance": "八弹丸逐区伤害按目标合并一次；狙击开镜独立FOV与准星，无衰减，满血头击归零；墙与去重回归。"
+    },
+    {
+      "id": "3.14.4",
+      "title": "泡泡副武器飞行与范围结算",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.14.3"
+      ],
+      "file": "docs/TASKS/3.14.4.md",
+      "acceptance": "4发单击副武器，固定步长扫掠、碰撞爆开与范围遮挡伤害/减速、有限生命周期/重置清理；综合试玩证据齐全。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

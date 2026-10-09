@@ -20,11 +20,11 @@ export class AimInput {
   }
   clear = () => this.set(false);
 
-  attach(canvas: EventTarget, global: EventTarget, doc: AimDocument) {
+  attach(canvas: EventTarget, global: EventTarget, doc: AimDocument, enabled = () => true) {
     this.detachCurrent?.();
     const down = (event: Event) => {
       const e = event as MouseEvent;
-      if (e.button !== 2 || e.ctrlKey || e.metaKey || e.altKey || doc.hidden
+      if (!enabled() || e.button !== 2 || e.ctrlKey || e.metaKey || e.altKey || doc.hidden
         || (doc.pointerLockElement && doc.pointerLockElement !== canvas)) return;
       e.preventDefault();
       this.set(true);

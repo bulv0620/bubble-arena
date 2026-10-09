@@ -1,5 +1,5 @@
 import { Ray, QueryFilterFlags, type World } from '@dimforge/rapier3d-compat';
-import { COLLISION_GROUPS, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, type HitRegion } from '@bubble-arena/shared';
+import { BUBBLE_CONFIG, COLLISION_GROUPS, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, WEAPON_HANDLING, type WeaponId, type HitRegion } from '@bubble-arena/shared';
 import { calculateWeaponDamage, type TrainingHit } from '@bubble-arena/game-core';
 import { queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
 import type { MuzzleRayResult } from './muzzleRay';
@@ -12,6 +12,10 @@ const mapMargin = 0.00001;
 export class TrainingTargets {
   private lastShotSequence = 0;
   private lastShotTick = -1;
+  private hitSequence = 0;
+  private explosions = new Set<number>();
+  private newestExplosion = 0;
+  isRegistered = (handle: number) => this.entries.has(handle);
   private entries = new Map<number, { target: LocalTrainingTarget; region: HitRegion }>();
   register(handle: number, target: LocalTrainingTarget, region: HitRegion = 'body') {
     if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body') throw new TypeError('Invalid/duplicate target collider or region');
@@ -43,19 +47,60 @@ export class TrainingTargets {
   receiveShot(world: World, shot: TrainingHit, result: MuzzleRayResult | null) {
     return this.receiveShotImpact(world, shot, result) !== null;
   }
-  receiveShotImpact(world: World, shot: TrainingHit, result: MuzzleRayResult | null) {
-    if (!shot || !Number.isSafeInteger(shot.tick) || shot.tick < 0 || !Number.isSafeInteger(shot.sequence) || shot.sequence <= 0) throw new TypeError('Invalid local shot identity');
+  receiveShotImpact(world: World, shot: TrainingHit, result: MuzzleRayResult | null, weapon: WeaponId = 'rifle') {
+    return this.receiveVolley(world, shot, [result], weapon);
+  }
+  /** One accepted shot identity; each target receives its summed pellets exactly once. */
+  receiveVolley(world: World, shot: TrainingHit, results: readonly (MuzzleRayResult | null)[], weapon: WeaponId) {
+    if (!shot || !Number.isSafeInteger(shot.tick) || shot.tick < 0 || !Number.isSafeInteger(shot.sequence) || shot.sequence <= 0
+      || !WEAPON_CONFIGS[weapon] || !Array.isArray(results) || results.length !== WEAPON_HANDLING[weapon].pellets) throw new TypeError('Invalid local shot/volley');
     if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return null;
     this.lastShotSequence = shot.sequence; this.lastShotTick = shot.tick;
-    if (!result || result.status === 'blocked-muzzle') return null;
-    const hit = this.query(world, { origin: result.origin, direction: result.direction, range: Math.min(result.distance, WEAPON_CONFIGS.rifle.range) });
-    if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) return null;
-    const entry = this.entries.get(hit.handle);
-    if (!entry) return null;
-    const damage = calculateWeaponDamage(WEAPON_CONFIGS.rifle.damage, WEAPON_DAMAGE_PROFILES.rifle, entry.region, hit.distance);
-    const accepted = entry.target.receiveHit(shot, damage);
-    if (accepted && import.meta.env.DEV) console.info('[damage.check]', JSON.stringify({ ...shot, region: entry.region,
-      distance: hit.distance, damage, appliedDamage: entry.target.getSnapshot().lastDamage }));
-    return accepted ? hit.point : null;
+    const damageByTarget = new Map<LocalTrainingTarget, { damage: number; point: ScreenAimTarget['point'] }>();
+    for (const result of results) {
+      if (!result || result.status === 'blocked-muzzle') continue;
+      const hit = this.query(world, { origin: result.origin, direction: result.direction, range: Math.min(result.distance, WEAPON_CONFIGS[weapon].range) });
+      if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) continue;
+      const entry = this.entries.get(hit.handle);
+      if (!entry) continue;
+      const damage = calculateWeaponDamage(WEAPON_CONFIGS[weapon].damage, WEAPON_DAMAGE_PROFILES[weapon], entry.region, hit.distance);
+      const previous = damageByTarget.get(entry.target);
+      damageByTarget.set(entry.target, { damage: (previous?.damage ?? 0) + damage, point: previous?.point ?? hit.point });
+      if (import.meta.env.DEV) console.info('[damage.check]', JSON.stringify({ ...shot, weapon, region: entry.region, distance: hit.distance, damage }));
+    }
+    let point: ScreenAimTarget['point'] | null = null;
+    const resolved = { tick: shot.tick, sequence: ++this.hitSequence };
+    for (const [target, hit] of damageByTarget) if (target.receiveHit(resolved, hit.damage)) point ??= hit.point;
+    return point;
   }
+  /** Arrival order differs from emission order; assign a separate monotonic hit identity. */
+  receiveExplosion(world: World, shot: TrainingHit, point: ScreenAimTarget['point']) {
+    if (!shot || !Number.isSafeInteger(shot.sequence) || shot.sequence <= 0 || !Number.isSafeInteger(shot.tick) || shot.tick < 0
+      || !point || ![point.x, point.y, point.z].every(Number.isFinite)) throw new TypeError('Invalid bubble impact');
+    if (this.explosions.has(shot.sequence) || shot.sequence <= this.newestExplosion - 64) return 0;
+    this.newestExplosion = Math.max(this.newestExplosion, shot.sequence);
+    this.explosions.add(shot.sequence);
+    for (const sequence of this.explosions) if (sequence <= this.newestExplosion - 64) this.explosions.delete(sequence);
+    const visible = new Set<LocalTrainingTarget>();
+    for (const [handle, { target }] of this.entries) {
+      if (visible.has(target)) continue;
+      const collider = world.getCollider(handle);
+      if (!collider) continue;
+      const projection = collider.projectPoint(point, true);
+      if (!projection) continue;
+      const closest = projection.point;
+      const direction = { x: closest.x - point.x, y: closest.y - point.y, z: closest.z - point.z };
+      const distance = Math.hypot(direction.x, direction.y, direction.z);
+      if (distance > BUBBLE_CONFIG.explosionRadius) continue;
+      const obstruction = distance > 1e-6 ? queryScreenAimTarget(world, { origin: point, direction, range: distance }) : null;
+      if (distance > 1e-6 && (!obstruction || obstruction.status === 'hit' && obstruction.distance + mapMargin < distance)) continue;
+      visible.add(target);
+    }
+    const resolved = { tick: shot.tick, sequence: ++this.hitSequence };
+    let hits = 0;
+    for (const target of visible) if (target.receiveHit(resolved, WEAPON_CONFIGS.bubble.damage)) { target.applySlow(); hits++; }
+    if (import.meta.env.DEV) console.info('[bubble.impact]', JSON.stringify({ ...shot, point, hits }));
+    return hits;
+  }
+
 }

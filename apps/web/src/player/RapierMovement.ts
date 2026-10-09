@@ -22,7 +22,7 @@ export class RapierMovement {
     this.controller.disableSnapToGround();
   }
 
-  step(body: RigidBody, collider: Collider, keys: MovementKeys, jumpPressed = false, cameraYaw = 0) {
+  step(body: RigidBody, collider: Collider, keys: MovementKeys, jumpPressed = false, cameraYaw = 0, speedScale = 1) {
     if (this.disposed) return;
     // Recheck the current capsule pose before accepting input. Last tick's support
     // may have disappeared, and a rising capsule must never regain jump eligibility.
@@ -41,7 +41,7 @@ export class RapierMovement {
       if (normal && normal.y > PLAYER_CONFIG.slopeSnapMinNormalY
         && normal.y < PLAYER_CONFIG.slopeSnapMaxNormalY) onSlope = true;
     }
-    const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : this.tuning.airControl, cameraYaw);
+    const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : this.tuning.airControl, cameraYaw, speedScale);
     const vertical = this.vertical.step(jumpPressed);
     // Follow descending slopes while supported, preserving ordinary flat/wall motion.
     if (onSlope && this.vertical.getState().grounded && vertical.y <= 0) {

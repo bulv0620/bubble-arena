@@ -1,12 +1,14 @@
 import { CAMERA_CONFIG, createRifleRecoilTuning, type RifleRecoilTuning } from '@bubble-arena/shared';
 /** Presentation-only offset, isolated from the mouse's desired orientation. */
 export class RifleRecoil {
-  readonly tuning: RifleRecoilTuning;
+  private currentTuning: RifleRecoilTuning;
+  get tuning() { return this.currentTuning; }
   private offset = 0;
   private pulse = 0;
   private quietTime = 0;
   private lastSequence = 0;
-  constructor(tuning: Partial<RifleRecoilTuning> = {}) { this.tuning = createRifleRecoilTuning(tuning); }
+  constructor(tuning: Partial<RifleRecoilTuning> = {}) { this.currentTuning = createRifleRecoilTuning(tuning); }
+  setTuning(tuning: RifleRecoilTuning) { this.currentTuning = createRifleRecoilTuning(tuning); this.reset(); }
   kick(sequence: number) {
     if (!Number.isSafeInteger(sequence) || sequence <= 0) throw new TypeError('Invalid recoil shot identity');
     if (sequence <= this.lastSequence) return false;

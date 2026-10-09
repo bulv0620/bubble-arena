@@ -6,3 +6,7 @@ export { createPlayerVitals, type PlayerVitals } from './playerVitals';
 export { spreadDirection, rifleSpreadDirection, rifleSpreadAngle } from './rifleSpread';
 export { RifleAccuracy } from './rifleAccuracy';
 export { calculateWeaponDamage } from './weaponDamage';
+export { WeaponFireState } from './weaponFireState';
+export { WeaponAccuracy } from './weaponAccuracy';
+export { BubbleFlight, type FlyingBubble } from './bubbleFlight';
+export { MovementSlow } from './movementSlow';

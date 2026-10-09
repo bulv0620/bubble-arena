@@ -1,11 +1,11 @@
 import { useSyncExternalStore } from 'react';
 import { WEAPON_CONFIGS } from '@bubble-arena/shared';
-import type { LocalRifle } from '../weapons';
+import type { LocalLoadout } from '../weapons/LocalLoadout';
 
-export function ReloadProgress({ rifle }: { rifle: LocalRifle }) {
-  const progress = useSyncExternalStore(rifle.subscribeReload, rifle.getReloadProgress);
+export function ReloadProgress({ loadout }: { loadout: LocalLoadout }) {
+  const { active, progress } = useSyncExternalStore(loadout.subscribe, loadout.getSnapshot);
   if (progress === null) return null;
-  const remaining = (1 - progress) * WEAPON_CONFIGS.rifle.reloadDuration;
+  const remaining = (1 - progress) * WEAPON_CONFIGS[active].reloadDuration;
   return <div className="reload-reticle" role="progressbar" aria-label="换弹进度"
     aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(progress * 100)}>
     <svg width="88" height="88" viewBox="0 0 100 100" aria-hidden="true">
