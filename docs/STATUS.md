@@ -2,6 +2,8 @@
 
 更新时间：2026-10-09。
 
+当前 3.4 implemented：game-core/RifleFireState 每物理步消费开火意图，8/s 小数相位、初始 30/120、每次接受扣一发、空弹不下溢/不自动补备弹；输入取消不重置冷却、不追补空闲射击。LocalRifle 和 AmmoHint 低频订阅，UI 无计时器/物理循环。最终 24 文件 218 测试、全部 pnpm check 通过；生产初始 HUD/拖动保护/Esc/error=[] 验证通过。Mac 仍锁屏，桌面连续扣弹未实测，组合输入/规则测试通过并保留真人步骤。报告 [3.4](reports/3.4.md)，本地提交 feat: apply fixed-step rifle fire rate and ammo，未推送。下一任务 3.5，本轮停止。以下为历史交付记录。
+
 最新任务：3.3 implemented，FireIntent（held/pressed）、FireInput consume 和低频提示已接通。首次锁定点击/普通后备拖动不产生开火，锁定后左键单击/按住；后备须右键瞄准，且互斥左键拖动/锁定重试。正常松键保留短点击，Esc/失焦/隐藏/失锁/卸载清空。最终 22 文件 207 测试、全部 pnpm check 通过。内置生产拖动保护/Esc/error=[] 已实测；桌面 Chrome 因 Mac 锁屏无法验证，已请求手动解锁，未虚报锁定实测通过。报告 [3.3](reports/3.3.md)，下一任务 3.4，本轮停止。
 
 当前任务进展：3.2 implemented，工程占位步枪已挂到角色右侧视觉 group，随移动/跳跃/转向，+Z 武器前向适配白盒 -Z；无新增碰撞体，实测仍 8 刚体/8 碰撞体、原地图 hash。21 文件 195 测试及全部 pnpm check 通过，生产转身/跳跃/瞄准截图、开发日志见 [3.2](reports/3.2.md)。未调用 Blender MCP、未生成正式模型；B.1 状态保持 todo。本地提交 feat: attach whitebox rifle to player visual，未推送。下一任务 3.3，本轮停止。

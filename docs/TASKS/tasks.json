@@ -435,7 +435,7 @@
       "title": "射速与弹药状态",
       "acceptance": "射速受时间约束，每次有效开火消耗一发。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.3"

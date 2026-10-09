@@ -1,5 +1,7 @@
 # Game core
 
+3.4 RifleFireState 是仅步枪的固定步规则：step(FireIntent) 一次对应共享 60Hz 的一 tick，接受返回 tick/sequence，本次扣一发，否则 null；getState 返回不可变弹匣/备弹/累计接受数。8/s 用小数 tick 相位保留平均射速，落到计划时刻后的首 tick（量化 <1 tick），每步最多一次，不追补空闲射击。松键/取消后冷却仍继续，冷却期单击不队列，空弹不补入备弹。仅本地原型由客户端运行，未来服务器独立执行同一规则，不接收客户端扣弹结果或配置。尚无换弹/命中。
+
 固定步长规则、运动与武器状态机；通过适配器连接 Rapier，不依赖 UI。
 
 任务 1.6 提供 HorizontalMovement：WASD 意图归一化，按共享 60Hz 步长计算水平加速/减速后的目标位移，无 React、DOM 或 Rapier 依赖。碰撞允许位移由 web 的 RapierMovement 适配器计算，未来服务端可复用同一运动规则和适配逻辑。

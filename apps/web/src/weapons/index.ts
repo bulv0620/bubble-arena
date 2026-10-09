@@ -2,3 +2,5 @@
 export { RiflePlaceholder } from './RiflePlaceholder';
 export { FireInput } from './FireInput';
 export { FireInputHint } from './FireInputHint';
+export { LocalRifle } from './LocalRifle';
+export { RifleSimulation } from './RifleSimulation';
