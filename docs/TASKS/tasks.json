@@ -507,7 +507,7 @@
       "title": "弹药和生命值 HUD",
       "acceptance": "读游戏状态，正确显示弹匣/备弹/自身生命值。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.9"

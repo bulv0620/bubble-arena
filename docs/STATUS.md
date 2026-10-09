@@ -2,7 +2,9 @@
 
 更新时间：2026-10-09。
 
-当前3.9 implemented：有效步枪命中读取共享20伤害，HP最小归零，lastDamage记录实际扣血量；重复/过期、miss、墙面遮挡和blocked-muzzle不扣血。有效受击低频驱动中心命中标记/数值700ms淡出，归零后不重复反馈。30文件256测试及全部pnpm check通过；桌面生产真实命中100→80、打空80不变；刷新后5发归零，第6发HP0/受击5不变。截图/AX/error日志见 [3.9](reports/3.9.md)。本地提交 feat: apply rifle damage and hit feedback，未推送，待人工视觉验收。下一任务3.10，本轮停止。
+当前3.10 implemented：独立玩家初始生命状态与自身HP HUD，弹匣/备弹继续订阅游戏状态。31文件257测试、pnpm check通过，桌面生产命中靶80HP/自身100HP/29弹，R完成30/119。报告 [3.10](reports/3.10.md)。用户授权阶段3剩余任务，继续3.11。
+
+历史3.9 implemented：有效步枪命中读取共享20伤害，HP最小归零，lastDamage记录实际扣血量；重复/过期、miss、墙面遮挡和blocked-muzzle不扣血。有效受击低频驱动中心命中标记/数值700ms淡出，归零后不重复反馈。30文件256测试及全部pnpm check通过；桌面生产真实命中100→80、打空80不变；刷新后5发归零，第6发HP0/受击5不变。截图/AX/error日志见 [3.9](reports/3.9.md)。本地提交 feat: apply rifle damage and hit feedback，未推送，待人工视觉验收。下一任务3.10，本轮停止。
 
 历史3.8 implemented：新增独立100HP练习靶配置、无推动sensor胶囊、TrainingTargetState/receiveHit接口、受击计数HUD。准星选择最近可见注册靶子；有效枪口射线在地图遮挡范围内路由一次，重复/过期射击不重放。3.9再扣血/反馈。30文件255测试及pnpm check全通过；桌面生产锁定真实命中30→29、受击0→1，移开再射29→28受击仍1、HP100；开发9刚体/9碰撞体（多一靶子），原地图hash不变。报告 [3.8](reports/3.8.md)，本地提交 feat: add training target and receive-hit interface，未推送，待人工验收。下一任务3.9，本轮停止。
 

@@ -1,7 +1,8 @@
+import { createPlayerVitals } from '@bubble-arena/game-core';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useCallback, useRef, useState } from 'react';
 import { AimInput, AimHint, CrosshairInput } from '../input';
-import { Crosshair, AmmoHint, TrainingTargetHint } from '../HUD';
+import { Crosshair, AmmoHint, TrainingTargetHint, HealthHint } from '../HUD';
 import type { RapierRigidBody } from '@react-three/rapier';
 import { CAMERA_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
@@ -21,6 +22,7 @@ export function BasicScene() {
   useEffect(() => reload.attach(window, document), [reload]);
   const [trainingTarget] = useState(() => new LocalTrainingTarget());
   const [targets] = useState(() => new TrainingTargets());
+  const [playerVitals] = useState(() => createPlayerVitals());
   const [rifle] = useState(() => new LocalRifle());
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
   const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
@@ -72,6 +74,7 @@ export function BasicScene() {
       </Canvas>
       <PointerLockHint control={pointer} />
       <AimHint input={aim} />
+      <HealthHint player={playerVitals} />
       <AmmoHint rifle={rifle} />
       <TrainingTargetHint target={trainingTarget} />
       <Crosshair input={crosshair} />
