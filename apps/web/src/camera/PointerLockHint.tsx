@@ -10,8 +10,7 @@ const messages: Record<PointerLockStatus, string> = {
 };
 export function PointerLockHint({ control }: { control: PointerLockInput }) {
   const status = useSyncExternalStore(control.subscribe, control.getSnapshot);
-  return <output aria-live="polite" style={{ position: 'absolute', bottom: 12, left: 12,
-    pointerEvents: 'none', padding: '8px 12px', background: '#ffffffdd', borderRadius: 8 }}>
+  return <output aria-live="polite" className={`control-hint ${status === 'locked' ? 'locked' : ''}`}>
     {messages[status]}
   </output>;
 }

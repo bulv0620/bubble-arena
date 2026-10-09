@@ -563,6 +563,18 @@
       "acceptance": "方向键只平移，角色始终朝准星水平前方；右键只减速和收束散布，不切镜头。"
     },
     {
+      "id": "3.12.3",
+      "title": "头顶血条与游戏HUD及逐次伤害浮字",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.2"
+      ],
+      "file": "docs/TASKS/3.12.3.md",
+      "acceptance": "人物/靶头顶血条跟随、HUD游戏化布局、逐次有效命中随机浮字并存且自动释放。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

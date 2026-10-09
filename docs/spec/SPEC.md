@@ -58,3 +58,7 @@ React/TS/Vite + Three/R3F/Drei；客户端和 Node 服务端使用一致 Rapier 
 | 玩家 | normal → downed → eliminated → respawning → normal | downed 救援回 normal；finished 停止生命转换 |
 
 资源由 web 预加载并回报 ready，服务端收到所有 ready 后进入 countdown。ready 不能让客户端自行跳过倒计时。loading 与比赛计时分离，比赛时间从 playing 起计算。玩家复活等待已定义为淘汰后的 5s，respawning 是选点/重置的瞬时事务，不额外等待。
+
+## 当前训练HUD（3.12.3）
+
+2026-10-09用户授权：角色和训练靶头顶显示真实生命血条；屏幕边缘放置生命、武器弹药与模式，中央留给战斗。每次有效受击独立显示实际伤害，目标附近有界随机错位并逐条上浮淡出，多次命中可并存；不由点击次数推算。表现队列容量有界、释放订阅与动画事件，不管理物理tick，不影响有效伤害。当前训练命中/清空数不代表联机比赛得分。

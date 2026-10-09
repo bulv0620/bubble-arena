@@ -10,6 +10,7 @@ import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
 import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
+import '../HUD/gameHud.css';
 import { InputDiagnostics } from './InputDiagnostics';
 import { RifleRecoil, TrainingTarget, TrainingTargets, LocalTrainingRange, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
 
@@ -60,8 +61,8 @@ export function BasicScene() {
         <Suspense fallback={null}>
           <PhysicsWorld>
             <WhiteboxMap />
-            {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} position={entry.position} />)}
-            <CapsulePlayer input={input} bodyRef={playerBody} view={view} aim={aim} facingYaw={facingYaw} position={[
+            {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
+            <CapsulePlayer playerVitals={playerVitals} input={input} bodyRef={playerBody} view={view} aim={aim} facingYaw={facingYaw} position={[
               TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
@@ -76,14 +77,15 @@ export function BasicScene() {
           </PhysicsWorld>
         </Suspense>
       </Canvas>
+      <div className="hud-brand"><i>BA</i><span>BUBBLE ARENA<small>训练模式</small></span></div>
       <PointerLockHint control={pointer} />
       <AimHint input={aim} />
       <HealthHint player={playerVitals} />
       <AmmoHint rifle={rifle} />
       <TrainingTargetHint range={range} />
       <Crosshair input={crosshair} />
-      <FireInputHint input={fire} pointer={pointer} />
-      {import.meta.env.DEV && <InputDiagnostics input={input} />}
+      {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><FireInputHint input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
+
     </>
   );
 }

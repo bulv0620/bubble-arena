@@ -8,9 +8,12 @@ import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
 import type { AimInput } from '../input';
 import { BlockAvatar } from '../visuals';
+import type { PlayerVitals } from '@bubble-arena/game-core';
+import { PlayerOverheadHealth } from '../HUD/OverheadHealth';
 import { RiflePlaceholder } from '../weapons';
 
 interface CapsulePlayerProps {
+  playerVitals: PlayerVitals;
   /** World-space capsule center, not the foot position. */
   position: [number, number, number];
   input: KeyboardInput;
@@ -20,7 +23,7 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facingYaw }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facingYaw, playerVitals }: CapsulePlayerProps) {
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
   const visual = useRef<Group | null>(null);
@@ -72,6 +75,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facin
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
+      <PlayerOverheadHealth player={playerVitals} />
       <group ref={visual}>
         <RiflePlaceholder />
         <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
