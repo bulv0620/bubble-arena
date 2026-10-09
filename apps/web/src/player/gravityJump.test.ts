@@ -238,3 +238,26 @@ test('holding Space across landing does not auto-jump; releasing and pressing ag
     expect(tick(player, input.consumeJump()).jumped).toBe(true);
   } finally { detach(); }
 });
+
+test('actual stationary jump keeps wider spread through ascent, apex and descent and restores on landing', async () => {
+  const { RifleMotion } = await import('../weapons/RifleMotion');
+  const { RIFLE_SPREAD_CONFIG } = await import('@bubble-arena/shared');
+  const player = setup(), motion = new RifleMotion();
+  for (let i = 0; i < 20; i++) tick(player);
+  let sawRise = false, sawApex = false, sawFall = false, sawLanding = false;
+  for (let i = 0; i < 100; i++) {
+    const result = tick(player, i === 0);
+    const horizontalSpeed = Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep;
+    expect(horizontalSpeed).toBeLessThan(0.001);
+    motion.setSpeed(horizontalSpeed, result.jumped || !result.grounded);
+    if (result.jumped || !result.grounded) {
+      expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal * RIFLE_SPREAD_CONFIG.movingMultiplier);
+      if (result.velocityY > 1) sawRise = true;
+      if (Math.abs(result.velocityY) < .4) sawApex = true;
+      if (result.velocityY < -1) sawFall = true;
+    } else if (i > 0) {
+      sawLanding = true; expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal); break;
+    }
+  }
+  expect([sawRise, sawApex, sawFall, sawLanding]).toEqual([true, true, true, true]);
+});

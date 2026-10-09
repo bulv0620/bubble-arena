@@ -38,3 +38,12 @@ test('actual horizontal speed selects stationary/moving spread with a noise thre
   for (const speed of [RIFLE_SPREAD_CONFIG.movementSpeedThreshold, 3.5, 5]) expect(rifleSpreadAngle(speed)).toBeCloseTo(3 * Math.PI / 180, 12);
   for (const invalid of [NaN, Infinity, -1]) expect(() => rifleSpreadAngle(invalid)).toThrow(RangeError);
 });
+
+test('airborne movement widens spread with zero horizontal speed and does not stack with running', () => {
+  const normal = RIFLE_SPREAD_CONFIG.normal, moving = normal * RIFLE_SPREAD_CONFIG.movingMultiplier;
+  expect(rifleSpreadAngle(0, false)).toBe(normal);
+  expect(rifleSpreadAngle(0, true)).toBe(moving);
+  expect(rifleSpreadAngle(5, true)).toBe(moving);
+  expect(rifleSpreadAngle(5, false)).toBe(moving);
+  expect(() => rifleSpreadAngle(0, 1 as unknown as boolean)).toThrow(TypeError);
+});

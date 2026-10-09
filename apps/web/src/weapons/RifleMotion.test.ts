@@ -17,3 +17,15 @@ test('invalid physical samples fall back to stationary without leaking a stale w
   const motion = new RifleMotion();
   for (const value of [NaN, Infinity, -1]) { motion.setSpeed(5); motion.setSpeed(value); expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal); }
 });
+
+test('jump/apex/falling stay widened, grounded stillness restores, reset clears airborne spread', () => {
+  const motion = new RifleMotion(), notify = vi.fn(), release = motion.subscribe(notify);
+  motion.setSpeed(0, true);
+  const moving = RIFLE_SPREAD_CONFIG.normal * RIFLE_SPREAD_CONFIG.movingMultiplier;
+  expect(motion.getSnapshot()).toBe(moving);
+  motion.setSpeed(0, true); motion.setSpeed(5, true); motion.setSpeed(5, false);
+  expect(notify).toHaveBeenCalledTimes(1); // Landing while running is still moving.
+  motion.setSpeed(0, false); expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal);
+  motion.setSpeed(0, true); motion.reset(); expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal);
+  release(); notify.mockClear(); motion.setSpeed(0, true); expect(notify).not.toHaveBeenCalled();
+});

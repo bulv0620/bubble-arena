@@ -69,3 +69,5 @@
 3.12.7覆盖上述重置挂载方式：Canvas和SceneSession保留，createTrainingSession生成新训练数据；revision仅用于PhysicsWorld子树重挂载。避免销毁Canvas时首个Html血条容器变空，保留原有occlude规则、输入释放与设置。
 
 3.12.8：trainingSession用TRAINING_RIFLE_AMMO_POLICY创建LocalRifle；核心策略校验/复制，自动换弹在接受最后一发的同一步启动。无限备弹由只读模式表达，数值reserve保持有限初值且不扣减，HUD显示∞/无障碍无限备弹标签；默认LocalRifle和核心保持有限规则，测试不通过UI模拟时间。
+
+3.12.10：CapsulePlayer以result.jumped || !result.grounded发布空中状态；RifleMotion与核心rifleSpreadAngle共同使用水平速度或空中状态，起跳/顶点/下落扩大，落地停稳恢复。UI与实际接受射击读取同一角度，不新增UI计时器；reset释放空中状态。

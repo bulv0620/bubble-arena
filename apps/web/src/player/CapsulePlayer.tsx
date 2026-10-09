@@ -46,7 +46,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
         { ...input.getSnapshot(), aiming: false }, input.consumeJump(), view.current.yaw);
       const speed = result ? Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep : 0;
-      motion.setSpeed(speed);
+      motion.setSpeed(speed, Boolean(result && (result.jumped || !result.grounded)));
       facing.step(view.current.yaw);
       facingYaw.current = facing.getYaw();
       if (import.meta.env.DEV) diagnostics.current.result = result;
