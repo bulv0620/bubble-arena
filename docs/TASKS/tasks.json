@@ -231,7 +231,7 @@
       "title": "第三人称跟随镜头",
       "acceptance": "角色移动时镜头跟随且默认距离恒定。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "1.11.1"
@@ -243,7 +243,7 @@
       "title": "鼠标旋转镜头",
       "acceptance": "鼠标水平/垂直输入改变 yaw/pitch，平滑且无翻转。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.1"
@@ -255,7 +255,7 @@
       "title": "视角上下限",
       "acceptance": "pitch 达到限制不会翻转。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.2"
@@ -267,7 +267,7 @@
       "title": "镜头障碍物检测",
       "acceptance": "可获得角色与理想摄像机间的命中距离，暂不改变镜头。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.3"
@@ -279,7 +279,7 @@
       "title": "镜头避障",
       "acceptance": "遇墙镜头前移至安全位置，不明显穿墙。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.4.1"
@@ -291,7 +291,7 @@
       "title": "镜头距离平滑恢复",
       "acceptance": "离墙后镜头渐进恢复，不剧烈抖动。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.4.2"
@@ -303,7 +303,7 @@
       "title": "鼠标锁定与释放",
       "acceptance": "点击游戏锁定鼠标，Esc 释放并正确处理失焦。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.4.3"
@@ -315,7 +315,7 @@
       "title": "镜头相对 WASD",
       "acceptance": "前进方向基于摄像机水平角；不受 pitch 影响。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.5"
@@ -327,7 +327,7 @@
       "title": "角色平滑转向",
       "acceptance": "普通移动状态下朝移动方向转身。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.6"
@@ -339,7 +339,7 @@
       "title": "右键举枪状态",
       "acceptance": "按住右键进入、松开退出瞄准；改变镜头肩部偏移。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.7"
@@ -351,7 +351,7 @@
       "title": "举枪横移和后退",
       "acceptance": "瞄准时角色朝准星水平朝向，WASD 可横移/后退。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.8"
@@ -363,7 +363,7 @@
       "title": "移动手感调参",
       "acceptance": "加减速、空中控制、转向均可独立调，不修改物理接口。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.9"
@@ -375,7 +375,7 @@
       "title": "渲染屏幕准星",
       "acceptance": "准星随游戏输入激活状态正确显示。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.10"
@@ -387,7 +387,7 @@
       "title": "准星与人物构图修正",
       "acceptance": "参考泡泡战士实机，默认头部位于中心准星下方、瞄准人物不过大，普通/瞄准与释放显示正确。",
       "stage": 2,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.11"
