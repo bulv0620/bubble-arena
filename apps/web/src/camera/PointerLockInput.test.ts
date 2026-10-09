@@ -97,3 +97,19 @@ test('a late old-canvas grant is released after switching to a different unsuppo
   expect(f.control.getSnapshot()).toBe('unsupported');
   detach();
 });
+
+test('menu blocks canvas activation; return button requests synchronously; release cancels late grants', () => {
+  const f = setup(); let menu = true;
+  const detach = f.control.attach(f.canvas, f.global, f.doc, f.rotate, f.clear, () => !menu);
+  f.click(); f.control.request();
+  expect(f.canvas.requestPointerLock).not.toHaveBeenCalled();
+  menu = false; f.control.request();
+  expect(f.canvas.requestPointerLock).toHaveBeenCalledTimes(1);
+  menu = true; f.control.release(); f.grant();
+  expect(f.doc.pointerLockElement).toBeNull();
+  menu = false; f.control.request(); f.grant();
+  expect(f.control.getSnapshot()).toBe('locked');
+  f.control.release(); expect(f.doc.pointerLockElement).toBeNull();
+  detach(); f.control.request();
+  expect(f.canvas.requestPointerLock).toHaveBeenCalledTimes(2);
+});

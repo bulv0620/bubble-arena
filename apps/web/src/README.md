@@ -63,3 +63,5 @@
 2.11 input/CrosshairInput 订阅锁定/瞄准和窗口生命周期，HUD/Crosshair 以固定 24px SVG 居中显示普通/瞄准样式；非激活或释放/失焦/隐藏时移除，pointer-events:none。没有每帧 React 状态，不通过屏幕准星授予权威命中。
 
 当前3.12.5覆盖旧2.8/3.12.2右键装配：普通步枪以RifleMotion读取实际允许水平位移，2°/3°散布，CrosshairInput当前禁用aim模式，移动准星80px/稳定64px。AimInput仅保留后备输入与后续狙击接口，当前不影响移动/镜头/弹道，HUD采用SpreadHint。
+
+3.12.6：BasicScene外层保存设置/面板和PointerLockInput，SceneSession key重新挂载用于重置训练；面板不拥有物理tick，已接受动作继续。enabled函数同步屏蔽键盘/换弹/镜头请求，release清空输入；返回按钮直接调用request保留用户手势。mouseSettings单处校验/保存倍率，MouseOrbit锁定和拖动读取实时倍率。

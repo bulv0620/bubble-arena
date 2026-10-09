@@ -11,6 +11,10 @@ export class PointerLockInput {
   private status: PointerLockStatus = 'idle';
   private subscribers = new Set<() => void>();
   private detachCurrent?: () => void;
+  private requestCurrent?: () => void;
+  private releaseCurrent?: () => void;
+  request = () => this.requestCurrent?.();
+  release = () => this.releaseCurrent?.();
   private currentCanvas: EventTarget | null = null;
   getSnapshot = () => this.status;
   subscribe = (listener: () => void) => {
@@ -60,9 +64,8 @@ export class PointerLockInput {
       clearInput();
       this.publish('error');
     };
-    const click = (event: Event) => {
-      const e = event as MouseEvent;
-      if (!canRequest() || e.button !== 0 || e.altKey || e.ctrlKey || e.metaKey || doc.hidden
+    const request = () => {
+      if (!canRequest() || doc.hidden
         || pending || doc.pointerLockElement === canvas) return;
       if (!canvas.requestPointerLock) { this.publish('unsupported'); return; }
       if (doc.pointerLockElement) { this.publish('error'); return; }
@@ -71,6 +74,12 @@ export class PointerLockInput {
         const promise = canvas.requestPointerLock();
         if (promise) void promise.catch(() => { if (pending) error(); });
       } catch { error(); }
+    };
+    this.requestCurrent = request;
+    this.releaseCurrent = release;
+    const click = (event: Event) => {
+      const e = event as MouseEvent;
+      if (e.button === 0 && !e.altKey && !e.ctrlKey && !e.metaKey) request();
     };
     const move = (event: Event) => {
       if (!active || !wanted || doc.hidden || this.status !== 'locked' || doc.pointerLockElement !== canvas) return;
@@ -101,6 +110,8 @@ export class PointerLockInput {
       if (!pending) removeSettlement();
       if (this.detachCurrent === detach) {
         this.detachCurrent = undefined;
+        this.requestCurrent = undefined;
+        this.releaseCurrent = undefined;
         this.currentCanvas = null;
       }
     };

@@ -1,4 +1,5 @@
 import { CAMERA_CONFIG } from '@bubble-arena/shared';
+import { validMouseSpeed } from '../settings/mouseSettings';
 
 export interface OrbitAngles { yaw: number; pitch: number }
 const wrap = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
@@ -9,11 +10,11 @@ export class MouseOrbit {
   private shown: OrbitAngles = { ...this.desired };
   private detachCurrent?: () => void;
 
-  rotate(dx: number, dy: number) {
-    if (![dx, dy].every(Number.isFinite)) return;
-    this.desired.yaw = wrap(this.desired.yaw - dx * CAMERA_CONFIG.mouseSensitivity);
+  rotate(dx: number, dy: number, sensitivityMultiplier = 1) {
+    if (![dx, dy, sensitivityMultiplier].every(Number.isFinite) || !validMouseSpeed(sensitivityMultiplier)) return;
+    this.desired.yaw = wrap(this.desired.yaw - dx * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier);
     this.desired.pitch = Math.max(CAMERA_CONFIG.minPitch, Math.min(CAMERA_CONFIG.maxPitch,
-      this.desired.pitch + dy * CAMERA_CONFIG.mouseSensitivity));
+      this.desired.pitch + dy * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier));
   }
 
   step(dt: number): OrbitAngles {
@@ -26,7 +27,7 @@ export class MouseOrbit {
   }
 
   attach(canvas: EventTarget, global: EventTarget, visibility: EventTarget & { hidden?: boolean },
-    enabled = () => true) {
+    enabled = () => true, sensitivity = () => 1) {
     this.detachCurrent?.();
     let last: { x: number; y: number } | null = null;
     const clear = () => { last = null; };
@@ -40,7 +41,7 @@ export class MouseOrbit {
       const e = event as MouseEvent;
       if (!last) return;
       if (!enabled() || !(e.buttons & 1) || visibility.hidden) return clear();
-      this.rotate(e.clientX - last.x, e.clientY - last.y);
+      this.rotate(e.clientX - last.x, e.clientY - last.y, sensitivity());
       last = { x: e.clientX, y: e.clientY };
     };
     const onVisibility = () => { if (visibility.hidden) clear(); };

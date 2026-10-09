@@ -1,3 +1,5 @@
+import { SettingsPanel } from '../settings/SettingsPanel';
+import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from '../settings/mouseSettings';
 import { createPlayerVitals } from '@bubble-arena/game-core';
 import { ShotFeedback, ShotEffects } from '../effects';
 import { Canvas } from '@react-three/fiber';
@@ -17,13 +19,51 @@ import { InputDiagnostics } from './InputDiagnostics';
 import { RifleMotion, RifleRecoil, TrainingTarget, TrainingTargets, LocalTrainingRange, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
 
 export function BasicScene() {
-  const input = useKeyboardInput();
-  const playerBody = useRef<RapierRigidBody | null>(null);
   const [pointer] = useState(() => new PointerLockInput());
+  const [open, setOpen] = useState(false);
+  const opened = useRef(false);
+  const [revision, setRevision] = useState(0);
+  const [speed, setSpeed] = useState(() => {
+    try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
+  });
+  const currentSpeed = useRef(speed);
+  const enabled = useCallback(() => !opened.current, []);
+  const sensitivity = useCallback(() => currentSpeed.current, []);
+  const openSettings = useCallback(() => {
+    opened.current = true; setOpen(true); pointer.release();
+  }, [pointer]);
+  useEffect(() => {
+    const key = (event: KeyboardEvent) => { if (event.code === 'Escape') openSettings(); };
+    let previous = pointer.getSnapshot();
+    const unsubscribe = pointer.subscribe(() => {
+      const next = pointer.getSnapshot();
+      const lost = previous === 'locked' && next !== 'locked';
+      previous = next;
+      if (lost) openSettings();
+    });
+    window.addEventListener('keydown', key);
+    return () => { window.removeEventListener('keydown', key); unsubscribe(); };
+  }, [pointer, openSettings]);
+  return <>
+    <SceneSession key={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
+    {open && <SettingsPanel speed={speed} onSpeed={value => {
+      if (!validMouseSpeed(value)) return;
+      currentSpeed.current = value; setSpeed(value);
+      try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
+    }} onReset={() => { pointer.release(); setRevision(value => value + 1); }} onReturn={() => {
+      opened.current = false; setOpen(false);
+      pointer.request(); // Must run directly in this user gesture, before React effects.
+    }} />}
+  </>;
+}
+
+function SceneSession({ pointer, enabled, sensitivity }: { pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
+  const input = useKeyboardInput(enabled);
+  const playerBody = useRef<RapierRigidBody | null>(null);
   const [aim] = useState(() => new AimInput());
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
-  useEffect(() => reload.attach(window, document), [reload]);
+  useEffect(() => reload.attach(window, document, enabled), [reload, enabled]);
   const [range] = useState(() => new LocalTrainingRange());
   const [targets] = useState(() => new TrainingTargets());
   const [playerVitals] = useState(() => createPlayerVitals());
@@ -72,7 +112,7 @@ export function BasicScene() {
             ]} />
             <RifleSimulation input={fire} motion={motion} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <ShotEffects feedback={feedback} />
-            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
+            <FollowCamera enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
             {import.meta.env.DEV && <>
               <AimTargetMarker target={aimTarget} />
               <MuzzleAimDiagnostics body={playerBody} yaw={facingYaw} target={aimTarget} />

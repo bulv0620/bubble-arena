@@ -5,7 +5,7 @@ export class ReloadInput {
   private detachCurrent?: () => void;
   clear = () => { this.held = false; this.queued = false; };
   consume = () => { const result = this.queued; this.queued = false; return result; };
-  attach(global: EventTarget, doc: EventTarget & { hidden?: boolean }) {
+  attach(global: EventTarget, doc: EventTarget & { hidden?: boolean }, enabled = () => true) {
     this.detachCurrent?.();
     this.clear();
     const editable = (target: EventTarget | null) => {
@@ -15,7 +15,7 @@ export class ReloadInput {
     const down = (event: Event) => {
       const key = event as KeyboardEvent;
       if (key.code === 'Escape') { this.clear(); return; }
-      if (key.code !== 'KeyR' || key.isComposing || key.ctrlKey || key.altKey || key.metaKey || doc.hidden || editable(key.target)) return;
+      if (!enabled() || key.code !== 'KeyR' || key.isComposing || key.ctrlKey || key.altKey || key.metaKey || doc.hidden || editable(key.target)) return;
       key.preventDefault();
       if (!key.repeat && !this.held) this.queued = true;
       this.held = true;

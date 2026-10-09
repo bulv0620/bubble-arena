@@ -599,6 +599,18 @@
       "acceptance": "步枪静止2°/实际移动3°散布；右键不收束/减速/缩准星，移动准星扩大且停稳恢复。"
     },
     {
+      "id": "3.12.6",
+      "title": "Esc 设置面板与鼠标灵敏度",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.5"
+      ],
+      "file": "docs/TASKS/3.12.6.md",
+      "acceptance": "Esc 打开并释放鼠标/屏蔽输入，返回游戏用户点击请求锁定，重置训练并留在面板，灵敏度校验/本地保存/异常释放及浏览器验证。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

@@ -50,13 +50,13 @@ export class KeyboardInput {
     this.publish(RELEASED);
   };
 
-  attach(keyTarget: EventTarget, visibilityTarget: EventTarget & Pick<Document, 'visibilityState'>) {
+  attach(keyTarget: EventTarget, visibilityTarget: EventTarget & Pick<Document, 'visibilityState'>, enabled = () => true) {
     this.detach?.();
     this.clear();
     const onKeyDown = (event: Event) => {
       const key = event as KeyboardEvent;
       const action = getAction(key.code);
-      if ((!action && key.code !== 'Space') || key.isComposing || key.ctrlKey || key.metaKey || key.altKey || isEditable(key.target)
+      if (!enabled() || (!action && key.code !== 'Space') || key.isComposing || key.ctrlKey || key.metaKey || key.altKey || isEditable(key.target)
         || visibilityTarget.visibilityState === 'hidden') return;
       key.preventDefault();
       if (key.code === 'Space') {

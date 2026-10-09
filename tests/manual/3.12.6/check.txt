@@ -1,0 +1,57 @@
+
+> bubble-arena@0.0.0 check /Users/bulv/Desktop/bubble-arena
+> pnpm check:workspace && pnpm typecheck && pnpm lint && pnpm test && pnpm build
+
+
+> bubble-arena@0.0.0 check:workspace /Users/bulv/Desktop/bubble-arena
+> node scripts/check-workspace.mjs
+
+Workspace OK: 150 task cards, acyclic dependencies, local Markdown links and asset manifest checked.
+
+> bubble-arena@0.0.0 typecheck /Users/bulv/Desktop/bubble-arena
+> pnpm --filter @bubble-arena/web typecheck && tsc --noEmit -p tsconfig.tools.json
+
+
+> @bubble-arena/web@0.0.0 typecheck /Users/bulv/Desktop/bubble-arena/apps/web
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json
+
+
+> bubble-arena@0.0.0 lint /Users/bulv/Desktop/bubble-arena
+> eslint . --max-warnings 0
+
+
+> bubble-arena@0.0.0 test /Users/bulv/Desktop/bubble-arena
+> vitest run
+
+
+ RUN  v4.1.11 /Users/bulv/Desktop/bubble-arena
+
+
+ Test Files  40 passed (40)
+      Tests  281 passed (281)
+   Start at  14:48:53
+   Duration  3.04s (transform 3.29s, setup 0ms, import 9.49s, tests 6.66s, environment 6ms)
+
+
+> bubble-arena@0.0.0 build /Users/bulv/Desktop/bubble-arena
+> pnpm --filter @bubble-arena/web build
+
+
+> @bubble-arena/web@0.0.0 build /Users/bulv/Desktop/bubble-arena/apps/web
+> vite build
+
+vite v8.3.3 building client environment for production...
+transforming...
+✓ 650 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.45 kB │ gzip:     0.29 kB
+dist/assets/index-C1iYF_Jm.css      8.49 kB │ gzip:     2.69 kB
+dist/assets/index-qka-SSUz.js   3,429.87 kB │ gzip: 1,177.25 kB
+
+✓ built in 411ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

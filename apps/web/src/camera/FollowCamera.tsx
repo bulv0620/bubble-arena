@@ -11,7 +11,7 @@ import type { PointerLockInput } from './PointerLockInput';
 import type { AimInput, CrosshairInput } from '../input';
 import { RifleRecoil, applyRecoilPitch, createScreenAimRay, type TrainingTargets, type ScreenAimTarget, type FireInput } from '../weapons';
 
-export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil }: { target: RefObject<CameraFollowTarget | null>;
+export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity }: { enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
   control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets; recoil: RifleRecoil }) {
   const diagnostics = useRef(0);
   const previousRecoil = useRef(0);
@@ -24,9 +24,9 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
   useEffect(() => () => { aimTarget.current = null; recoil.reset(); }, [aimTarget, recoil]);
   useEffect(() => aim.attach(canvas, window, document), [aim, canvas]);
   useEffect(() => control.attach(canvas, window, document,
-    (dx, dy) => orbit.rotate(dx, dy), clearInput, () => !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim]);
+    (dx, dy) => orbit.rotate(dx, dy, sensitivity()), clearInput, () => enabled() && !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim, enabled, sensitivity]);
   useEffect(() => orbit.attach(canvas, window, document,
-    () => (control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported') && !aim.getSnapshot()), [canvas, orbit, control, aim]);
+    () => enabled() && (control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported') && !aim.getSnapshot(), sensitivity), [canvas, orbit, control, aim, enabled, sensitivity]);
   useEffect(() => crosshair.attach(canvas, window, document), [canvas, crosshair]);
   useEffect(() => fire.attach(canvas, window, document), [canvas, fire]);
   useFrame(({ camera }, dt) => {
