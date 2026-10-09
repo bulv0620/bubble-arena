@@ -66,3 +66,19 @@ test('reload progress has a separate tick subscription; ammo updates only at sta
   expect(rifle.getReloadProgress()).toBeNull(); expect(ammo).toHaveBeenCalledTimes(2);
   expect(progress).toHaveBeenCalledTimes(61); releaseAmmo();
 });
+
+test('training automatic reload publishes progress at the final shot and completes without new input', () => {
+  const rifle = new LocalRifle({ autoReload: true, infiniteReserve: true });
+  expect(rifle.infiniteReserve).toBe(true);
+  const progress = vi.fn(), ammo = vi.fn();
+  const release = rifle.subscribeReload(progress), releaseAmmo = rifle.subscribe(ammo);
+  while (rifle.getSnapshot().shotsFired < 30) rifle.step({ held: true, pressed: false });
+  expect(rifle.getSnapshot()).toMatchObject({ magazine: 0, reloading: true });
+  expect(progress).toHaveBeenCalledTimes(1); expect(rifle.getReloadProgress()).toBe(0);
+  expect(ammo).toHaveBeenCalledTimes(30);
+  for (let i = 0; i < 120; i++) rifle.step({ held: false, pressed: false });
+  expect(rifle.getSnapshot()).toMatchObject({ magazine: 30, reserve: 120, reloading: false });
+  expect(progress).toHaveBeenCalledTimes(121); expect(ammo).toHaveBeenCalledTimes(31);
+  release(); releaseAmmo(); progress.mockClear(); ammo.mockClear();
+  rifle.step({ held: true, pressed: false }); expect(progress).not.toHaveBeenCalled(); expect(ammo).not.toHaveBeenCalled();
+});

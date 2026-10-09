@@ -67,3 +67,5 @@
 3.12.6：BasicScene外层保存设置/面板和PointerLockInput，SceneSession key重新挂载用于重置训练；面板不拥有物理tick，已接受动作继续。enabled函数同步屏蔽键盘/换弹/镜头请求，release清空输入；返回按钮直接调用request保留用户手势。mouseSettings单处校验/保存倍率，MouseOrbit锁定和拖动读取实时倍率。
 
 3.12.7覆盖上述重置挂载方式：Canvas和SceneSession保留，createTrainingSession生成新训练数据；revision仅用于PhysicsWorld子树重挂载。避免销毁Canvas时首个Html血条容器变空，保留原有occlude规则、输入释放与设置。
+
+3.12.8：trainingSession用TRAINING_RIFLE_AMMO_POLICY创建LocalRifle；核心策略校验/复制，自动换弹在接受最后一发的同一步启动。无限备弹由只读模式表达，数值reserve保持有限初值且不扣减，HUD显示∞/无障碍无限备弹标签；默认LocalRifle和核心保持有限规则，测试不通过UI模拟时间。

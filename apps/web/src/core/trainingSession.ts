@@ -1,3 +1,4 @@
+import { TRAINING_RIFLE_AMMO_POLICY } from '@bubble-arena/shared';
 import { createPlayerVitals } from '@bubble-arena/game-core';
 import { ShotFeedback } from '../effects/ShotFeedback';
 import { LocalTrainingRange } from '../weapons/LocalTrainingRange';
@@ -10,6 +11,6 @@ import { LocalRifle } from '../weapons/LocalRifle';
 export function createTrainingSession() {
   return {
     range: new LocalTrainingRange(), targets: new TrainingTargets(), playerVitals: createPlayerVitals(),
-    recoil: new RifleRecoil(), feedback: new ShotFeedback(), motion: new RifleMotion(), rifle: new LocalRifle(),
+    recoil: new RifleRecoil(), feedback: new ShotFeedback(), motion: new RifleMotion(), rifle: new LocalRifle(TRAINING_RIFLE_AMMO_POLICY),
   };
 }

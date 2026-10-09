@@ -1,9 +1,11 @@
 import { RifleFireState, type RifleAmmoState } from '@bubble-arena/game-core';
-import type { FireIntent } from '@bubble-arena/shared';
+import { DEFAULT_RIFLE_AMMO_POLICY, WEAPON_CONFIGS, type RifleAmmoPolicy, type FireIntent } from '@bubble-arena/shared';
 
 /** Single-player adapter; future server must run the same core rule independently. */
 export class LocalRifle {
-  private readonly rule = new RifleFireState();
+  private readonly rule: RifleFireState;
+  constructor(policy: RifleAmmoPolicy = DEFAULT_RIFLE_AMMO_POLICY) { this.rule = new RifleFireState(WEAPON_CONFIGS.rifle, policy); }
+  get infiniteReserve() { return this.rule.infiniteReserve; }
   private progressSubscribers = new Set<() => void>();
   getReloadProgress = () => this.rule.getReloadProgress();
   subscribeReload = (listener: () => void) => { this.progressSubscribers.add(listener); return () => { this.progressSubscribers.delete(listener); }; };

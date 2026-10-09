@@ -1,0 +1,80 @@
+Window: "Bubble Arena", App: Google Chrome.
+0 标准窗口 Bubble Arena - Google Chrome, URL: localhost:4173/, Secondary Actions: Raise
+	1 container Bubble Arena - Google Chrome, URL: localhost:4173/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: localhost:4173, Placeholder: 在 Google 中搜索，或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 iCloud 密码
+可以访问此网站
+					13 弹出式按钮 JSONViewer
+					14 弹出式按钮 扩展程序
+				15 按钮 jt
+				16 弹出式按钮 Chrome
+			17 container
+				18 滚动区
+					19 HTML 内容 Bubble Arena, URL: localhost:4173/
+						20 container Bubble Arena · 基础白盒场景
+							21 container
+								22 文本 当前浏览器无法显示 3D 场景，请启用 WebGL。
+								23 container
+									24 text 左靶 100
+									25 层次指示器 左靶生命值, Value: 100
+								26 container
+									27 text 中靶 100
+									28 层次指示器 中靶生命值, Value: 100
+								29 container
+									30 text 右靶 100
+									31 层次指示器 右靶生命值, Value: 100
+								32 container
+									33 text YOU 100
+									34 层次指示器 YOU生命值, Value: 100
+							35 container
+								36 text BA BUBBLE ARENA 训练模式
+							37 文本 鼠标已锁定 · 移动鼠标：转镜头 · Esc：设置
+							38 文本 ○ 步枪 · 稳定射击
+							39 container 自身 HP：100 / 100
+								40 container
+									41 text 泡泡先锋  YOU
+								42 container
+									43 text 100  /  100  HP
+							44 container 步枪弹药：30 / 无限备弹
+								45 container
+									46 text 01  泡泡步枪 RIFLE
+								47 文本 30
+								48 text /  ∞
+								49 文本 按 R 装填
+							50 container
+								51 text TRAINING RANGE 三靶练习 命中  10  · 待恢复  0  / 3
+							52 图像 普通准星
+			53 弹出式按钮 标签页搜索
+			54 container
+				55 标签页组
+					56 标签 (settable, boolean) Bubble Arena - 内存用量 - 140 MB, Value: off
+						57 按钮 关闭
+					58 标签 (selected, settable, boolean) Bubble Arena - 内存用量 - 99.9 MB, Value: on
+						59 按钮 关闭
+			60 按钮 新标签页
+			61 按钮 打开 Chrome 中的 Gemini
+	62 关闭按钮
+	63 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	64 最小化按钮
+65 menu bar
+	66 Chrome
+	67 文件
+	68 编辑
+	69 显示
+	70 历史记录
+	71 书签
+	72 个人资料
+	73 标签页
+	74 窗口
+	75 帮助
+
+The focused UI element is 19 HTML 内容 Bubble Arena, URL: localhost:4173/

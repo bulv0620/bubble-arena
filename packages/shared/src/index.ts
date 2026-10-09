@@ -9,3 +9,4 @@ export { TRAINING_TARGET_CONFIG, TRAINING_TARGET_LAYOUT, TRAINING_RANGE_CONFIG }
 export { PLAYER_VITALS_CONFIG } from './playerVitals';
 export { RIFLE_RECOIL_CONFIG, createRifleRecoilTuning, type RifleRecoilTuning } from './rifleRecoil';
 export { RIFLE_SPREAD_CONFIG } from './rifleSpread';
+export { DEFAULT_RIFLE_AMMO_POLICY, TRAINING_RIFLE_AMMO_POLICY, type RifleAmmoPolicy } from './rifleAmmoPolicy';

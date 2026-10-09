@@ -1,4 +1,4 @@
-import { PHYSICS_CONFIG, WEAPON_CONFIGS, parseWeaponConfig, type FireIntent, type WeaponConfig } from '@bubble-arena/shared';
+import { DEFAULT_RIFLE_AMMO_POLICY, PHYSICS_CONFIG, WEAPON_CONFIGS, parseWeaponConfig, type FireIntent, type RifleAmmoPolicy, type WeaponConfig } from '@bubble-arena/shared';
 
 export interface RifleAmmoState {
   readonly magazine: number;
@@ -10,6 +10,8 @@ export interface RifleShot { readonly tick: number; readonly sequence: number }
 
 /** Fixed-step local/authority rule; no clock, input device, renderer or hit result. */
 export class RifleFireState {
+  readonly infiniteReserve: boolean;
+  private readonly autoReload: boolean;
   private readonly periodTicks: number;
   private readonly magazineSize: number;
   private readonly reloadTicks: number;
@@ -19,7 +21,11 @@ export class RifleFireState {
   private wasFiring = false;
   private state: RifleAmmoState;
 
-  constructor(config: WeaponConfig = WEAPON_CONFIGS.rifle) {
+  constructor(config: WeaponConfig = WEAPON_CONFIGS.rifle, policy: RifleAmmoPolicy = DEFAULT_RIFLE_AMMO_POLICY) {
+    if (!policy || typeof policy.autoReload !== 'boolean' || typeof policy.infiniteReserve !== 'boolean'
+      || Object.keys(policy).some(key => key !== 'autoReload' && key !== 'infiniteReserve')) throw new TypeError('Invalid rifle ammo policy');
+    this.infiniteReserve = policy.infiniteReserve;
+    this.autoReload = policy.autoReload;
     const validated = parseWeaponConfig(config);
     if (validated.id !== 'rifle' || validated.fireRate > PHYSICS_CONFIG.tickRate) {
       throw new RangeError('Rifle rule requires rifle config with fireRate <= tickRate');
@@ -44,14 +50,15 @@ export class RifleFireState {
     // Reload has priority over fire; repeated requests cannot restart its deadline.
     if (this.state.reloading) {
       if (tick >= this.reloadEndTick) {
-        const transferred = Math.min(this.magazineSize - this.state.magazine, this.state.reserve);
+        const transferred = this.infiniteReserve ? this.magazineSize - this.state.magazine
+          : Math.min(this.magazineSize - this.state.magazine, this.state.reserve);
         this.state = Object.freeze({ ...this.state, reloading: false,
-          magazine: this.state.magazine + transferred, reserve: this.state.reserve - transferred });
+          magazine: this.state.magazine + transferred, reserve: this.infiniteReserve ? this.state.reserve : this.state.reserve - transferred });
       }
       this.wasFiring = false;
       return null; // Completion tick is also reserved for reload, no buffered short shots.
     }
-    if (reloadPressed && this.state.magazine < this.magazineSize && this.state.reserve > 0) {
+    if (reloadPressed && this.state.magazine < this.magazineSize && (this.infiniteReserve || this.state.reserve > 0)) {
       this.reloadEndTick = tick + this.reloadTicks;
       this.state = Object.freeze({ ...this.state, reloading: true });
       this.wasFiring = false;
@@ -67,8 +74,13 @@ export class RifleFireState {
       this.state = Object.freeze({ ...this.state, magazine: this.state.magazine - 1,
         shotsFired: this.state.shotsFired + 1 });
       shot = Object.freeze({ tick, sequence: this.state.shotsFired });
+      // The final shot still resolves normally while its accepted empty reload starts.
+      if (this.autoReload && this.state.magazine === 0 && (this.infiniteReserve || this.state.reserve > 0)) {
+        this.reloadEndTick = tick + this.reloadTicks;
+        this.state = Object.freeze({ ...this.state, reloading: true });
+      }
     }
-    this.wasFiring = firing;
+    this.wasFiring = firing && !this.state.reloading;
     return shot;
   }
 }

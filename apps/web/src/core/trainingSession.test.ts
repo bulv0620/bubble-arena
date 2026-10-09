@@ -14,6 +14,7 @@ test('reset isolates ammo/reload, all target hit histories, floating damage and 
   const fresh = createTrainingSession(), changed = vi.fn();
   const release = fresh.range.subscribe(changed);
   expect(fresh.rifle.getSnapshot()).toMatchObject({ magazine: 30, reserve: 120, shotsFired: 0, reloading: false });
+  expect(fresh.rifle.infiniteReserve).toBe(true);
   expect(fresh.rifle.getReloadProgress()).toBeNull();
   expect(fresh.range.getSnapshot().hitCount).toBe(0);
   for (const e of fresh.range.entries) {
