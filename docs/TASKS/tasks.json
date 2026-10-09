@@ -423,7 +423,7 @@
       "title": "采集开火输入",
       "acceptance": "左键单击/按住触发意图，暂不扣弹药。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.2"

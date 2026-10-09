@@ -9,14 +9,16 @@ import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { InputDiagnostics } from './InputDiagnostics';
+import { FireInput, FireInputHint } from '../weapons';
 
 export function BasicScene() {
   const input = useKeyboardInput();
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [pointer] = useState(() => new PointerLockInput());
   const [aim] = useState(() => new AimInput());
+  const [fire] = useState(() => new FireInput(pointer, aim));
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
-  const clearInput = useCallback(() => { input.clear(); aim.clear(); }, [input, aim]);
+  const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); }, [input, aim, fire]);
   const view = useRef<CameraHeading>({ yaw: 0 });
   return (
     <>
@@ -50,13 +52,14 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} />
+            <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} />
           </PhysicsWorld>
         </Suspense>
       </Canvas>
       <PointerLockHint control={pointer} />
       <AimHint input={aim} />
       <Crosshair input={crosshair} />
+      <FireInputHint input={fire} pointer={pointer} />
       {import.meta.env.DEV && <InputDiagnostics input={input} />}
     </>
   );

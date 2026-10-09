@@ -24,7 +24,7 @@ export class PointerLockInput {
   }
 
   attach(canvas: LockCanvas, global: EventTarget, doc: LockDocument,
-    rotate: (dx: number, dy: number) => void, clearInput: () => void) {
+    rotate: (dx: number, dy: number) => void, clearInput: () => void, canRequest = () => true) {
     this.detachCurrent?.();
     this.currentCanvas = canvas;
     let active = true, wanted = false, pending = false;
@@ -62,7 +62,7 @@ export class PointerLockInput {
     };
     const click = (event: Event) => {
       const e = event as MouseEvent;
-      if (e.button !== 0 || e.altKey || e.ctrlKey || e.metaKey || doc.hidden
+      if (!canRequest() || e.button !== 0 || e.altKey || e.ctrlKey || e.metaKey || doc.hidden
         || pending || doc.pointerLockElement === canvas) return;
       if (!canvas.requestPointerLock) { this.publish('unsupported'); return; }
       if (doc.pointerLockElement) { this.publish('error'); return; }

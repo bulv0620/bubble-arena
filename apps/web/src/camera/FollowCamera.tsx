@@ -9,9 +9,10 @@ import { avoidCameraObstacles } from './cameraAvoidance';
 import { CameraDistanceRecovery } from './CameraDistanceRecovery';
 import type { PointerLockInput } from './PointerLockInput';
 import type { AimInput, CrosshairInput } from '../input';
+import type { FireInput } from '../weapons';
 
-export function FollowCamera({ target, control, clearInput, view, aim, crosshair }: { target: RefObject<CameraFollowTarget | null>;
-  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput }) {
+export function FollowCamera({ target, control, clearInput, view, aim, crosshair, fire }: { target: RefObject<CameraFollowTarget | null>;
+  control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput }) {
   const diagnostics = useRef(0);
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
@@ -21,10 +22,11 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
   useEffect(() => aim.attach(canvas, window, document), [aim, canvas]);
   useEffect(() => control.attach(canvas, window, document,
-    (dx, dy) => orbit.rotate(dx, dy), clearInput), [canvas, orbit, control, clearInput]);
+    (dx, dy) => orbit.rotate(dx, dy), clearInput, () => !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim]);
   useEffect(() => orbit.attach(canvas, window, document,
-    () => control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported'), [canvas, orbit, control]);
+    () => (control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported') && !aim.getSnapshot()), [canvas, orbit, control, aim]);
   useEffect(() => crosshair.attach(canvas, window, document), [canvas, crosshair]);
+  useEffect(() => fire.attach(canvas, window, document), [canvas, fire]);
   useFrame(({ camera }, dt) => {
     const angles = orbit.step(dt);
     view.current.yaw = angles.yaw;

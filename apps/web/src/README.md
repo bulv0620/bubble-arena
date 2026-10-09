@@ -1,5 +1,7 @@
 # 客户端模块边界
 
+3.3 weapons/FireInput 采集左键 held 与合并 pressed 沿；consume 只移除沿、clear 取消全部。FireInputHint 订阅低频状态，没有射击/扣弹/伤害或模拟 tick。正常锁定后可采集；后备时右键瞄准才采集左键，并禁止镜头拖动/锁定重试，普通左键仍拖动。监听和订阅由 attach 返回的清理函数释放。
+
 3.2 weapons/RiflePlaceholder 以声明式几何体提供工程占位，挂到 CapsulePlayer 的视觉 group 下，随角色位移、跳跃与 yaw 转身；不创建物理体或碰撞体，不单独执行 tick。武器 +Z 前向经 socket 的 π 旋转适配白盒角色 -Z，几何体/材质由 R3F 声明式生命周期管理。当前无手臂/骨骼或 pitch 举枪动画，正式资产仍需 Blender MCP。
 
 2.11.1 已按用户反馈调整默认构图，HUD 圆环普通 64px / 瞄准 52px 替换原 24px 十字；人物头部默认在准星下方，准星仍位于屏幕中心，状态/释放逻辑保持。
