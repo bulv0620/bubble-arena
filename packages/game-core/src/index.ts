@@ -5,3 +5,4 @@ export { TrainingTargetState, type TrainingHit, type TrainingTargetSnapshot } fr
 export { createPlayerVitals, type PlayerVitals } from './playerVitals';
 export { spreadDirection, rifleSpreadDirection, rifleSpreadAngle } from './rifleSpread';
 export { RifleAccuracy } from './rifleAccuracy';
+export { calculateWeaponDamage } from './weaponDamage';

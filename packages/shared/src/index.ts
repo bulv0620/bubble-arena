@@ -10,3 +10,5 @@ export { PLAYER_VITALS_CONFIG } from './playerVitals';
 export { RIFLE_RECOIL_CONFIG, createRifleRecoilTuning, type RifleRecoilTuning } from './rifleRecoil';
 export { RIFLE_SPREAD_CONFIG } from './rifleSpread';
 export { DEFAULT_RIFLE_AMMO_POLICY, TRAINING_RIFLE_AMMO_POLICY, type RifleAmmoPolicy } from './rifleAmmoPolicy';
+export { WEAPON_DAMAGE_PROFILES, parseWeaponDamageProfile, type WeaponDamageProfile, type HitRegion } from './weaponDamage';
+export { BLOCK_AVATAR_CONFIG } from './blockAvatar';

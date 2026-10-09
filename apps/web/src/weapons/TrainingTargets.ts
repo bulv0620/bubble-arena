@@ -1,6 +1,6 @@
 import { Ray, QueryFilterFlags, type World } from '@dimforge/rapier3d-compat';
-import { COLLISION_GROUPS } from '@bubble-arena/shared';
-import type { TrainingHit } from '@bubble-arena/game-core';
+import { COLLISION_GROUPS, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, type HitRegion } from '@bubble-arena/shared';
+import { calculateWeaponDamage, type TrainingHit } from '@bubble-arena/game-core';
 import { queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
 import type { MuzzleRayResult } from './muzzleRay';
 import type { LocalTrainingTarget } from './LocalTrainingTarget';
@@ -12,10 +12,10 @@ const mapMargin = 0.00001;
 export class TrainingTargets {
   private lastShotSequence = 0;
   private lastShotTick = -1;
-  private entries = new Map<number, LocalTrainingTarget>();
-  register(handle: number, target: LocalTrainingTarget) {
-    if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle)) throw new TypeError('Invalid/duplicate target collider');
-    this.entries.set(handle, target);
+  private entries = new Map<number, { target: LocalTrainingTarget; region: HitRegion }>();
+  register(handle: number, target: LocalTrainingTarget, region: HitRegion = 'body') {
+    if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body') throw new TypeError('Invalid/duplicate target collider or region');
+    this.entries.set(handle, { target, region });
     let active = true;
     return () => { if (active) { active = false; this.entries.delete(handle); } };
   }
@@ -48,8 +48,14 @@ export class TrainingTargets {
     if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return null;
     this.lastShotSequence = shot.sequence; this.lastShotTick = shot.tick;
     if (!result || result.status === 'blocked-muzzle') return null;
-    const hit = this.query(world, { origin: result.origin, direction: result.direction, range: result.distance });
+    const hit = this.query(world, { origin: result.origin, direction: result.direction, range: Math.min(result.distance, WEAPON_CONFIGS.rifle.range) });
     if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) return null;
-    return this.entries.get(hit.handle)?.receiveHit(shot) ? hit.point : null;
+    const entry = this.entries.get(hit.handle);
+    if (!entry) return null;
+    const damage = calculateWeaponDamage(WEAPON_CONFIGS.rifle.damage, WEAPON_DAMAGE_PROFILES.rifle, entry.region, hit.distance);
+    const accepted = entry.target.receiveHit(shot, damage);
+    if (accepted && import.meta.env.DEV) console.info('[damage.check]', JSON.stringify({ ...shot, region: entry.region,
+      distance: hit.distance, damage, appliedDamage: entry.target.getSnapshot().lastDamage }));
+    return accepted ? hit.point : null;
   }
 }

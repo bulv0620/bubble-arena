@@ -1,0 +1,14 @@
+[
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":12,\"colliders\":15,\"mapHash\":\"fnv1a64:5c84d22467198a7b\"}",
+    "timestamp": "2026-10-09T12:02:45.461Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791547281132"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":12,\"colliders\":15,\"mapHash\":\"fnv1a64:5c84d22467198a7b\"}",
+    "timestamp": "2026-10-09T12:03:29.812Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791547281132"
+  }
+]

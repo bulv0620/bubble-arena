@@ -14,8 +14,8 @@ export class LocalTrainingTarget {
     for (const listener of this.listeners) listener();
     return true;
   }
-  receiveHit(hit: TrainingHit) {
-    const accepted = this.rule.receiveHit(hit);
+  receiveHit(hit: TrainingHit, resolvedDamage?: number) {
+    const accepted = this.rule.receiveHit(hit, resolvedDamage);
     if (accepted) {
       this.damageNumbers.push(hit.sequence, this.rule.getState().lastDamage);
       for (const listener of this.listeners) listener();

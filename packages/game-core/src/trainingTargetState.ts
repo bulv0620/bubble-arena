@@ -26,15 +26,17 @@ export class TrainingTargetState {
     this.state = Object.freeze({ ...this.state, hp: this.state.maxHp, lastDamage: 0 });
     return true;
   }
-  receiveHit(hit: TrainingHit) {
+  /** Resolved damage is internal simulation output, not a network/client command. */
+  receiveHit(hit: TrainingHit, resolvedDamage = this.damage) {
     if (!hit || !Number.isSafeInteger(hit.tick) || hit.tick < 0 || !Number.isSafeInteger(hit.sequence) || hit.sequence <= 0) {
       throw new TypeError('Expected valid local shot identity');
     }
+    if (!Number.isFinite(resolvedDamage) || resolvedDamage <= 0) throw new RangeError('Expected positive finite resolved damage');
     if (hit.sequence <= this.lastSequence || hit.tick < this.lastReceivedTick) return false;
     this.lastSequence = hit.sequence;
     this.lastReceivedTick = hit.tick;
     if (this.state.hp === 0) return false;
-    const lastDamage = Math.min(this.damage, this.state.hp);
+    const lastDamage = Math.min(resolvedDamage, this.state.hp);
     this.state = Object.freeze({ ...this.state, hp: this.state.hp - lastDamage, lastDamage,
       hitCount: this.state.hitCount + 1, lastHitTick: hit.tick });
     if (this.state.hp === 0) this.remainingRestoreTicks = this.restoreTicks;

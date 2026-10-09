@@ -1,6 +1,6 @@
 import { beforeAll, expect, test, vi } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
-import { COLLISION_GROUPS, TRAINING_TARGET_CONFIG, WHITEBOX_COLLISION, TRAINING_RANGE_CONFIG } from '@bubble-arena/shared';
+import { COLLISION_GROUPS, BLOCK_AVATAR_CONFIG as shape, WHITEBOX_COLLISION, TRAINING_RANGE_CONFIG } from '@bubble-arena/shared';
 import { LocalTrainingRange } from './LocalTrainingRange';
 import { TrainingTargets } from './TrainingTargets';
 import { queryMuzzleRay } from './muzzleRay';
@@ -18,14 +18,16 @@ test('three configured fixtures receive independent damage through real map quer
     }
     const handles = range.entries.map(entry => {
       const [x, y, z] = entry.position;
-      const sensor = world.createCollider(RAPIER.ColliderDesc.capsule(TRAINING_TARGET_CONFIG.capsuleHalfHeight, TRAINING_TARGET_CONFIG.radius)
-        .setTranslation(x, y, z).setSensor(true).setCollisionGroups(COLLISION_GROUPS.trainingTarget));
-      releases.push(registry.register(sensor.handle, entry.target)); return sensor.handle;
+      const head = world.createCollider(RAPIER.ColliderDesc.ball(shape.headRadius).setTranslation(x, y + shape.headY, z)
+        .setSensor(true).setCollisionGroups(COLLISION_GROUPS.trainingTarget));
+      const sensor = world.createCollider(RAPIER.ColliderDesc.capsule(shape.bodyHalfHeight, shape.bodyRadius)
+        .setTranslation(x, y + shape.bodyY, z).setSensor(true).setCollisionGroups(COLLISION_GROUPS.trainingTarget));
+      releases.push(registry.register(head.handle, entry.target, 'head'), registry.register(sensor.handle, entry.target, 'body')); return sensor.handle;
     });
     world.step();
     const initial = range.getSnapshot(), notify = vi.fn(), unsubscribe = range.subscribe(notify);
     for (let i = 0; i < 3; i++) {
-      const x = range.entries[i].position[0], origin = { x, y: 1.2, z: 0 };
+      const x = range.entries[i].position[0], origin = { x, y: .8, z: 0 };
       const aim = registry.aim(world, { origin, direction: { x: 0, y: 0, z: -1 }, range: 70 })!;
       expect(aim.colliderHandle).toBe(handles[i]);
       const result = queryMuzzleRay(world, origin, { ...origin, z: -0.67 }, aim);

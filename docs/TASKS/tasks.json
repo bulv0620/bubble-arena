@@ -683,6 +683,18 @@
       "acceptance": "调试点默认隐藏/可手动开启；累计上限后逐发震动，边界/去重/恢复/重置和浏览器验证通过。"
     },
     {
+      "id": "3.12.13",
+      "title": "部位伤害与距离衰减",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.12"
+      ],
+      "file": "docs/TASKS/3.12.13.md",
+      "acceptance": "头/身分区与占位外形一致；枪口距离决定线性衰减；实际扣血/浮字一致，遮挡、去重、恢复与重置回归通过。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",
