@@ -4,6 +4,8 @@
 
 最新：用户在 2.11.1 修正后指示“开始下一阶段吧”，记录阶段 2 全部 14 项 accepted 并关闭，第一版操控/构图基线确定。原测试、截图与已知限制保留，不宣称跨平台/性能矩阵通过。验收回退 tag stage-2-accepted；接下来执行阶段 3 首项 3.1。下文为前次实现记录。
 
+阶段 3 最新：3.1 implemented，共享 WeaponId/WeaponConfig、严格运行时解析及冻结默认目录已完成；四武器基础数值按 GAME_DESIGN，霰弹伤害是单粒。最终 pnpm check：21 文件 195 测试、typecheck/lint/build/索引全通过，编译期类型负例也通过。无依赖安装、无 UI/模型/射击变化。报告 [3.1](reports/3.1.md)，本地提交 feat: define validated shared weapon configuration，未推送。下一任务 3.2，本轮停止。
+
 - 阶段 0、阶段 1 accepted，阶段 1 已关闭。回退 tag：stage-0-baseline、stage-1-jump-fix（86b735b）。1.1～1.11 与 1.11.1 accepted。
 - **阶段 2 全部 14 张任务卡 implemented，待用户手感/视觉验收，尚未关闭。** 剩余 2.9～2.11 已实现；本轮按试玩反馈完成 2.11.1 构图修正，没有进入阶段 3。
 - 2.1～2.3：右肩第三人称跟随、鼠标 yaw/pitch 指数平滑、俯仰 -60°～70° 限幅与最短路径环绕。

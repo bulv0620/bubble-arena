@@ -1,5 +1,7 @@
 # Shared
 
+3.1 已提供 weapons.ts：WeaponId、只读 WeaponConfig、isWeaponId、parseWeaponConfig 和 WEAPON_CONFIGS。伤害为正有限数值（霰弹按单粒）；fireRate 为次/秒，range 为米，reloadDuration 为秒；magazineSize 为正安全整数，reserveAmmo 为非负安全整数。解析拒绝缺失/额外字段、非法 ID、强制转换值和访问器，返回冻结副本；四武器基础默认值与 GAME_DESIGN 对齐，无弹药状态、射击机制或客户端伤害授权。
+
 当前镜头基线已于 2026-10-09 按用户反馈更新（2.11.1）：观察点 1.1m、初始俯角 8°、瞄准 3.4m/60°/0.65m，普通 4.5m/70°/0.55m 保持。下文 2.1/2.8 参数属于历史交付；当前以 CAMERA_CONFIG、GAME_DESIGN 为准。
 
 协议、运行时校验、配置和资源 ID；不依赖 React、DOM 或服务端。当前入口 src/index.ts 供 Vite/Vitest/TypeScript 消费；Node 20 服务端需 TS loader 或构建器，尚未提供发布 JS 产物。

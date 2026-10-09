@@ -399,7 +399,7 @@
       "title": "定义武器配置 Schema",
       "acceptance": "ID、伤害、射速、弹匣、备弹、射程、换弹时长受类型约束。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "2.11"
