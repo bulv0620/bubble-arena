@@ -495,7 +495,7 @@
       "title": "伤害与命中反馈",
       "acceptance": "有效命中才扣血；未命中不扣血。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.8"

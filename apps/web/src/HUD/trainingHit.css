@@ -1,0 +1,16 @@
+.training-hit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  color: #ffe267;
+  text-shadow: 0 1px 3px #152333;
+  animation: training-hit-fade 700ms ease-out forwards;
+}
+.training-hit svg { display: block; }
+.training-hit span { position: absolute; left: 38px; top: 3px; white-space: nowrap; }
+@keyframes training-hit-fade {
+  0%, 60% { opacity: 1; }
+  100% { opacity: 0; }
+}

@@ -2,7 +2,9 @@
 
 更新时间：2026-10-09。
 
-当前3.8 implemented：新增独立100HP练习靶配置、无推动sensor胶囊、TrainingTargetState/receiveHit接口、受击计数HUD。准星选择最近可见注册靶子；有效枪口射线在地图遮挡范围内路由一次，重复/过期射击不重放。3.9再扣血/反馈。30文件255测试及pnpm check全通过；桌面生产锁定真实命中30→29、受击0→1，移开再射29→28受击仍1、HP100；开发9刚体/9碰撞体（多一靶子），原地图hash不变。报告 [3.8](reports/3.8.md)，本地提交 feat: add training target and receive-hit interface，未推送，待人工验收。下一任务3.9，本轮停止。
+当前3.9 implemented：有效步枪命中读取共享20伤害，HP最小归零，lastDamage记录实际扣血量；重复/过期、miss、墙面遮挡和blocked-muzzle不扣血。有效受击低频驱动中心命中标记/数值700ms淡出，归零后不重复反馈。30文件256测试及全部pnpm check通过；桌面生产真实命中100→80、打空80不变；刷新后5发归零，第6发HP0/受击5不变。截图/AX/error日志见 [3.9](reports/3.9.md)。本地提交 feat: apply rifle damage and hit feedback，未推送，待人工视觉验收。下一任务3.10，本轮停止。
+
+历史3.8 implemented：新增独立100HP练习靶配置、无推动sensor胶囊、TrainingTargetState/receiveHit接口、受击计数HUD。准星选择最近可见注册靶子；有效枪口射线在地图遮挡范围内路由一次，重复/过期射击不重放。3.9再扣血/反馈。30文件255测试及pnpm check全通过；桌面生产锁定真实命中30→29、受击0→1，移开再射29→28受击仍1、HP100；开发9刚体/9碰撞体（多一靶子），原地图hash不变。报告 [3.8](reports/3.8.md)，本地提交 feat: add training target and receive-hit interface，未推送，待人工验收。下一任务3.9，本轮停止。
 
 历史3.7 implemented：共享占位枪口尺寸，按本步物理中心/朝向计算；角色中心→枪口安全段阻止枪口穿墙起射，通过后枪口→准星方向查询最近地图交点，实际射程70m。已接受开火在物理步后输出结果，受阻仍扣弹，开发红点/preview与实际shot.ray分开。28文件246测试、pnpm check全通过。内置靠墙预览blocked-muzzle，桌面Chrome锁定/W靠墙/单击29弹，并从真实DevTools读取tick657、sequence1、blocked-muzzle、交点z≈-2.75。报告 [3.7](reports/3.7.md)，本地提交 feat: resolve muzzle rays with close-wall protection，未推送；待人工验收。下一任务3.8，本轮停止。
 

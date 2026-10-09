@@ -27,8 +27,12 @@ test('nearest visible sensor is aim target and actual shot invokes independent h
   expect(registry.receiveShot(world, { tick: 0, sequence: 1 }, actual)).toBe(true);
   expect(registry.receiveShot(world, { tick: 0, sequence: 1 }, actual)).toBe(false);
   expect(spy).toHaveBeenCalledTimes(1); expect(listener).toHaveBeenCalledTimes(1);
-  expect(near.target.getSnapshot()).toMatchObject({ hp: 100, hitCount: 1 });
-  un(); registry.receiveShot(world, { tick: 8, sequence: 2 }, actual); expect(listener).toHaveBeenCalledTimes(1);
+  expect(near.target.getSnapshot()).toMatchObject({ hp: 80, hitCount: 1, lastDamage: 20 });
+  const damaged = near.target.getSnapshot();
+  expect(registry.receiveShot(world, { tick: 4, sequence: 2 }, null)).toBe(false);
+  expect(near.target.getSnapshot()).toBe(damaged); expect(listener).toHaveBeenCalledTimes(1);
+  un(); registry.receiveShot(world, { tick: 8, sequence: 3 }, actual); expect(listener).toHaveBeenCalledTimes(1);
+  expect(near.target.getSnapshot().hp).toBe(60);
 });
 test('wall in front of target prevents aim selection and receiveHit, including muzzle guard', () => {
   setup(); const registry = new TrainingTargets(), entry = dummy(-5, registry), spy = vi.spyOn(entry.target, 'receiveHit'); wall(-2); world.step();
@@ -37,7 +41,7 @@ test('wall in front of target prevents aim selection and receiveHit, including m
   expect(registry.receiveShot(world, { tick: 0, sequence: 1 }, actual)).toBe(false);
   wall(-0.4); world.step(); const blocked = queryMuzzleRay(world, anchor, muzzle, aim)!;
   expect(blocked.status).toBe('blocked-muzzle'); expect(registry.receiveShot(world, { tick: 8, sequence: 2 }, blocked)).toBe(false);
-  expect(spy).not.toHaveBeenCalled();
+  expect(spy).not.toHaveBeenCalled(); expect(entry.target.getSnapshot().hp).toBe(100);
 });
 test('miss, absent/invalid results, out-of-range and unregistered colliders never call receiver', () => {
   setup(); const registry = new TrainingTargets(), entry = dummy(-80, registry), spy = vi.spyOn(entry.target, 'receiveHit'); world.step();
@@ -45,7 +49,7 @@ test('miss, absent/invalid results, out-of-range and unregistered colliders neve
   expect(registry.receiveShot(world, { tick: 0, sequence: 1 }, queryMuzzleRay(world, anchor, muzzle, aim))).toBe(false);
   expect(registry.receiveShot(world, { tick: 8, sequence: 2 }, null)).toBe(false);
   const near = dummy(-3, registry); near.detach(); world.step();
-  expect(registry.aim(world, ray)?.status).toBe('clear'); expect(spy).not.toHaveBeenCalled();
+  expect(registry.aim(world, ray)?.status).toBe('clear'); expect(spy).not.toHaveBeenCalled(); expect(entry.target.getSnapshot().hp).toBe(100);
 });
 test('registration cleanup is idempotent, stale cleanup does not remove replacement; scene reset isolates hits', () => {
   setup(); const registry = new TrainingTargets(), entry = dummy(-3, registry); world.step();
@@ -67,13 +71,20 @@ test('training sensor does not participate in player movement or map camera quer
 test('accepted rifle tick dispatches hits; cooldown/reload do not emit, stale missed event cannot later hit', () => {
   setup(); const registry = new TrainingTargets(), entry = dummy(-3, registry), rifle = new LocalRifle(); world.step();
   const aim = registry.aim(world, ray)!, actual = queryMuzzleRay(world, anchor, muzzle, aim)!;
+  const listener = vi.fn(), unsubscribe = entry.target.subscribe(listener);
   for (let i = 0; i < 60; i++) { const shot = rifle.step({ held: true, pressed: false }); if (shot) registry.receiveShot(world, shot, actual); }
-  expect(entry.target.getSnapshot().hitCount).toBe(8); expect(rifle.getSnapshot().magazine).toBe(22);
+  expect(entry.target.getSnapshot().hitCount).toBe(5); expect(rifle.getSnapshot().magazine).toBe(22);
+  expect(entry.target.getSnapshot().hp).toBe(0); expect(listener).toHaveBeenCalledTimes(5);
+  unsubscribe();
   rifle.step({ held: true, pressed: false }, true);
   for (let i = 0; i < 120; i++) expect(rifle.step({ held: true, pressed: false })).toBeNull();
+  entry.detach(); const fresh = new LocalTrainingTarget(); registry.register(entry.collider.handle, fresh);
   registry.receiveShot(world, { tick: 300, sequence: 100 }, null);
   expect(registry.receiveShot(world, { tick: 300, sequence: 100 }, actual)).toBe(false);
+  expect(fresh.getSnapshot().hp).toBe(100);
   expect(() => registry.receiveShot(world, { tick: -1, sequence: 101 }, actual)).toThrow(TypeError);
+  expect(registry.receiveShot(world, { tick: 301, sequence: 101 }, actual)).toBe(true);
+  expect(fresh.getSnapshot().hp).toBe(80);
 });
 test('coincident target and wall surfaces keep map priority instead of dispatching through float rounding', () => {
   setup(); const registry = new TrainingTargets(), entry = dummy(-3, registry); wall(-2.7); world.step();
