@@ -2,6 +2,8 @@
 
 更新时间：2026-10-09。
 
+当前任务进展：3.2 implemented，工程占位步枪已挂到角色右侧视觉 group，随移动/跳跃/转向，+Z 武器前向适配白盒 -Z；无新增碰撞体，实测仍 8 刚体/8 碰撞体、原地图 hash。21 文件 195 测试及全部 pnpm check 通过，生产转身/跳跃/瞄准截图、开发日志见 [3.2](reports/3.2.md)。未调用 Blender MCP、未生成正式模型；B.1 状态保持 todo。本地提交 feat: attach whitebox rifle to player visual，未推送。下一任务 3.3，本轮停止。
+
 最新：用户在 2.11.1 修正后指示“开始下一阶段吧”，记录阶段 2 全部 14 项 accepted 并关闭，第一版操控/构图基线确定。原测试、截图与已知限制保留，不宣称跨平台/性能矩阵通过。验收回退 tag stage-2-accepted；接下来执行阶段 3 首项 3.1。下文为前次实现记录。
 
 阶段 3 最新：3.1 implemented，共享 WeaponId/WeaponConfig、严格运行时解析及冻结默认目录已完成；四武器基础数值按 GAME_DESIGN，霰弹伤害是单粒。最终 pnpm check：21 文件 195 测试、typecheck/lint/build/索引全通过，编译期类型负例也通过。无依赖安装、无 UI/模型/射击变化。报告 [3.1](reports/3.1.md)，本地提交 feat: define validated shared weapon configuration，未推送。下一任务 3.2，本轮停止。

@@ -411,7 +411,7 @@
       "title": "装备步枪占位模型",
       "acceptance": "步枪组件与角色位置正确关联。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.1"

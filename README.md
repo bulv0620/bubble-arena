@@ -1,6 +1,6 @@
 # Bubble Arena 工作区
 
-阶段 2（含 [准星构图修正](docs/reports/2.11.1.md)）已按用户进入下一阶段的指令验收关闭。[3.1 武器配置 Schema](docs/reports/3.1.md) 已实现；下一任务为 [3.2 装备步枪占位模型](docs/TASKS/3.2.md)。
+阶段 2（含 [准星构图修正](docs/reports/2.11.1.md)）已验收关闭。[3.1 武器配置 Schema](docs/reports/3.1.md)、[3.2 步枪工程占位](docs/reports/3.2.md) 已实现；下一任务为 [3.3 采集开火输入](docs/TASKS/3.3.md)。
 
 原创 3D 卡通第三人称房间制射击游戏。当前白盒原型支持 WASD 移动、空格跳跃和地面/墙箱碰撞，尚未接入战斗与联机。
 

@@ -1,3 +1,2 @@
 // 武器视觉、枪口与反馈适配。弹药、射速和伤害规则属于 game-core/shared。
-// 当前为空模块；后续任务通过此入口显式导出公共 API。
-export {};
+export { RiflePlaceholder } from './RiflePlaceholder';

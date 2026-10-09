@@ -6,6 +6,7 @@ import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
 import type { AimInput } from '../input';
+import { RiflePlaceholder } from '../weapons';
 
 interface CapsulePlayerProps {
   /** World-space capsule center, not the foot position. */
@@ -62,6 +63,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim }: Cap
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
       <group ref={visual}>
+        <RiflePlaceholder />
         <mesh castShadow receiveShadow>
           <capsuleGeometry args={[radius, capsuleHalfHeight * 2, 8, 16]} />
           <meshStandardMaterial color="#ef9350" roughness={0.7} />

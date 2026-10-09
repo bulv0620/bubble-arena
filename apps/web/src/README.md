@@ -1,5 +1,7 @@
 # 客户端模块边界
 
+3.2 weapons/RiflePlaceholder 以声明式几何体提供工程占位，挂到 CapsulePlayer 的视觉 group 下，随角色位移、跳跃与 yaw 转身；不创建物理体或碰撞体，不单独执行 tick。武器 +Z 前向经 socket 的 π 旋转适配白盒角色 -Z，几何体/材质由 R3F 声明式生命周期管理。当前无手臂/骨骼或 pitch 举枪动画，正式资产仍需 Blender MCP。
+
 2.11.1 已按用户反馈调整默认构图，HUD 圆环普通 64px / 瞄准 52px 替换原 24px 十字；人物头部默认在准星下方，准星仍位于屏幕中心，状态/释放逻辑保持。
 
 任务 0.5 建立模块目录；core/BasicScene 装配地图、物理、player 与 camera，App 只引用 core 公共入口。player 提供胶囊、输入/移动适配和视觉转向；camera 提供跟随/避障、恢复与锁定，失败时可拖动。监听器由 effect 配对释放。camera 只读位置并发布 yaw 意图，固定物理步调用共享规则计算位移；weapons/audio/network 仍为空。

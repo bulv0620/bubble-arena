@@ -1,0 +1,8 @@
+[
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":8,\"colliders\":8,\"mapHash\":\"fnv1a64:4abdb29633dc2d14\"}",
+    "timestamp": "2026-10-09T01:30:13.781Z",
+    "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791509115405"
+  }
+]
