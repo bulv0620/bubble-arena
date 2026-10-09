@@ -575,6 +575,18 @@
       "acceptance": "人物/靶头顶血条跟随、HUD游戏化布局、逐次有效命中随机浮字并存且自动释放。"
     },
     {
+      "id": "3.12.4",
+      "title": "换弹准星进度环与训练靶自动恢复",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.3"
+      ],
+      "file": "docs/TASKS/3.12.4.md",
+      "acceptance": "准星外圈展示实际换弹进度；靶子归零后120物理步恢复满血，等待期间拒绝伤害且恢复后保留去重。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

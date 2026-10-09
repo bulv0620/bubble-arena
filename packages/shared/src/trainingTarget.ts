@@ -2,7 +2,7 @@ import { PLAYER_CONFIG } from './player';
 
 /** Separate engineering test fixture, not a formal map or player life state. */
 export const TRAINING_TARGET_CONFIG = Object.freeze({
-  version: 2, maxHp: 100,
+  version: 3, maxHp: 100, restoreDuration: 2,
   radius: PLAYER_CONFIG.radius, capsuleHalfHeight: PLAYER_CONFIG.capsuleHalfHeight,
 });
 

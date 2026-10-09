@@ -54,3 +54,7 @@
   .health-track i { transition: none; }.damage-number { animation-name: damage-fade; }
 }
 @keyframes damage-fade { 0%, 65% { opacity: 1; transform: translate(calc(var(--damage-x) - 50%), var(--damage-y)); } 100% { opacity: 0; transform: translate(calc(var(--damage-x) - 50%), var(--damage-y)); } }
+
+.reload-reticle { position: absolute; z-index: 50; top: 50%; left: 50%; width: 88px; height: 88px; transform: translate(-50%, -50%); pointer-events: none; user-select: none; }
+.reload-reticle svg { display: block; filter: drop-shadow(0 1px 2px #132b4680); }
+.reload-reticle > span { position: absolute; top: 92px; left: 50%; transform: translateX(-50%); font: 700 11px 'PingFang SC', sans-serif; color: #e4fff7; white-space: nowrap; text-shadow: 0 1px 3px #17364b, 0 0 2px #17364b; }

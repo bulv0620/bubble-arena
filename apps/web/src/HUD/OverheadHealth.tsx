@@ -1,6 +1,6 @@
 import { Html } from '@react-three/drei';
 import { useEffect, useSyncExternalStore, type CSSProperties } from 'react';
-import { PLAYER_CONFIG } from '@bubble-arena/shared';
+import { PLAYER_CONFIG, TRAINING_TARGET_CONFIG } from '@bubble-arena/shared';
 import type { PlayerVitals } from '@bubble-arena/game-core';
 import type { LocalTrainingTarget } from '../weapons';
 import { DAMAGE_NUMBER_CONFIG, type DamageNumbers } from '../effects/DamageNumbers';
@@ -32,7 +32,7 @@ export function PlayerOverheadHealth({ player }: { player: PlayerVitals }) {
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {
   const state = useSyncExternalStore(target.subscribe, target.getSnapshot);
   return <Html center occlude position={[0, PLAYER_CONFIG.height / 2 + 0.38, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
-    <HealthPlate label={state.hp === 0 ? `${label} · 已清空` : label} hp={state.hp} maxHp={state.maxHp} />
+    <HealthPlate label={state.hp === 0 ? `${label} · ${TRAINING_TARGET_CONFIG.restoreDuration}s恢复` : label} hp={state.hp} maxHp={state.maxHp} />
     <FloatingDamage queue={target.damageNumbers} />
   </Html>;
 }

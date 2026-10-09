@@ -8,6 +8,12 @@ export class LocalTrainingTarget {
   private listeners = new Set<() => void>();
   getSnapshot = () => this.rule.getState();
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
+  step() {
+    if (!this.rule.step()) return false;
+    this.damageNumbers.clear();
+    for (const listener of this.listeners) listener();
+    return true;
+  }
   receiveHit(hit: TrainingHit) {
     const accepted = this.rule.receiveHit(hit);
     if (accepted) {

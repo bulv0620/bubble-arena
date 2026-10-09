@@ -52,3 +52,17 @@ test('a short locked click between physics steps deducts once, then remains idle
   expect(rifle.getSnapshot().magazine).toBe(29);
   detach(); unPointer();
 });
+
+test('reload progress has a separate tick subscription; ammo updates only at start/end and release works', () => {
+  const rifle = new LocalRifle(), ammo = vi.fn(), progress = vi.fn();
+  const releaseAmmo = rifle.subscribe(ammo), releaseProgress = rifle.subscribeReload(progress);
+  const idle = { held: false, pressed: false };
+  rifle.step({ held: true, pressed: false }); ammo.mockClear();
+  rifle.step(idle, true); expect(rifle.getReloadProgress()).toBe(0);
+  for (let i = 0; i < 60; i++) rifle.step(idle, true);
+  expect(rifle.getReloadProgress()).toBe(0.5); expect(ammo).toHaveBeenCalledTimes(1);
+  expect(progress).toHaveBeenCalledTimes(61); releaseProgress(); releaseProgress();
+  for (let i = 0; i < 60; i++) rifle.step(idle);
+  expect(rifle.getReloadProgress()).toBeNull(); expect(ammo).toHaveBeenCalledTimes(2);
+  expect(progress).toHaveBeenCalledTimes(61); releaseAmmo();
+});

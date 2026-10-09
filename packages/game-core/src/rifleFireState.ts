@@ -32,6 +32,9 @@ export class RifleFireState {
     this.state = Object.freeze({ reloading: false, magazine: validated.magazineSize, reserve: validated.reserveAmmo, shotsFired: 0 });
   }
   getState = () => this.state;
+  /** Progress after the last processed fixed tick; null means no accepted reload. */
+  getReloadProgress = (): number | null => this.state.reloading
+    ? Math.max(0, Math.min(1, 1 - (this.reloadEndTick - (this.tick - 1)) / this.reloadTicks)) : null;
 
   step(intent: FireIntent, reloadPressed = false): RifleShot | null {
     if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean' || typeof reloadPressed !== 'boolean') {

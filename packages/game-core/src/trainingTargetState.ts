@@ -1,4 +1,4 @@
-import { TRAINING_TARGET_CONFIG, WEAPON_CONFIGS } from '@bubble-arena/shared';
+import { PHYSICS_CONFIG, TRAINING_TARGET_CONFIG, WEAPON_CONFIGS } from '@bubble-arena/shared';
 
 export interface TrainingHit { readonly tick: number; readonly sequence: number }
 export interface TrainingTargetSnapshot {
@@ -8,21 +8,36 @@ export interface TrainingTargetSnapshot {
 export class TrainingTargetState {
   private state: TrainingTargetSnapshot;
   private lastSequence = 0;
-  constructor(maxHp: number = TRAINING_TARGET_CONFIG.maxHp, private readonly damage: number = WEAPON_CONFIGS.rifle.damage) {
+  private lastReceivedTick = -1;
+  private remainingRestoreTicks = 0;
+  private readonly restoreTicks: number;
+  constructor(maxHp: number = TRAINING_TARGET_CONFIG.maxHp, private readonly damage: number = WEAPON_CONFIGS.rifle.damage, restoreDuration: number = TRAINING_TARGET_CONFIG.restoreDuration) {
     if (!Number.isSafeInteger(maxHp) || maxHp <= 0) throw new RangeError('Expected positive safe-integer target HP');
     if (!Number.isFinite(damage) || damage <= 0) throw new RangeError('Expected positive finite damage');
+    this.restoreTicks = Math.ceil(restoreDuration * PHYSICS_CONFIG.tickRate);
+    if (!Number.isFinite(restoreDuration) || restoreDuration <= 0 || !Number.isSafeInteger(this.restoreTicks) || this.restoreTicks < 1)
+      throw new RangeError('Expected representable positive target restore duration');
     this.state = Object.freeze({ hp: maxHp, maxHp, hitCount: 0, lastHitTick: null, lastDamage: 0 });
   }
   getState = () => this.state;
+  /** One call per fixed physics step; restoration creates no hit or damage event. */
+  step() {
+    if (this.remainingRestoreTicks === 0 || --this.remainingRestoreTicks > 0) return false;
+    this.state = Object.freeze({ ...this.state, hp: this.state.maxHp, lastDamage: 0 });
+    return true;
+  }
   receiveHit(hit: TrainingHit) {
     if (!hit || !Number.isSafeInteger(hit.tick) || hit.tick < 0 || !Number.isSafeInteger(hit.sequence) || hit.sequence <= 0) {
       throw new TypeError('Expected valid local shot identity');
     }
-    if (this.state.hp === 0 || hit.sequence <= this.lastSequence || (this.state.lastHitTick !== null && hit.tick < this.state.lastHitTick)) return false;
+    if (hit.sequence <= this.lastSequence || hit.tick < this.lastReceivedTick) return false;
     this.lastSequence = hit.sequence;
+    this.lastReceivedTick = hit.tick;
+    if (this.state.hp === 0) return false;
     const lastDamage = Math.min(this.damage, this.state.hp);
     this.state = Object.freeze({ ...this.state, hp: this.state.hp - lastDamage, lastDamage,
       hitCount: this.state.hitCount + 1, lastHitTick: hit.tick });
+    if (this.state.hp === 0) this.remainingRestoreTicks = this.restoreTicks;
     return true;
   }
 }

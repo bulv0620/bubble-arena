@@ -41,3 +41,14 @@ test('fractional reload duration rounds up and invalid duration/intent rejects b
   rule.step(idle); expect(rule.getState().reloading).toBe(false);
   expect(() => new RifleFireState({ ...WEAPON_CONFIGS.rifle, reloadDuration: Number.MAX_VALUE })).toThrow(RangeError);
 });
+
+test('reload progress follows processed simulation ticks, repeated requests cannot reset it', () => {
+  const rule = new RifleFireState();
+  expect(rule.getReloadProgress()).toBeNull(); rule.step(idle, true); expect(rule.getReloadProgress()).toBeNull();
+  rule.step(hold); rule.step(idle, true); expect(rule.getReloadProgress()).toBe(0);
+  for (let i = 1; i <= 60; i++) { rule.step(hold, true); expect(rule.getReloadProgress()).toBeCloseTo(i / 120, 12); }
+  const half = rule.getReloadProgress();
+  expect(() => rule.step(null as unknown as typeof idle)).toThrow(TypeError); expect(rule.getReloadProgress()).toBe(half);
+  for (let i = 61; i < 120; i++) { rule.step(idle); expect(rule.getReloadProgress()).toBeCloseTo(i / 120, 12); }
+  rule.step(idle); expect(rule.getReloadProgress()).toBeNull(); expect(rule.getState().reloading).toBe(false);
+});

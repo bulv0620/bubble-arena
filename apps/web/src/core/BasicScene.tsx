@@ -10,6 +10,7 @@ import { FollowCamera, PointerLockHint, PointerLockInput } from '../camera';
 import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
+import { ReloadProgress } from '../HUD/ReloadProgress';
 import '../HUD/gameHud.css';
 import { InputDiagnostics } from './InputDiagnostics';
 import { RifleRecoil, TrainingTarget, TrainingTargets, LocalTrainingRange, MuzzleAimDiagnostics, type MuzzleRayResult, AimTargetMarker, type ScreenAimTarget, ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
@@ -84,6 +85,7 @@ export function BasicScene() {
       <AmmoHint rifle={rifle} />
       <TrainingTargetHint range={range} />
       <Crosshair input={crosshair} />
+      <ReloadProgress rifle={rifle} />
       {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><FireInputHint input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
 
     </>

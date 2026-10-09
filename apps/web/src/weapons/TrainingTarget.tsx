@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { CapsuleCollider, RigidBody } from '@react-three/rapier';
+import { CapsuleCollider, RigidBody, useBeforePhysicsStep } from '@react-three/rapier';
 import type { Collider } from '@dimforge/rapier3d-compat';
 import { COLLISION_GROUPS, TRAINING_TARGET_CONFIG } from '@bubble-arena/shared';
 import { TargetOverheadHealth } from '../HUD/OverheadHealth';
@@ -9,6 +9,7 @@ import type { LocalTrainingTarget } from './LocalTrainingTarget';
 
 /** Engineering dummy: shared block silhouette inside a unified hit sensor. No solid movement collision. */
 export function TrainingTarget({ registry, target, position, label }: { registry: TrainingTargets; target: LocalTrainingTarget; label: string; position: readonly [number, number, number] }) {
+  useBeforePhysicsStep(() => { target.step(); });
   const collider = useRef<Collider>(null);
   const { radius, capsuleHalfHeight } = TRAINING_TARGET_CONFIG;
   useEffect(() => {
