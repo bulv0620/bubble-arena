@@ -4,12 +4,16 @@ export interface RifleAmmoState {
   readonly magazine: number;
   readonly reserve: number;
   readonly shotsFired: number;
+  readonly reloading: boolean;
 }
 export interface RifleShot { readonly tick: number; readonly sequence: number }
 
 /** Fixed-step local/authority rule; no clock, input device, renderer or hit result. */
 export class RifleFireState {
   private readonly periodTicks: number;
+  private readonly magazineSize: number;
+  private readonly reloadTicks: number;
+  private reloadEndTick = 0;
   private tick = 0;
   private nextShotTick = 0;
   private wasFiring = false;
@@ -22,15 +26,34 @@ export class RifleFireState {
     }
     this.periodTicks = PHYSICS_CONFIG.tickRate / validated.fireRate;
     if (!Number.isFinite(this.periodTicks)) throw new RangeError('Unrepresentable rifle fire interval');
-    this.state = Object.freeze({ magazine: validated.magazineSize, reserve: validated.reserveAmmo, shotsFired: 0 });
+    this.magazineSize = validated.magazineSize;
+    this.reloadTicks = Math.ceil(validated.reloadDuration * PHYSICS_CONFIG.tickRate);
+    if (!Number.isSafeInteger(this.reloadTicks) || this.reloadTicks < 1) throw new RangeError('Unrepresentable reload duration');
+    this.state = Object.freeze({ reloading: false, magazine: validated.magazineSize, reserve: validated.reserveAmmo, shotsFired: 0 });
   }
   getState = () => this.state;
 
-  step(intent: FireIntent): RifleShot | null {
-    if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean') {
+  step(intent: FireIntent, reloadPressed = false): RifleShot | null {
+    if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean' || typeof reloadPressed !== 'boolean') {
       throw new TypeError('Expected boolean fire intent');
     }
     const tick = this.tick++;
+    // Reload has priority over fire; repeated requests cannot restart its deadline.
+    if (this.state.reloading) {
+      if (tick >= this.reloadEndTick) {
+        const transferred = Math.min(this.magazineSize - this.state.magazine, this.state.reserve);
+        this.state = Object.freeze({ ...this.state, reloading: false,
+          magazine: this.state.magazine + transferred, reserve: this.state.reserve - transferred });
+      }
+      this.wasFiring = false;
+      return null; // Completion tick is also reserved for reload, no buffered short shots.
+    }
+    if (reloadPressed && this.state.magazine < this.magazineSize && this.state.reserve > 0) {
+      this.reloadEndTick = tick + this.reloadTicks;
+      this.state = Object.freeze({ ...this.state, reloading: true });
+      this.wasFiring = false;
+      return null;
+    }
     const firing = intent.held || intent.pressed;
     let shot: RifleShot | null = null;
     if (firing && this.state.magazine > 0 && tick >= this.nextShotTick) {

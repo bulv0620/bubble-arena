@@ -1,6 +1,9 @@
 # 客户端模块边界
 
-3.4 weapons/RifleSimulation 注册现有 Rapier useBeforePhysicsStep 回调，读取 FireInput.consume 并调用 LocalRifle 的共享规则；没有 useFrame 射击或 UI-owned timer。LocalRifle 只在接受开火/扣弹时通知，HUD/AmmoHint 订阅不可变快照。卸载时 hook/订阅由既有生命周期清理，重新创建整个场景恢复初始弹药；当前无换弹/子弹/命中反馈。
+3.5 ReloadInput 采集 R 按下沿，过滤自动重复/文字编辑/修饰键，Esc/失焦/隐藏/卸载清空待处理输入。BasicScene 仅装配生命周期；RifleSimulation 在既有物理步消费换弹意图。LocalRifle 仅在扣弹、换弹开始/结束通知，AmmoHint 显示共享配置耗时；无 UI 计时器。
+
+
+3.4 weapons/RifleSimulation 注册现有 Rapier useBeforePhysicsStep 回调，读取 FireInput.consume 并调用 LocalRifle 的共享规则；没有 useFrame 射击或 UI-owned timer。LocalRifle 只在接受开火/扣弹时通知，HUD/AmmoHint 订阅不可变快照。卸载时 hook/订阅由既有生命周期清理，重新创建整个场景恢复初始弹药；3.4 时无换弹/子弹/命中反馈。
 
 3.3 weapons/FireInput 采集左键 held 与合并 pressed 沿；consume 只移除沿、clear 取消全部。FireInputHint 订阅低频状态，没有射击/扣弹/伤害或模拟 tick。正常锁定后可采集；后备时右键瞄准才采集左键，并禁止镜头拖动/锁定重试，普通左键仍拖动。监听和订阅由 attach 返回的清理函数释放。
 

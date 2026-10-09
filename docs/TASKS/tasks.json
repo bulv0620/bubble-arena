@@ -447,7 +447,7 @@
       "title": "换弹状态机",
       "acceptance": "R 键换弹；换弹中不射击，满弹匣和无备弹规则正确。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.4"

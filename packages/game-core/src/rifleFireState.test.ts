@@ -5,10 +5,10 @@ import { RifleFireState } from './rifleFireState';
 const idle: FireIntent = { held: false, pressed: false }, hold: FireIntent = { held: true, pressed: false };
 test('rifle starts at 30/120; each accepted shot deducts exactly one and preserves immutable snapshots', () => {
   const rule = new RifleFireState(), before = rule.getState();
-  expect(before).toEqual({ magazine: 30, reserve: 120, shotsFired: 0 });
+  expect(before).toEqual({ magazine: 30, reserve: 120, reloading: false, shotsFired: 0 });
   expect(rule.step(idle)).toBeNull(); expect(rule.getState()).toBe(before);
   expect(rule.step({ held: false, pressed: true })).toEqual({ tick: 1, sequence: 1 });
-  expect(rule.getState()).toEqual({ magazine: 29, reserve: 120, shotsFired: 1 });
+  expect(rule.getState()).toEqual({ magazine: 29, reserve: 120, reloading: false, shotsFired: 1 });
   expect(before.magazine).toBe(30); expect(Object.isFrozen(rule.getState())).toBe(true);
 });
 
@@ -27,7 +27,7 @@ test('empty magazine never underflows or auto-refills from reserve', () => {
   const rule = new RifleFireState(); let shots = 0;
   for (let i = 0; i < 600; i++) if (rule.step(hold)) shots++;
   expect(shots).toBe(30);
-  expect(rule.getState()).toEqual({ magazine: 0, reserve: 120, shotsFired: 30 });
+  expect(rule.getState()).toEqual({ magazine: 0, reserve: 120, reloading: false, shotsFired: 30 });
   const empty = rule.getState();
   expect(rule.step({ held: false, pressed: true })).toBeNull(); expect(rule.getState()).toBe(empty);
 });

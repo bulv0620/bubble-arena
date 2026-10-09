@@ -10,9 +10,10 @@ export class LocalRifle {
     this.subscribers.add(listener);
     return () => { this.subscribers.delete(listener); };
   };
-  step(intent: FireIntent) {
-    const shot = this.rule.step(intent);
-    if (shot) for (const listener of this.subscribers) listener();
+  step(intent: FireIntent, reloadPressed = false) {
+    const before = this.rule.getState();
+    const shot = this.rule.step(intent, reloadPressed);
+    if (before !== this.rule.getState()) for (const listener of this.subscribers) listener();
     return shot;
   }
 }

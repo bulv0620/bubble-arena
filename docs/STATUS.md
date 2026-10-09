@@ -2,7 +2,9 @@
 
 更新时间：2026-10-09。
 
-当前 3.4 implemented：game-core/RifleFireState 每物理步消费开火意图，8/s 小数相位、初始 30/120、每次接受扣一发、空弹不下溢/不自动补备弹；输入取消不重置冷却、不追补空闲射击。LocalRifle 和 AmmoHint 低频订阅，UI 无计时器/物理循环。最终 24 文件 218 测试、全部 pnpm check 通过；生产初始 HUD/拖动保护/Esc/error=[] 验证通过。Mac 仍锁屏，桌面连续扣弹未实测，组合输入/规则测试通过并保留真人步骤。报告 [3.4](reports/3.4.md)，本地提交 feat: apply fixed-step rifle fire rate and ammo，未推送。下一任务 3.5，本轮停止。以下为历史交付记录。
+当前 3.5 implemented：R 单次沿触发步枪 2s/120 tick 换弹；换弹中禁止射击/重启，完成时从有限备弹转入缺弹量，满匣/无备弹忽略。输入取消不取消已接受换弹，HUD 仅在开始/结束和扣弹更新。26 文件 229 测试、pnpm check 全通过。桌面 Chrome 本轮已可操作，生产版实测锁定、29/120→换弹中→30/119、换弹期间点击不扣弹、第二次完成30/118及 Esc 释放；内置满匣 R/错误日志也检查。截图与步骤见 [3.5](reports/3.5.md)。本地提交 feat: implement fixed-step rifle reload，未推送；尚待人工试玩验收。下一任务 3.6，本轮停止。
+
+历史 3.4 implemented：game-core/RifleFireState 每物理步消费开火意图，8/s 小数相位、初始 30/120、每次接受扣一发、空弹不下溢/不自动补备弹；输入取消不重置冷却、不追补空闲射击。LocalRifle 和 AmmoHint 低频订阅，UI 无计时器/物理循环。最终 24 文件 218 测试、全部 pnpm check 通过；生产初始 HUD/拖动保护/Esc/error=[] 验证通过。Mac 仍锁屏，桌面连续扣弹未实测，组合输入/规则测试通过并保留真人步骤。报告 [3.4](reports/3.4.md)，本地提交 feat: apply fixed-step rifle fire rate and ammo，未推送。下一任务 3.5，本轮停止。以下为历史交付记录。
 
 最新任务：3.3 implemented，FireIntent（held/pressed）、FireInput consume 和低频提示已接通。首次锁定点击/普通后备拖动不产生开火，锁定后左键单击/按住；后备须右键瞄准，且互斥左键拖动/锁定重试。正常松键保留短点击，Esc/失焦/隐藏/失锁/卸载清空。最终 22 文件 207 测试、全部 pnpm check 通过。内置生产拖动保护/Esc/error=[] 已实测；桌面 Chrome 因 Mac 锁屏无法验证，已请求手动解锁，未虚报锁定实测通过。报告 [3.3](reports/3.3.md)，下一任务 3.4，本轮停止。
 

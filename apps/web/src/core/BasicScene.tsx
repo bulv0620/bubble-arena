@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useCallback, useRef, useState } from 'react';
+import { Suspense, useEffect, useCallback, useRef, useState } from 'react';
 import { AimInput, AimHint, CrosshairInput } from '../input';
 import { Crosshair, AmmoHint } from '../HUD';
 import type { RapierRigidBody } from '@react-three/rapier';
@@ -9,7 +9,7 @@ import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { InputDiagnostics } from './InputDiagnostics';
-import { FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
+import { ReloadInput, FireInput, FireInputHint, LocalRifle, RifleSimulation } from '../weapons';
 
 export function BasicScene() {
   const input = useKeyboardInput();
@@ -17,9 +17,11 @@ export function BasicScene() {
   const [pointer] = useState(() => new PointerLockInput());
   const [aim] = useState(() => new AimInput());
   const [fire] = useState(() => new FireInput(pointer, aim));
+  const [reload] = useState(() => new ReloadInput());
+  useEffect(() => reload.attach(window, document), [reload]);
   const [rifle] = useState(() => new LocalRifle());
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
-  const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); }, [input, aim, fire]);
+  const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
   const view = useRef<CameraHeading>({ yaw: 0 });
   return (
     <>
@@ -53,7 +55,7 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation input={fire} rifle={rifle} />
+            <RifleSimulation input={fire} rifle={rifle} reload={reload} />
             <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} />
           </PhysicsWorld>
         </Suspense>
