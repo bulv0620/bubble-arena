@@ -1,0 +1,13 @@
+
+> bubble-arena@0.0.0 test /Users/bulv/Desktop/bubble-arena
+> vitest run packages/game-core/src/weaponCooldown.test.ts packages/game-core/src/weaponTtk.test.ts apps/web/src/HUD/reticleProgress.test.ts
+
+
+ RUN  v4.1.11 /Users/bulv/Desktop/bubble-arena
+
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  21:23:27
+   Duration  158ms (transform 151ms, setup 0ms, import 209ms, tests 16ms, environment 0ms)
+

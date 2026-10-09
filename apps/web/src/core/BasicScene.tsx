@@ -13,7 +13,6 @@ import { WhiteboxMap } from '../maps';
 import { CapsulePlayer, useKeyboardInput } from '../player';
 import { PhysicsWorld } from './PhysicsWorld';
 import { SpreadHint } from '../HUD/SpreadHint';
-import { FireCooldownProgress } from '../HUD/FireCooldownProgress';
 import { ReloadProgress } from '../HUD/ReloadProgress';
 import '../HUD/gameHud.css';
 import { InputDiagnostics } from './InputDiagnostics';
@@ -134,8 +133,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />
       <Crosshair loadout={loadout} input={crosshair} motion={motion} />
-      <ReloadProgress loadout={loadout} />
-      <FireCooldownProgress loadout={loadout} />
+      <ReloadProgress loadout={loadout} motion={motion} />
       {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><label><input type="checkbox" checked={showAimDiagnostics} onChange={event => setShowAimDiagnostics(event.target.checked)} />显示瞄准调试点</label><FireInputHint loadout={loadout} input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
 
     </>
