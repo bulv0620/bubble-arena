@@ -73,3 +73,20 @@ test('aim profile changes shoulder, distance and FOV; release restores ordinary 
   expect(camera.fov).toBe(CAMERA_CONFIG.fov); expect(camera.projectionMatrix).toEqual(projection);
   expect(position).toEqual({ x: 2, y: 1, z: 4 });
 });
+
+test('default framing keeps the head below the center reticle and the full body in view', () => {
+  const position = { x: -2, y: 0.91, z: 0 };
+  for (const aspect of [16 / 9, 4 / 3]) {
+    for (const aiming of [false, true]) {
+      const camera = new PerspectiveCamera(CAMERA_CONFIG.fov, aspect, CAMERA_CONFIG.near, CAMERA_CONFIG.far);
+      updateFollowCamera(camera, { translation: () => position }, undefined, aiming);
+      camera.updateMatrixWorld();
+      const head = new Vector3(position.x, position.y + 0.9, position.z).project(camera);
+      const foot = new Vector3(position.x, position.y - 0.9, position.z).project(camera);
+      expect(head.x).toBeLessThan(-0.05); // Player stays left of the viewing center.
+      expect(head.y).toBeLessThan(-0.05); // Viewing center is above the head.
+      expect(foot.y).toBeGreaterThan(-1);
+      expect((head.y - foot.y) / 2).toBeLessThan(0.5); // No majority-screen capsule while aiming.
+    }
+  }
+});

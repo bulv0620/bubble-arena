@@ -383,6 +383,18 @@
       "file": "docs/TASKS/2.11.md"
     },
     {
+      "id": "2.11.1",
+      "title": "准星与人物构图修正",
+      "acceptance": "参考泡泡战士实机，默认头部位于中心准星下方、瞄准人物不过大，普通/瞄准与释放显示正确。",
+      "stage": 2,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "2.11"
+      ],
+      "file": "docs/TASKS/2.11.1.md"
+    },
+    {
       "id": "3.1",
       "title": "定义武器配置 Schema",
       "acceptance": "ID、伤害、射速、弹匣、备弹、射程、换弹时长受类型约束。",

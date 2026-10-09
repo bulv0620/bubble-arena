@@ -2,11 +2,11 @@
 export const CAMERA_CONFIG = {
   distance: 4.5,
   shoulderOffset: 0.55,
-  aimShoulderOffset: 0.8,
-  aimDistance: 2.5,
-  aimFov: 55,
-  focusHeight: 0.55,
-  initialPitch: 25 * Math.PI / 180,
+  aimShoulderOffset: 0.65,
+  aimDistance: 3.4,
+  aimFov: 60,
+  focusHeight: 1.1,
+  initialPitch: 8 * Math.PI / 180,
   mouseSensitivity: 0.003,
   rotationResponse: 14,
   // Positive pitch places the camera above the shoulder focus (looking down).
