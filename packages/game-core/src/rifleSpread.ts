@@ -4,7 +4,7 @@ import { RIFLE_SPREAD_CONFIG } from '@bubble-arena/shared';
 export function rifleSpreadAngle(horizontalSpeed: number, airborne = false): number {
   if (!Number.isFinite(horizontalSpeed) || horizontalSpeed < 0) throw new RangeError('Expected finite nonnegative horizontal speed');
   if (typeof airborne !== 'boolean') throw new TypeError('Expected boolean airborne state');
-  return RIFLE_SPREAD_CONFIG.normal * (airborne || horizontalSpeed >= RIFLE_SPREAD_CONFIG.movementSpeedThreshold ? RIFLE_SPREAD_CONFIG.movingMultiplier : 1);
+  return RIFLE_SPREAD_CONFIG.normal * (airborne ? RIFLE_SPREAD_CONFIG.airborneMultiplier : horizontalSpeed >= RIFLE_SPREAD_CONFIG.movementSpeedThreshold ? RIFLE_SPREAD_CONFIG.movingMultiplier : 1);
 }
 
 interface Vector { readonly x: number; readonly y: number; readonly z: number }
@@ -25,4 +25,10 @@ export function spreadDirection(direction: Vector, halfAngle: number, radial: nu
   const a = Math.cos(azimuth * 2 * Math.PI) * sine, b = Math.sin(azimuth * 2 * Math.PI) * sine;
   return Object.freeze({ x: x * cosine + u.x * a + v.x * b,
     y: y * cosine + u.y * a + v.y * b, z: z * cosine + u.z * a + v.z * b });
+}
+
+/** Current rifle uses a centre-biased distribution inside the same bounded cone. */
+export function rifleSpreadDirection(direction: Vector, halfAngle: number, radial: number, azimuth: number) {
+  if (!Number.isFinite(radial) || radial < 0 || radial >= 1) return null;
+  return spreadDirection(direction, halfAngle, radial ** RIFLE_SPREAD_CONFIG.radialPower, azimuth);
 }

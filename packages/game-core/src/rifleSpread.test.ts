@@ -35,15 +35,31 @@ test('rejects invalid vectors, angles and random samples', () => {
 
 test('actual horizontal speed selects stationary/moving spread with a noise threshold and rejects invalid speed', () => {
   for (const speed of [0, 0.01, RIFLE_SPREAD_CONFIG.movementSpeedThreshold - 1e-6]) expect(rifleSpreadAngle(speed)).toBe(RIFLE_SPREAD_CONFIG.normal);
-  for (const speed of [RIFLE_SPREAD_CONFIG.movementSpeedThreshold, 3.5, 5]) expect(rifleSpreadAngle(speed)).toBeCloseTo(3 * Math.PI / 180, 12);
+  for (const speed of [RIFLE_SPREAD_CONFIG.movementSpeedThreshold, 3.5, 5]) expect(rifleSpreadAngle(speed)).toBeCloseTo(.9 * Math.PI / 180, 12);
   for (const invalid of [NaN, Infinity, -1]) expect(() => rifleSpreadAngle(invalid)).toThrow(RangeError);
 });
 
-test('airborne movement widens spread with zero horizontal speed and does not stack with running', () => {
-  const normal = RIFLE_SPREAD_CONFIG.normal, moving = normal * RIFLE_SPREAD_CONFIG.movingMultiplier;
+test('airborne movement has its own penalty without stacking with running', () => {
+  const normal = RIFLE_SPREAD_CONFIG.normal, moving = normal * RIFLE_SPREAD_CONFIG.airborneMultiplier;
   expect(rifleSpreadAngle(0, false)).toBe(normal);
   expect(rifleSpreadAngle(0, true)).toBe(moving);
   expect(rifleSpreadAngle(5, true)).toBe(moving);
-  expect(rifleSpreadAngle(5, false)).toBe(moving);
+  expect(rifleSpreadAngle(5, false)).toBe(normal * RIFLE_SPREAD_CONFIG.movingMultiplier);
   expect(() => rifleSpreadAngle(0, 1 as unknown as boolean)).toThrow(TypeError);
+});
+
+test('rifle sampling favours the centre without exceeding the actual cone or losing reproducibility', async () => {
+  const { rifleSpreadDirection } = await import('./rifleSpread');
+  const forward = { x: 0, y: 0, z: -1 }, angle = .05;
+  let nearCentre = 0;
+  for (let i = 0; i < 1000; i++) {
+    const radial = (i + .5) / 1000;
+    const shot = rifleSpreadDirection(forward, angle, radial, .3)!;
+    const deviation = Math.acos(-shot.z);
+    expect(deviation).toBeLessThanOrEqual(angle);
+    if (deviation <= angle / 2) nearCentre++;
+    expect(shot).toEqual(rifleSpreadDirection(forward, angle, radial, .3));
+  }
+  expect(nearCentre).toBeGreaterThanOrEqual(499); expect(nearCentre).toBeLessThanOrEqual(501);
+  for (const invalid of [-1, 1, NaN, Infinity]) expect(rifleSpreadDirection(forward, angle, invalid, .3)).toBeNull();
 });

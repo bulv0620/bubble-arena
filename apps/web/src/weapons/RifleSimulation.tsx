@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react';
 import { useBeforePhysicsStep, useAfterPhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
 import type { ShotFeedback } from '../effects';
-import { spreadDirection, type RifleShot } from '@bubble-arena/game-core';
+import { rifleSpreadDirection, type RifleShot } from '@bubble-arena/game-core';
 import { WEAPON_CONFIGS } from '@bubble-arena/shared';
 import type { RifleMotion } from './RifleMotion';
 import type { ScreenAimTarget } from './screenAimRay';
@@ -22,7 +22,8 @@ export function RifleSimulation({ input, motion, rifle, reload, body, yaw, targe
   useEffect(() => () => { pending.current = null; shotRay.current = null; feedback.clear(); recoil.reset(); }, [shotRay, feedback, recoil]);
   useBeforePhysicsStep(() => {
     const shot = rifle.step(input.consume(), reload.consume());
-    pending.current = shot ? { shot, target: target.current, spreadAngle: motion.getSnapshot(), radial: Math.random(), azimuth: Math.random() } : null;
+    const spreadAngle = motion.step(shot !== null);
+    pending.current = shot ? { shot, target: target.current, spreadAngle, radial: Math.random(), azimuth: Math.random() } : null;
     if (shot && import.meta.env.DEV) console.info('[weapon.check]', JSON.stringify({ ...shot, ...rifle.getSnapshot() }));
   });
   useAfterPhysicsStep(() => {
@@ -32,7 +33,7 @@ export function RifleSimulation({ input, motion, rifle, reload, body, yaw, targe
     recoil.kick(accepted.shot.sequence);
     const center = body.current?.translation(), muzzle = center && rifleMuzzlePosition(center, yaw.current);
     const point = accepted.target?.point;
-    const direction = muzzle && point ? spreadDirection({ x: point.x - muzzle.x, y: point.y - muzzle.y, z: point.z - muzzle.z },
+    const direction = muzzle && point ? rifleSpreadDirection({ x: point.x - muzzle.x, y: point.y - muzzle.y, z: point.z - muzzle.z },
       accepted.spreadAngle, accepted.radial, accepted.azimuth) : null;
     shotRay.current = center && muzzle && accepted.target && direction
       ? queryMuzzleRay(world, center, muzzle, accepted.target, WEAPON_CONFIGS.rifle.range, direction) : null;

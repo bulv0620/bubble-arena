@@ -251,7 +251,7 @@ test('actual stationary jump keeps wider spread through ascent, apex and descent
     expect(horizontalSpeed).toBeLessThan(0.001);
     motion.setSpeed(horizontalSpeed, result.jumped || !result.grounded);
     if (result.jumped || !result.grounded) {
-      expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal * RIFLE_SPREAD_CONFIG.movingMultiplier);
+      expect(motion.getSnapshot()).toBe(RIFLE_SPREAD_CONFIG.normal * RIFLE_SPREAD_CONFIG.airborneMultiplier);
       if (result.velocityY > 1) sawRise = true;
       if (Math.abs(result.velocityY) < .4) sawApex = true;
       if (result.velocityY < -1) sawFall = true;

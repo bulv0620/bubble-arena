@@ -11,7 +11,7 @@ test('one impulse per accepted identity, bounded continuous fire, decay and rese
   for (let i = 2; i < 100; i++) recoil.kick(i);
   expect(recoil.step(0)).toBe(recoil.tuning.maxAngle);
   const before = recoil.step(0); expect(recoil.step(NaN)).toBe(before); expect(recoil.step(-1)).toBe(before);
-  expect(recoil.step(0.1)).toBeLessThan(before); expect(recoil.step(10)).toBe(0);
+  expect(recoil.step(0.1)).toBe(before); expect(recoil.step(0.1)).toBeLessThan(before); expect(recoil.step(10)).toBe(0);
   recoil.kick(100); recoil.reset(); expect(recoil.step(0)).toBe(0); expect(recoil.kick(100)).toBe(false);
   expect(() => recoil.kick(0)).toThrow(TypeError);
 });
@@ -22,7 +22,7 @@ test('decay is time-based across 30/60Hz and tuning validates without sharing mu
   expect(a.step(0)).toBeCloseTo(b.step(0), 12);
   const overrides = { kickAngle: 0.01 }; const custom = new RifleRecoil(overrides); overrides.kickAngle = 0.02;
   expect(custom.tuning.kickAngle).toBe(0.01); expect(Object.isFrozen(custom.tuning)).toBe(true);
-  for (const bad of [{ kickAngle: -1 }, { maxAngle: 0 }, { recoveryResponse: 0 }, { kickAngle: NaN }, { maxAngle: Infinity }]) expect(() => new RifleRecoil(bad)).toThrow(RangeError);
+  for (const bad of [{ kickAngle: -1 }, { maxAngle: 0 }, { recoveryResponse: 0 }, { kickAngle: NaN }, { maxAngle: Infinity }, { recoveryDelay: -1 }, { recoveryDelay: NaN }]) expect(() => new RifleRecoil(bad)).toThrow(RangeError);
   const disabled = new RifleRecoil({ kickAngle: 0, maxAngle: 0 }); disabled.kick(1); expect(disabled.step(0)).toBe(0);
 });
 test('camera upkick enters next center ray, preserves mouse yaw/base pitch, restores exact direction and clamps', () => {
@@ -36,4 +36,15 @@ test('camera upkick enters next center ray, preserves mouse yaw/base pitch, rest
   updateFollowCamera(camera, target, applyRecoilPitch(base, recoil.step(10)));
   expect(createScreenAimRay(camera)!.direction).toEqual(initial.direction);
   expect(applyRecoilPitch({ yaw: 1, pitch: CAMERA_CONFIG.minPitch }, 1).pitch).toBe(CAMERA_CONFIG.minPitch);
+});
+
+test('real 8/s burst now builds to visible six-degree kick and recovers after firing stops', () => {
+  const recoil = new RifleRecoil(); let sequence = 0, peak = 0;
+  for (let i = 0; i < 60; i++) {
+    if ([0, 8, 15, 23, 30, 38, 45, 53].includes(i)) recoil.kick(++sequence);
+    peak = Math.max(peak, recoil.step(1 / 60));
+  }
+  expect(peak).toBeCloseTo(6 * Math.PI / 180);
+  expect(recoil.step(0)).toBeGreaterThan(5 * Math.PI / 180);
+  recoil.step(2); expect(recoil.step(0)).toBe(0);
 });

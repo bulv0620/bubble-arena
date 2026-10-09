@@ -659,6 +659,18 @@
       "acceptance": "真实起跳/顶点/下落均扩大，落地停稳恢复，跑跳不叠加，重置/订阅/异常测试及浏览器检查通过。"
     },
     {
+      "id": "3.12.11",
+      "title": "改善首发/连射扩散与后坐力",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.12.10"
+      ],
+      "file": "docs/TASKS/3.12.11.md",
+      "acceptance": "官方资料调研，首发/累积扩散/恢复/后坐力与动态准星同源，核心/生命周期测试、浏览器检查、报告齐全。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

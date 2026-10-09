@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
-import { COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type MovementKeys } from '@bubble-arena/shared';
+import { RIFLE_SPREAD_CONFIG, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, WHITEBOX_CONFIG, type MovementKeys } from '@bubble-arena/shared';
 import { RapierMovement } from './RapierMovement';
 import { RifleMotion } from '../weapons/RifleMotion';
 import { PlayerFacing } from './PlayerFacing';
@@ -182,8 +182,8 @@ test('actual wall movement expands spread while pressing into a blocked wall sta
     const result = adapter.step(player.body, player.collider, { ...idle, forward: true });
     if (!result) throw new Error('missing movement');
     motion.setSpeed(Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep);
-    moved ||= motion.getSnapshot() > 2 * Math.PI / 180;
+    moved ||= motion.getSnapshot() > RIFLE_SPREAD_CONFIG.normal;
     world.step();
   }
-  expect(moved).toBe(true); expect(motion.getSnapshot()).toBeCloseTo(2 * Math.PI / 180, 12);
+  expect(moved).toBe(true); expect(motion.getSnapshot()).toBeCloseTo(RIFLE_SPREAD_CONFIG.normal, 12);
 });
