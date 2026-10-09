@@ -1,4 +1,5 @@
 import { createPlayerVitals } from '@bubble-arena/game-core';
+import { ShotFeedback, ShotEffects } from '../effects';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useCallback, useRef, useState } from 'react';
 import { AimInput, AimHint, CrosshairInput } from '../input';
@@ -23,6 +24,7 @@ export function BasicScene() {
   const [trainingTarget] = useState(() => new LocalTrainingTarget());
   const [targets] = useState(() => new TrainingTargets());
   const [playerVitals] = useState(() => createPlayerVitals());
+  const [feedback] = useState(() => new ShotFeedback());
   const [rifle] = useState(() => new LocalRifle());
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim));
   const clearInput = useCallback(() => { input.clear(); aim.clear(); fire.clear(); reload.clear(); }, [input, aim, fire, reload]);
@@ -63,7 +65,8 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               WHITEBOX_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation input={fire} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} />
+            <RifleSimulation input={fire} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} />
+            <ShotEffects feedback={feedback} />
             <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} />
             {import.meta.env.DEV && <>
               <AimTargetMarker target={aimTarget} />

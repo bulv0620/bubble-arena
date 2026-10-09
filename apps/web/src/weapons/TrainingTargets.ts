@@ -41,12 +41,15 @@ export class TrainingTargets {
     return Object.freeze({ ...map, status: 'hit', point: hit.point, distance: hit.distance, colliderHandle: hit.handle });
   }
   receiveShot(world: World, shot: TrainingHit, result: MuzzleRayResult | null) {
+    return this.receiveShotImpact(world, shot, result) !== null;
+  }
+  receiveShotImpact(world: World, shot: TrainingHit, result: MuzzleRayResult | null) {
     if (!shot || !Number.isSafeInteger(shot.tick) || shot.tick < 0 || !Number.isSafeInteger(shot.sequence) || shot.sequence <= 0) throw new TypeError('Invalid local shot identity');
-    if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return false;
+    if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return null;
     this.lastShotSequence = shot.sequence; this.lastShotTick = shot.tick;
-    if (!result || result.status === 'blocked-muzzle') return false;
+    if (!result || result.status === 'blocked-muzzle') return null;
     const hit = this.query(world, { origin: result.origin, direction: result.direction, range: result.distance });
-    if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) return false;
-    return this.entries.get(hit.handle)?.receiveHit(shot) ?? false;
+    if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) return null;
+    return this.entries.get(hit.handle)?.receiveHit(shot) ? hit.point : null;
   }
 }

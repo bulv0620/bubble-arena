@@ -519,7 +519,7 @@
       "title": "枪口与命中特效占位",
       "acceptance": "开火和命中时有简单可见反馈，销毁时不泄漏对象。",
       "stage": 3,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "3.10"
