@@ -54,7 +54,10 @@ test('missing or invalid target retains the last valid camera pose; remount uses
   expect(camera.position.x).toBeCloseTo(20 + CAMERA_CONFIG.shoulderOffset);
 });
 
-test('aim profile changes shoulder, distance and FOV; release restores ordinary profile', () => {
+test('right button retains the same camera pose and projection', () => {
+  expect(CAMERA_CONFIG.aimDistance).toBe(CAMERA_CONFIG.distance);
+  expect(CAMERA_CONFIG.aimShoulderOffset).toBe(CAMERA_CONFIG.shoulderOffset);
+  expect(CAMERA_CONFIG.aimFov).toBe(CAMERA_CONFIG.fov);
   const camera = new PerspectiveCamera(CAMERA_CONFIG.fov);
   const position = { x: 2, y: 1, z: 4 }, target = { translation: () => position };
   for (const yaw of [0, Math.PI / 2, -Math.PI]) {

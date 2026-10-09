@@ -2,7 +2,9 @@
 
 更新时间：2026-10-09。
 
-当前3.12.1 implemented：按用户要求共用上半球形头/圆脸、下半身体分块占位；背景墙前左右中三靶，每靶独立100HP，HUD分行及共享一次命中提示；训练区物品分散、另设清晰出生视角。旧移动回归区保留。地图hash更新fnv1a64:5c84d22467198a7b，开发实测12刚体/12碰撞体；34文件263测试及pnpm check通过。生产实测中靶80/两侧100、人物转身圆脸截图。报告 [3.12.1](reports/3.12.1.md)。阶段3当前13项implemented待验收；本地提交feat: improve block avatars and three-target range，未推送，stage-3-layout-playtest保存当前候选，stage-3-playtest保留历史候选。本轮停止。
+当前3.12.2 implemented：人物全程跟随最终准星水平朝向，WASD只移动；右键只收束步枪散布2°→0.3°、减速5→3.5m/s，镜头4.5m/0.55m/70°不切换。35文件263测试、pnpm check通过；桌面后退/横移朝前截图及生产两发28弹/中靶60HP实测。报告 [3.12.2](reports/3.12.2.md)。阶段3现在14项implemented待人工验收，未进入阶段4。 本地提交与候选tag见报告。
+
+历史3.12.1 implemented：按用户要求共用上半球形头/圆脸、下半身体分块占位；背景墙前左右中三靶，每靶独立100HP，HUD分行及共享一次命中提示；训练区物品分散、另设清晰出生视角。旧移动回归区保留。地图hash更新fnv1a64:5c84d22467198a7b，开发实测12刚体/12碰撞体；34文件263测试及pnpm check通过。生产实测中靶80/两侧100、人物转身圆脸截图。报告 [3.12.1](reports/3.12.1.md)。阶段3当前13项implemented待验收；本地提交feat: improve block avatars and three-target range，未推送，stage-3-layout-playtest保存当前候选，stage-3-playtest保留历史候选。本轮停止。
 
 历史：阶段3原12项implemented，尚待人工验收，未关闭。本轮按用户授权完成3.10自身HP HUD、3.11固定容量枪口/冲击特效、3.12可调镜头后坐力（1°/4°/7/s）。最终33文件262测试及pnpm check通过；生产命中29弹/靶80/自身100，开发900ms真实连射8发，recoil日志显示基础俯角8°不变、偏移归零并准确回落。报告 [3.10](reports/3.10.md)、[3.11](reports/3.11.md)、[3.12](reports/3.12.md)，[阶段3试玩清单](reports/stage-3.md)。本地逐项提交并保存stage-3-playtest候选回退tag，未推送。下一步人工试玩验收，通过后4.1；本轮停止。
 

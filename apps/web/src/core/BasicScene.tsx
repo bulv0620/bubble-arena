@@ -66,7 +66,7 @@ export function BasicScene() {
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation input={fire} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
+            <RifleSimulation input={fire} aim={aim} rifle={rifle} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <ShotEffects feedback={feedback} />
             <FollowCamera target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
             {import.meta.env.DEV && <>

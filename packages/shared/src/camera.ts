@@ -2,9 +2,9 @@
 export const CAMERA_CONFIG = {
   distance: 4.5,
   shoulderOffset: 0.55,
-  aimShoulderOffset: 0.65,
-  aimDistance: 3.4,
-  aimFov: 60,
+  aimShoulderOffset: 0.55,
+  aimDistance: 4.5,
+  aimFov: 70,
   focusHeight: 1.1,
   initialPitch: 8 * Math.PI / 180,
   mouseSensitivity: 0.003,

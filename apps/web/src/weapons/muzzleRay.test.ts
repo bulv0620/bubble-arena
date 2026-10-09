@@ -86,3 +86,15 @@ test('accepted blocked shot still spends one round; cooldown and reload cannot c
   rifle.step({ held: true, pressed: false }, true);
   for (let i = 0; i < 120; i++) expect(rifle.step({ held: true, pressed: false })).toBeNull();
 });
+
+test('scattered direction drives actual map collision, with unchanged close-wall protection', () => {
+  setup(); const blocker = wall(-3, 0.02); world.step();
+  expect(queryMuzzleRay(world, anchor, muzzle, target())?.status).toBe('hit');
+  const scattered = { x: Math.sin(2 * Math.PI / 180), y: 0, z: -Math.cos(2 * Math.PI / 180) };
+  const result = queryMuzzleRay(world, anchor, muzzle, target(), 70, scattered)!;
+  expect(result.status).toBe('clear'); expect(result.direction.x).toBeCloseTo(scattered.x);
+  blocker.setTranslation({ x: 0, y: 1, z: -0.4 }); world.step();
+  expect(queryMuzzleRay(world, anchor, muzzle, target(), 70, scattered)?.status).toBe('blocked-muzzle');
+  blocker.setTranslation({ x: 0, y: 1, z: -3 }); world.step();
+  expect(queryMuzzleRay(world, anchor, muzzle, target(), 70, { x: NaN, y: 0, z: -1 })).toBeNull();
+});

@@ -53,6 +53,7 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
       camera.quaternion.copy(previous.rotation);
     }
     const ray = createScreenAimRay(camera);
+    if (ray) view.current.yaw = Math.atan2(-ray.direction.x, -ray.direction.z);
     aimTarget.current = ray ? targets.aim(world, ray) : null;
     if (import.meta.env.DEV) {
       diagnostics.current += 1;
@@ -74,6 +75,6 @@ export function FollowCamera({ target, control, clearInput, view, aim, crosshair
         }));
       }
     }
-  });
+  }, -1);
   return null;
 }

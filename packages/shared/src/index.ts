@@ -8,3 +8,4 @@ export { WEAPON_IDS, WEAPON_CONFIGS, isWeaponId, parseWeaponConfig, type WeaponI
 export { TRAINING_TARGET_CONFIG, TRAINING_TARGET_LAYOUT, TRAINING_RANGE_CONFIG } from './trainingTarget';
 export { PLAYER_VITALS_CONFIG } from './playerVitals';
 export { RIFLE_RECOIL_CONFIG, createRifleRecoilTuning, type RifleRecoilTuning } from './rifleRecoil';
+export { RIFLE_SPREAD_CONFIG } from './rifleSpread';

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import type { Group } from 'three';
+import { Vector3, type Group } from 'three';
+import { useFrame } from '@react-three/fiber';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
-import { COLLIDER_MATERIALS, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
+import { COLLIDER_MATERIALS, COLLISION_GROUPS, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
@@ -41,14 +42,19 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, aim, facin
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
         { ...input.getSnapshot(), aiming: aim.getSnapshot() }, input.consumeJump(), view.current.yaw);
-      if (result) facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep,
-        aim.getSnapshot() ? view.current.yaw : undefined);
+      facing.step(view.current.yaw);
       facingYaw.current = facing.getYaw();
       if (import.meta.env.DEV) diagnostics.current.result = result;
     }
   });
-  useAfterPhysicsStep(() => {
+  const [forward] = useState(() => new Vector3());
+  useFrame(({ camera }) => {
+    camera.getWorldDirection(forward);
+    facing.step(Math.atan2(-forward.x, -forward.z));
+    facingYaw.current = facing.getYaw();
     if (visual.current) visual.current.rotation.y = facing.getYaw();
+  });
+  useAfterPhysicsStep(() => {
     if (!import.meta.env.DEV || !body.current) return;
     const sample = diagnostics.current;
     const active = Boolean(sample.result && (sample.result.jumped || !sample.result.grounded

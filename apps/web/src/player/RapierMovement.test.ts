@@ -6,17 +6,15 @@ import { PlayerFacing } from './PlayerFacing';
 
 const idle: MovementKeys = { forward: false, backward: false, left: false, right: false };
 
-test('visual facing follows the real wall-slide displacement without rotating the capsule collider', () => {
+test('wall-slide displacement never changes view heading or rotates the capsule collider', () => {
   const player = setup(); const facing = new PlayerFacing();
   for (let tick = 0; tick < 120; tick++) {
     const result = adapter.step(player.body, player.collider, { ...idle, forward: true, right: true });
     if (!result) throw new Error('missing adapter');
-    facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep);
+    facing.step(0);
     world.step();
   }
-  // Real contact correction adds a tiny tangential angle; validate a meaningful
-  // directional tolerance rather than requiring an exact axis in float32 physics.
-  expect(Math.abs(facing.getYaw() + Math.PI / 2)).toBeLessThan(0.01);
+  expect(facing.getYaw()).toBe(0);
   expect(player.body.rotation().y).toBe(0);
   expect(player.body.rotation().w).toBe(1);
 });
@@ -145,20 +143,22 @@ test('controller disposal is idempotent and a disposed adapter cannot move a bod
   expect(player.body.translation()).toEqual(start);
 });
 
-test.each(['right', 'backward'] as const)('aim %s moves relative to camera while visual keeps aim yaw', action => {
+test.each([{ aiming: false, action: 'right' }, { aiming: false, action: 'backward' },
+  { aiming: true, action: 'right' }, { aiming: true, action: 'backward' }] as const)(
+  'ordinary/precise %j moves without turning', ({ aiming, action }) => {
   const player = setup(false), facing = new PlayerFacing();
   const start = player.body.translation(), yaw = 0.8;
   for (let tick = 0; tick < 60; tick++) {
-    const result = adapter.step(player.body, player.collider, { ...idle, [action]: true, aiming: true }, false, yaw);
+    const result = adapter.step(player.body, player.collider, { ...idle, [action]: true, aiming }, false, yaw);
     if (!result) throw new Error('missing adapter');
-    facing.step(result.allowed.x, result.allowed.z, PHYSICS_CONFIG.timeStep, yaw);
+    facing.step(yaw);
     world.step();
   }
   const end = player.body.translation(), dx = end.x - start.x, dz = end.z - start.z;
   const expectedX = action === 'right' ? Math.cos(yaw) : Math.sin(yaw);
   const expectedZ = action === 'right' ? -Math.sin(yaw) : Math.cos(yaw);
-  expect(dx * expectedX + dz * expectedZ).toBeGreaterThan(3.1);
-  expect(dx * expectedX + dz * expectedZ).toBeLessThan(3.5);
+  expect(dx * expectedX + dz * expectedZ).toBeGreaterThan((aiming ? PLAYER_CONFIG.aimSpeed : PLAYER_CONFIG.speed) - 0.6);
+  expect(dx * expectedX + dz * expectedZ).toBeLessThan(aiming ? PLAYER_CONFIG.aimSpeed : PLAYER_CONFIG.speed);
   expect(Math.abs(dx * expectedZ - dz * expectedX)).toBeLessThan(0.03);
   expect(facing.getYaw()).toBeCloseTo(yaw, 4);
   expect(player.body.rotation()).toEqual({ x: 0, y: 0, z: 0, w: 1 });
