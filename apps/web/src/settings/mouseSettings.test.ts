@@ -22,13 +22,13 @@ test('stored mouse speed validates bounds, empty/corrupt values and blocked stor
 });
 test('mouse speed applies equally to yaw/pitch and rejects invalid settings', () => {
   const normal = new MouseOrbit(), fast = new MouseOrbit();
-  const initial = normal.step(0).pitch;
+  const initial = normal.step().pitch;
   normal.rotate(20, 20); fast.rotate(20, 20, 2);
-  expect(fast.step(10).yaw).toBeCloseTo(normal.step(10).yaw * 2);
-  expect(fast.step(0).pitch - initial).toBeCloseTo((normal.step(0).pitch - initial) * 2);
-  const previous = fast.step(0);
+  expect(fast.step().yaw).toBeCloseTo(normal.step().yaw * 2);
+  expect(fast.step().pitch - initial).toBeCloseTo((normal.step().pitch - initial) * 2);
+  const previous = fast.step();
   for (const invalid of [NaN, Infinity, 0, 4]) fast.rotate(50, 50, invalid);
-  const unchanged = fast.step(10);
+  const unchanged = fast.step();
   expect(unchanged.yaw).toBeCloseTo(previous.yaw, 12);
   expect(unchanged.pitch).toBeCloseTo(previous.pitch, 12);
 });
@@ -57,13 +57,13 @@ test('fallback dragging reads the latest speed without rebinding and blocks whil
   const detach = orbit.attach(canvas, global, doc, () => !open, () => speed);
   event(canvas, 'mousedown', { button: 0, clientX: 0, clientY: 0 });
   event(global, 'mousemove', { buttons: 1, clientX: 10, clientY: 0 });
-  expect(orbit.step(10).yaw).toBeCloseTo(-.03);
+  expect(orbit.step().yaw).toBeCloseTo(-.03);
   speed = 2;
   event(global, 'mousemove', { buttons: 1, clientX: 20, clientY: 0 });
-  expect(orbit.step(10).yaw).toBeCloseTo(-.09);
+  expect(orbit.step().yaw).toBeCloseTo(-.09);
   open = true;
   event(global, 'mousemove', { buttons: 1, clientX: 100, clientY: 0 });
   open = false;
   event(global, 'mousemove', { buttons: 1, clientX: 200, clientY: 0 });
-  expect(orbit.step(10).yaw).toBeCloseTo(-.09); detach();
+  expect(orbit.step().yaw).toBeCloseTo(-.09); detach();
 });

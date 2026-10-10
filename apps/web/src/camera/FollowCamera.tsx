@@ -39,7 +39,7 @@ export function FollowCamera({ loadout, target, control, clearInput, view, aim, 
       recoil.reset();
       recoveryTarget.current = target.current;
     }
-    const baseAngles = orbit.step(dt);
+    const baseAngles = orbit.step();
     const recoilOffset = recoil.step(dt);
     const angles = applyRecoilPitch(baseAngles, recoilOffset);
     view.current.yaw = angles.yaw;

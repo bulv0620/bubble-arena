@@ -4,26 +4,20 @@ import { validMouseSpeed } from '../settings/mouseSettings';
 export interface OrbitAngles { yaw: number; pitch: number }
 const wrap = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
 
-/** Presentation-only angles; never changes player movement or physics. */
+/** Direct presentation angles: the next render frame consumes all received mouse delta. */
 export class MouseOrbit {
-  private desired: OrbitAngles = { yaw: 0, pitch: CAMERA_CONFIG.initialPitch };
-  private shown: OrbitAngles = { ...this.desired };
+  private angles: OrbitAngles = { yaw: 0, pitch: CAMERA_CONFIG.initialPitch };
   private detachCurrent?: () => void;
 
   rotate(dx: number, dy: number, sensitivityMultiplier = 1) {
     if (![dx, dy, sensitivityMultiplier].every(Number.isFinite) || !validMouseSpeed(sensitivityMultiplier)) return;
-    this.desired.yaw = wrap(this.desired.yaw - dx * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier);
-    this.desired.pitch = Math.max(CAMERA_CONFIG.minPitch, Math.min(CAMERA_CONFIG.maxPitch,
-      this.desired.pitch + dy * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier));
+    this.angles.yaw = wrap(this.angles.yaw - dx * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier);
+    this.angles.pitch = Math.max(CAMERA_CONFIG.minPitch, Math.min(CAMERA_CONFIG.maxPitch,
+      this.angles.pitch + dy * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier));
   }
 
-  step(dt: number): OrbitAngles {
-    if (Number.isFinite(dt) && dt > 0) {
-      const blend = 1 - Math.exp(-CAMERA_CONFIG.rotationResponse * dt);
-      this.shown.yaw = wrap(this.shown.yaw + wrap(this.desired.yaw - this.shown.yaw) * blend);
-      this.shown.pitch += (this.desired.pitch - this.shown.pitch) * blend;
-    }
-    return { ...this.shown };
+  step(): OrbitAngles {
+    return { ...this.angles };
   }
 
   attach(canvas: EventTarget, global: EventTarget, visibility: EventTarget & { hidden?: boolean },

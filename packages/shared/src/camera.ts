@@ -8,7 +8,6 @@ export const CAMERA_CONFIG = {
   focusHeight: 1.7,
   initialPitch: 8 * Math.PI / 180,
   mouseSensitivity: 0.003,
-  rotationResponse: 14,
   // Positive pitch places the camera above the shoulder focus (looking down).
   minPitch: -60 * Math.PI / 180,
   maxPitch: 70 * Math.PI / 180,
