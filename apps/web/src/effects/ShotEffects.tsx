@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Vector3, type Mesh } from 'three';
 import { ShotFeedback, SHOT_EFFECT_CONFIG } from './ShotFeedback';
+import { skipEffectRaycast } from './skipEffectRaycast';
 
 /** Permanent bounded mesh pool, disposed by R3F; no per-shot geometry accumulation. */
 export function ShotEffects({ feedback }: { feedback: ShotFeedback }) {
@@ -32,7 +33,7 @@ export function ShotEffects({ feedback }: { feedback: ShotFeedback }) {
       if (pellet) mesh.position.copy(pellet.point);
     });
   });
-  return <group name="shot-effects">
+  return <group name="shot-effects" raycast={skipEffectRaycast}>
     <mesh ref={muzzle} visible={false}>
       <sphereGeometry args={[SHOT_EFFECT_CONFIG.muzzleRadius, 8, 6]} />
       <meshBasicMaterial color="#ffe267" toneMapped={false} />

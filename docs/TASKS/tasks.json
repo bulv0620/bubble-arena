@@ -815,6 +815,19 @@
       "acceptance": "人物偏移减小，血条位于正头顶；默认大准星与进度环清晰，近墙保护可恢复，浏览器视觉及相关检查通过。"
     },
     {
+      "id": "3.15.7",
+      "title": "修复泡泡命中后靶子血条被特效遮挡",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.14.4",
+        "3.15.6"
+      ],
+      "file": "docs/TASKS/3.15.7.md",
+      "acceptance": "泡泡飞行/爆炸及结束后不遮挡靶子头顶条，真实墙体遮挡保留；射线回归/状态恢复/浏览器与检查证据齐全。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",
