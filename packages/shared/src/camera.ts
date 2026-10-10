@@ -1,11 +1,11 @@
 // Follow distance is measured from the shoulder focus point, in metres.
 export const CAMERA_CONFIG = {
   distance: 4.5,
-  shoulderOffset: 1.6,
-  aimShoulderOffset: 1.6,
+  shoulderOffset: 1.12,
+  aimShoulderOffset: 1.12,
   aimDistance: 4.5,
   aimFov: 70,
-  focusHeight: 1.1,
+  focusHeight: 1.7,
   initialPitch: 8 * Math.PI / 180,
   mouseSensitivity: 0.003,
   rotationResponse: 14,

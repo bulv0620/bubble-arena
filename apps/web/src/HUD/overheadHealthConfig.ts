@@ -8,6 +8,6 @@ export const OVERHEAD_HEALTH_CONFIG = Object.freeze({
   selfDistanceFactor: CAMERA_CONFIG.distance * perspectiveFactor,
   selfWidth: 76,
   selfHeightBound: 32,
-  selfPosition: Object.freeze([-.18, PLAYER_CONFIG.height / 2 + .38, 0] as const),
+  selfPosition: Object.freeze([0, PLAYER_CONFIG.height / 2 + .25, 0] as const),
   reticleClearance: 8,
 });

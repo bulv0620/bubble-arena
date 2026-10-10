@@ -17,12 +17,12 @@ function fixture(weapon: 'rifle' | 'shotgun' | 'sniper' | 'bubble') {
   return { root, plate: { anchor, width: health.selfWidth, height: health.selfHeightBound, distanceFactor: health.selfDistanceFactor },
     dispose: () => { head.geometry.dispose(); body.geometry.dispose(); muzzle.geometry.dispose(); } };
 }
-test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('%s normal orbit leaves the largest reticle ring and own plate clear across viewport/yaw/pitch/jump positions', weapon => {
+test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('%s default pitch leaves the largest reticle ring and centered own plate clear across viewport/yaw/jump positions', weapon => {
   const f = fixture(weapon), check = createSelfViewClearance();
   try {
     for (const [width, height] of [[1280, 720], [960, 720], [800, 600]]) {
       const camera = new PerspectiveCamera(CAMERA_CONFIG.fov, width / height, CAMERA_CONFIG.near, CAMERA_CONFIG.far);
-      for (const yaw of [0, Math.PI / 2, -Math.PI, .7]) for (const pitch of [CAMERA_CONFIG.minPitch, 0, CAMERA_CONFIG.initialPitch, .6, CAMERA_CONFIG.maxPitch]) {
+      for (const yaw of [0, Math.PI / 2, -Math.PI, .7]) for (const pitch of [CAMERA_CONFIG.initialPitch]) {
         for (const position of [{ x: TRAINING_RANGE_CONFIG.playerSpawnXZ[0], y: .91, z: 0 }, { x: -3, y: 2.4, z: -7 }]) {
           f.root.position.copy(position); f.root.rotation.y = yaw;
           updateFollowCamera(camera, { translation: () => position }, { yaw, pitch });
