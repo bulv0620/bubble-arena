@@ -791,6 +791,18 @@
       "acceptance": "唯一准星外围进度环，换弹优先/冷却仅显示冷却；按100HP真实固定tick计算TTK，霰弹27tick冷却，射速/门禁与最后一发回归。"
     },
     {
+      "id": "3.15.5",
+      "title": "准星与自身人物血条构图避让",
+      "stage": 3,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "3.15.4"
+      ],
+      "file": "docs/TASKS/3.15.5.md",
+      "acceptance": "自身偏左/血条紧凑偏左，与准星和进度环分离；近墙压近遮挡时自显示避让并恢复；屏幕中心射线、敌靶部位/距离与输入/重置不变。"
+    },
+    {
       "id": "4.1",
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",

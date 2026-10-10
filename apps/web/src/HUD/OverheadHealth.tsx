@@ -1,6 +1,8 @@
 import { Html } from '@react-three/drei';
 import { useEffect, useSyncExternalStore, type CSSProperties } from 'react';
 import { PLAYER_CONFIG, TRAINING_TARGET_CONFIG } from '@bubble-arena/shared';
+import type { Group } from 'three';
+import type { RefObject } from 'react';
 import type { PlayerVitals } from '@bubble-arena/game-core';
 import type { LocalTrainingTarget } from '../weapons';
 import { DAMAGE_NUMBER_CONFIG, type DamageNumbers } from '../effects/DamageNumbers';
@@ -9,7 +11,7 @@ import './gameHud.css';
 
 function HealthPlate({ label, hp, maxHp, self = false }: { label: string; hp: number; maxHp: number; self?: boolean }) {
   const ratio = Math.max(0, Math.min(1, hp / maxHp));
-  return <div className={`overhead-health ${self ? 'self' : 'target'} ${ratio <= 0.25 ? 'low' : ''}`}>
+  return <div className={`overhead-health ${self ? 'self' : 'target'} ${ratio <= 0.25 ? 'low' : ''}`} style={self ? { width: OVERHEAD_HEALTH_CONFIG.selfWidth } : undefined}>
     <div className="overhead-label"><span>{label}</span><b>{hp}</b></div>
     <div role="meter" aria-label={`${label}生命值`} aria-valuemin={0} aria-valuemax={maxHp} aria-valuenow={hp}
       className="health-track"><i style={{ width: `${ratio * 100}%` }} /></div>
@@ -25,10 +27,10 @@ function FloatingDamage({ queue }: { queue: DamageNumbers }) {
     −{entry.damage}
   </span>)}</div>;
 }
-export function PlayerOverheadHealth({ player, hidden = false }: { player: PlayerVitals; hidden?: boolean }) {
-  return <Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + 0.32, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none', display: hidden ? 'none' : undefined }}>
+export function PlayerOverheadHealth({ player, hidden = false, anchor }: { player: PlayerVitals; hidden?: boolean; anchor: RefObject<Group | null> }) {
+  return <group ref={anchor} position={[...OVERHEAD_HEALTH_CONFIG.selfPosition]}><Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} zIndexRange={[30, 0]} style={{ pointerEvents: 'none', display: hidden ? 'none' : undefined }}>
     <HealthPlate label="YOU" hp={player.hp} maxHp={player.maxHp} self />
-  </Html>;
+  </Html></group>;
 }
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {
   const state = useSyncExternalStore(target.subscribe, target.getSnapshot);

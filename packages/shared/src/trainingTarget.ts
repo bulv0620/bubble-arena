@@ -1,4 +1,5 @@
 import { PLAYER_CONFIG } from './player';
+import { CAMERA_CONFIG } from './camera';
 
 /** Separate engineering test fixture, not a formal map or player life state. */
 export const TRAINING_TARGET_CONFIG = Object.freeze({
@@ -13,4 +14,4 @@ export const TRAINING_TARGET_LAYOUT = Object.freeze([
   { id: 'training-target-center', label: '中靶', position: Object.freeze([12, 0.9, -7] as const) },
   { id: 'training-target-right', label: '右靶', position: Object.freeze([15, 0.9, -7] as const) },
 ].map(entry => Object.freeze(entry)));
-export const TRAINING_RANGE_CONFIG = Object.freeze({ playerSpawnXZ: Object.freeze([11.45, 0] as const) });
+export const TRAINING_RANGE_CONFIG = Object.freeze({ playerSpawnXZ: Object.freeze([TRAINING_TARGET_LAYOUT[1].position[0] - CAMERA_CONFIG.shoulderOffset, 0] as const) });

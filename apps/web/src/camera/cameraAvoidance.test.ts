@@ -10,10 +10,10 @@ test('removing and restoring a real wall recovers gradually, then immediately co
   setup();
   let wall = box(0, 1, 2, 1, 1, 0.1); world.step();
   const recovery = new CameraDistanceRecovery(), camera = new PerspectiveCamera();
-  const position = { x: -0.55, y: 0.45, z: 0 };
+  const position = { x: -CAMERA_CONFIG.shoulderOffset, y: 0.45, z: 0 };
   const frame = (dt: number) => {
     updateFollowCamera(camera, { translation: () => position }, { yaw: 0, pitch: 0 });
-    const result = avoidCameraObstacles(world, camera, { x: -0.55, y: 1, z: 0 }, cameraFocus(position, 0), recovery, dt);
+    const result = avoidCameraObstacles(world, camera, { x: position.x, y: position.y + CAMERA_CONFIG.focusHeight, z: 0 }, cameraFocus(position, 0), recovery, dt);
     if (result.status !== 'resolved') throw new Error('expected resolved');
     expectOutside(camera);
     return result.distance;
@@ -42,7 +42,7 @@ function box(x: number, y: number, z: number, hx: number, hy: number, hz: number
   return world.createCollider(RAPIER.ColliderDesc.cuboid(hx, hy, hz).setTranslation(x, y, z)
     .setCollisionGroups(COLLISION_GROUPS.map));
 }
-function apply(position = { x: -0.55, y: 0.45, z: 0 }, yaw = 0, pitch = 0) {
+function apply(position = { x: -CAMERA_CONFIG.shoulderOffset, y: 0.45, z: 0 }, yaw = 0, pitch = 0) {
   const camera = new PerspectiveCamera(CAMERA_CONFIG.fov, 16 / 9, CAMERA_CONFIG.near, CAMERA_CONFIG.far);
   updateFollowCamera(camera, { translation: () => position }, { yaw, pitch });
   const rotation = camera.quaternion.toArray();

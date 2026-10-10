@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
-import { Vector3, type Group } from 'three';
+import { PerspectiveCamera, Vector3, type Group } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
 import { COLLIDER_MATERIALS, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
@@ -11,6 +11,10 @@ import type { PlayerVitals } from '@bubble-arena/game-core';
 import { PlayerOverheadHealth } from '../HUD/OverheadHealth';
 import { RiflePlaceholder, type RifleMotion } from '../weapons';
 import type { LocalLoadout } from '../weapons/LocalLoadout';
+import { createSelfViewClearance } from './selfViewClearance';
+import { OVERHEAD_HEALTH_CONFIG } from '../HUD/overheadHealthConfig';
+import { crosshairSize } from '../HUD/crosshairSize';
+import { reticleProgress } from '../HUD/reticleProgress';
 
 interface CapsulePlayerProps {
   playerVitals: PlayerVitals;
@@ -29,6 +33,10 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
   const visual = useRef<Group | null>(null);
+  const healthAnchor = useRef<Group | null>(null);
+  const [obscured, setObscured] = useState(false);
+  const lastObscured = useRef(false);
+  const [checkClearance] = useState(createSelfViewClearance);
   const [facing] = useState(() => new PlayerFacing());
   const diagnostics = useRef({ ticks: 0, wasActive: false, result: undefined as ReturnType<RapierMovement['step']> });
   const { world } = useRapier();
@@ -56,11 +64,23 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     } else motion.reset();
   });
   const [forward] = useState(() => new Vector3());
-  useFrame(({ camera }) => {
+  useFrame(({ camera, size }) => {
     camera.getWorldDirection(forward);
     facing.step(Math.atan2(-forward.x, -forward.z));
     facingYaw.current = facing.getYaw();
-    if (visual.current) visual.current.rotation.y = facing.getYaw();
+    if (visual.current) {
+      visual.current.rotation.y = facing.getYaw();
+      const reticle = crosshairSize(loadout.getAngle());
+      const radius = (reticleProgress(loadout.getSnapshot()) ? Math.max(88, reticle + 24) : reticle) / 2 + OVERHEAD_HEALTH_CONFIG.reticleClearance;
+      const blocked = !scoped && camera instanceof PerspectiveCamera && checkClearance(visual.current, camera, size.width, size.height, radius,
+        healthAnchor.current ? { anchor: healthAnchor.current, width: OVERHEAD_HEALTH_CONFIG.selfWidth, height: OVERHEAD_HEALTH_CONFIG.selfHeightBound,
+          distanceFactor: OVERHEAD_HEALTH_CONFIG.selfDistanceFactor } : undefined);
+      visual.current.visible = !scoped && !blocked;
+      if (blocked !== lastObscured.current) {
+        lastObscured.current = blocked; setObscured(blocked);
+        if (import.meta.env.DEV) console.info('[self.clearance]', JSON.stringify({ hidden: blocked, radius }));
+      }
+    }
   });
   useAfterPhysicsStep(() => {
     if (!import.meta.env.DEV || !body.current) return;
@@ -78,8 +98,8 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
-      <PlayerOverheadHealth player={playerVitals} hidden={scoped} />
-      <group ref={visual} visible={!scoped}>
+      <group ref={visual} visible={!scoped && !obscured}>
+        <PlayerOverheadHealth anchor={healthAnchor} player={playerVitals} hidden={scoped || obscured} />
         <RiflePlaceholder loadout={loadout} />
         <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
       </group>
