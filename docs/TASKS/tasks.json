@@ -399,7 +399,7 @@
       "title": "定义武器配置 Schema",
       "acceptance": "ID、伤害、射速、弹匣、备弹、射程、换弹时长受类型约束。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "2.11"
@@ -411,7 +411,7 @@
       "title": "装备步枪占位模型",
       "acceptance": "步枪组件与角色位置正确关联。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.1"
@@ -423,7 +423,7 @@
       "title": "采集开火输入",
       "acceptance": "左键单击/按住触发意图，暂不扣弹药。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.2"
@@ -435,7 +435,7 @@
       "title": "射速与弹药状态",
       "acceptance": "射速受时间约束，每次有效开火消耗一发。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.3"
@@ -447,7 +447,7 @@
       "title": "换弹状态机",
       "acceptance": "R 键换弹；换弹中不射击，满弹匣和无备弹规则正确。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.4"
@@ -459,7 +459,7 @@
       "title": "屏幕中心瞄准射线",
       "acceptance": "获得准星命中目标点；空场景也能给出方向。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.5"
@@ -471,7 +471,7 @@
       "title": "枪口实际射线",
       "acceptance": "近墙遮挡正确，不能穿墙命中。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.6"
@@ -483,7 +483,7 @@
       "title": "创建带生命值靶子",
       "acceptance": "测试目标能显示生命值，命中时调用独立受击接口。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.7"
@@ -495,7 +495,7 @@
       "title": "伤害与命中反馈",
       "acceptance": "有效命中才扣血；未命中不扣血。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.8"
@@ -507,7 +507,7 @@
       "title": "弹药和生命值 HUD",
       "acceptance": "读游戏状态，正确显示弹匣/备弹/自身生命值。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.9"
@@ -519,7 +519,7 @@
       "title": "枪口与命中特效占位",
       "acceptance": "开火和命中时有简单可见反馈，销毁时不泄漏对象。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.10"
@@ -531,7 +531,7 @@
       "title": "基础后坐力",
       "acceptance": "枪口/摄像机响应可调，结束后回落，不破坏瞄准方向。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.11"
@@ -543,7 +543,7 @@
       "title": "分块人物与三靶训练场调整",
       "acceptance": "人物/靶子共用头部、圆形脸和身体分块；分散白盒物品；背景墙前三靶独立受击。",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12"
@@ -554,7 +554,7 @@
       "id": "3.12.2",
       "title": "准星统一朝向与右键收束散布",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.1"
@@ -566,7 +566,7 @@
       "id": "3.12.3",
       "title": "头顶血条与游戏HUD及逐次伤害浮字",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.2"
@@ -578,7 +578,7 @@
       "id": "3.12.4",
       "title": "换弹准星进度环与训练靶自动恢复",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.3"
@@ -590,7 +590,7 @@
       "id": "3.12.5",
       "title": "移动散布与取消普通武器右键效果",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.4"
@@ -602,7 +602,7 @@
       "id": "3.12.6",
       "title": "Esc 设置面板与鼠标灵敏度",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.5"
@@ -614,7 +614,7 @@
       "id": "3.12.7",
       "title": "修复重置后的左靶血条",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.6"
@@ -626,7 +626,7 @@
       "id": "3.12.8",
       "title": "自动装填与训练无限备弹",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.7"
@@ -638,7 +638,7 @@
       "id": "3.12.9",
       "title": "头顶血条随距离缩放",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.8"
@@ -650,7 +650,7 @@
       "id": "3.12.10",
       "title": "跳跃扩大准星与散布",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.9"
@@ -662,7 +662,7 @@
       "id": "3.12.11",
       "title": "改善首发/连射扩散与后坐力",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.10"
@@ -674,7 +674,7 @@
       "id": "3.12.12",
       "title": "隐藏调试点与持续连射反馈",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.11"
@@ -686,7 +686,7 @@
       "id": "3.12.13",
       "title": "部位伤害与距离衰减",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.12"
@@ -698,7 +698,7 @@
       "id": "3.14.1",
       "title": "多武器共享配置与通用射击规则",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12.13"
@@ -710,7 +710,7 @@
       "id": "3.14.2",
       "title": "双武器装备与设置切换",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.14.1"
@@ -722,7 +722,7 @@
       "id": "3.14.3",
       "title": "霰弹散射与狙击开镜伤害",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.14.2"
@@ -734,7 +734,7 @@
       "id": "3.14.4",
       "title": "泡泡副武器飞行与范围结算",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.14.3"
@@ -746,7 +746,7 @@
       "id": "3.15.1",
       "title": "非连发冷却进度与点击式狙击镜",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.14.4"
@@ -758,7 +758,7 @@
       "id": "3.15.2",
       "title": "霰弹逐弹丸反馈与贴脸压制",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.15.1"
@@ -770,7 +770,7 @@
       "id": "3.15.3",
       "title": "切枪保留移动与跳跃意图",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.15.2"
@@ -782,7 +782,7 @@
       "id": "3.15.4",
       "title": "互斥准星进度环与霰弹TTK平衡",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.15.3"
@@ -794,7 +794,7 @@
       "id": "3.15.5",
       "title": "准星与自身人物血条构图避让",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.15.4"
@@ -806,7 +806,7 @@
       "id": "3.15.6",
       "title": "收回肩位并居中自身头顶血条",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.15.5"
@@ -818,7 +818,7 @@
       "id": "3.15.7",
       "title": "修复泡泡命中后靶子血条被特效遮挡",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.14.4",
@@ -831,7 +831,7 @@
       "id": "3.15.8",
       "title": "消除鼠标镜头旋转追赶延迟",
       "stage": 3,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.15.7"
