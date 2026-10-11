@@ -1,5 +1,7 @@
 # Game core
 
+4.1 PlayerLifeMachine提供normal/downed/eliminated/respawning纯转换守卫，内部已结算事实携带lifeId/revision并显式接收finished门禁；HP扣减/实际时钟/救援资格/出生事务由后续任务接入，不是客户端命令入口。配置与状态类型在shared，规则见 [PLAYER_LIFE](../../docs/spec/PLAYER_LIFE.md)。无UI/网络/定时器依赖，训练仍沿用独立PlayerVitals与TrainingTargetState。
+
 3.10 createPlayerVitals提供校验、冻结的自身初始HP快照；与练习靶状态独立，不包含阶段4生命状态转换。
 
 3.9 TrainingTargetState默认读取WEAPON_CONFIGS.rifle.damage=20，接受唯一命中时扣血至最小0；lastDamage记录实际扣血量，归零后拒绝进一步受击并保持快照身份。构造校验HP/伤害，调用只提供射击身份，客户端事件不携带授权伤害。单机练习靶尚不包含阶段4倒地/复活；以后由服务端运行同一规则。下文3.8为历史边界。

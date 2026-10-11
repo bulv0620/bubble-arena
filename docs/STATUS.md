@@ -2,7 +2,7 @@
 
 更新时间：2026-10-11。
 
-阶段3已于2026-10-11由用户明确验收通过，37项全部accepted，阶段关闭。验收前pnpm check通过：58文件376测试，169任务卡，类型/lint/build通过；本地验收tag stage-3-accepted，未推送。此前段落是历史实现记录。下一项4.1定义玩家生命状态机，用户已授权开始。
+阶段3已于2026-10-11由用户明确验收通过，37项全部accepted，阶段关闭。验收前pnpm check通过：58文件376测试，169任务卡，类型/lint/build通过；本地验收tag stage-3-accepted，未推送。此前段落是历史实现记录。4.1 implemented：纯核心四状态转换守卫与共享配置/内部事实类型已完成，20项新增回归/编译期边界及完整pnpm check通过（60文件396测试、169任务卡、build673modules）。报告 [4.1](reports/4.1.md)，规则 [PLAYER_LIFE](spec/PLAYER_LIFE.md)。训练界面未接入倒地，下一项4.2受伤/HP归零接入；本轮停止。本地stage-4-life-machine-baseline候选，未推送。
 
 最新3.15.8 implemented：取消MouseOrbit旋转14/s指数追赶/目标与显示角分离，完整鼠标增量用于下一渲染帧，停手/反向无残余追赶，废弃rotationResponse移除。速度倍率/角度限幅/输入释放沿用，避障恢复/后坐力独立保留。第一帧完整角、批次/采样等效、锁定事件至Three相机方向/实时倍率及Esc拒绝输入回归通过；58文件376测试、pnpm check通过，169任务卡。开发实际100px/1.5倍得到yaw−0.45，4次停手日志恒定；生产水平/俯仰/反向与重置三靶100/30∞正常，近墙距离约0.109m→离墙4.49m恢复，error=[]。报告 [3.15.8](reports/3.15.8.md)，规则SPEC/D21。阶段3共37项implemented待人工跟手验收，未关闭不进入4；本地候选stage-3-direct-camera-playtest，未推送。
 
