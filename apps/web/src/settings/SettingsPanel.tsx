@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { MOUSE_SETTINGS } from './mouseSettings';
 import './settings.css';
 import { PRIMARY_WEAPON_IDS, WEAPON_HANDLING, weaponGroundSpeed, type PrimaryWeaponId } from '@bubble-arena/shared';
 
-export function SettingsPanel({ speed, onSpeed, onReset, onReturn, primary, onPrimary }: {
+export function SettingsPanel({ speed, onSpeed, onReset, onReturn, primary, onPrimary, lifeTest }: {
   speed: number; onSpeed: (value: number) => void; onReset: () => void; onReturn: () => void;
-  primary: PrimaryWeaponId; onPrimary: (id: PrimaryWeaponId) => void;
+  primary: PrimaryWeaponId; onPrimary: (id: PrimaryWeaponId) => void; lifeTest?: ReactNode;
 }) {
   const panel = useRef<HTMLDivElement>(null);
   useEffect(() => { panel.current?.querySelector<HTMLInputElement>('input')?.focus(); }, []);
@@ -28,6 +28,7 @@ export function SettingsPanel({ speed, onSpeed, onReset, onReturn, primary, onPr
         {PRIMARY_WEAPON_IDS.map(id => <option key={id} value={id}>{WEAPON_HANDLING[id].label} · 重量 {WEAPON_HANDLING[id].weight} · {weaponGroundSpeed(id)} m/s</option>)}
       </select>
       <small>槽位 2 固定携带泡泡发射器 · 4 发弹匣<br />游戏中按 1 / 2 切换，弹药分别保留。</small>
+      {lifeTest}
       <p>Esc 打开设置 · 返回游戏后锁定鼠标</p>
       <div className="settings-actions"><button onClick={onReset}>重置训练</button><button className="settings-return" onClick={onReturn}>返回游戏</button></div>
       <small>重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。</small>

@@ -1,5 +1,7 @@
 # Game core
 
+4.2 PlayerHealthState处理普通受伤并调用4.1归零转downed，普通/倒地血量独立、溢伤裁剪，lifeId/tick/受击sequence去重与finished门禁、冻结快照；当前不处理倒地后的补刀/计时/救援/复活。receiveDamage是权威模拟器内部已结算接口，不是客户端命令。
+
 4.1 PlayerLifeMachine提供normal/downed/eliminated/respawning纯转换守卫，内部已结算事实携带lifeId/revision并显式接收finished门禁；HP扣减/实际时钟/救援资格/出生事务由后续任务接入，不是客户端命令入口。配置与状态类型在shared，规则见 [PLAYER_LIFE](../../docs/spec/PLAYER_LIFE.md)。无UI/网络/定时器依赖，训练仍沿用独立PlayerVitals与TrainingTargetState。
 
 3.10 createPlayerVitals提供校验、冻结的自身初始HP快照；与练习靶状态独立，不包含阶段4生命状态转换。

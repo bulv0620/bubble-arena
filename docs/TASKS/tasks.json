@@ -856,7 +856,7 @@
       "title": "实现击倒状态",
       "acceptance": "生命值耗尽转为 downed 而非直接重生。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.1"

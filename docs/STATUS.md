@@ -1,6 +1,8 @@
 # 当前状态
 
-更新时间：2026-10-11。
+更新时间：2026-10-14。
+
+最新4.2 implemented：PlayerHealthState普通伤害/归零转downed，普通HP保留0、独立倒地HP50且不溢伤；身份/去重/finished/异常守卫，LocalPlayerHealth有界测试意图按物理步消费，头顶/边缘订阅真实快照。Esc生命测试实际100→80→倒地，生产五次20依次80/60/40/20/倒地50，狙击此前5→4且倒地仍4∞；开发前后人物坐标完全一致、lifeId1/revision1/hp0/downedHp50日志、12刚体15碰撞体/原hash，三次重置四条血条满血/选枪保留，800×600设置可滚动、error=[]。62文件404测试及pnpm check通过、169任务卡。报告 [4.2](reports/4.2.md)，规则 [PLAYER_LIFE](spec/PLAYER_LIFE.md)。4.3操作限制/爬行、4.4救援、4.5补刀计时、4.6复活仍todo，不声称完整倒地玩法或新动画。阶段4未关闭，下一项4.3；本轮停止。本地stage-4-downed-playtest候选，未推送。
 
 阶段3已于2026-10-11由用户明确验收通过，37项全部accepted，阶段关闭。验收前pnpm check通过：58文件376测试，169任务卡，类型/lint/build通过；本地验收tag stage-3-accepted，未推送。此前段落是历史实现记录。4.1 implemented：纯核心四状态转换守卫与共享配置/内部事实类型已完成，20项新增回归/编译期边界及完整pnpm check通过（60文件396测试、169任务卡、build673modules）。报告 [4.1](reports/4.1.md)，规则 [PLAYER_LIFE](spec/PLAYER_LIFE.md)。训练界面未接入倒地，下一项4.2受伤/HP归零接入；本轮停止。本地stage-4-life-machine-baseline候选，未推送。
 

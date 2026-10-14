@@ -1,4 +1,6 @@
 import { SettingsPanel } from '../settings/SettingsPanel';
+import { PlayerLifeTestPanel } from '../HUD/PlayerLifeTestPanel';
+import { PlayerHealthSimulation } from '../player/PlayerHealthSimulation';
 import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from '../settings/mouseSettings';
 import { createTrainingSession } from './trainingSession';
 import { ShotEffects } from '../effects';
@@ -51,7 +53,7 @@ export function BasicScene() {
   }, [pointer, openSettings]);
   return <>
     <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
+    {open && <SettingsPanel lifeTest={<PlayerLifeTestPanel player={session.playerHealth} />} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
@@ -72,7 +74,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [switchInput] = useState(() => new WeaponSwitchInput());
   useEffect(() => reload.attach(window, document, enabled), [reload, enabled]);
   useEffect(() => switchInput.attach(window, document, enabled), [switchInput, enabled]);
-  const { range, targets, playerVitals, recoil, feedback, motion, loadout, bubbles } = session;
+  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles } = session;
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
   const clearWeaponInput = useCallback(() => clearWeaponActions({ aim, fire, reload, switchInput }), [aim, fire, reload, switchInput]);
   const clearInput = useCallback(() => { input.clear(); clearWeaponInput(); }, [input, clearWeaponInput]);
@@ -109,8 +111,9 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
           {/* Keep Canvas and its HTML portal host mounted while resetting training. */}
           <PhysicsWorld key={revision}>
             <WhiteboxMap />
+            <PlayerHealthSimulation player={playerHealth} />
             {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
-            <CapsulePlayer loadout={loadout} playerVitals={playerVitals} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
+            <CapsulePlayer loadout={loadout} playerHealth={playerHealth} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
               TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
@@ -129,7 +132,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <div className="hud-brand"><i>BA</i><span>BUBBLE ARENA<small>训练模式</small></span></div>
       <PointerLockHint control={pointer} />
       <SpreadHint loadout={loadout} motion={motion} />
-      <HealthHint player={playerVitals} />
+      <HealthHint player={playerHealth} />
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />
       <Crosshair loadout={loadout} input={crosshair} motion={motion} />

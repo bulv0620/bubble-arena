@@ -1,0 +1,27 @@
+[
+  {
+    "edge": "✚\n泡泡先锋 YOU\n80 / 100 HP",
+    "head": "YOU\n80",
+    "ammo": "01 狙击枪\nSNIPER\n04\n/ ∞\n按 R 装填\n1 · 狙击枪\n2 · 泡泡\n重量 4 · 移速 4.0 m/s"
+  },
+  {
+    "edge": "✚\n泡泡先锋 YOU\n60 / 100 HP",
+    "head": "YOU\n60",
+    "ammo": "01 狙击枪\nSNIPER\n04\n/ ∞\n按 R 装填\n1 · 狙击枪\n2 · 泡泡\n重量 4 · 移速 4.0 m/s"
+  },
+  {
+    "edge": "✚\n泡泡先锋 YOU\n40 / 100 HP",
+    "head": "YOU\n40",
+    "ammo": "01 狙击枪\nSNIPER\n04\n/ ∞\n按 R 装填\n1 · 狙击枪\n2 · 泡泡\n重量 4 · 移速 4.0 m/s"
+  },
+  {
+    "edge": "✚\n泡泡先锋 YOU\n20 / 100 HP",
+    "head": "YOU\n20",
+    "ammo": "01 狙击枪\nSNIPER\n04\n/ ∞\n按 R 装填\n1 · 狙击枪\n2 · 泡泡\n重量 4 · 移速 4.0 m/s"
+  },
+  {
+    "edge": "✚\n泡泡先锋 倒地\n50 / 50 倒地生命",
+    "head": "倒地\n50",
+    "ammo": "01 狙击枪\nSNIPER\n04\n/ ∞\n按 R 装填\n1 · 狙击枪\n2 · 泡泡\n重量 4 · 移速 4.0 m/s"
+  }
+]

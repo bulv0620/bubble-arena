@@ -38,3 +38,17 @@ test('reset preserves chosen primary but isolates both ammo, projectiles, scope 
   expect(fresh.loadout.getWeaponAmmo('bubble').magazine).toBe(4); expect(fresh.bubbles.flight.getSnapshot()).toEqual([]);
   expect(fresh.range.entries[0].target.getSlowSnapshot()).toBe(1); expect(old.range.entries[0].target.getSlowSnapshot()).toBe(.5);
 });
+
+test('reset isolates downed health, queued damage and subscribers while preserving chosen primary', () => {
+  const old = createTrainingSession('shotgun'); old.playerHealth.requestTest('down'); old.playerHealth.step();
+  expect(old.playerHealth.getSnapshot().status).toBe('downed');
+  const fresh = createTrainingSession(old.loadout.getSnapshot().primary), notify = vi.fn(), release = fresh.playerHealth.subscribe(notify);
+  expect(fresh.playerHealth.getSnapshot()).toMatchObject({ hp: 100, downedHp: 0, status: 'normal', lifeId: 1, lastDamage: 0 });
+  expect(fresh.loadout.getSnapshot()).toMatchObject({ primary: 'shotgun', ammo: { magazine: 6 } });
+  old.playerHealth.step(); expect(notify).not.toHaveBeenCalled();
+  const pending = createTrainingSession(); pending.playerHealth.requestTest('down');
+  const another = createTrainingSession(); pending.playerHealth.step();
+  expect(another.playerHealth.getSnapshot().hp).toBe(100);
+  fresh.playerHealth.requestTest('hit'); fresh.playerHealth.step(); expect(notify).toHaveBeenCalledTimes(1);
+  release(); release(); fresh.playerHealth.requestTest('down'); fresh.playerHealth.step(); expect(notify).toHaveBeenCalledTimes(1);
+});

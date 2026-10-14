@@ -1,0 +1,8 @@
+[
+  {
+    "level": "info",
+    "message": "[camera.check] {\"target\":{\"x\":10.882050514221191,\"y\":0.9100973010063171,\"z\":-1.5777028799057007},\"camera\":{\"x\":12.002050514221192,\"y\":3.2363762553266118,\"z\":2.8785034294313663},\"angles\":{\"yaw\":0,\"pitch\":0.13962634015954636},\"aiming\":false,\"shoulderOffset\":1.12,\"avoidance\":{\"status\":\"resolved\",\"focus\":{\"x\":12.002050514221192,\"y\":2.6100973010063173,\"z\":-1.5777028799057007},\"distance\":4.500000000000001,\"safeDistance\":4.500000000000001,\"shoulderProbe\":{\"status\":\"clear\",\"length\":1.120000000000001},\"obstruction\":{\"status\":\"clear\",\"length\":4.500000000000001}},\"probeRadius\":0.2,\"distance\":4.500000000000001,\"fov\":70}",
+    "timestamp": "2026-10-14T03:18:12.238Z",
+    "url": "http://localhost:5173/src/camera/FollowCamera.tsx?t=1791947679183"
+  }
+]

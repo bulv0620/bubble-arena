@@ -1,4 +1,4 @@
-import { createPlayerVitals } from '@bubble-arena/game-core';
+import { LocalPlayerHealth } from '../player/LocalPlayerHealth';
 import { ShotFeedback } from '../effects/ShotFeedback';
 import { LocalTrainingRange } from '../weapons/LocalTrainingRange';
 import { TrainingTargets } from '../weapons/TrainingTargets';
@@ -12,7 +12,7 @@ import type { PrimaryWeaponId } from '@bubble-arena/shared';
 export function createTrainingSession(primary: PrimaryWeaponId = 'rifle') {
   const loadout = new LocalLoadout(primary), targets = new TrainingTargets();
   return {
-    range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets), playerVitals: createPlayerVitals(),
+    range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets), playerHealth: new LocalPlayerHealth(),
     recoil: new RifleRecoil(), feedback: new ShotFeedback(), motion: new RifleMotion(loadout), loadout,
   };
 }

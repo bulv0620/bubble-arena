@@ -1,0 +1,14 @@
+[
+  {
+    "level": "info",
+    "message": "[player.health] {\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":80,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":20}",
+    "timestamp": "2026-10-14T03:19:42.817Z",
+    "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791947942488"
+  },
+  {
+    "level": "info",
+    "message": "[player.health] {\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":80}",
+    "timestamp": "2026-10-14T03:19:43.217Z",
+    "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791947942488"
+  }
+]

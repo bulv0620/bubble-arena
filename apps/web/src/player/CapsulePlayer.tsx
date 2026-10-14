@@ -7,7 +7,7 @@ import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
 import { BlockAvatar } from '../visuals';
-import type { PlayerVitals } from '@bubble-arena/game-core';
+import type { LocalPlayerHealth } from './LocalPlayerHealth';
 import { PlayerOverheadHealth } from '../HUD/OverheadHealth';
 import { RiflePlaceholder, type RifleMotion } from '../weapons';
 import type { LocalLoadout } from '../weapons/LocalLoadout';
@@ -17,7 +17,7 @@ import { crosshairSize } from '../HUD/crosshairSize';
 import { reticleProgress } from '../HUD/reticleProgress';
 
 interface CapsulePlayerProps {
-  playerVitals: PlayerVitals;
+  playerHealth: LocalPlayerHealth;
   loadout: LocalLoadout;
   /** World-space capsule center, not the foot position. */
   position: [number, number, number];
@@ -28,7 +28,7 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerVitals, loadout }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout }: CapsulePlayerProps) {
   const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
@@ -99,7 +99,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
       <group ref={visual} visible={!scoped && !obscured}>
-        <PlayerOverheadHealth anchor={healthAnchor} player={playerVitals} hidden={scoped || obscured} />
+        <PlayerOverheadHealth anchor={healthAnchor} player={playerHealth} hidden={scoped || obscured} />
         <RiflePlaceholder loadout={loadout} />
         <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
       </group>

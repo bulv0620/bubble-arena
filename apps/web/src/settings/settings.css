@@ -15,3 +15,10 @@
 .settings-panel small { display: block; font-size: 11px; color: #a1bbcf; margin-top: 16px; }
 .settings-panel .settings-weapon-label { margin-top: 24px; }
 .settings-panel select { width: 100%; margin-top: 12px; padding: 12px; border: 1px solid #88b4d85c; border-radius: 10px; color: #e2f3ff; background: #264461; font: inherit; }
+
+.settings-panel { max-height: calc(100dvh - 40px); overflow-y: auto; }
+.life-test { border-top: 1px solid #88b4d844; margin-top: 18px; padding-top: 16px; }
+.life-test > b { font-size: 12px; color: #bfdfee; }
+.life-test > output { display: block; margin: 8px 0 12px; font-size: 12px; }
+.life-test small { margin-top: 8px; }
+.settings-actions button:disabled { cursor: default; opacity: .45; }

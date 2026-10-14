@@ -4,6 +4,7 @@ export { RifleFireState, type RifleAmmoState, type RifleShot } from './rifleFire
 export { TrainingTargetState, type TrainingHit, type TrainingTargetSnapshot } from './trainingTargetState';
 export { createPlayerVitals, type PlayerVitals } from './playerVitals';
 export { PlayerLifeMachine } from './playerLifeMachine';
+export { PlayerHealthState, type PlayerHealthSnapshot, type PlayerDamageIdentity } from './playerHealthState';
 export { spreadDirection, rifleSpreadDirection, rifleSpreadAngle } from './rifleSpread';
 export { RifleAccuracy } from './rifleAccuracy';
 export { calculateWeaponDamage } from './weaponDamage';

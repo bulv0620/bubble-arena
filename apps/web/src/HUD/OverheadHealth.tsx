@@ -3,15 +3,15 @@ import { useEffect, useSyncExternalStore, type CSSProperties } from 'react';
 import { PLAYER_CONFIG, TRAINING_TARGET_CONFIG } from '@bubble-arena/shared';
 import type { Group } from 'three';
 import type { RefObject } from 'react';
-import type { PlayerVitals } from '@bubble-arena/game-core';
+import type { LocalPlayerHealth } from '../player/LocalPlayerHealth';
 import type { LocalTrainingTarget } from '../weapons';
 import { DAMAGE_NUMBER_CONFIG, type DamageNumbers } from '../effects/DamageNumbers';
 import { OVERHEAD_HEALTH_CONFIG } from './overheadHealthConfig';
 import './gameHud.css';
 
-function HealthPlate({ label, hp, maxHp, self = false }: { label: string; hp: number; maxHp: number; self?: boolean }) {
+function HealthPlate({ label, hp, maxHp, self = false, downed = false }: { label: string; hp: number; maxHp: number; self?: boolean; downed?: boolean }) {
   const ratio = Math.max(0, Math.min(1, hp / maxHp));
-  return <div className={`overhead-health ${self ? 'self' : 'target'} ${ratio <= 0.25 ? 'low' : ''}`} style={self ? { width: OVERHEAD_HEALTH_CONFIG.selfWidth } : undefined}>
+  return <div className={`overhead-health ${self ? 'self' : 'target'} ${ratio <= 0.25 ? 'low' : ''} ${downed ? 'downed' : ''}`} style={self ? { width: OVERHEAD_HEALTH_CONFIG.selfWidth } : undefined}>
     <div className="overhead-label"><span>{label}</span><b>{hp}</b></div>
     <div role="meter" aria-label={`${label}生命值`} aria-valuemin={0} aria-valuemax={maxHp} aria-valuenow={hp}
       className="health-track"><i style={{ width: `${ratio * 100}%` }} /></div>
@@ -27,9 +27,11 @@ function FloatingDamage({ queue }: { queue: DamageNumbers }) {
     −{entry.damage}
   </span>)}</div>;
 }
-export function PlayerOverheadHealth({ player, hidden = false, anchor }: { player: PlayerVitals; hidden?: boolean; anchor: RefObject<Group | null> }) {
+export function PlayerOverheadHealth({ player, hidden = false, anchor }: { player: LocalPlayerHealth; hidden?: boolean; anchor: RefObject<Group | null> }) {
+  const state = useSyncExternalStore(player.subscribe, player.getSnapshot);
+  const downed = state.status === 'downed';
   return <group ref={anchor} position={[...OVERHEAD_HEALTH_CONFIG.selfPosition]}><Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} zIndexRange={[30, 0]} style={{ pointerEvents: 'none', display: hidden ? 'none' : undefined }}>
-    <HealthPlate label="YOU" hp={player.hp} maxHp={player.maxHp} self />
+    <HealthPlate label={downed ? "倒地" : "YOU"} hp={downed ? state.downedHp : state.hp} maxHp={downed ? state.maxDownedHp : state.maxHp} self downed={downed} />
   </Html></group>;
 }
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {

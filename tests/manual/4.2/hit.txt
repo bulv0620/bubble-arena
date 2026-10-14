@@ -1,0 +1,72 @@
+Browser tab: 10, Title: "Bubble Arena", URL: "http://localhost:5173/".
+0 AXWebArea Bubble Arena, URL: localhost:5173/
+	1 container Bubble Arena · 基础白盒场景
+		26 container
+			27 image
+				28 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			29 container
+				30 text 左靶 100
+				31 level indicator Description: 左靶生命值, Value: 100
+			32 container
+				33 text 中靶 100
+				34 level indicator Description: 中靶生命值, Value: 100
+			35 container
+				36 text 右靶 100
+				37 level indicator Description: 右靶生命值, Value: 100
+			38 container
+				39 text YOU 80
+				40 level indicator Description: YOU生命值, Value: 80
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 步枪 · 稳定射击
+		8 container 自身 HP：80 / 100
+			9 container
+				10 text 泡泡先锋  YOU
+			11 container
+				12 text 80  /  100 HP
+		13 container 步枪弹药：30 / 无限备弹
+			14 container
+				15 text 01 步枪 RIFLE
+			16 text 30
+			17 text /  ∞
+			18 text 按 R 装填
+			19 text 1 ·  步枪 2 · 泡泡
+			20 container
+				21 text 重量  2  · 移速  5.0  m/s
+		22 container
+			23 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+		24 button (collapsed) 调试, Secondary Actions: Expand
+			25 text 调试
+		41 container 游戏设置
+			42 text BUBBLE ARENA / OPTIONS
+			43 heading 游戏设置, Value: 1, ID: settings-title
+				44 text 游戏设置
+			45 container
+				46 text 鼠标速度 1.50 ×
+			47 slider (settable, float) 鼠标速度, Value: 1.5, ID: mouse-speed
+			48 text 慢 快
+			49 text 主武器 · 槽位 1
+			50 pop up button (collapsed, settable) 主武器 · 槽位 1, Value: 步枪 · 重量 2 · 5 m/s, ID: primary-weapon, Secondary Actions: Expand
+				51 menu
+					52 (selected) 步枪 · 重量 2 · 5 m/s
+					53 霰弹枪 · 重量 1 · 5.5 m/s
+					54 狙击枪 · 重量 4 · 4 m/s
+			55 container
+				56 text 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+				57 text 游戏中按 1 / 2 切换，弹药分别保留。
+			58 container 单机生命测试
+				59 text 生命测试 · 单机训练
+				60 text 正常 · HP 80 / 100
+				61 button 受伤（20）
+					62 text 受伤（
+					63 text 20
+					64 text ）
+				65 button 击倒测试
+				66 text 倒地后可重置训练，重新测试。
+			67 text Esc 打开设置 · 返回游戏后锁定鼠标
+			68 button 重置训练
+			69 button 返回游戏
+			70 text 重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。
+
+The focused UI element is 61 button 受伤（20）

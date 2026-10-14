@@ -1,5 +1,8 @@
 # 客户端模块边界
 
+2026-10-14现行：阶段3已accepted。4.2训练会话持有LocalPlayerHealth及PlayerHealthSimulation固定物理步消费测试意图；头顶/边缘HUD以useSyncExternalStore订阅真实PlayerHealthState。Esc面板的单机生命测试槽只排队hit/down，生成身份和读取20/100伤害配置在模拟步完成。重置仅重建PhysicsWorld和会话，Canvas/Html宿主仍保持；未提前实现4.3操作门禁或完整救援/复活。下文为历史实现记录。
+
+
 3.12.1 visuals/BlockAvatar共用分块头/圆脸/身子，player只替换视觉，target旋转π朝向玩家；胶囊尺寸/无爆头规则不改。LocalTrainingRange创建三个独立目标，HUD缓存聚合快照并配对释放订阅，只显示一个统一命中标记。BasicScene按独立训练区spawn装配；原移动回归基线spawn保留供物理测试。
 
 3.10～3.12：自身HUD读取game-core独立初始PlayerVitals，尚无敌方攻击。ShotFeedback消费接受射击，两个ShotEffects网格固定复用，350/650ms隐藏，R3F卸载释放，无计时器/新物理体。RifleRecoil按接受sequence唯一脉冲，在FollowCamera基础鼠标pitch外叠加可回落偏移，再走原避障并查询最终aim；不改鼠标desired方向，不回溯本发伤害。阶段3全部implemented，等待人工手感验收。
