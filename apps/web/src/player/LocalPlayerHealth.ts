@@ -16,7 +16,8 @@ export class LocalPlayerHealth {
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   requestTest = (intent: HealthTestIntent) => {
     if (intent !== 'hit' && intent !== 'down') throw new TypeError('Invalid health test intent');
-    if (this.pending !== null || this.getSnapshot().status !== 'normal') return false;
+    const status = this.getSnapshot().status;
+    if (this.pending !== null || (status !== 'normal' && status !== 'downed') || intent === 'down' && status !== 'normal') return false;
     this.pending = intent; return true;
   };
   clearPending = () => { this.pending = null; };
@@ -36,15 +37,17 @@ export class LocalPlayerHealth {
   canCauseControl = () => this.getTick() < 0 || this.rule.canCauseControl(this.getTick(), false);
   step() {
     const tick = this.tick++;
-    const before = this.getSnapshot(); this.rule.advanceProtection(tick, false);
+    const before = this.getSnapshot();
     const intent = this.pending; this.pending = null;
     if (intent === null) {
+      this.rule.advanceTick(tick, false);
       if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
       return false;
     }
     const damage = intent === 'hit' ? TRAINING_PLAYER_HEALTH_CONFIG.hitDamage : TRAINING_PLAYER_HEALTH_CONFIG.downDamage;
     const accepted = this.rule.receiveDamage({ lifeId: this.getSnapshot().lifeId, tick, sequence: ++this.sequence }, damage, false);
     if (accepted) this.damageRevision++;
+    this.rule.advanceTick(tick, false);
     if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
     return accepted;
   }

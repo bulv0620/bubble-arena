@@ -1,5 +1,8 @@
 # Game core
 
+4.5 PlayerHealthState接入独立倒地池补刀/固定1200tick超时，advanceTick驱动物理时间与低频剩余秒数，淘汰原因区分补刀/超时；救起清理旧期限、重复/旧tick/finished/溢出守卫。尚未接复活/计分，见 [PLAYER_LIFE](../../docs/spec/PLAYER_LIFE.md)。
+
+
 4.4.3 RescueProgress.complete同tick消费真实ready通道一次并释放，PlayerHealthState.completeRescue恢复normal/50HP/同生命ID并提供60tick保护与实际开火提前终止；严格身份、去重和finished门禁。控制接收/产生查询独立，仍无UI/网络/计时器依赖。见 [RESCUE](../../docs/spec/RESCUE.md)。下文为各项原始实现范围。
 
 

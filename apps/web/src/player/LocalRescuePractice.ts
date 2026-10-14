@@ -48,7 +48,7 @@ export class LocalRescuePractice {
       if (this.ally && this.mode !== 'self-rescue') this.allyHealth.receiveDamage({ lifeId: 1, sequence: 1, tick }, this.allyHealth.getSnapshot().maxHp, false);
       this.publish(null, '');
     }
-    this.allyHealth.advanceProtection(tick, false);
+    this.allyHealth.advanceTick(tick, false);
     const current = this.state.channel;
     if (current && this.ally && this.mode === 'crawl-away') {
       const dx = this.ally.x - position.x, dz = this.ally.z - position.z, distance = Math.hypot(dx, dz);

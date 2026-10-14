@@ -1,0 +1,42 @@
+Browser tab: 17, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+1 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	2 container Bubble Arena · 基础白盒场景
+		3 container
+			4 image
+				5 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			6 container
+				7 text 左靶 100
+				8 level indicator Description: 左靶生命值, Value: 100
+			9 container
+				10 text 中靶 100
+				11 level indicator Description: 中靶生命值, Value: 100
+			12 container
+				13 text 右靶 100
+				14 level indicator Description: 右靶生命值, Value: 100
+			15 container
+				16 text 倒地 50
+				17 level indicator Description: 倒地生命值, Value: 50
+		18 container
+			19 text BA BUBBLE ARENA 训练模式
+		20 text 锁定失败：可按住左键拖动镜头，或点击重试 · Esc：设置
+		21 text 倒地 · 缓慢移动
+		22 container 自身倒地 HP：50 / 50
+			23 container
+				24 text 泡泡先锋  倒地
+			25 container
+				26 text 50  /  50 倒地生命
+		38 container
+			39 text 已倒地 · 剩余  20  秒 WASD 缓慢移动 · 鼠标观察 等待队友救援 · 倒地生命耗尽或计时结束将淘汰
+		27 container 步枪弹药：30 / 无限备弹
+			28 container
+				29 text 01 步枪 RIFLE
+			30 text 30
+			31 text /  ∞
+			32 text 倒地 · 武器不可用
+			33 text 1 ·  步枪 2 · 泡泡
+			34 container
+				35 text 重量  2  · 移速  1.0  m/s
+		36 container
+			37 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+
+The focused UI element is 1 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/

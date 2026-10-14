@@ -19,8 +19,8 @@ export function RescuePracticePanel({ practice }: { practice: LocalRescuePractic
 }
 export function RescueHint({ practice, player }: { practice: LocalRescuePractice; player: LocalPlayerHealth }) {
   const { mode, channel, message } = useSyncExternalStore(practice.subscribe, practice.getSnapshot);
-  const normal = useSyncExternalStore(player.subscribe, () => player.getSnapshot().status === 'normal');
-  const receiving = mode === 'self-rescue' && !normal;
+  const status = useSyncExternalStore(player.subscribe, () => player.getSnapshot().status), normal = status === 'normal';
+  const receiving = mode === 'self-rescue' && status === 'downed';
   if (mode === 'off' || !normal && !receiving) return null;
   return <aside className={`rescue-hint ${receiving ? 'receiving' : ''}`} aria-live="polite">
     <b>{channel ? receiving ? '队友正在救援你' : '正在救援队友' : '救援练习'}</b>
@@ -35,11 +35,12 @@ export function RescuePracticeAlly({ practice }: { practice: LocalRescuePractice
   const { ally, allyHealth } = useSyncExternalStore(practice.subscribe, practice.getSnapshot);
   if (!ally || !allyHealth) return null;
   const downed = allyHealth.status === 'downed', hp = downed ? allyHealth.downedHp : allyHealth.hp, maxHp = downed ? allyHealth.maxDownedHp : allyHealth.maxHp;
-  const label = `测试队友 · ${downed ? '倒地' : allyHealth.protected ? '保护' : '正常'}`;
+  const eliminated = allyHealth.status === 'eliminated';
+  const label = `测试队友 · ${eliminated ? '淘汰' : downed ? '倒地' : allyHealth.protected ? '保护' : '正常'}`;
   return <group position={[ally.x, ally.y, ally.z]}>
     <BlockAvatar headColor="#d6b182" bodyColor="#79b966" />
     <Html center occlude distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + .25, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
-      <div className={`overhead-health self ${downed ? 'downed' : ''} ${allyHealth.protected ? 'protected' : ''}`} style={{ width: 104 }}><div className="overhead-label"><span>{label}</span><b>{hp}</b></div>
+      <div className={`overhead-health self ${eliminated ? 'eliminated' : downed ? 'downed' : ''} ${allyHealth.protected ? 'protected' : ''}`} style={{ width: 104 }}><div className="overhead-label"><span>{label}</span><b>{hp}</b></div>
         <div className="health-track" role="meter" aria-label={`测试队友${downed ? '倒地' : ''}生命值`} aria-valuemin={0} aria-valuemax={maxHp} aria-valuenow={hp}><i style={{ width: `${hp / maxHp * 100}%` }} /></div>
       </div>
     </Html>

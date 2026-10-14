@@ -57,7 +57,10 @@ test('strict completion/fire validation and end-tick overflow fail before life m
   const accessor = Object.defineProperty({ ...fact }, 'elapsedTicks', { get: () => { throw new Error('Must not read'); } });
   expect(() => health.completeRescue(accessor, 180, false)).toThrow(TypeError);
   expect(() => health.completeRescue({ ...fact, hp: 100 } as typeof fact, 180, false)).toThrow(TypeError);
-  expect(() => health.completeRescue(fact, Number.MAX_SAFE_INTEGER, false)).toThrow(RangeError);
+  expect(health.completeRescue(fact, Number.MAX_SAFE_INTEGER, false)).toBe(false);
+  const nearEnd = new PlayerHealthState(); nearEnd.receiveDamage({ lifeId: 1, sequence: 1, tick: Number.MAX_SAFE_INTEGER - 1201 }, 100, false);
+  const nearSaved = nearEnd.getSnapshot();
+  expect(() => nearEnd.completeRescue(fact, Number.MAX_SAFE_INTEGER - 10, false)).toThrow(RangeError); expect(nearEnd.getSnapshot()).toBe(nearSaved);
   expect(() => health.onAcceptedFire({ lifeId: 1, revision: 2, sequence: NaN, tick: 180 }, false)).toThrow(RangeError);
   expect(() => health.advanceProtection(180, undefined as unknown as boolean)).toThrow(TypeError);
   expect(health.getSnapshot()).toBe(saved);

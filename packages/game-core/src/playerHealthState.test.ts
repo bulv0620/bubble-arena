@@ -19,9 +19,13 @@ test('overkill is clipped to standing health and cannot spill into the independe
   player.receiveDamage(hit(), 160, false);
   const downed = player.getSnapshot();
   expect(downed).toMatchObject({ hp: 0, downedHp: 50, lastDamage: 100, status: 'downed' });
-  // Downed finishing belongs to 4.5; this path cannot reset the downed pool or respawn.
-  for (let sequence = 2; sequence < 100; sequence++) expect(player.receiveDamage(hit(sequence, sequence), 999, false)).toBe(false);
-  expect(player.getSnapshot()).toBe(downed);
+  // Only a distinct subsequent hit can finish; replay of the standing hit cannot spill.
+  expect(player.receiveDamage(hit(), 999, false)).toBe(false); expect(player.getSnapshot()).toBe(downed);
+  expect(player.receiveDamage(hit(2, 1), 999, false)).toBe(true);
+  expect(player.getSnapshot()).toMatchObject({ status: 'eliminated', hp: 0, downedHp: 0, lastDamage: 50 });
+  const eliminated = player.getSnapshot();
+  for (let sequence = 3; sequence < 100; sequence++) expect(player.receiveDamage(hit(sequence, sequence), 999, false)).toBe(false);
+  expect(player.getSnapshot()).toBe(eliminated);
 });
 test('duplicate, out-of-order and wrong-life damage cannot mutate health or poison a later valid identity', () => {
   const player = new PlayerHealthState(); player.receiveDamage(hit(2, 10), 20, false);

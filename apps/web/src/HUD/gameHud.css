@@ -89,3 +89,9 @@
 .rescue-hint.receiving { top: 216px; }
 .player-health.protected, .overhead-health.self.protected { border-color: #ffeb91; box-shadow: 0 0 16px #ffce5677; }
 .player-health.protected .health-track i, .overhead-health.self.protected .health-track i { background: linear-gradient(#fff3a5,#e5c053); }
+
+.life-state-hint.eliminated { background: #3a4052ed; border-color: #bbc4d5aa; }
+.life-state-hint.eliminated b { color: #e1e7f2; }
+.player-health.eliminated .health-emblem { background: #67758a; box-shadow: inset 0 -5px 0 #475266; }
+.player-health.eliminated .health-info small span { color: #c7d0df; }
+.overhead-health.eliminated { border-color: #99a6bb; }

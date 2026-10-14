@@ -916,7 +916,7 @@
       "title": "淘汰与倒地计时",
       "acceptance": "到时淘汰或满足补刀规则时淘汰，状态不会重复触发。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.4.3"

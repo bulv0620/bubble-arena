@@ -1,0 +1,8 @@
+Browser tab: 17, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~				16 text 倒地 10
+~				17 level indicator Description: 倒地生命值, Value: 10
+~		22 container 自身倒地 HP：10 / 50
+~				26 text 10  /  50 倒地生命
+~				57 text 倒地 · 倒地生命 10 / 50 · 剩余 20 秒
+The focused UI element is 58 button 补刀（20）

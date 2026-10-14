@@ -18,3 +18,10 @@ player.completeRescue({ lifeId: 1, revision: 1, elapsedTicks: 180, hp: 100 }, 18
 player.onAcceptedFire({ lifeId: 1, tick: 180, sequence: 1 }, false);
 // @ts-expect-error Protection snapshots are read-only.
 player.getSnapshot().protected = false;
+
+// @ts-expect-error Countdown is authority-owned and read-only.
+player.getSnapshot().downedSecondsRemaining = 20;
+// @ts-expect-error The clock must explicitly receive the finished gate.
+player.advanceTick(1200);
+// @ts-expect-error Elimination cause is resolved internally, never observer-assigned.
+player.getSnapshot().eliminationReason = 'finishing-damage';

@@ -9,9 +9,9 @@ import { DAMAGE_NUMBER_CONFIG, type DamageNumbers } from '../effects/DamageNumbe
 import { OVERHEAD_HEALTH_CONFIG } from './overheadHealthConfig';
 import './gameHud.css';
 
-function HealthPlate({ label, hp, maxHp, self = false, downed = false, protected: protectedState = false }: { label: string; hp: number; maxHp: number; self?: boolean; downed?: boolean; protected?: boolean }) {
+function HealthPlate({ label, hp, maxHp, self = false, downed = false, protected: protectedState = false, eliminated = false }: { label: string; hp: number; maxHp: number; self?: boolean; downed?: boolean; protected?: boolean; eliminated?: boolean }) {
   const ratio = Math.max(0, Math.min(1, hp / maxHp));
-  return <div className={`overhead-health ${self ? 'self' : 'target'} ${ratio <= 0.25 ? 'low' : ''} ${downed ? 'downed' : ''} ${protectedState ? 'protected' : ''}`} style={self ? { width: OVERHEAD_HEALTH_CONFIG.selfWidth } : undefined}>
+  return <div className={`overhead-health ${self ? 'self' : 'target'} ${ratio <= 0.25 ? 'low' : ''} ${eliminated ? 'eliminated' : downed ? 'downed' : ''} ${protectedState ? 'protected' : ''}`} style={self ? { width: OVERHEAD_HEALTH_CONFIG.selfWidth } : undefined}>
     <div className="overhead-label"><span>{label}</span><b>{hp}</b></div>
     <div role="meter" aria-label={`${label}生命值`} aria-valuemin={0} aria-valuemax={maxHp} aria-valuenow={hp}
       className="health-track"><i style={{ width: `${ratio * 100}%` }} /></div>
@@ -31,7 +31,7 @@ export function PlayerOverheadHealth({ player, hidden = false, anchor }: { playe
   const state = useSyncExternalStore(player.subscribe, player.getSnapshot);
   const downed = state.status === 'downed';
   return <group ref={anchor} position={[...OVERHEAD_HEALTH_CONFIG.selfPosition]}><Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} zIndexRange={[30, 0]} style={{ pointerEvents: 'none', display: hidden ? 'none' : undefined }}>
-    <HealthPlate label={downed ? "倒地" : state.protected ? "保护" : "YOU"} hp={downed ? state.downedHp : state.hp} maxHp={downed ? state.maxDownedHp : state.maxHp} self downed={downed} protected={state.protected} />
+    <HealthPlate label={state.status === 'eliminated' ? "淘汰" : downed ? "倒地" : state.protected ? "保护" : "YOU"} hp={downed ? state.downedHp : state.hp} maxHp={downed ? state.maxDownedHp : state.maxHp} self downed={downed} eliminated={state.status === 'eliminated'} protected={state.protected} />
   </Html></group>;
 }
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {

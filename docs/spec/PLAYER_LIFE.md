@@ -1,4 +1,4 @@
-# 玩家生命状态机（4.1～4.4.3）
+# 玩家生命状态机（4.1～4.5）
 
 2026-10-11阶段3由用户整体验收通过。4.1建立纯核心转换守卫与共享配置/类型；4.2已接入普通玩家HP扣减与归零转倒地，训练靶仍独立2秒恢复。4.3已接入倒地操作门禁和1m/s移动；实际计时、救援资格及合法出生事务按4.4～4.6接入，计分/比赛阶段按4.7～4.9接入。
 
@@ -66,3 +66,16 @@ LocalPlayerHealth状态通知同步更新LocalLoadout并清除开火、换弹、
 ## 4.4.3 实际救起
 
 真实180tick通道同tick只消费一次，PlayerHealthState恢复normal/50HP/倒地HP0并增加revision；生命ID、人物位置、选枪与弹药保留。救起后1秒（60tick）免伤/免控制，实际接受的主动开火提前结束保护。保护中忽略的有效伤害仍消费去重身份，不能延后重放；保护时钟/开火/完成均显式finished与严格身份门禁。规则、当前单机两种救援方向及控制接入范围见 [RESCUE](RESCUE.md)，报告 [4.4.3](../reports/4.4.3.md)。前文4.2/4.3的“只能重置恢复”是历史范围，当前已能被救起；倒地补刀/20秒淘汰及复活分别仍待4.5/4.6。
+
+
+## 4.5 倒地补刀与超时淘汰
+
+PlayerHealthState.receiveDamage现已处理normal和downed；普通HP归零的那一次伤害仍裁剪普通池，不穿入倒地池。后续唯一有效伤害扣downedHp，lastDamage为实际扣除值（例如倒地剩10、伤害20只扣10）；倒地HP归零同次调用转换eliminated，revision增加、生命ID/位置/弹药保持，eliminationReason=finishing-damage。已淘汰/复活中不接受伤害；生命/sequence/旧tick/finished及严格输入守卫沿用，不通过高序号错误生命污染后续有效伤害。
+
+倒地时保存内部固定截止tick=受击tick+ceil(PLAYER_LIFE_CONFIG.downedDuration×60)，默认1200tick。deadline溢出在快照/时钟/去重身份修改前拒绝。advanceTick(tick, matchFinished)由模拟每物理步调用，同时推进保护及倒地时间；倒地满20秒转换eliminated、倒地HP清零、lastDamage=0、eliminationReason=downed-timeout。受伤/救援进度不延长；旧/重复tick不重复淘汰，跳过tick仍按原截止时间判断，finished不推进快照和时钟。UI只订阅downedSecondsRemaining=ceil(剩余tick/60)，整秒变化才通知，不能提供elapsed时间或管理定时器。
+
+单机固定步顺序是已排队伤害→advanceTick超时→物理移动/后置救援。截止同tick致命伤害先结算可记为补刀，已经处理的超时不能被后来伤害改写；迟于deadline的伤害直接按超时结束，不能偷取原因。救援必须在deadline前完成，completeRescue即便未调用advanceTick也拒绝截止tick及以后；救起清除旧计时，再次倒地创建新20秒期限。无伤害时生命revision不随整秒倒计时变化，所以持续合格救援不因HUD时间更新中断。
+
+LocalPlayerHealth测试意图仍最多暂存1个，hit在normal为20受伤、downed为20补刀，down仅normal可用；淘汰后测试/改枪禁止，重置/返回仍可用。真实测试队友也用advanceTick，到期不可继续救起。有效补刀增加damageRevision，立即中断对应救援；超时状态/身份改变释放通道。淘汰沿用已有操作策略：禁止移动/跳跃/武器/救援，水平惯性限速0；同一胶囊/控制器保留重力与镜头观察，不新增碰撞体或瞬移。HUD显示剩余秒数、已淘汰及补刀/超时原因，头顶0HP与武器不可用同步。
+
+检查和实际浏览器步骤见 [4.5报告](../reports/4.5.md)。未接正式敌方命中/联网协议，单机按钮不是正式damage命令；未接actor归属/得分（4.7）、5秒复活/合法出生（4.6）或环境死亡/正式模型动画。本任务淘汰后保持状态，训练通过重置恢复。前文4.2～4.4的“补刀/计时仍待4.5”是历史范围，以本节为准。

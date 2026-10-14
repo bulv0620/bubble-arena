@@ -1,0 +1,19 @@
+Browser tab: 17, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~				16 text 倒地 30
+~				17 level indicator Description: 倒地生命值, Value: 30
+~		20 text 点击画布锁定鼠标 · WASD：缓慢移动 · Esc：设置
+~		21 text 倒地 · 缓慢移动
+~		22 container 自身倒地 HP：30 / 50
+~				24 text 泡泡先锋  倒地
+~				26 text 30  /  50 倒地生命
++		79 container
++			80 text 已倒地 · 剩余  20  秒 WASD 缓慢移动 · 鼠标观察 等待队友救援 · 倒地生命耗尽或计时结束将淘汰
+~			32 text 倒地 · 武器不可用
+~				35 text 重量  2  · 移速  1.0  m/s
+~			47 pop up button (disabled, collapsed, settable) 主武器 · 槽位 1, Value: 步枪 · 重量 2 · 5 m/s, ID: primary-weapon, Secondary Actions: Expand
+~				57 text 倒地 · 倒地生命 30 / 50 · 剩余 20 秒
+~				58 button 补刀（20）
+~					59 text 补刀
+~				63 button (disabled) 击倒测试
+The focused UI element is 58 button 补刀（20）

@@ -1,0 +1,14 @@
+[
+  {
+    "level": "info",
+    "message": "[player.health] {\"tick\":864,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":100,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null}",
+    "timestamp": "2026-10-14T09:40:16.295Z",
+    "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+  },
+  {
+    "level": "info",
+    "message": "[player.health] {\"tick\":2064,\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"downed-timeout\"}",
+    "timestamp": "2026-10-14T09:40:36.300Z",
+    "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+  }
+]
