@@ -1,0 +1,122 @@
+[
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:40:58.248Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:40:59.225Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:00.185Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:01.157Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:02.131Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:03.107Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:04.065Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:05.039Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:06.010Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:06.973Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:07.945Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:08.921Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:09.892Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:10.853Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:11.826Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:12.798Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:13.761Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:14.735Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:15.709Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:41:16.668Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  }
+]

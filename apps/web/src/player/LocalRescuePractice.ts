@@ -25,6 +25,7 @@ export class LocalRescuePractice {
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   configure = (mode: TrainingRescueMode) => {
     if (!TRAINING_RESCUE_MODES.includes(mode)) throw new TypeError('Invalid rescue practice mode');
+    if (!this.health.canPlay()) return;
     this.pending = mode;
   };
   private publish(channel: RescueChannel | null, message: string) {
@@ -40,6 +41,7 @@ export class LocalRescuePractice {
   }
   dispose = () => { this.pending = null; this.cancel(); };
   step(world: World, rawPosition: RescuePosition, grounded: boolean, input: RescueInputState) {
+    if (!this.health.canPlay()) { this.pending = null; this.cancel(); return this.rule.getSnapshot(); }
     const tick = this.tick++;
     const position = Object.freeze({ x: rawPosition.x, y: rawPosition.y, z: rawPosition.z });
     const health = this.health.getSnapshot();

@@ -2,7 +2,7 @@ import { WeaponAccuracy, WeaponFireState, playerActionPolicy, type RifleAmmoStat
 import { WEAPON_IDS, WEAPON_CONFIGS, WEAPON_HANDLING, TRAINING_RIFLE_AMMO_POLICY, weaponGroundSpeed, isPrimaryWeaponId,
   type PrimaryWeaponId, type WeaponId, type FireIntent, type PlayerLifeStatus } from '@bubble-arena/shared';
 export type WeaponSlot = 1 | 2;
-export interface LoadoutSnapshot { readonly rescuing: boolean; readonly lifeStatus: PlayerLifeStatus; readonly primary: PrimaryWeaponId; readonly active: WeaponId; readonly scoped: boolean; readonly ammo: RifleAmmoState; readonly progress: number | null; readonly cooldownProgress: number | null; readonly cooldownRemaining: number }
+export interface LoadoutSnapshot { readonly matchPlaying: boolean; readonly rescuing: boolean; readonly lifeStatus: PlayerLifeStatus; readonly primary: PrimaryWeaponId; readonly active: WeaponId; readonly scoped: boolean; readonly ammo: RifleAmmoState; readonly progress: number | null; readonly cooldownProgress: number | null; readonly cooldownRemaining: number }
 export interface EquippedShot { readonly tick: number; readonly sequence: number; readonly weapon: WeaponId; readonly angle: number }
 const RELEASED = Object.freeze({ held: false, pressed: false });
 
@@ -23,24 +23,25 @@ export class LocalLoadout {
   private snapshot: LoadoutSnapshot;
   private listeners = new Set<() => void>();
   readonly infiniteReserve = true;
-  constructor(primary: PrimaryWeaponId = 'rifle') {
+  constructor(primary: PrimaryWeaponId = 'rifle', readonly matchCanPlay: () => boolean = () => true) {
     if (!isPrimaryWeaponId(primary)) throw new TypeError('Invalid primary weapon');
     this.primary = primary; this.active = primary;
     this.snapshot = this.buildSnapshot();
   }
   private buildSnapshot(): LoadoutSnapshot {
     const cooldown = WEAPON_HANDLING[this.active].fireMode === 'semi' ? this.rules[this.active].getFireCooldown() : null;
-    return Object.freeze({ rescuing: this.rescuing, lifeStatus: this.lifeStatus, primary: this.primary, active: this.active, scoped: this.scoped,
+    return Object.freeze({ matchPlaying: this.matchCanPlay(), rescuing: this.rescuing, lifeStatus: this.lifeStatus, primary: this.primary, active: this.active, scoped: this.scoped,
       ammo: this.rules[this.active].getState(), progress: this.rules[this.active].getReloadProgress(),
       cooldownProgress: cooldown?.progress ?? null, cooldownRemaining: cooldown?.remaining ?? 0 });
   }
   private publish() {
     const next = this.buildSnapshot(), old = this.snapshot;
-    if (next.rescuing === old.rescuing && next.lifeStatus === old.lifeStatus && next.primary === old.primary && next.active === old.active && next.scoped === old.scoped && next.ammo === old.ammo && next.progress === old.progress
+    if (next.matchPlaying === old.matchPlaying && next.rescuing === old.rescuing && next.lifeStatus === old.lifeStatus && next.primary === old.primary && next.active === old.active && next.scoped === old.scoped && next.ammo === old.ammo && next.progress === old.progress
       && next.cooldownProgress === old.cooldownProgress && next.cooldownRemaining === old.cooldownRemaining) return;
     this.snapshot = next; for (const listener of this.listeners) listener();
   }
   getSnapshot = () => this.snapshot;
+  refreshMatchGate() { if (!this.matchCanPlay()) this.scoped = false; this.publish(); }
   /** Keep equipped slots and monotonic effect identities; reset per-life weapon rules. */
   resetForRespawn() {
     for (const id of WEAPON_IDS) {
@@ -50,8 +51,8 @@ export class LocalLoadout {
     this.scoped = false; this.rescuing = false; this.speed = 0; this.airborne = false; this.reloadOnEquip = false; this.publish();
   }
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
-  canOperate = () => playerActionPolicy(this.lifeStatus).canUseWeapons && !this.rescuing;
-  getSpeed = () => this.rescuing ? 0 : playerActionPolicy(this.lifeStatus).maximumSpeed ?? weaponGroundSpeed(this.active, this.scoped);
+  canOperate = () => this.matchCanPlay() && playerActionPolicy(this.lifeStatus).canUseWeapons && !this.rescuing;
+  getSpeed = () => !this.matchCanPlay() || this.rescuing ? 0 : playerActionPolicy(this.lifeStatus).maximumSpeed ?? weaponGroundSpeed(this.active, this.scoped);
   setRescuing(value: boolean) {
     if (typeof value !== 'boolean') throw new TypeError('Invalid rescue weapon gate');
     if (this.rescuing === value) return;
@@ -92,7 +93,7 @@ export class LocalLoadout {
   }
   setPrimary(id: PrimaryWeaponId) {
     if (!isPrimaryWeaponId(id)) throw new TypeError('Invalid primary weapon');
-    if (!this.canOperate()) return false;
+    if (!playerActionPolicy(this.lifeStatus).canUseWeapons || this.rescuing) return false;
     this.primary = id; this.equip(id); this.publish(); return true;
   }
   private equip(id: WeaponId) {
@@ -111,6 +112,7 @@ export class LocalLoadout {
   }
   step(intent: FireIntent, reload = false): EquippedShot | null {
     if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean' || typeof reload !== 'boolean') throw new TypeError('Invalid loadout fire intent');
+    if (!this.matchCanPlay()) return null;
     const tick = this.tick++;
     const reloadNow = this.canOperate() && (reload || this.reloadOnEquip); this.reloadOnEquip = false;
     let accepted: EquippedShot | null = null;

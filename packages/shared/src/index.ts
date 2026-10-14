@@ -28,3 +28,5 @@ export { WHITEBOX_SPAWNS, WHITEBOX_SPAWN_HASH, RESPAWN_CONFIG, parseRespawnConfi
 export { TEAM_IDS, parseTeamId, type TeamId } from './team';
 export { SCORE_CONFIG, parseDamageActor, parseScoreParticipant, parseScoreRoster, parseEliminationFact, parseEliminationFrame, type DamageActor, type ScoreParticipant, type EliminationFact } from './scoring';
 export { TRAINING_DAMAGE_SOURCES, TRAINING_SCORE_ACTORS, TRAINING_SCORE_ROSTER, type TrainingDamageSource } from './trainingScore';
+
+export { MATCH_CONFIG, parseMatchConfig, type MatchConfig, type MatchPhase } from './match';

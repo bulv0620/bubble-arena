@@ -9,7 +9,7 @@ export class LocalPlayerHealth {
   private source: TrainingDamageSource = 'unowned';
   private lastObserved: EliminationFact | null = null;
   private lastResolved: EliminationFact | null = null;
-  constructor(private readonly score?: LocalTeamScore) {}
+  constructor(private readonly score?: LocalTeamScore, readonly canPlay: () => boolean = () => true) {}
   getTestSource = () => this.source;
   canReplayScore = () => this.lastResolved !== null;
   configureTestSource = (source: TrainingDamageSource) => {
@@ -27,6 +27,7 @@ export class LocalPlayerHealth {
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   requestTest = (intent: HealthTestIntent) => {
     if (intent !== 'hit' && intent !== 'down' && intent !== 'replay-score') throw new TypeError('Invalid health test intent');
+    if (!this.canPlay()) return false;
     const status = this.getSnapshot().status;
     if (this.pending !== null) return false;
     if (intent === 'replay-score') { if (!this.lastResolved) return false; }
@@ -35,6 +36,7 @@ export class LocalPlayerHealth {
   };
   clearPending = () => { this.pending = null; };
   completeSpawn(apply: () => boolean) {
+    if (!this.canPlay()) return false;
     const before = this.getSnapshot();
     const accepted = this.rule.completeSpawn({ lifeId: before.lifeId, revision: before.revision }, this.getTick(), apply, false);
     if (accepted) { this.pending = null; this.lastObserved = null; this.score?.beginLife(TRAINING_SCORE_ACTORS.player.playerId, this.getSnapshot().lifeId, this.getTick(), false); }
@@ -42,6 +44,7 @@ export class LocalPlayerHealth {
     return accepted;
   }
   completeRescue(channel: RescueChannel) {
+    if (!this.canPlay()) return false;
     if (channel.target.playerId !== TRAINING_RESCUE_CONFIG.playerId) return false;
     const before = this.getSnapshot();
     const accepted = this.rule.completeRescue({ lifeId: channel.target.lifeId, revision: channel.target.revision, elapsedTicks: channel.elapsedTicks }, this.getTick(), false);
@@ -49,13 +52,15 @@ export class LocalPlayerHealth {
     return accepted;
   }
   onAcceptedFire(sequence: number) {
+    if (!this.canPlay()) return false;
     const before = this.getSnapshot();
     const ended = this.rule.onAcceptedFire({ lifeId: before.lifeId, revision: before.revision, tick: this.getTick(), sequence }, false);
     if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
     return ended;
   }
-  canCauseControl = () => this.getTick() < 0 || this.rule.canCauseControl(this.getTick(), false);
+  canCauseControl = () => this.canPlay() && (this.getTick() < 0 || this.rule.canCauseControl(this.getTick(), false));
   step() {
+    if (!this.canPlay()) { this.pending = null; return false; }
     const tick = this.tick++;
     const before = this.getSnapshot();
     const intent = this.pending; this.pending = null;

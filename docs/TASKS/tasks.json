@@ -952,7 +952,7 @@
       "title": "比赛计时与状态",
       "acceptance": "waiting/countdown/playing/finished 转换可测。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.7"

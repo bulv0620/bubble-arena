@@ -8,8 +8,8 @@ import type { TrainingTargets } from './TrainingTargets';
 import type { LocalTrainingTarget } from './LocalTrainingTarget';
 
 /** Engineering dummy: visual-matched head/body sensors, no solid movement collision. */
-export function TrainingTarget({ registry, target, position, label }: { registry: TrainingTargets; target: LocalTrainingTarget; label: string; position: readonly [number, number, number] }) {
-  useBeforePhysicsStep(() => { target.step(); });
+export function TrainingTarget({ registry, target, position, label, canPlay = () => true }: { canPlay?: () => boolean; registry: TrainingTargets; target: LocalTrainingTarget; label: string; position: readonly [number, number, number] }) {
+  useBeforePhysicsStep(() => { if (canPlay()) target.step(); });
   const head = useRef<Collider>(null), body = useRef<Collider>(null);
   const { headY, headRadius, bodyY, bodyRadius, bodyHalfHeight } = BLOCK_AVATAR_CONFIG;
   useEffect(() => {

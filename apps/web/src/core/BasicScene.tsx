@@ -1,3 +1,5 @@
+import { MatchHud } from '../HUD/MatchHud';
+import { MatchSimulation } from './MatchSimulation';
 import { TeamScoreHint, ScorePracticePanel } from '../HUD/TeamScoreHint';
 import { RescueInput } from '../input/RescueInput';
 import { RescueSimulation } from '../player/RescueSimulation';
@@ -35,8 +37,8 @@ export function BasicScene() {
   const [open, setOpen] = useState(false);
   const opened = useRef(false);
   const [revision, setRevision] = useState(0);
-  const [session, setSession] = useState(createTrainingSession);
-  const primaryDisabled = useSyncExternalStore(session.loadout.subscribe, () => !session.loadout.canOperate());
+  const [session, setSession] = useState(() => createTrainingSession('rifle', { match: true }));
+  const primaryDisabled = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().lifeStatus !== 'normal' || session.loadout.getSnapshot().rescuing);
   const primary = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().primary);
   const [speed, setSpeed] = useState(() => {
     try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
@@ -65,7 +67,7 @@ export function BasicScene() {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
-    }} onReset={() => { pointer.release(); setSession(createTrainingSession(session.loadout.getSnapshot().primary)); setRevision(value => value + 1); }} onReturn={() => {
+    }} onReset={() => { pointer.release(); setSession(createTrainingSession(session.loadout.getSnapshot().primary, { match: true, config: session.match.rule.config })); setRevision(value => value + 1); }} onReturn={() => {
       opened.current = false; setOpen(false);
       pointer.request(); // Must run directly in this user gesture, before React effects.
     }} />}
@@ -82,7 +84,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   const [switchInput] = useState(() => new WeaponSwitchInput());
-  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue, respawn, score } = session;
+  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue, respawn, score, match } = session;
   const weaponsEnabled = useCallback(() => enabled() && loadout.canOperate(), [enabled, loadout]);
   useEffect(() => reload.attach(window, document, weaponsEnabled), [reload, weaponsEnabled]);
   useEffect(() => switchInput.attach(window, document, weaponsEnabled), [switchInput, weaponsEnabled]);
@@ -92,6 +94,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   useEffect(() => bindWeaponChanges(loadout, { aim, fire, reload, switchInput }, motion, recoil), [loadout, aim, fire, reload, switchInput, recoil, motion]);
   useEffect(() => bindLifeActions(playerHealth, loadout, { aim, fire, reload, switchInput, keyboard: input, feedback, recoil }),
     [playerHealth, loadout, aim, fire, reload, switchInput, input, feedback, recoil]);
+  useEffect(() => match.subscribe(() => { loadout.refreshMatchGate(); if (!match.canPlay()) { clearInput(); loadout.setScoped(false); } }), [match, clearInput, loadout]);
   useEffect(() => bindRescueActions(loadout, { aim, fire, reload, switchInput }, input, recoil), [loadout, aim, fire, reload, switchInput, input, recoil]);
   const facingYaw = useRef(0);
   const shotRay = useRef<MuzzleRayResult | null>(null);
@@ -125,8 +128,9 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
           {/* Keep Canvas and its HTML portal host mounted while resetting training. */}
           <PhysicsWorld key={revision}>
             <WhiteboxMap />
+            <MatchSimulation match={match} />
             <PlayerHealthSimulation player={playerHealth} />
-            {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
+            {range.entries.map(entry => <TrainingTarget key={entry.id} canPlay={match.canPlay} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
             <RescuePracticeAlly practice={rescue} />
             <CapsulePlayer respawn={respawn} clearInput={clearInput} groundedRef={grounded} loadout={loadout} playerHealth={playerHealth} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
               TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
@@ -149,7 +153,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <PointerLockHint control={pointer} loadout={loadout} />
       <SpreadHint loadout={loadout} motion={motion} />
       <RescueHint practice={rescue} player={playerHealth} />
-      <TeamScoreHint score={score} /><HealthHint player={playerHealth} />
+      <MatchHud match={match} /><TeamScoreHint score={score} /><HealthHint player={playerHealth} />
       <PlayerLifeHint player={playerHealth} />
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />

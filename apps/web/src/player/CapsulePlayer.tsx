@@ -66,8 +66,8 @@ export function CapsulePlayer({ respawn, clearInput, position, input, bodyRef: b
     const policy = playerActionPolicy(playerHealth.getSnapshot().status), jump = input.consumeJump();
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
-        policy.canMove ? { ...input.getSnapshot(), aiming: false } : { forward: false, backward: false, left: false, right: false },
-        !loadout.getSnapshot().rescuing && policy.canJump && jump, view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed, loadout.getSnapshot().rescuing ? 0 : policy.maximumSpeed ?? undefined);
+        playerHealth.canPlay() && policy.canMove ? { ...input.getSnapshot(), aiming: false } : { forward: false, backward: false, left: false, right: false },
+        playerHealth.canPlay() && !loadout.getSnapshot().rescuing && policy.canJump && jump, view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed, !playerHealth.canPlay() || loadout.getSnapshot().rescuing ? 0 : policy.maximumSpeed ?? undefined);
       groundedRef.current = Boolean(result?.grounded);
       const speed = result ? Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep : 0;
       motion.setSpeed(speed, Boolean(result && (result.jumped || !result.grounded)));

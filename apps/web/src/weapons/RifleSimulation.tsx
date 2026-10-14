@@ -70,7 +70,7 @@ export function RifleSimulation({ playerHealth, aim, input, motion, loadout, swi
         ...(shot.weapon === 'shotgun' ? { pellets } : {}) });
       if (import.meta.env.DEV) console.info('[shot.ray]', JSON.stringify({ ...shot, muzzle, pellets: results.length, result: shotRay.current }));
     }
-    bubbles.step(world, loadout.getTick());
+    if (playerHealth.canPlay()) bubbles.step(world, loadout.getTick());
   });
   return null;
 }
