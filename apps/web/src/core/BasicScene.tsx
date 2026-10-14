@@ -81,7 +81,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   const [switchInput] = useState(() => new WeaponSwitchInput());
-  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue } = session;
+  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue, respawn } = session;
   const weaponsEnabled = useCallback(() => enabled() && loadout.canOperate(), [enabled, loadout]);
   useEffect(() => reload.attach(window, document, weaponsEnabled), [reload, weaponsEnabled]);
   useEffect(() => switchInput.attach(window, document, weaponsEnabled), [switchInput, weaponsEnabled]);
@@ -127,7 +127,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
             <PlayerHealthSimulation player={playerHealth} />
             {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
             <RescuePracticeAlly practice={rescue} />
-            <CapsulePlayer groundedRef={grounded} loadout={loadout} playerHealth={playerHealth} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
+            <CapsulePlayer respawn={respawn} clearInput={clearInput} groundedRef={grounded} loadout={loadout} playerHealth={playerHealth} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
               TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
@@ -136,7 +136,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
             <RescueSimulation practice={rescue} input={rescueInput} body={playerBody} grounded={grounded} enabled={enabled} pointer={pointer} aim={aim} />
             <ShotEffects feedback={feedback} />
             <BubbleVisuals bubbles={bubbles} />
-            <FollowCamera loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
+            <FollowCamera respawn={respawn} loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
             {import.meta.env.DEV && showAimDiagnostics && <>
               <AimTargetMarker target={aimTarget} />
               <MuzzleAimDiagnostics loadout={loadout} body={playerBody} yaw={facingYaw} target={aimTarget} />

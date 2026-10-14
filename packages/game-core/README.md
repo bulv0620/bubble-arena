@@ -1,5 +1,8 @@
 # Game core
 
+4.6 PlayerHealthState推进淘汰5秒等待/同tick出生回调事务，恢复100HP/新lifeId/2秒保护；纯核心selectSpawnPoint按地图可用性和最近存活敌人距离选点，带严格共享目录/事实和稳定回退。无DOM/物理/网络依赖，见 [SPAWN](../../docs/spec/SPAWN.md)。
+
+
 4.5 PlayerHealthState接入独立倒地池补刀/固定1200tick超时，advanceTick驱动物理时间与低频剩余秒数，淘汰原因区分补刀/超时；救起清理旧期限、重复/旧tick/finished/溢出守卫。尚未接复活/计分，见 [PLAYER_LIFE](../../docs/spec/PLAYER_LIFE.md)。
 
 

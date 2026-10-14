@@ -33,8 +33,8 @@ test('real bound health finishing locks weapons and horizontal inertia without c
     const result = f.adapter.step(f.body, f.collider, { forward: false, backward: false, left: false, right: false }, policy.canJump, 0, 1, policy.maximumSpeed ?? undefined)!;
     f.world.step(); expect(Math.hypot(result.desired.x, result.desired.z)).toBe(0); expect(result.jumped).toBe(false);
     expect(f.body.translation().x).toBeCloseTo(before.x, 5); expect(f.body.translation().z).toBeCloseTo(before.z, 5);
-    const saved = f.session.playerHealth.getSnapshot(); for (let i = 0; i < 1500; i++) f.step();
-    expect(f.session.playerHealth.getSnapshot()).toBe(saved); expect(f.session.playerHealth.requestTest('hit')).toBe(false);
+    const saved = f.session.playerHealth.getSnapshot(); for (let i = 0; i < 150; i++) f.step();
+    expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: saved.status, hp: saved.hp, downedHp: saved.downedHp, revision: saved.revision }); expect(f.session.playerHealth.requestTest('hit')).toBe(false);
     expect(f.world.bodies.len()).toBe(bodies); expect(f.world.colliders.len()).toBe(colliders);
   } finally { f.dispose(); }
 });

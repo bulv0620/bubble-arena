@@ -5,6 +5,7 @@ export class HorizontalMovement {
   private velocity = { x: 0, z: 0 };
   private readonly tuning: MovementTuning;
   constructor(tuning: Partial<MovementTuning> = {}) { this.tuning = createMovementTuning(tuning); }
+  reset() { this.velocity = { x: 0, z: 0 }; }
 
   step(keys: MovementKeys, controlScale = 1, cameraYaw = 0, speedScale = 1, maximumSpeed?: number) {
     if (maximumSpeed !== undefined && (!Number.isFinite(maximumSpeed) || maximumSpeed < 0)) throw new RangeError('Invalid movement speed cap');

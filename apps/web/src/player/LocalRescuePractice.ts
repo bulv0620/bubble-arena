@@ -34,6 +34,10 @@ export class LocalRescuePractice {
     this.state = Object.freeze({ mode: this.mode, ally: this.ally, allyHealth, channel, message }); for (const listener of this.listeners) listener();
   }
   cancel = () => { this.rule.clear(); this.publish(null, this.state.channel ? '救援已中断，请重新按 E' : this.state.message); };
+  resetForRespawn() {
+    this.pending = null; this.rule.clear(); this.mode = 'off'; this.ally = null; this.injuryQueued = false;
+    this.previousDamageRevision = this.health.getDamageRevision(); this.publish(null, '');
+  }
   dispose = () => { this.pending = null; this.cancel(); };
   step(world: World, rawPosition: RescuePosition, grounded: boolean, input: RescueInputState) {
     const tick = this.tick++;

@@ -928,7 +928,7 @@
       "title": "复活与出生点",
       "acceptance": "延时复活、恢复生命/弹药，出生点合法。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.5"

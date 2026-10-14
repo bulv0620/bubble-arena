@@ -1,0 +1,96 @@
+{
+  "health": [
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":11966,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":100,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:07:04.406Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":11983,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":30,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:07:04.686Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":12001,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":10,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:07:04.981Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":12018,\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5}",
+      "timestamp": "2026-10-14T10:07:05.272Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":12318,\"status\":\"respawning\",\"lifeId\":1,\"revision\":3,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:07:10.262Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    }
+  ],
+  "spawn": [
+    {
+      "level": "info",
+      "message": "[player.spawn] {\"tick\":12318,\"position\":{\"x\":10.880000114440918,\"y\":0.9200000166893005,\"z\":0},\"selection\":{\"point\":{\"id\":\"red-main\",\"team\":\"red\",\"primary\":true,\"position\":{\"x\":10.879999999999999,\"y\":0.92,\"z\":0}},\"fallback\":false,\"nearestEnemyDistance\":null,\"catalogHash\":\"fnv1a64:0634c343957c90f1\"},\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:07:10.268Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    }
+  ],
+  "fire": [
+    {
+      "level": "info",
+      "message": "[player.protection] {\"reason\":\"fire\",\"sequence\":2,\"tick\":12334,\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:07:10.527Z",
+      "url": "http://localhost:5173/src/weapons/RifleSimulation.tsx?t=1791971753879"
+    }
+  ],
+  "movement": [
+    {
+      "level": "info",
+      "message": "[movement.check] {\"position\":{\"x\":10.880000114440918,\"y\":0.9144444465637207,\"z\":0},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.026179938779914945,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0,\"y\":-0.0055555556900799274,\"z\":0},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":-0.3333333333333333,\"grounded\":false}",
+      "timestamp": "2026-10-14T10:03:45.447Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    },
+    {
+      "level": "info",
+      "message": "[movement.check] {\"position\":{\"x\":10.880000114440918,\"y\":0.910099983215332,\"z\":8.58299600281498e-8},\"active\":false,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.003490658503988659,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.01111111111111111,\"z\":0},\"allowed\":{\"x\":4.29149800140749e-8,\"y\":-0.004344484303146601,\"z\":8.58299600281498e-8},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+      "timestamp": "2026-10-14T10:03:45.450Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    },
+    {
+      "level": "info",
+      "message": "[movement.check] {\"position\":{\"x\":10.880002975463867,\"y\":0.9102304577827454,\"z\":-0.006831230130046606},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"sniper\",\"groundSpeed\":4,\"spreadAngle\":0.1308996938995747,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.006944444444444445},\"allowed\":{\"x\":0,\"y\":0.00013315367687027901,\"z\":-0.006834609899669886},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+      "timestamp": "2026-10-14T10:06:12.300Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    },
+    {
+      "level": "info",
+      "message": "[movement.check] {\"position\":{\"x\":10.880455017089844,\"y\":0.9123381972312927,\"z\":-0.37878286838531494},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"sniper\",\"groundSpeed\":4,\"spreadAngle\":0.1308996938995747,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.06666666666666667},\"allowed\":{\"x\":0.00039942117291502655,\"y\":0.00108320452272892,\"z\":-0.06656581163406372},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+      "timestamp": "2026-10-14T10:06:12.449Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    },
+    {
+      "level": "info",
+      "message": "[movement.check] {\"position\":{\"x\":10.880464553833008,\"y\":0.9169957637786865,\"z\":-2.377251386642456},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"sniper\",\"groundSpeed\":4,\"spreadAngle\":0.1308996938995747,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":-0.06666666666666667},\"allowed\":{\"x\":-0.0003749146999325603,\"y\":0.0068957265466451645,\"z\":-0.06599710136651993},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+      "timestamp": "2026-10-14T10:06:12.956Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    },
+    {
+      "level": "info",
+      "message": "[movement.check] {\"position\":{\"x\":10.880922317504883,\"y\":0.9100972414016724,\"z\":-3.142575979232788},\"active\":false,\"lifeStatus\":\"normal\",\"weapon\":\"sniper\",\"groundSpeed\":4,\"spreadAngle\":0.08726646259971647,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-3.9368205762002617e-7,\"y\":-0.00026337080635130405,\"z\":0},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+      "timestamp": "2026-10-14T10:06:13.223Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    }
+  ],
+  "physics": [
+    {
+      "level": "info",
+      "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":12,\"colliders\":15,\"mapHash\":\"fnv1a64:5c84d22467198a7b\",\"spawnHash\":\"fnv1a64:0634c343957c90f1\"}",
+      "timestamp": "2026-10-14T10:03:45.949Z",
+      "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791971946051"
+    }
+  ]
+}

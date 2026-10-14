@@ -11,8 +11,9 @@ test('independent finishing damage clips 50→30→10→0 and eliminates once in
   }
   const saved = health.getSnapshot(); expect(saved).toMatchObject({ status: 'eliminated', lastDamage: 10, eliminationReason: 'finishing-damage', downedSecondsRemaining: 0, protected: false });
   expect(Object.isFrozen(saved)).toBe(true);
-  expect(health.receiveDamage(hit(5, 101), 20, false)).toBe(false); expect(health.advanceTick(10000, false)).toBe(false);
-  expect(health.getSnapshot()).toBe(saved);
+  expect(health.receiveDamage(hit(5, 101), 20, false)).toBe(false); expect(health.advanceTick(101, false)).toBe(false); expect(health.getSnapshot()).toBe(saved);
+  expect(health.advanceTick(400, false)).toBe(true); expect(health.getSnapshot()).toMatchObject({ status: 'respawning', revision: 3 });
+  expect(health.advanceTick(10000, false)).toBe(false);
 });
 test('exact 1200-tick deadline and one-second snapshot updates; duplicate/old tick has no effect', () => {
   const health = down(), saved = health.getSnapshot();

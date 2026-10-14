@@ -1,5 +1,5 @@
-import { PHYSICS_CONFIG, PLAYER_LIFE_CONFIG, PLAYER_VITALS_CONFIG, RESCUE_PROTECTION_CONFIG, parseRescueProtectionConfig,
-  type RescueProtectionConfig, type PlayerLifeConfig, type PlayerLifeSnapshot } from '@bubble-arena/shared';
+import { PHYSICS_CONFIG, PLAYER_LIFE_CONFIG, PLAYER_VITALS_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, parseRespawnConfig, parseRescueProtectionConfig,
+  type RespawnConfig, type RescueProtectionConfig, type PlayerLifeConfig, type PlayerLifeSnapshot } from '@bubble-arena/shared';
 import { PlayerLifeMachine } from './playerLifeMachine';
 import type { PlayerVitals } from './playerVitals';
 
@@ -7,10 +7,12 @@ import type { PlayerVitals } from './playerVitals';
 export interface PlayerDamageIdentity { readonly lifeId: number; readonly tick: number; readonly sequence: number }
 export interface PlayerFireIdentity extends PlayerDamageIdentity { readonly revision: number }
 export interface PlayerRescueCompletion { readonly lifeId: number; readonly revision: number; readonly elapsedTicks: number }
+export interface PlayerSpawnIdentity { readonly lifeId: number; readonly revision: number }
 export interface PlayerHealthSnapshot extends PlayerVitals, PlayerLifeSnapshot {
   readonly protected: boolean;
   readonly downedSecondsRemaining: number;
   readonly eliminationReason: 'finishing-damage' | 'downed-timeout' | null;
+  readonly respawnSecondsRemaining: number;
   readonly downedHp: number;
   readonly maxDownedHp: number;
   readonly lastDamage: number;
@@ -26,38 +28,56 @@ export class PlayerHealthState {
   private lastFireSequence = 0;
   private downedEndTick = 0;
   private readonly downedTicks: number;
+  private eliminatedTick = 0;
+  private readonly respawnTicks: number;
+  private readonly spawnProtectionTicks: number;
+  private spawning = false;
   private readonly protectionTicks: number;
-  constructor(lifeId = 1, config: PlayerLifeConfig = PLAYER_LIFE_CONFIG, protectionConfig: RescueProtectionConfig = RESCUE_PROTECTION_CONFIG) {
+  constructor(lifeId = 1, config: PlayerLifeConfig = PLAYER_LIFE_CONFIG, protectionConfig: RescueProtectionConfig = RESCUE_PROTECTION_CONFIG, respawnConfig: RespawnConfig = RESPAWN_CONFIG) {
     this.life = new PlayerLifeMachine(lifeId, config);
     this.downedTicks = Math.ceil(this.life.config.downedDuration * PHYSICS_CONFIG.tickRate);
+    this.respawnTicks = Math.ceil(this.life.config.respawnDelay * PHYSICS_CONFIG.tickRate);
+    this.spawnProtectionTicks = Math.ceil(parseRespawnConfig(respawnConfig).protectionDuration * PHYSICS_CONFIG.tickRate);
     this.protectionTicks = Math.ceil(parseRescueProtectionConfig(protectionConfig).duration * PHYSICS_CONFIG.tickRate);
     this.state = Object.freeze({ ...this.life.getSnapshot(), hp: PLAYER_VITALS_CONFIG.maxHp, maxHp: PLAYER_VITALS_CONFIG.maxHp,
-      downedHp: 0, maxDownedHp: this.life.config.downedHp, lastDamage: 0, protected: false, downedSecondsRemaining: 0, eliminationReason: null });
+      downedHp: 0, maxDownedHp: this.life.config.downedHp, lastDamage: 0, protected: false, downedSecondsRemaining: 0, eliminationReason: null, respawnSecondsRemaining: 0 });
   }
   getSnapshot = () => this.state;
   /** Call after current-tick damage and before rescue. The deadline never extends. */
   advanceTick(tick: number, matchFinished: boolean) {
     validateTick(tick, matchFinished);
-    if (matchFinished || tick < this.clockTick) return false;
+    if (matchFinished || tick < this.clockTick || this.spawning) return false;
     const before = this.state;
     this.advanceProtection(tick, matchFinished);
     if (this.state.status === 'downed') {
       if (tick >= this.downedEndTick) {
         if (this.life.transition({ type: 'downed_timeout', lifeId: this.state.lifeId, revision: this.state.revision,
           elapsedTicks: this.downedTicks }, matchFinished)) {
+          this.eliminatedTick = this.downedEndTick;
           this.state = Object.freeze({ ...this.state, ...this.life.getSnapshot(), downedHp: 0, downedSecondsRemaining: 0,
-            lastDamage: 0, protected: false, eliminationReason: 'downed-timeout' });
+            lastDamage: 0, protected: false, eliminationReason: 'downed-timeout', respawnSecondsRemaining: Math.ceil(this.respawnTicks / PHYSICS_CONFIG.tickRate) });
         }
       } else {
         const remaining = Math.ceil((this.downedEndTick - tick) / PHYSICS_CONFIG.tickRate);
         if (remaining !== this.state.downedSecondsRemaining) this.state = Object.freeze({ ...this.state, downedSecondsRemaining: remaining });
       }
     }
+    if (this.state.status === 'eliminated') {
+      const elapsedTicks = tick - this.eliminatedTick;
+      if (elapsedTicks >= this.respawnTicks) {
+        if (this.life.transition({ type: 'respawn_due', lifeId: this.state.lifeId, revision: this.state.revision, elapsedTicks }, matchFinished)) {
+          this.state = Object.freeze({ ...this.state, ...this.life.getSnapshot(), respawnSecondsRemaining: 0 });
+        }
+      } else {
+        const remaining = Math.ceil((this.respawnTicks - elapsedTicks) / PHYSICS_CONFIG.tickRate);
+        if (remaining !== this.state.respawnSecondsRemaining) this.state = Object.freeze({ ...this.state, respawnSecondsRemaining: remaining });
+      }
+    }
     return this.state !== before;
   }
   advanceProtection(tick: number, matchFinished: boolean) {
     validateTick(tick, matchFinished);
-    if (matchFinished || tick < this.clockTick) return false;
+    if (matchFinished || tick < this.clockTick || this.spawning) return false;
     this.clockTick = tick;
     if (!this.state.protected || tick < this.protectionEndTick) return false;
     this.state = Object.freeze({ ...this.state, protected: false }); return true;
@@ -101,6 +121,25 @@ export class PlayerHealthState {
     if (!this.state.protected) return false;
     this.protectionEndTick = fire.tick; this.state = Object.freeze({ ...this.state, protected: false }); return wasProtected;
   }
+  /** Synchronous authoritative spawn transaction. Preflight map/objects before mutation. */
+  completeSpawn(fact: PlayerSpawnIdentity, tick: number, apply: () => boolean, matchFinished: boolean) {
+    validateData(fact, ['lifeId', 'revision']); validateTick(tick, matchFinished);
+    if (!Number.isSafeInteger(fact.lifeId) || fact.lifeId < 1 || !Number.isSafeInteger(fact.revision) || fact.revision < 0) throw new RangeError('Invalid spawn identity');
+    if (typeof apply !== 'function') throw new TypeError('Expected spawn transaction');
+    const current = this.state;
+    if (this.spawning || matchFinished || tick < this.clockTick || current.status !== 'respawning' || current.lifeId !== fact.lifeId || current.revision !== fact.revision) return false;
+    const end = tick + this.spawnProtectionTicks;
+    if (!Number.isSafeInteger(end) || !Number.isSafeInteger(current.lifeId + 1) || !Number.isSafeInteger(current.revision + 1)) throw new RangeError('Spawn identity/clock exhausted');
+    this.spawning = true;
+    try {
+      const applied = apply(); if (typeof applied !== 'boolean') throw new TypeError('Expected spawn transaction result'); if (!applied) return false;
+      if (!this.life.transition({ type: 'spawn_completed', ...fact }, matchFinished)) return false;
+      this.clockTick = tick; this.protectionEndTick = end; this.downedEndTick = 0; this.lastSequence = 0; this.lastTick = tick; this.lastFireSequence = 0;
+      this.state = Object.freeze({ ...current, ...this.life.getSnapshot(), hp: current.maxHp, downedHp: 0, lastDamage: 0,
+        protected: true, downedSecondsRemaining: 0, respawnSecondsRemaining: 0, eliminationReason: null });
+      return true;
+    } finally { this.spawning = false; }
+  }
   /** Identity and resolvedDamage are simulation output, never client-provided hit results. */
   receiveDamage(hit: PlayerDamageIdentity, resolvedDamage: number, matchFinished: boolean): boolean {
     const keys = ['lifeId', 'tick', 'sequence'];
@@ -123,10 +162,12 @@ export class PlayerHealthState {
     if (current.status === 'downed') {
       const lastDamage = Math.min(resolvedDamage, current.downedHp), downedHp = current.downedHp - lastDamage;
       if (downedHp === 0 && !this.life.transition({ type: 'hp_depleted', hp: 0, lifeId: current.lifeId, revision: current.revision }, matchFinished)) return false;
+      if (downedHp === 0) this.eliminatedTick = hit.tick;
       this.lastSequence = hit.sequence; this.lastTick = hit.tick;
       this.state = Object.freeze({ ...current, ...this.life.getSnapshot(), downedHp, lastDamage,
         downedSecondsRemaining: downedHp === 0 ? 0 : current.downedSecondsRemaining,
-        eliminationReason: downedHp === 0 ? 'finishing-damage' : null });
+        eliminationReason: downedHp === 0 ? 'finishing-damage' : null,
+        respawnSecondsRemaining: downedHp === 0 ? Math.ceil(this.respawnTicks / PHYSICS_CONFIG.tickRate) : 0 });
       return true;
     }
     const lastDamage = Math.min(resolvedDamage, current.hp), hp = current.hp - lastDamage;

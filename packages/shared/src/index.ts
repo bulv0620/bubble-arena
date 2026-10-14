@@ -22,3 +22,5 @@ export { DEFAULT_RIFLE_AMMO_POLICY, TRAINING_RIFLE_AMMO_POLICY, type RifleAmmoPo
 export { WEAPON_DAMAGE_PROFILES, parseWeaponDamageProfile, type WeaponDamageProfile, type HitRegion } from './weaponDamage';
 export { BLOCK_AVATAR_CONFIG } from './blockAvatar';
 export { PRIMARY_WEAPON_IDS, createWeaponHandling, WEAPON_HANDLING, SNIPER_SCOPE_CONFIG, BUBBLE_CONFIG, isPrimaryWeaponId, weaponGroundSpeed, type PrimaryWeaponId, type WeaponHandling } from './weaponHandling';
+
+export { WHITEBOX_SPAWNS, WHITEBOX_SPAWN_HASH, RESPAWN_CONFIG, parseRespawnConfig, parseSpawnCatalog, parseSpawnEnemies, parseSpawnTeam, spawnCatalogHash, type SpawnTeam, type SpawnPoint, type SpawnCatalog, type SpawnEnemy, type RespawnConfig } from './spawn';

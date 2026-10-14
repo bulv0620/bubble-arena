@@ -4,7 +4,7 @@ export { RifleFireState, type RifleAmmoState, type RifleShot } from './rifleFire
 export { TrainingTargetState, type TrainingHit, type TrainingTargetSnapshot } from './trainingTargetState';
 export { createPlayerVitals, type PlayerVitals } from './playerVitals';
 export { PlayerLifeMachine } from './playerLifeMachine';
-export { PlayerHealthState, type PlayerHealthSnapshot, type PlayerDamageIdentity, type PlayerRescueCompletion, type PlayerFireIdentity } from './playerHealthState';
+export { PlayerHealthState, type PlayerHealthSnapshot, type PlayerDamageIdentity, type PlayerRescueCompletion, type PlayerSpawnIdentity, type PlayerFireIdentity } from './playerHealthState';
 export { playerActionPolicy, type PlayerActionPolicy } from './playerActionPolicy';
 export { evaluateRescueEligibility, type RescueEligibility, type RescueIdentity, type RescueRejection, type RescueVisibilityQuery } from './rescueEligibility';
 export { RescueProgress, type RescueChannel, type RescueProgressSnapshot, type RescueProgressEvent, type RescueInterruptReason } from './rescueProgress';
@@ -15,3 +15,5 @@ export { WeaponFireState } from './weaponFireState';
 export { WeaponAccuracy } from './weaponAccuracy';
 export { BubbleFlight, type FlyingBubble } from './bubbleFlight';
 export { MovementSlow } from './movementSlow';
+
+export { selectSpawnPoint, type SpawnSelection } from './spawnSelection';

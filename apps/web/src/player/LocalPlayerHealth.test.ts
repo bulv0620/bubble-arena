@@ -13,7 +13,7 @@ test('UI requests are bounded intents: no damage until the next simulation step,
   expect(notify).toHaveBeenCalledTimes(2);
   expect(player.requestTest('down')).toBe(false);
   for (let i = 0; i < 1800; i++) player.step();
-  expect(player.getSnapshot()).toMatchObject({ status: 'eliminated', eliminationReason: 'downed-timeout', revision: 2 }); expect(notify).toHaveBeenCalledTimes(22);
+  expect(player.getSnapshot()).toMatchObject({ status: 'respawning', eliminationReason: 'downed-timeout', revision: 3 }); expect(notify).toHaveBeenCalledTimes(27);
   release(); release();
 });
 test('pending input cleanup and subscription release are idempotent, and a rebound subscriber works', () => {

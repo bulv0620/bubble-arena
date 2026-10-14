@@ -13,10 +13,13 @@ import { RifleRecoil, applyRecoilPitch, createScreenAimRay, type TrainingTargets
 import { SNIPER_SCOPE_CONFIG, WEAPON_CONFIGS } from '@bubble-arena/shared';
 import type { LocalLoadout } from '../weapons/LocalLoadout';
 
-export function FollowCamera({ loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity }: { loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
+import type { LocalRespawn } from '../player/LocalRespawn';
+
+export function FollowCamera({ respawn, loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity }: { respawn: LocalRespawn; loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
   control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets; recoil: RifleRecoil }) {
   const diagnostics = useRef(0);
   const previousRecoil = useRef(0);
+  const lifeRevision = useRef(respawn.getRevision());
   const [orbit] = useState(() => new MouseOrbit());
   const canvas = useThree(state => state.gl.domElement);
   const { world } = useRapier();
@@ -34,7 +37,8 @@ export function FollowCamera({ loadout, target, control, clearInput, view, aim, 
   useFrame(({ camera }, dt) => {
     loadout.setScoped(enabled() && aim.getSnapshot());
     aimTarget.current = null;
-    if (recoveryTarget.current !== target.current) {
+    if (recoveryTarget.current !== target.current || lifeRevision.current !== respawn.getRevision()) {
+      lifeRevision.current = respawn.getRevision();
       recovery.reset();
       recoil.reset();
       recoveryTarget.current = target.current;

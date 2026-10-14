@@ -17,7 +17,10 @@ import { OVERHEAD_HEALTH_CONFIG } from '../HUD/overheadHealthConfig';
 import { crosshairSize } from '../HUD/crosshairSize';
 import { reticleProgress } from '../HUD/reticleProgress';
 
+import type { LocalRespawn } from './LocalRespawn';
 interface CapsulePlayerProps {
+  respawn: LocalRespawn;
+  clearInput: () => void;
   playerHealth: LocalPlayerHealth;
   loadout: LocalLoadout;
   groundedRef: RefObject<boolean>;
@@ -30,7 +33,7 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
+export function CapsulePlayer({ respawn, clearInput, position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
   const lifeStatus = useSyncExternalStore(playerHealth.subscribe, () => playerHealth.getSnapshot().status);
   const rescuing = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().rescuing);
   const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
@@ -56,8 +59,11 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     };
   }, [world, facing, facingYaw, motion]);
   useBeforePhysicsStep(() => {
-    const policy = playerActionPolicy(playerHealth.getSnapshot().status), jump = input.consumeJump();
     const rigidBody = body.current;
+    if (rigidBody && movement.current && respawn.step(world, rigidBody, movement.current, clearInput) && import.meta.env.DEV) {
+      console.info('[player.spawn]', JSON.stringify({ tick: playerHealth.getTick(), position: rigidBody.translation(), selection: respawn.getSelection(), ...playerHealth.getSnapshot() }));
+    }
+    const policy = playerActionPolicy(playerHealth.getSnapshot().status), jump = input.consumeJump();
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
         policy.canMove ? { ...input.getSnapshot(), aiming: false } : { forward: false, backward: false, left: false, right: false },

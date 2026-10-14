@@ -35,8 +35,8 @@ export function RescuePracticeAlly({ practice }: { practice: LocalRescuePractice
   const { ally, allyHealth } = useSyncExternalStore(practice.subscribe, practice.getSnapshot);
   if (!ally || !allyHealth) return null;
   const downed = allyHealth.status === 'downed', hp = downed ? allyHealth.downedHp : allyHealth.hp, maxHp = downed ? allyHealth.maxDownedHp : allyHealth.maxHp;
-  const eliminated = allyHealth.status === 'eliminated';
-  const label = `测试队友 · ${eliminated ? '淘汰' : downed ? '倒地' : allyHealth.protected ? '保护' : '正常'}`;
+  const eliminated = allyHealth.status === 'eliminated' || allyHealth.status === 'respawning';
+  const label = `测试队友 · ${allyHealth.status === 'respawning' ? '待复活' : eliminated ? '淘汰' : downed ? '倒地' : allyHealth.protected ? '保护' : '正常'}`;
   return <group position={[ally.x, ally.y, ally.z]}>
     <BlockAvatar headColor="#d6b182" bodyColor="#79b966" />
     <Html center occlude distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + .25, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>

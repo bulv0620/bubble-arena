@@ -21,6 +21,13 @@ export class LocalPlayerHealth {
     this.pending = intent; return true;
   };
   clearPending = () => { this.pending = null; };
+  completeSpawn(apply: () => boolean) {
+    const before = this.getSnapshot();
+    const accepted = this.rule.completeSpawn({ lifeId: before.lifeId, revision: before.revision }, this.getTick(), apply, false);
+    if (accepted) this.pending = null;
+    if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
+    return accepted;
+  }
   completeRescue(channel: RescueChannel) {
     if (channel.target.playerId !== TRAINING_RESCUE_CONFIG.playerId) return false;
     const before = this.getSnapshot();

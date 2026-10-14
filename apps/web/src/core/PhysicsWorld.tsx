@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { useThree } from '@react-three/fiber';
 import { Physics, useAfterPhysicsStep } from '@react-three/rapier';
-import { PHYSICS_CONFIG, WHITEBOX_COLLISION_HASH } from '@bubble-arena/shared';
+import { PHYSICS_CONFIG, WHITEBOX_COLLISION_HASH, WHITEBOX_SPAWN_HASH } from '@bubble-arena/shared';
 
 // Development-only proof that real WASM steps use the configured interval.
 function PhysicsStepDiagnostics() {
@@ -18,7 +18,7 @@ function PhysicsStepDiagnostics() {
         ...sample.current,
         bodies: world.bodies.len(),
         colliders: world.colliders.len(),
-        mapHash: WHITEBOX_COLLISION_HASH,
+        mapHash: WHITEBOX_COLLISION_HASH, spawnHash: WHITEBOX_SPAWN_HASH,
       }));
     }
   });

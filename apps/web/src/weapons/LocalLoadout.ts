@@ -41,6 +41,14 @@ export class LocalLoadout {
     this.snapshot = next; for (const listener of this.listeners) listener();
   }
   getSnapshot = () => this.snapshot;
+  /** Keep equipped slots and monotonic effect identities; reset per-life weapon rules. */
+  resetForRespawn() {
+    for (const id of WEAPON_IDS) {
+      this.rules[id] = new WeaponFireState(WEAPON_CONFIGS[id], TRAINING_RIFLE_AMMO_POLICY, WEAPON_HANDLING[id].fireMode);
+      this.accuracy[id].reset();
+    }
+    this.scoped = false; this.rescuing = false; this.speed = 0; this.airborne = false; this.reloadOnEquip = false; this.publish();
+  }
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   canOperate = () => playerActionPolicy(this.lifeStatus).canUseWeapons && !this.rescuing;
   getSpeed = () => this.rescuing ? 0 : playerActionPolicy(this.lifeStatus).maximumSpeed ?? weaponGroundSpeed(this.active, this.scoped);

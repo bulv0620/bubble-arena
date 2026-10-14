@@ -1,0 +1,30 @@
+{
+  "health": [
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":25141,\"status\":\"downed\",\"lifeId\":2,\"revision\":5,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":100,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:10:43.989Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":26341,\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"downed-timeout\",\"respawnSecondsRemaining\":5}",
+      "timestamp": "2026-10-14T10:11:03.979Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":26641,\"status\":\"respawning\",\"lifeId\":2,\"revision\":7,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"downed-timeout\",\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:11:08.983Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    }
+  ],
+  "spawn": [
+    {
+      "level": "info",
+      "message": "[player.spawn] {\"tick\":26641,\"position\":{\"x\":10.880000114440918,\"y\":0.9200000166893005,\"z\":0},\"selection\":{\"point\":{\"id\":\"red-main\",\"team\":\"red\",\"primary\":true,\"position\":{\"x\":10.879999999999999,\"y\":0.92,\"z\":0}},\"fallback\":false,\"nearestEnemyDistance\":null,\"catalogHash\":\"fnv1a64:0634c343957c90f1\"},\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T10:11:08.984Z",
+      "url": "http://localhost:5173/src/player/CapsulePlayer.tsx?t=1791971832870"
+    }
+  ]
+}

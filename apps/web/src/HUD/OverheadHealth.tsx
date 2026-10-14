@@ -31,7 +31,7 @@ export function PlayerOverheadHealth({ player, hidden = false, anchor }: { playe
   const state = useSyncExternalStore(player.subscribe, player.getSnapshot);
   const downed = state.status === 'downed';
   return <group ref={anchor} position={[...OVERHEAD_HEALTH_CONFIG.selfPosition]}><Html center distanceFactor={OVERHEAD_HEALTH_CONFIG.selfDistanceFactor} zIndexRange={[30, 0]} style={{ pointerEvents: 'none', display: hidden ? 'none' : undefined }}>
-    <HealthPlate label={state.status === 'eliminated' ? "淘汰" : downed ? "倒地" : state.protected ? "保护" : "YOU"} hp={downed ? state.downedHp : state.hp} maxHp={downed ? state.maxDownedHp : state.maxHp} self downed={downed} eliminated={state.status === 'eliminated'} protected={state.protected} />
+    <HealthPlate label={state.status === 'respawning' ? "复活" : state.status === 'eliminated' ? "淘汰" : downed ? "倒地" : state.protected ? "保护" : "YOU"} hp={downed ? state.downedHp : state.hp} maxHp={downed ? state.maxDownedHp : state.maxHp} self downed={downed} eliminated={state.status === 'eliminated' || state.status === 'respawning'} protected={state.protected} />
   </Html></group>;
 }
 export function TargetOverheadHealth({ target, label }: { target: LocalTrainingTarget; label: string }) {

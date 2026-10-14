@@ -25,3 +25,10 @@ player.getSnapshot().downedSecondsRemaining = 20;
 player.advanceTick(1200);
 // @ts-expect-error Elimination cause is resolved internally, never observer-assigned.
 player.getSnapshot().eliminationReason = 'finishing-damage';
+
+// @ts-expect-error Spawn application and explicit match gate are required authority arguments.
+player.completeSpawn({ lifeId: 1, revision: 3 }, 1500);
+// @ts-expect-error Clients cannot choose coordinates or HP via the health completion fact.
+player.completeSpawn({ lifeId: 1, revision: 3, hp: 100, position: { x: 0, y: 0, z: 0 } }, 1500, () => true, false);
+// @ts-expect-error Respawn countdown is a read-only authority snapshot.
+player.getSnapshot().respawnSecondsRemaining = 0;

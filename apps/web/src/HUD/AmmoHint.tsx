@@ -14,7 +14,7 @@ export function AmmoHint({ loadout }: { loadout: LocalLoadout }) {
     </svg><b>{String(ammo.magazine).padStart(2, '0')}</b><span>/ {reserveLabel}</span></div>
     <div className="ammo-pips" aria-hidden="true">{Array.from({ length: config.magazineSize }, (_, i) =>
       <i key={i} className={i < ammo.magazine ? 'filled' : ''} />)}</div>
-    <div className="weapon-action">{rescuing ? '救援中 · 武器暂停' : lifeStatus !== 'normal' ? `${lifeStatus === 'downed' ? '倒地' : '淘汰'} · 武器不可用` : ammo.reloading ? `装填中 · ${config.reloadDuration}s` : ammo.magazine === 0 ? '弹匣已空 · 按 R 装填' : '按 R 装填'}</div>
+    <div className="weapon-action">{rescuing ? '救援中 · 武器暂停' : lifeStatus !== 'normal' ? `${lifeStatus === 'downed' ? '倒地' : lifeStatus === 'respawning' ? '复活' : '淘汰'} · 武器不可用` : ammo.reloading ? `装填中 · ${config.reloadDuration}s` : ammo.magazine === 0 ? '弹匣已空 · 按 R 装填' : '按 R 装填'}</div>
     <div className="weapon-slots"><span className={active !== 'bubble' ? 'selected' : ''}>1 · {WEAPON_HANDLING[primary].label}</span><span className={active === 'bubble' ? 'selected' : ''}>2 · 泡泡</span></div>
     <small className="weapon-weight">重量 {WEAPON_HANDLING[active].weight} · 移速 {loadout.getSpeed().toFixed(1)} m/s</small>
   </output>;

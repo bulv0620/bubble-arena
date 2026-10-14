@@ -71,4 +71,8 @@ export class RapierMovement {
     this.disposed = true;
     this.world.removeCharacterController(this.controller);
   }
+  reset() {
+    if (this.disposed) throw new Error('Movement controller disposed');
+    this.intent.reset(); this.vertical.reset(); this.controller.disableSnapToGround();
+  }
 }

@@ -13,6 +13,7 @@ export class VerticalMovement {
   }
 
   getState() { return { velocityY: this.velocityY, grounded: this.grounded }; }
+  reset() { this.velocityY = 0; this.grounded = false; }
 
   refreshSupport(supported: boolean) {
     this.grounded = supported && this.velocityY <= 0;
