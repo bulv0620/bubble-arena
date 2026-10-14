@@ -13,7 +13,7 @@ import type { PrimaryWeaponId } from '@bubble-arena/shared';
 export function createTrainingSession(primary: PrimaryWeaponId = 'rifle') {
   const loadout = new LocalLoadout(primary), targets = new TrainingTargets(), playerHealth = new LocalPlayerHealth();
   return {
-    range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets), playerHealth, rescue: new LocalRescuePractice(playerHealth, loadout),
+    range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets, playerHealth.canCauseControl), playerHealth, rescue: new LocalRescuePractice(playerHealth, loadout),
     recoil: new RifleRecoil(), feedback: new ShotFeedback(), motion: new RifleMotion(loadout), loadout,
   };
 }

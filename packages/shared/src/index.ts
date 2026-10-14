@@ -9,6 +9,7 @@ export { TRAINING_TARGET_CONFIG, TRAINING_TARGET_LAYOUT, TRAINING_RANGE_CONFIG }
 export { PLAYER_VITALS_CONFIG } from './playerVitals';
 export { TRAINING_PLAYER_HEALTH_CONFIG } from './trainingPlayerHealth';
 export { PLAYER_LIFE_CONTROL_CONFIG } from './playerLifeControl';
+export { RESCUE_PROTECTION_CONFIG, parseRescueProtectionConfig, type RescueProtectionConfig } from './rescueProtection';
 export { TRAINING_RESCUE_MODES, TRAINING_RESCUE_CONFIG, type TrainingRescueMode } from './trainingRescue';
 export { RESCUE_CONFIG, parseRescueConfig, parseRescueTargetId, parseRescuePosition, parseRescueEligibilityFacts,
   parseRescueParticipant, parseRescueProgressFrame, RESCUE_PLAYER_CAPACITY,

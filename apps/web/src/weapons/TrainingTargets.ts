@@ -83,7 +83,8 @@ export class TrainingTargets {
     return { impact: point, pellets: Object.freeze(pellets) };
   }
   /** Arrival order differs from emission order; assign a separate monotonic hit identity. */
-  receiveExplosion(world: World, shot: TrainingHit, point: ScreenAimTarget['point']) {
+  receiveExplosion(world: World, shot: TrainingHit, point: ScreenAimTarget['point'], controlAllowed = true) {
+    if (typeof controlAllowed !== 'boolean') throw new TypeError('Invalid bubble control gate');
     if (!shot || !Number.isSafeInteger(shot.sequence) || shot.sequence <= 0 || !Number.isSafeInteger(shot.tick) || shot.tick < 0
       || !point || ![point.x, point.y, point.z].every(Number.isFinite)) throw new TypeError('Invalid bubble impact');
     if (this.explosions.has(shot.sequence) || shot.sequence <= this.newestExplosion - 64) return 0;
@@ -107,7 +108,7 @@ export class TrainingTargets {
     }
     const resolved = { tick: shot.tick, sequence: ++this.hitSequence };
     let hits = 0;
-    for (const target of visible) if (target.receiveHit(resolved, WEAPON_CONFIGS.bubble.damage)) { target.applySlow(); hits++; }
+    for (const target of visible) if (target.receiveHit(resolved, WEAPON_CONFIGS.bubble.damage)) { if (controlAllowed) target.applySlow(); hits++; }
     if (import.meta.env.DEV) console.info('[bubble.impact]', JSON.stringify({ ...shot, point, hits }));
     return hits;
   }

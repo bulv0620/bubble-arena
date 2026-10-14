@@ -1,5 +1,6 @@
 import { beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
+import { PlayerHealthState } from '@bubble-arena/game-core';
 import { BLOCK_AVATAR_CONFIG as shape, COLLISION_GROUPS } from '@bubble-arena/shared';
 import { TrainingTargets } from './TrainingTargets';
 import { LocalTrainingTarget } from './LocalTrainingTarget';
@@ -116,5 +117,25 @@ test('unregistered target sensors do not explode a travelling bubble', () => {
     bubbles.flight.spawn(1, { x: 0, y: 1.55, z: 0 }, { x: 0, y: 0, z: -1 });
     for (let tick = 0; tick < 20; tick++) bubbles.step(world, tick);
     expect(bubbles.flight.getSnapshot()).toHaveLength(1); expect(entry.target.getSnapshot().hp).toBe(100);
+  } finally { world.free(); }
+});
+
+test('already-flying bubble cannot slow while its rescued source is protected; actual accepted fire restores control', () => {
+  const world = new RAPIER.World({ x: 0, y: 0, z: 0 });
+  try {
+    const registry = new TrainingTargets(), entry = dummy(world, registry), source = new PlayerHealthState(); world.step();
+    source.receiveDamage({ lifeId: 1, tick: 0, sequence: 1 }, 100, false);
+    source.completeRescue({ lifeId: 1, revision: 1, elapsedTicks: 180 }, 180, false);
+    let tick = 180;
+    const flight = new LocalBubbleFlight(registry, () => source.canCauseControl(tick, false));
+    const origin = { x: 0, y: 1 + shape.bodyY, z: 0 }, direction = { x: 0, y: 0, z: -1 };
+    flight.flight.spawn(1, origin, direction);
+    for (; tick < 200; tick++) flight.step(world, tick);
+    expect(entry.target.getSnapshot().hp).toBe(75); expect(entry.target.getSlowSnapshot()).toBe(1);
+    source.onAcceptedFire({ lifeId: 1, revision: 2, tick, sequence: 1 }, false);
+    flight.flight.spawn(2, origin, direction);
+    for (; tick < 220; tick++) flight.step(world, tick);
+    expect(entry.target.getSnapshot().hp).toBe(50); expect(entry.target.getSlowSnapshot()).toBe(.5);
+    entry.release(); flight.clear();
   } finally { world.free(); }
 });

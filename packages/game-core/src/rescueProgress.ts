@@ -1,11 +1,11 @@
-import { PHYSICS_CONFIG, PLAYER_LIFE_CONFIG, RESCUE_CONFIG, parsePlayerLifeConfig, parseRescueConfig, parseRescueProgressFrame,
+import { PHYSICS_CONFIG, PLAYER_LIFE_CONFIG, RESCUE_CONFIG, parsePlayerLifeConfig, parseRescueConfig, parseRescueProgressFrame, parseRescueTargetId,
   type RescueConfig, type PlayerLifeConfig, type RescueProgressFrame, type RescueControl, type RescueParticipant } from '@bubble-arena/shared';
 import { evaluateRescueEligibility, type RescueIdentity, type RescueRejection, type RescueVisibilityQuery } from './rescueEligibility';
 export interface RescueChannel {
   readonly rescuer: RescueIdentity; readonly target: RescueIdentity; readonly elapsedTicks: number; readonly requiredTicks: number; readonly ready: boolean;
 }
-export type RescueInterruptReason = RescueRejection | 'released' | 'inactive' | 'action' | 'damaged' | 'identity-changed' | 'target-changed' | 'tick-gap' | 'invalid';
-export type RescueProgressEvent = Readonly<{ kind: 'ready'; rescuerId: string; targetId: string }>
+export type RescueInterruptReason = RescueRejection | 'released' | 'inactive' | 'action' | 'damaged' | 'identity-changed' | 'target-changed' | 'tick-gap' | 'invalid' | 'completion-rejected';
+export type RescueProgressEvent = Readonly<{ kind: 'ready' | 'completed'; rescuerId: string; targetId: string }>
   | Readonly<{ kind: 'interrupted'; rescuerId: string; targetId: string; reason: RescueInterruptReason }>;
 export interface RescueProgressSnapshot { readonly tick: number | null; readonly channels: readonly RescueChannel[]; readonly events: readonly RescueProgressEvent[] }
 const empty = (): RescueProgressSnapshot => Object.freeze({ tick: null, channels: Object.freeze([]), events: Object.freeze([]) });
@@ -25,6 +25,26 @@ export class RescueProgress {
     this.requiredTicks = Math.ceil(parsePlayerLifeConfig(lifeConfig).rescueDuration * PHYSICS_CONFIG.tickRate);
   }
   getSnapshot = () => this.state;
+  /** Current-tick reservation is consumed before applying one atomic health fact.
+   * Caller invokes synchronously after step; no saved/caller-supplied channel. */
+  complete(tick: number, rescuerId: string, apply: (channel: RescueChannel) => boolean, matchFinished: boolean) {
+    if (!Number.isSafeInteger(tick) || tick < 0 || typeof rescuerId !== 'string' || typeof apply !== 'function' || typeof matchFinished !== 'boolean') throw new TypeError('Invalid rescue completion transaction');
+    parseRescueTargetId(rescuerId);
+    if (this.state.tick !== tick) return false;
+    const channel = this.channels.get(rescuerId); if (!channel?.ready) return false;
+    this.channels.delete(rescuerId); this.owners.delete(channel.target.playerId); this.blocked.add(rescuerId);
+    const events = this.state.events.filter(e => !(e.kind === 'ready' && e.rescuerId === rescuerId));
+    try {
+      const accepted = !matchFinished && apply(channel);
+      if (typeof accepted !== 'boolean') throw new TypeError('Expected atomic rescue completion result');
+      events.push(accepted ? Object.freeze({ kind: 'completed', rescuerId, targetId: channel.target.playerId })
+        : Object.freeze({ kind: 'interrupted', rescuerId, targetId: channel.target.playerId, reason: matchFinished ? 'finished' : 'completion-rejected' }));
+      this.publish(tick, events); return accepted;
+    } catch (error) {
+      events.push(Object.freeze({ kind: 'interrupted', rescuerId, targetId: channel.target.playerId, reason: 'completion-rejected' }));
+      this.publish(tick, events); throw error;
+    }
+  }
   clear() { this.channels.clear(); this.owners.clear(); this.blocked.clear(); this.state = empty(); }
   private publish(tick: number, events: RescueProgressEvent[]) {
     this.state = Object.freeze({ tick, channels: Object.freeze([...this.channels.values()]), events: Object.freeze(events) });
@@ -45,7 +65,6 @@ export class RescueProgress {
       const players = new Map(current.players.map(p => [p.playerId, p])), controls = new Map(current.controls.map(c => [c.playerId, c]));
       const damaged = new Set(current.damagedPlayerIds);
       if (this.state.tick !== null && tick !== this.state.tick + 1) for (const id of this.channels.keys()) cancel(id, 'tick-gap');
-      for (const id of this.blocked) if (!players.has(id) || !controls.get(id)?.held) this.blocked.delete(id);
       const eligibility = (control: RescueControl) => evaluateRescueEligibility(control.targetPlayerId,
         { rescuer: players.get(control.playerId)!, target: control.targetPlayerId === null ? null : players.get(control.targetPlayerId) ?? null,
           targetRescuerId: control.targetPlayerId === null ? null : this.owners.get(control.targetPlayerId) ?? null, matchFinished: current.matchFinished }, query, this.config);
@@ -68,6 +87,7 @@ export class RescueProgress {
         if (!result.eligible) { cancel(id, result.reason); continue; }
         this.channels.set(id, advance(channel));
       }
+      for (const id of this.blocked) if (!players.has(id) || !controls.get(id)?.held) this.blocked.delete(id);
       const candidates = [...current.controls].sort((a, b) => a.playerId < b.playerId ? -1 : a.playerId > b.playerId ? 1 : 0);
       for (const control of candidates) {
         if (current.matchFinished || this.channels.has(control.playerId) || this.blocked.has(control.playerId)

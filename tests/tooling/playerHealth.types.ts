@@ -9,3 +9,12 @@ player.receiveDamage({ lifeId: 1, tick: 1, sequence: 2 }, '20', false);
 player.receiveDamage({ tick: 1, sequence: 2 }, 20, false);
 // @ts-expect-error Observers cannot assign health.
 player.getSnapshot().hp = 100;
+
+// @ts-expect-error Rescue must carry authoritative elapsed progress and explicit match gate.
+player.completeRescue({ lifeId: 1, revision: 1 }, 180);
+// @ts-expect-error Clients cannot choose restored HP in a completion fact.
+player.completeRescue({ lifeId: 1, revision: 1, elapsedTicks: 180, hp: 100 }, 180, false);
+// @ts-expect-error Accepted fire is scoped to life revision, not a click boolean.
+player.onAcceptedFire({ lifeId: 1, tick: 180, sequence: 1 }, false);
+// @ts-expect-error Protection snapshots are read-only.
+player.getSnapshot().protected = false;

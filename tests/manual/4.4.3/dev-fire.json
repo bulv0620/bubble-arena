@@ -1,0 +1,24 @@
+{
+  "completion": [
+    {
+      "level": "info",
+      "message": "[rescue.check] {\"tick\":1337,\"channels\":[{\"rescuer\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":150,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000033900746529980097},\"mode\":\"self-rescue\",\"playerHealth\":{\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":100,\"protected\":false},\"allyHealth\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false}}",
+      "timestamp": "2026-10-14T08:00:38.237Z",
+      "url": "http://localhost:5173/src/player/RescueSimulation.tsx?t=1791963741329"
+    },
+    {
+      "level": "info",
+      "message": "[rescue.check] {\"tick\":1367,\"channels\":[],\"events\":[{\"kind\":\"completed\",\"rescuerId\":\"training-ally\",\"targetId\":\"training-player\"}],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.00000339003372573643},\"mode\":\"self-rescue\",\"playerHealth\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":2,\"hp\":50,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true},\"allyHealth\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false}}",
+      "timestamp": "2026-10-14T08:00:38.729Z",
+      "url": "http://localhost:5173/src/player/RescueSimulation.tsx?t=1791963741329"
+    }
+  ],
+  "fire": [
+    {
+      "level": "info",
+      "message": "[player.protection] {\"reason\":\"fire\",\"sequence\":1,\"tick\":1374,\"status\":\"normal\",\"lifeId\":1,\"revision\":2,\"hp\":50,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false}",
+      "timestamp": "2026-10-14T08:00:38.850Z",
+      "url": "http://localhost:5173/src/weapons/RifleSimulation.tsx?t=1791964528919"
+    }
+  ]
+}

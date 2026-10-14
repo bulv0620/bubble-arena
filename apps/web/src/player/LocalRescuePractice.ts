@@ -1,12 +1,12 @@
-import { RescueProgress, type RescueChannel, type RescueInterruptReason } from '@bubble-arena/game-core';
-import { TRAINING_RESCUE_CONFIG as config, TRAINING_RESCUE_MODES, PHYSICS_CONFIG, PLAYER_LIFE_CONFIG,
-  type TrainingRescueMode, type RescueParticipant, type RescuePosition } from '@bubble-arena/shared';
+import { PlayerHealthState, RescueProgress, type PlayerHealthSnapshot, type RescueChannel, type RescueInterruptReason } from '@bubble-arena/game-core';
+import { TRAINING_RESCUE_CONFIG as config, TRAINING_RESCUE_MODES, PHYSICS_CONFIG,
+  type TrainingRescueMode, type RescueParticipant, type RescueControl, type RescuePosition } from '@bubble-arena/shared';
 import type { World } from '@dimforge/rapier3d-compat';
 import type { RescueInputState } from '../input/RescueInput';
 import type { LocalPlayerHealth } from './LocalPlayerHealth';
 import type { LocalLoadout } from '../weapons/LocalLoadout';
 import { isRescueLineClear } from './rescueLineOfSight';
-export interface RescuePracticeSnapshot { readonly mode: TrainingRescueMode; readonly ally: RescuePosition | null; readonly channel: RescueChannel | null; readonly message: string }
+export interface RescuePracticeSnapshot { readonly mode: TrainingRescueMode; readonly ally: RescuePosition | null; readonly allyHealth: PlayerHealthSnapshot | null; readonly channel: RescueChannel | null; readonly message: string }
 /** Stage-4 fixture only. UI queues a mode intent; all positions/damage/progress
  * are resolved in physics callbacks. Never introduces a formal match teammate. */
 export class LocalRescuePractice {
@@ -16,10 +16,11 @@ export class LocalRescuePractice {
   private pending: TrainingRescueMode | null = null;
   private ally: RescuePosition | null = null;
   private injuryQueued = false;
-  private previousHealth;
-  private state: RescuePracticeSnapshot = Object.freeze({ mode: 'off', ally: null, channel: null, message: '' });
+  private previousDamageRevision;
+  private allyHealth = new PlayerHealthState();
+  private state: RescuePracticeSnapshot = Object.freeze({ mode: 'off', ally: null, allyHealth: null, channel: null, message: '' });
   private readonly listeners = new Set<() => void>();
-  constructor(private readonly health: LocalPlayerHealth, private readonly loadout: LocalLoadout) { this.previousHealth = health.getSnapshot(); }
+  constructor(private readonly health: LocalPlayerHealth, private readonly loadout: LocalLoadout) { this.previousDamageRevision = health.getDamageRevision(); }
   getSnapshot = () => this.state;
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   configure = (mode: TrainingRescueMode) => {
@@ -27,22 +28,27 @@ export class LocalRescuePractice {
     this.pending = mode;
   };
   private publish(channel: RescueChannel | null, message: string) {
-    this.loadout.setRescuing(channel !== null);
-    if (this.state.mode === this.mode && this.state.ally === this.ally && this.state.channel === channel && this.state.message === message) return;
-    this.state = Object.freeze({ mode: this.mode, ally: this.ally, channel, message }); for (const listener of this.listeners) listener();
+    this.loadout.setRescuing(channel?.rescuer.playerId === config.playerId);
+    const allyHealth = this.ally ? this.allyHealth.getSnapshot() : null;
+    if (this.state.mode === this.mode && this.state.ally === this.ally && this.state.allyHealth === allyHealth && this.state.channel === channel && this.state.message === message) return;
+    this.state = Object.freeze({ mode: this.mode, ally: this.ally, allyHealth, channel, message }); for (const listener of this.listeners) listener();
   }
   cancel = () => { this.rule.clear(); this.publish(null, this.state.channel ? '救援已中断，请重新按 E' : this.state.message); };
   dispose = () => { this.pending = null; this.cancel(); };
   step(world: World, rawPosition: RescuePosition, grounded: boolean, input: RescueInputState) {
+    const tick = this.tick++;
     const position = Object.freeze({ x: rawPosition.x, y: rawPosition.y, z: rawPosition.z });
     const health = this.health.getSnapshot();
-    const damaged = health.hp < this.previousHealth.hp || health.downedHp < this.previousHealth.downedHp;
-    this.previousHealth = health;
+    const damaged = this.health.getDamageRevision() !== this.previousDamageRevision;
+    this.previousDamageRevision = this.health.getDamageRevision();
     if (this.pending !== null) {
       this.mode = this.pending; this.pending = null; this.rule.clear(); this.injuryQueued = false;
       this.ally = this.mode === 'off' ? null : Object.freeze({ x: position.x + config.offsetX, y: position.y, z: position.z + config.offsetZ });
+      this.allyHealth = new PlayerHealthState();
+      if (this.ally && this.mode !== 'self-rescue') this.allyHealth.receiveDamage({ lifeId: 1, sequence: 1, tick }, this.allyHealth.getSnapshot().maxHp, false);
       this.publish(null, '');
     }
+    this.allyHealth.advanceProtection(tick, false);
     const current = this.state.channel;
     if (current && this.ally && this.mode === 'crawl-away') {
       const dx = this.ally.x - position.x, dz = this.ally.z - position.z, distance = Math.hypot(dx, dz);
@@ -53,20 +59,32 @@ export class LocalRescuePractice {
       this.injuryQueued = this.health.requestTest('hit');
     }
     const players: RescueParticipant[] = [{ playerId: config.playerId, teamId: 'red', life: { status: health.status, lifeId: health.lifeId, revision: health.revision }, position, grounded, connected: true }];
-    if (this.ally) players.push({ playerId: config.allyId, teamId: 'red', life: { status: 'downed', lifeId: 1, revision: 1 }, position: this.ally, grounded: true, connected: true });
+    const allyState = this.allyHealth.getSnapshot();
+    if (this.ally) players.push({ playerId: config.allyId, teamId: 'red', life: { status: allyState.status, lifeId: allyState.lifeId, revision: allyState.revision }, position: this.ally, grounded: true, connected: true });
+    const controls: RescueControl[] = [{ ...input, playerId: config.playerId, targetPlayerId: this.ally ? config.allyId : null }];
+    if (this.ally && this.mode === 'self-rescue') controls.push({ playerId: config.allyId, targetPlayerId: config.playerId, held: health.status === 'downed' && input.active, active: input.active,
+      move: false, jump: false, fire: false, reload: false, weaponSwitch: false, aim: false });
     try {
-      const snapshot = this.rule.step(this.tick++, { players, controls: [{ ...input, playerId: config.playerId, targetPlayerId: this.ally ? config.allyId : null }],
+      let snapshot = this.rule.step(tick, { players, controls,
         damagedPlayerIds: damaged ? [config.playerId] : [], matchFinished: false }, (from, to) => isRescueLineClear(world, from, to));
-      const channel = snapshot.channels[0] ?? null, event = snapshot.events.find(e => e.rescuerId === config.playerId);
+      for (const event of snapshot.events) if (event.kind === 'ready') this.rule.complete(tick, event.rescuerId, channel => {
+        if (channel.target.playerId === config.playerId) return this.health.completeRescue(channel);
+        if (channel.target.playerId !== config.allyId) return false;
+        return this.allyHealth.completeRescue({ lifeId: channel.target.lifeId, revision: channel.target.revision, elapsedTicks: channel.elapsedTicks }, tick, false);
+      }, false);
+      snapshot = this.rule.getSnapshot();
+      const channel = snapshot.channels[0] ?? null, event = snapshot.events[0];
       if (!current && channel) this.injuryQueued = false;
-      let message = this.state.message;
+      let message = damaged && health.status === 'downed' ? '' : this.state.message;
       if (channel) message = channel.ready ? '3秒救援进度测试完成' : '';
+      else if (event?.kind === 'completed') message = event.targetId === config.playerId ? '你已被救起 · 50 HP' : '队友已救起 · 50 HP';
       else if (event?.kind === 'interrupted') message = interruptMessage(event.reason);
       this.publish(channel, message);
       return snapshot;
     } catch (error) { this.publish(null, '救援已中断'); throw error; }
   }
-  getAllyHp = () => PLAYER_LIFE_CONFIG.downedHp;
+  getAllyHp = () => this.allyHealth.getSnapshot().status === 'downed' ? this.allyHealth.getSnapshot().downedHp : this.allyHealth.getSnapshot().hp;
+  getSelfHealth = () => this.health.getSnapshot();
 }
 function interruptMessage(reason: RescueInterruptReason) {
   if (reason === 'out-of-range') return '队友已移出2米范围 · 救援中断';

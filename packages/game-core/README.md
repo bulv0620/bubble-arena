@@ -1,5 +1,8 @@
 # Game core
 
+4.4.3 RescueProgress.complete同tick消费真实ready通道一次并释放，PlayerHealthState.completeRescue恢复normal/50HP/同生命ID并提供60tick保护与实际开火提前终止；严格身份、去重和finished门禁。控制接收/产生查询独立，仍无UI/网络/计时器依赖。见 [RESCUE](../../docs/spec/RESCUE.md)。下文为各项原始实现范围。
+
+
 4.4.2 RescueProgress按整体tick推进180步ready，唯一占用/生命身份复核、全部中断清零、旧重复缺步和异常释放；不修改HP或救起。见 [RESCUE](../../docs/spec/RESCUE.md)。
 
 4.4.1 evaluateRescueEligibility提供无状态救援资格判断：同队、正确对象、normal救援者/downed目标、接地、连接、2m三维距、占用及finished/地图查询门禁，成功结果带双方lifeId/revision。无Rapier/UI/网络依赖，不推进进度/占用/救起。规则见 [RESCUE](../../docs/spec/RESCUE.md)。

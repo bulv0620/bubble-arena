@@ -132,7 +132,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
             ]} />
-            <RifleSimulation aim={aim} bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
+            <RifleSimulation playerHealth={playerHealth} aim={aim} bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <RescueSimulation practice={rescue} input={rescueInput} body={playerBody} grounded={grounded} enabled={enabled} pointer={pointer} aim={aim} />
             <ShotEffects feedback={feedback} />
             <BubbleVisuals bubbles={bubbles} />

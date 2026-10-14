@@ -9,7 +9,7 @@ export class LocalBubbleFlight {
   readonly flight = new BubbleFlight();
   private readonly shape = new Ball(BUBBLE_CONFIG.radius);
   private explosion: { point: AimVector; ticks: number } | null = null;
-  constructor(private readonly targets: TrainingTargets) {}
+  constructor(private readonly targets: TrainingTargets, private readonly canCauseControl = () => true) {}
   getExplosion = () => this.explosion;
   step(world: World, tick: number) {
     if (this.explosion) this.explosion = this.explosion.ticks > 1 ? { ...this.explosion, ticks: this.explosion.ticks - 1 } : null;
@@ -19,7 +19,7 @@ export class LocalBubbleFlight {
         undefined, undefined, collider => !collider.isSensor() || this.targets.isRegistered(collider.handle));
       return hit?.time_of_impact ?? null;
     }, (sequence, point) => {
-      this.targets.receiveExplosion(world, { sequence, tick }, point);
+      this.targets.receiveExplosion(world, { sequence, tick }, point, this.canCauseControl());
       this.explosion = { point, ticks: Math.ceil(.3 * PHYSICS_CONFIG.tickRate) };
     });
   }

@@ -904,7 +904,7 @@
       "title": "救援完成",
       "acceptance": "达成条件恢复正常状态和约定生命值。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.4.2"

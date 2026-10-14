@@ -85,3 +85,7 @@
 .rescue-hint small { margin-top: 7px; font-size: 10px; color: #a8cfc5; }
 .rescue-track { height: 7px; background: #06231e; border-radius: 6px; margin-top: 10px; overflow: hidden; }
 .rescue-track i { display: block; height: 100%; background: linear-gradient(90deg,#64ceac,#b9ffe4); }
+
+.rescue-hint.receiving { top: 216px; }
+.player-health.protected, .overhead-health.self.protected { border-color: #ffeb91; box-shadow: 0 0 16px #ffce5677; }
+.player-health.protected .health-track i, .overhead-health.self.protected .health-track i { background: linear-gradient(#fff3a5,#e5c053); }

@@ -15,9 +15,11 @@ import type { LocalLoadout, EquippedShot } from './LocalLoadout';
 import type { WeaponSwitchInput } from './WeaponSwitchInput';
 import type { LocalBubbleFlight } from './LocalBubbleFlight';
 import type { AimInput } from '../input';
+import type { LocalPlayerHealth } from '../player/LocalPlayerHealth';
 
 /** Existing fixed physics callbacks drive every weapon, never UI/render timers. */
-export function RifleSimulation({ aim, input, motion, loadout, switchInput, bubbles, reload, body, yaw, target, shotRay, targets, feedback, recoil }: {
+export function RifleSimulation({ playerHealth, aim, input, motion, loadout, switchInput, bubbles, reload, body, yaw, target, shotRay, targets, feedback, recoil }: {
+  playerHealth: LocalPlayerHealth;
   aim: AimInput;
   input: FireInput; motion: RifleMotion; loadout: LocalLoadout; switchInput: WeaponSwitchInput; bubbles: LocalBubbleFlight; reload: ReloadInput;
   body: RefObject<RapierRigidBody | null>; yaw: RefObject<number>; target: RefObject<ScreenAimTarget | null>;
@@ -31,6 +33,9 @@ export function RifleSimulation({ aim, input, motion, loadout, switchInput, bubb
     const slot = switchInput.consume();
     if (slot && loadout.select(slot)) { input.clear(); reload.clear(); }
     const shot = loadout.step(input.consume(), reload.consume());
+    if (shot && playerHealth.onAcceptedFire(shot.sequence) && import.meta.env.DEV) {
+      console.info('[player.protection]', JSON.stringify({ reason: 'fire', sequence: shot.sequence, tick: playerHealth.getTick(), ...playerHealth.getSnapshot() }));
+    }
     if (loadout.getSnapshot().active === 'sniper' && !loadout.canScope()) aim.clear();
     motion.refresh();
     pending.current = shot ? { shot, target: target.current,

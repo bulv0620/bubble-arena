@@ -16,7 +16,7 @@ export function RescueSimulation({ practice, input, body, grounded, enabled, poi
     const position = body.current?.translation(); if (!position) { practice.cancel(); return; }
     const state = practice.step(world, position, grounded.current, input.consume());
     if (import.meta.env.DEV && (state.events.length || state.channels.some(c => c.elapsedTicks === 1 || c.elapsedTicks % 30 === 0 && !c.ready))) {
-      console.info('[rescue.check]', JSON.stringify({ ...state, position, mode: practice.getSnapshot().mode }));
+      console.info('[rescue.check]', JSON.stringify({ ...state, position, mode: practice.getSnapshot().mode, playerHealth: practice.getSelfHealth(), allyHealth: practice.getSnapshot().allyHealth }));
     }
   });
   return null;
