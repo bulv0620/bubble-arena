@@ -11,7 +11,7 @@ import { PlayerLifeHint } from '../HUD/PlayerLifeHint';
 import { PlayerLifeTestPanel } from '../HUD/PlayerLifeTestPanel';
 import { PlayerHealthSimulation } from '../player/PlayerHealthSimulation';
 import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from '../settings/mouseSettings';
-import { createTrainingSession } from './trainingSession';
+import { createTrainingSession, restartTrainingSession } from './trainingSession';
 import { ShotEffects } from '../effects';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useCallback, useRef, useState, useSyncExternalStore } from 'react';
@@ -63,20 +63,25 @@ export function BasicScene() {
     window.addEventListener('keydown', key);
     return () => { window.removeEventListener('keydown', key); unsubscribe(); };
   }, [pointer, openSettings]);
+  const restart = useCallback(() => {
+    pointer.release();
+    setSession(restartTrainingSession(session)); setRevision(value => value + 1);
+  }, [pointer, session]);
+  const returnWaiting = useCallback(() => { restart(); opened.current = false; setOpen(false); }, [restart]);
   return <>
-    <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel primaryDisabled={lifeDisabled || matchState.phase === 'finished' || matchState.phase === 'countdown'} lifeTest={<fieldset className="match-test-gate" disabled={!session.match.canPlay()}><PlayerLifeTestPanel player={session.playerHealth} /><ScorePracticePanel score={session.score} player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></fieldset>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
+    <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} onRestart={returnWaiting} />
+    {open && <SettingsPanel returnLocks={matchState.phase === 'playing' || matchState.phase === 'countdown'} primaryDisabled={lifeDisabled || matchState.phase === 'finished' || matchState.phase === 'countdown'} lifeTest={<fieldset className="match-test-gate" disabled={!session.match.canPlay()}><PlayerLifeTestPanel player={session.playerHealth} /><ScorePracticePanel score={session.score} player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></fieldset>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
-    }} onReset={() => { pointer.release(); setSession(createTrainingSession(session.loadout.getSnapshot().primary, { match: true, config: session.match.rule.config })); setRevision(value => value + 1); }} onReturn={() => {
+    }} onReset={restart} onReturn={() => {
       opened.current = false; setOpen(false);
-      pointer.request(); // Must run directly in this user gesture, before React effects.
+      if (session.match.getSnapshot().phase !== 'waiting' && session.match.getSnapshot().phase !== 'finished') pointer.request(); // Must run directly in this user gesture, before React effects.
     }} />}
   </>;
 }
 
-function SceneSession({ session, revision, pointer, enabled, sensitivity }: { session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
+function SceneSession({ session, revision, pointer, enabled, sensitivity, onRestart }: { onRestart: () => void; session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
   const input = useKeyboardInput(enabled);
   const [showAimDiagnostics, setShowAimDiagnostics] = useState(false);
   const grounded = useRef(false);
@@ -94,6 +99,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
   const clearWeaponInput = useCallback(() => clearWeaponActions({ aim, fire, reload, switchInput }), [aim, fire, reload, switchInput]);
   const clearInput = useCallback(() => { input.clear(); clearWeaponInput(); rescueInput.clear(); rescue.cancel(); }, [input, clearWeaponInput, rescueInput, rescue]);
+  useEffect(() => { clearInput(); return session.bindInputReset(clearInput); }, [session, clearInput]);
   useEffect(() => bindWeaponChanges(loadout, { aim, fire, reload, switchInput }, motion, recoil), [loadout, aim, fire, reload, switchInput, recoil, motion]);
   useEffect(() => bindLifeActions(playerHealth, loadout, { aim, fire, reload, switchInput, keyboard: input, feedback, recoil }),
     [playerHealth, loadout, aim, fire, reload, switchInput, input, feedback, recoil]);
@@ -157,7 +163,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       {phase !== 'finished' && <PointerLockHint control={pointer} loadout={loadout} />}
       <SpreadHint loadout={loadout} motion={motion} />
       {phase !== 'finished' && <RescueHint practice={rescue} player={playerHealth} />}
-      <MatchHud match={match} /><TeamScoreHint score={score} /><HealthHint player={playerHealth} />
+      <MatchHud match={match} onRestart={onRestart} /><TeamScoreHint score={score} /><HealthHint player={playerHealth} />
       {phase !== 'finished' && <PlayerLifeHint player={playerHealth} />}
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />

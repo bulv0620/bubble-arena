@@ -1,0 +1,55 @@
+Browser tab: 23, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		39 container
+			40 image
+				41 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			125 container
+				126 text 左靶 100
+				127 level indicator Description: 左靶生命值, Value: 100
+			128 container
+				129 text 中靶 100
+				130 level indicator Description: 中靶生命值, Value: 100
+			131 container
+				132 text 右靶 100
+				133 level indicator Description: 右靶生命值, Value: 100
+			134 container
+				135 text YOU 100
+				136 level indicator Description: YOU生命值, Value: 100
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		54 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 狙击枪 · 稳定射击
+		8 container 比赛状态
+			55 container
+				56 text 等待开始  ·  1  分制
+			57 text 05:00
+			58 container
+				59 text 比赛预设
+				60 pop up button (collapsed, settable) Description: 比赛预设, Value: 计分测试 · 5分钟 / 1分, Secondary Actions: Expand
+					61 menu
+						62 标准 · 5分钟 / 20分
+						63 时间测试 · 15秒 / 20分
+						64 (selected) 计分测试 · 5分钟 / 1分
+			65 button 开始比赛
+		20 container 队伍比分：红队 0，蓝队 0
+			21 text TEAM SCORE · 计分练习
+			22 text 红队  0 : 0  蓝队 击倒不计分 · 淘汰 +1
+		23 container 自身 HP：100 / 100
+			24 container
+				25 text 泡泡先锋  YOU
+			26 container
+				27 text 100  /  100 HP
+		28 container 狙击枪弹药：5 / 无限备弹
+			29 container
+				30 text 01 狙击枪 SNIPER
+			31 text 05
+			32 text /  ∞
+			33 text 按 R 装填
+			34 text 1 ·  狙击枪 2 · 泡泡
+			35 container
+				36 text 重量  4  · 移速  0.0  m/s
+		37 container
+			38 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+
+The focused UI element is 0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/

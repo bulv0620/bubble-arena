@@ -15,6 +15,7 @@ export class TrainingTargets {
   private hitSequence = 0;
   private explosions = new Set<number>();
   private newestExplosion = 0;
+  dispose() { this.entries.clear(); this.explosions.clear(); }
   isRegistered = (handle: number) => this.entries.has(handle);
   private entries = new Map<number, { target: LocalTrainingTarget; region: HitRegion }>();
   register(handle: number, target: LocalTrainingTarget, region: HitRegion = 'body') {

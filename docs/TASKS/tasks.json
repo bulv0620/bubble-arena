@@ -976,7 +976,7 @@
       "title": "完整重开",
       "acceptance": "计时、玩家、目标、得分重置，不残留上一局状态。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.9"

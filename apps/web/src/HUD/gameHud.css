@@ -123,3 +123,6 @@
 .result-card th, .result-card td { padding:12px 4px; border-bottom:1px solid #83aab333; } .result-card th { color:#a8c5d8; font-size:11px; }
 
 .match-test-gate { border:0; margin:0; padding:0; min-width:0; }
+
+.result-restart { display:block; margin:20px auto 0; border:1px solid #a6ffe1; border-radius:10px; padding:12px 28px; background:#6fe0c8; color:#0b2a36; font:700 14px system-ui,sans-serif; cursor:pointer; }
+.result-restart:focus-visible { outline:3px solid white; outline-offset:4px; }
