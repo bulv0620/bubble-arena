@@ -940,7 +940,7 @@
       "title": "队伍与计分",
       "acceptance": "红蓝队 ID 与积分事件统一，不因重复事件重复得分。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.6"

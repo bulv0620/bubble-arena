@@ -24,3 +24,7 @@ export { BLOCK_AVATAR_CONFIG } from './blockAvatar';
 export { PRIMARY_WEAPON_IDS, createWeaponHandling, WEAPON_HANDLING, SNIPER_SCOPE_CONFIG, BUBBLE_CONFIG, isPrimaryWeaponId, weaponGroundSpeed, type PrimaryWeaponId, type WeaponHandling } from './weaponHandling';
 
 export { WHITEBOX_SPAWNS, WHITEBOX_SPAWN_HASH, RESPAWN_CONFIG, parseRespawnConfig, parseSpawnCatalog, parseSpawnEnemies, parseSpawnTeam, spawnCatalogHash, type SpawnTeam, type SpawnPoint, type SpawnCatalog, type SpawnEnemy, type RespawnConfig } from './spawn';
+
+export { TEAM_IDS, parseTeamId, type TeamId } from './team';
+export { SCORE_CONFIG, parseDamageActor, parseScoreParticipant, parseScoreRoster, parseEliminationFact, parseEliminationFrame, type DamageActor, type ScoreParticipant, type EliminationFact } from './scoring';
+export { TRAINING_DAMAGE_SOURCES, TRAINING_SCORE_ACTORS, TRAINING_SCORE_ROSTER, type TrainingDamageSource } from './trainingScore';

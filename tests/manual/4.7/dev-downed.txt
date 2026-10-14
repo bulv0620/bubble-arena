@@ -1,0 +1,108 @@
+Browser tab: 21, Title: "Bubble Arena", URL: "http://localhost:5173/".
+0 AXWebArea Bubble Arena, URL: localhost:5173/
+	1 container Bubble Arena · 基础白盒场景
+		29 container
+			30 image
+				31 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			32 container
+				33 text 左靶 100
+				34 level indicator Description: 左靶生命值, Value: 100
+			35 container
+				36 text 中靶 100
+				37 level indicator Description: 中靶生命值, Value: 100
+			38 container
+				39 text 右靶 100
+				40 level indicator Description: 右靶生命值, Value: 100
+			41 container
+				42 text 倒地 50
+				43 level indicator Description: 倒地生命值, Value: 50
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 点击画布锁定鼠标 · WASD：缓慢移动 · Esc：设置
+		7 text 倒地 · 缓慢移动
+		8 container 队伍比分：红队 0，蓝队 0
+			9 text TEAM SCORE · 计分练习
+			10 text 红队  0 : 0  蓝队 击倒不计分 · 淘汰 +1
+		11 container 自身倒地 HP：50 / 50
+			12 container
+				13 text 泡泡先锋  倒地
+			14 container
+				15 text 50  /  50 倒地生命
+		105 container
+			106 text 已倒地 · 剩余  20  秒 WASD 缓慢移动 · 鼠标观察 等待队友救援 · 倒地生命耗尽或计时结束将淘汰
+		16 container 步枪弹药：30 / 无限备弹
+			17 container
+				18 text 01 步枪 RIFLE
+			19 text 30
+			20 text /  ∞
+			21 text 倒地 · 武器不可用
+			22 text 1 ·  步枪 2 · 泡泡
+			23 container
+				24 text 重量  2  · 移速  1.0  m/s
+		25 container
+			26 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+		27 button (collapsed) 调试, Secondary Actions: Expand
+			28 text 调试
+		44 container 游戏设置
+			45 text BUBBLE ARENA / OPTIONS
+			46 heading 游戏设置, Value: 1, ID: settings-title
+				47 text 游戏设置
+			48 container
+				49 text 鼠标速度 1.50 ×
+			50 slider (settable, float) 鼠标速度, Value: 1.5, ID: mouse-speed
+			51 text 慢 快
+			52 text 主武器 · 槽位 1
+			53 pop up button (disabled, collapsed, settable) 主武器 · 槽位 1, Value: 步枪 · 重量 2 · 5 m/s, ID: primary-weapon, Secondary Actions: Expand
+				54 menu
+					55 (selected) 步枪 · 重量 2 · 5 m/s
+					56 霰弹枪 · 重量 1 · 5.5 m/s
+					57 狙击枪 · 重量 4 · 4 m/s
+			58 container
+				59 text 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+				60 text 游戏中按 1 / 2 切换，弹药分别保留。
+			61 container 单机生命测试
+				62 text 生命测试 · 单机训练
+				63 text 倒地 · 倒地生命 50 / 50 · 剩余 20 秒
+				64 button 补刀（20）
+					65 text 补刀
+					66 text （
+					67 text 20
+					68 text ）
+				69 button (disabled) 击倒测试
+				70 text 倒地后可测试补刀；20秒内未被救起会淘汰，5秒后自动复活。
+			71 container 单机计分测试
+				72 text 计分测试 · 模拟伤害来源
+				73 text 生命测试伤害来源
+				74 pop up button (collapsed, settable) 生命测试伤害来源, Value: 模拟敌人 A · 蓝队, ID: damage-source, Secondary Actions: Expand
+					75 menu
+						76 未归属 · 不计分
+						77 (selected) 模拟敌人 A · 蓝队
+						78 模拟敌人 B · 蓝队
+				79 text 为受伤/击倒/补刀按钮指定来源。击倒不计分；换另一来源补刀可测试助攻。
+				80 button (disabled) 重放上次淘汰
+				81 text 你 · 红队
+				82 container
+					83 text 0  淘汰 ·  0  助攻
+				84 text 模拟敌人 A · 蓝队
+				85 container
+					86 text 0  淘汰 ·  0  助攻
+				87 text 模拟敌人 B · 蓝队
+				88 container
+					89 text 0  淘汰 ·  0  助攻
+				90 text 模拟来源没有场景人物；重复淘汰不重复得分，重置训练清空比分。
+			91 container 单机救援练习
+				92 text 救援练习 · 单机测试
+				93 pop up button (collapsed, settable) 救援练习 · 单机测试, Value: 关闭, ID: rescue-mode, Secondary Actions: Expand
+					94 menu
+						95 (selected) 关闭
+						96 静止倒地队友
+						97 队友在救援中向外爬行
+						98 救援1秒后受到伤害
+						99 队友救我（先击倒自己）
+				100 text 在身旁放置测试队友，长按 E 救起，恢复50HP和1秒保护；“队友救我”场景在你倒地后自动救援。
+			101 text Esc 打开设置 · 返回游戏后锁定鼠标
+			102 button 重置训练
+			103 button 返回游戏
+			104 text 重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。
+
+The focused UI element is 0 AXWebArea Bubble Arena, URL: localhost:5173/

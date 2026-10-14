@@ -17,3 +17,5 @@ export { BubbleFlight, type FlyingBubble } from './bubbleFlight';
 export { MovementSlow } from './movementSlow';
 
 export { selectSpawnPoint, type SpawnSelection } from './spawnSelection';
+
+export { TeamScoreState, type TeamScoreSnapshot, type PlayerScoreLine, type ScoreResolution } from './teamScoreState';

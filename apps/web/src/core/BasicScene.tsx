@@ -1,3 +1,4 @@
+import { TeamScoreHint, ScorePracticePanel } from '../HUD/TeamScoreHint';
 import { RescueInput } from '../input/RescueInput';
 import { RescueSimulation } from '../player/RescueSimulation';
 import { RescuePracticePanel, RescueHint, RescuePracticeAlly } from '../HUD/RescuePractice';
@@ -60,7 +61,7 @@ export function BasicScene() {
   }, [pointer, openSettings]);
   return <>
     <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel primaryDisabled={primaryDisabled} lifeTest={<><PlayerLifeTestPanel player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
+    {open && <SettingsPanel primaryDisabled={primaryDisabled} lifeTest={<><PlayerLifeTestPanel player={session.playerHealth} /><ScorePracticePanel score={session.score} player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
@@ -81,7 +82,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   const [switchInput] = useState(() => new WeaponSwitchInput());
-  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue, respawn } = session;
+  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue, respawn, score } = session;
   const weaponsEnabled = useCallback(() => enabled() && loadout.canOperate(), [enabled, loadout]);
   useEffect(() => reload.attach(window, document, weaponsEnabled), [reload, weaponsEnabled]);
   useEffect(() => switchInput.attach(window, document, weaponsEnabled), [switchInput, weaponsEnabled]);
@@ -148,7 +149,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <PointerLockHint control={pointer} loadout={loadout} />
       <SpreadHint loadout={loadout} motion={motion} />
       <RescueHint practice={rescue} player={playerHealth} />
-      <HealthHint player={playerHealth} />
+      <TeamScoreHint score={score} /><HealthHint player={playerHealth} />
       <PlayerLifeHint player={playerHealth} />
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />

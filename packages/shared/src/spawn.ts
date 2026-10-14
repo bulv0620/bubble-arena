@@ -1,10 +1,11 @@
+import { parseTeamId, type TeamId } from './team';
 import { PLAYER_CONFIG } from './player';
 import { PHYSICS_CONFIG } from './physics';
 import { WHITEBOX_CONFIG, WHITEBOX_COLLISION_HASH } from './whitebox';
 import { TRAINING_RANGE_CONFIG } from './trainingTarget';
 import { parseRescuePosition, parseRescueTargetId, type RescuePosition } from './rescue';
 import { PLAYER_LIFE_STATUSES, type PlayerLifeStatus } from './playerLife';
-export type SpawnTeam = 'red' | 'blue';
+export type SpawnTeam = TeamId;
 export interface SpawnPoint { readonly id: string; readonly team: SpawnTeam; readonly primary: boolean; readonly position: RescuePosition }
 export interface SpawnCatalog { readonly collisionHash: string; readonly points: readonly SpawnPoint[] }
 export interface SpawnEnemy { readonly playerId: string; readonly team: SpawnTeam; readonly status: PlayerLifeStatus; readonly position: RescuePosition }
@@ -20,7 +21,7 @@ function array(value: unknown, maximum: number): unknown[] {
   for (let i = 0; i < value.length; i++) { const f = Object.getOwnPropertyDescriptor(value, String(i)); if (!f || !('value' in f)) throw new TypeError('Invalid spawn element'); }
   return value;
 }
-export function parseSpawnTeam(value: unknown): SpawnTeam { if (value !== 'red' && value !== 'blue') throw new TypeError('Invalid spawn team'); return value; }
+export const parseSpawnTeam = parseTeamId;
 export function parseRespawnConfig(value: unknown): RespawnConfig {
   const data = record(value, ['protectionDuration', 'clearance']), duration = data.protectionDuration, clearance = data.clearance;
   if (typeof duration !== 'number' || !Number.isFinite(duration) || duration <= 0 || !Number.isSafeInteger(Math.ceil(duration * PHYSICS_CONFIG.tickRate))

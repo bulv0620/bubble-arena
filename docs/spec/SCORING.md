@@ -1,0 +1,39 @@
+# 队伍、淘汰归属与计分（4.7）
+
+2026-10-14 implemented；阶段3 accepted，阶段4仍开放。本项不实现比赛计时/阶段或胜负结束。
+
+## 队伍与伤害归属
+
+shared/team.ts单处定义TEAM_IDS/TeamId和严格parseTeamId。救援RescueTeamId、出生SpawnTeam及其旧解析入口保留为兼容别名，使用同一红蓝类型/解析规则；救援尚未分队仍允许null事实。现有地图/出生目录值及两个hash不变。
+
+DamageActor={playerId,teamId}表示攻击者ID与攻击发生时的队伍；playerId在此就是规则里的actorId。内部已结算receiveDamage增加可选source快照，PlayerHealthState可绑定只读owner身份；这不是客户端damage/score命令。解析普通数据/闭合字段/有限身份，在任何生命变化前拒绝访问器/非法来源。绑定玩家拒绝自己及同队来源的武器伤害，不污染伤害去重身份；未归属训练来源null仍允许既有生命测试。
+
+只有有效normal→downed伤害记当前击倒者。倒地期间非致命伤害不替换它；同life救起清除旧击倒者，再次击倒保存新来源。补刀归零记录当次finisher及保存的downer；自然超时记录实际截止tick、downer和finisher=null。保存深冻结来源，后续选择变化/外部对象变更/断线不改变归属。getElimination返回最多一条该生命已结算事实，复活清理；未绑定owner的核心健康实例不伪造玩家ID或计分事实。
+
+EliminationFact={tick,victim:{playerId,teamId,lifeId},cause,finisher,downer}严格解析。cause为finishing-damage/downed-timeout/environment/suicide；只有补刀允许finisher非null。环境/自杀仅定义归属计分边界，尚未接地图killY或新增生命触发。事实由权威模拟生成，不接受客户端上传有效坐标、经过时间、淘汰或加分。
+
+## 积分与统计
+
+TeamScoreState构造时复制冻结本局名单（最多8个唯一玩家ID/队伍/初始lifeId），包含本局已断线攻击者的归档身份。没有删除攻击者即丢失归属的实时在线名单查询；比赛中身份/队伍绑定固定，新局重建。名单不等于场景AI或联机玩家。
+
+- 击倒无淘汰事实，不加分。
+- 敌方补刀者给其队伍+SCORE_CONFIG.eliminationPoints（默认1），个人淘汰+1；不同且为敌方的downer助攻+1。同人击倒/补刀不自助攻。
+- 自然倒地超时给downer队伍+1、其个人淘汰+1，不额外产生补刀助攻。
+- 环境/自杀/自己/友军/无归属不加分、不扣分、无助攻；未归属补刀也不回退计给原击倒者。
+- 当前统计个人淘汰/助攻；救援次数、比赛结算展示后续接入。
+
+step(tick, facts, matchFinished)必须由权威模拟在本tick所有玩家淘汰结算后调用一次，接收最多8条事实的整批。双方同tick淘汰全部累计后才供后续胜负模块读取，不能分两次同tick调用导致漏掉第二队，也不能一方先达阈值就提前结束。当前单机只有自身生命在该步骤内产生事实；未来服务器须全局汇总，不能照搬每玩家各调一次的训练装配。
+
+每个名单玩家只保存当前lifeId/bornTick/是否已消费，不积累无限历史。相同事实重复出现只处理一次，旧/重复tick不重复处理，冲突的同生命事实/未来tick/非法帧在任何提交前拒绝。未知/队伍不匹配/非当前lifeId/出生前事实不消费当前生命；finished校验输入后保持全部状态/时钟不变。无积分的真实淘汰也标为已消费，不能后来换来源补分。团队/个人/快照revision加法安全整数检查在提交前完成，不允许溢出回绕或部分提交。
+
+成功复活后由模拟beginLife(playerId,newLifeId,tick,matchFinished)注册恰好下一条生命，重开该玩家消费作用域；积分和统计累计不变。旧生命事实仍拒绝，不能因为清了旧锁而重放旧lifeId。新局须新实例和新绑定的健康事件源，单机重置清除原实例/pending/缓存；当前没有网络跨局消息协议，不声称已实现外部matchId校验。
+
+输出TeamScoreSnapshot深冻结，包含teams/players/revision与最近一批lastEvents，最多8条；空步/重复/无有效事实保留同一快照引用，无UI/DOM/网络/计时器/监听器依赖。web/LocalTeamScore提供低频订阅和幂等取消，规则与UI释放分离。
+
+## 单机入口与验证
+
+当前固定自身红队，测试队友红队、模拟来源A/B蓝队形成4人归档名单；A/B没有模型、碰撞体或AI。Esc计分测试只选来源预设，hit/down按钮在排队时固定该预设，物理步从shared已知表生成来源和20/100伤害。UI不能传任意actorId/队伍/伤害/分数。默认未归属保留旧训练语义，靶子击破不作为玩家淘汰计分。
+
+健康物理步依次消费测试伤害、推进超时、获取当前真实淘汰并送入积分批次，再通知生命周期订阅；出生后注册新lifeId。重放按钮只是有界replay-score意图，模拟读取自己缓存的上一条事实；没有UI手写事件，也不重复伤害或改变生命。可在淘汰/复活后验证去重。新训练清0比分/统计/来源/重放缓存，保留原鼠标速度/主枪和现有Canvas/Html宿主行为。
+
+左侧比分HUD与Esc个人淘汰/助攻表接同一真实快照，无每帧UI时钟。报告 [4.7](../reports/4.7.md) 包含检查/浏览器截图日志。正式玩家命中体/联网与环境死亡触发、4.8比赛计时/状态、4.9胜负结束、正式模型/动画仍后续；Blender MCP B.1未执行。

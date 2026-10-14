@@ -1,7 +1,8 @@
+import { parseTeamId, type TeamId } from './team';
 import { PLAYER_LIFE_STATUSES, type PlayerLifeSnapshot } from './playerLife';
 
 export interface RescueConfig { readonly maxDistance: number }
-export type RescueTeamId = 'red' | 'blue';
+export type RescueTeamId = TeamId;
 export interface RescuePosition { readonly x: number; readonly y: number; readonly z: number }
 /** Authoritative simulation facts, never a client player/coordinate payload. */
 export interface RescueParticipant {
@@ -48,13 +49,13 @@ export function parseRescuePosition(value: unknown): RescuePosition {
 export function parseRescueParticipant(value: unknown): RescueParticipant {
   const data = record(value, ['playerId', 'teamId', 'life', 'position', 'grounded', 'connected']);
   const id = playerId(data.playerId);
-  if (data.teamId !== null && data.teamId !== 'red' && data.teamId !== 'blue') throw new TypeError('Invalid rescue team');
+  const teamId = data.teamId === null ? null : parseTeamId(data.teamId);
   if (typeof data.grounded !== 'boolean' || typeof data.connected !== 'boolean') throw new TypeError('Expected rescue simulation flags');
   const life = record(data.life, ['status', 'lifeId', 'revision']);
   if (!PLAYER_LIFE_STATUSES.includes(life.status as PlayerLifeSnapshot['status'])) throw new TypeError('Invalid rescue life status');
   if (typeof life.lifeId !== 'number' || !Number.isSafeInteger(life.lifeId) || life.lifeId < 1
     || typeof life.revision !== 'number' || !Number.isSafeInteger(life.revision) || life.revision < 0) throw new RangeError('Invalid rescue life identity');
-  return Object.freeze({ playerId: id, teamId: data.teamId, life: Object.freeze({ ...life }) as unknown as PlayerLifeSnapshot,
+  return Object.freeze({ playerId: id, teamId, life: Object.freeze({ ...life }) as unknown as PlayerLifeSnapshot,
     position: parseRescuePosition(data.position), grounded: data.grounded, connected: data.connected });
 }
 export function parseRescueEligibilityFacts(value: unknown): RescueEligibilityFacts {

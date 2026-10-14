@@ -1,5 +1,8 @@
 # Game core
 
+4.7 TeamScoreState按整tick淘汰批次汇总红蓝积分和淘汰/助攻，当前lifeId消费一次、复活新作用域、归档断线身份/finished与严格边界；PlayerHealthState绑定身份并捕获真实击倒/补刀来源。纯规则没有DOM/网络/订阅/计时器，见 [SCORING](../../docs/spec/SCORING.md)。
+
+
 4.6 PlayerHealthState推进淘汰5秒等待/同tick出生回调事务，恢复100HP/新lifeId/2秒保护；纯核心selectSpawnPoint按地图可用性和最近存活敌人距离选点，带严格共享目录/事实和稳定回退。无DOM/物理/网络依赖，见 [SPAWN](../../docs/spec/SPAWN.md)。
 
 

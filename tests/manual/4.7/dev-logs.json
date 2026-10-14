@@ -1,0 +1,94 @@
+{
+  "score": [
+    {
+      "level": "info",
+      "message": "[score.check] {\"tick\":4989,\"revision\":1,\"teams\":{\"red\":0,\"blue\":1},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-ally\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":0,\"assists\":1},{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0}],\"lastEvents\":[{\"fact\":{\"tick\":4989,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":1},\"cause\":\"finishing-damage\",\"finisher\":{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\"},\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\"},\"assistant\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"points\":1}]}",
+      "timestamp": "2026-10-14T11:35:25.351Z",
+      "url": "http://localhost:5173/src/player/LocalTeamScore.ts?t=1791977418170"
+    },
+    {
+      "level": "info",
+      "message": "[score.check] {\"tick\":9431,\"revision\":2,\"teams\":{\"red\":0,\"blue\":2},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-ally\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":1},{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0}],\"lastEvents\":[{\"fact\":{\"tick\":9431,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":2},\"cause\":\"downed-timeout\",\"finisher\":null,\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"assistant\":null,\"points\":1}]}",
+      "timestamp": "2026-10-14T11:36:39.381Z",
+      "url": "http://localhost:5173/src/player/LocalTeamScore.ts?t=1791977418170"
+    }
+  ],
+  "replay": [
+    {
+      "level": "info",
+      "message": "[score.replay] {\"tick\":5015,\"lifeId\":1,\"replayLifeId\":1,\"score\":{\"revision\":1,\"teams\":{\"red\":0,\"blue\":1},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-ally\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":0,\"assists\":1},{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0}],\"lastEvents\":[{\"fact\":{\"tick\":4989,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":1},\"cause\":\"finishing-damage\",\"finisher\":{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\"},\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\"},\"assistant\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"points\":1}]}}",
+      "timestamp": "2026-10-14T11:35:25.790Z",
+      "url": "http://localhost:5173/src/player/LocalPlayerHealth.ts?t=1791977418172"
+    },
+    {
+      "level": "info",
+      "message": "[score.replay] {\"tick\":8208,\"lifeId\":2,\"replayLifeId\":1,\"score\":{\"revision\":1,\"teams\":{\"red\":0,\"blue\":1},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-ally\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":0,\"assists\":1},{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0}],\"lastEvents\":[{\"fact\":{\"tick\":4989,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":1},\"cause\":\"finishing-damage\",\"finisher\":{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\"},\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\"},\"assistant\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"points\":1}]}}",
+      "timestamp": "2026-10-14T11:36:19.002Z",
+      "url": "http://localhost:5173/src/player/LocalPlayerHealth.ts?t=1791977418172"
+    },
+    {
+      "level": "info",
+      "message": "[score.replay] {\"tick\":16101,\"lifeId\":3,\"replayLifeId\":2,\"score\":{\"revision\":2,\"teams\":{\"red\":0,\"blue\":2},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-ally\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":1},{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0}],\"lastEvents\":[{\"fact\":{\"tick\":9431,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":2},\"cause\":\"downed-timeout\",\"finisher\":null,\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"assistant\":null,\"points\":1}]}}",
+      "timestamp": "2026-10-14T11:38:30.553Z",
+      "url": "http://localhost:5173/src/player/LocalPlayerHealth.ts?t=1791977418172"
+    }
+  ],
+  "health": [
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":4929,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":100,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T11:35:24.352Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":4955,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":30,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T11:35:24.790Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":4972,\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":10,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T11:35:25.070Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":4989,\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5}",
+      "timestamp": "2026-10-14T11:35:25.352Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":5289,\"status\":\"respawning\",\"lifeId\":1,\"revision\":3,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T11:35:30.353Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":8231,\"status\":\"downed\",\"lifeId\":2,\"revision\":5,\"hp\":0,\"maxHp\":100,\"downedHp\":50,\"maxDownedHp\":50,\"lastDamage\":100,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T11:36:19.389Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":9431,\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"downed-timeout\",\"respawnSecondsRemaining\":5}",
+      "timestamp": "2026-10-14T11:36:39.381Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    },
+    {
+      "level": "info",
+      "message": "[player.health] {\"tick\":9731,\"status\":\"respawning\",\"lifeId\":2,\"revision\":7,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"downed-timeout\",\"respawnSecondsRemaining\":0}",
+      "timestamp": "2026-10-14T11:36:44.382Z",
+      "url": "http://localhost:5173/src/player/PlayerHealthSimulation.tsx?t=1791970487734"
+    }
+  ],
+  "physics": [
+    {
+      "level": "info",
+      "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":12,\"colliders\":15,\"mapHash\":\"fnv1a64:5c84d22467198a7b\",\"spawnHash\":\"fnv1a64:0634c343957c90f1\"}",
+      "timestamp": "2026-10-14T11:34:03.186Z",
+      "url": "http://localhost:5173/src/core/PhysicsWorld.tsx?t=1791977270188"
+    }
+  ]
+}

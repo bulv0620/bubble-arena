@@ -1,5 +1,5 @@
-import { PHYSICS_CONFIG, PLAYER_LIFE_CONFIG, PLAYER_VITALS_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, parseRespawnConfig, parseRescueProtectionConfig,
-  type RespawnConfig, type RescueProtectionConfig, type PlayerLifeConfig, type PlayerLifeSnapshot } from '@bubble-arena/shared';
+import { PHYSICS_CONFIG, PLAYER_LIFE_CONFIG, PLAYER_VITALS_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, parseRespawnConfig, parseRescueProtectionConfig, parseDamageActor,
+  type DamageActor, type EliminationFact, type RespawnConfig, type RescueProtectionConfig, type PlayerLifeConfig, type PlayerLifeSnapshot } from '@bubble-arena/shared';
 import { PlayerLifeMachine } from './playerLifeMachine';
 import type { PlayerVitals } from './playerVitals';
 
@@ -32,8 +32,12 @@ export class PlayerHealthState {
   private readonly respawnTicks: number;
   private readonly spawnProtectionTicks: number;
   private spawning = false;
+  private readonly owner: DamageActor | null;
+  private downer: DamageActor | null = null;
+  private elimination: EliminationFact | null = null;
   private readonly protectionTicks: number;
-  constructor(lifeId = 1, config: PlayerLifeConfig = PLAYER_LIFE_CONFIG, protectionConfig: RescueProtectionConfig = RESCUE_PROTECTION_CONFIG, respawnConfig: RespawnConfig = RESPAWN_CONFIG) {
+  constructor(lifeId = 1, config: PlayerLifeConfig = PLAYER_LIFE_CONFIG, protectionConfig: RescueProtectionConfig = RESCUE_PROTECTION_CONFIG, respawnConfig: RespawnConfig = RESPAWN_CONFIG, owner: DamageActor | null = null) {
+    this.owner = owner === null ? null : parseDamageActor(owner);
     this.life = new PlayerLifeMachine(lifeId, config);
     this.downedTicks = Math.ceil(this.life.config.downedDuration * PHYSICS_CONFIG.tickRate);
     this.respawnTicks = Math.ceil(this.life.config.respawnDelay * PHYSICS_CONFIG.tickRate);
@@ -43,6 +47,10 @@ export class PlayerHealthState {
       downedHp: 0, maxDownedHp: this.life.config.downedHp, lastDamage: 0, protected: false, downedSecondsRemaining: 0, eliminationReason: null, respawnSecondsRemaining: 0 });
   }
   getSnapshot = () => this.state;
+  getElimination = () => this.elimination;
+  private recordElimination(tick: number, cause: EliminationFact['cause'], finisher: DamageActor | null) {
+    if (this.owner) this.elimination = Object.freeze({ tick, cause, victim: Object.freeze({ ...this.owner, lifeId: this.state.lifeId }), finisher, downer: this.downer });
+  }
   /** Call after current-tick damage and before rescue. The deadline never extends. */
   advanceTick(tick: number, matchFinished: boolean) {
     validateTick(tick, matchFinished);
@@ -54,6 +62,7 @@ export class PlayerHealthState {
         if (this.life.transition({ type: 'downed_timeout', lifeId: this.state.lifeId, revision: this.state.revision,
           elapsedTicks: this.downedTicks }, matchFinished)) {
           this.eliminatedTick = this.downedEndTick;
+          this.recordElimination(this.eliminatedTick, 'downed-timeout', null);
           this.state = Object.freeze({ ...this.state, ...this.life.getSnapshot(), downedHp: 0, downedSecondsRemaining: 0,
             lastDamage: 0, protected: false, eliminationReason: 'downed-timeout', respawnSecondsRemaining: Math.ceil(this.respawnTicks / PHYSICS_CONFIG.tickRate) });
         }
@@ -106,6 +115,7 @@ export class PlayerHealthState {
     if (!Number.isSafeInteger(end)) throw new RangeError('Rescue protection tick exhausted');
     if (!this.life.transition({ type: 'rescue_completed', ...fact }, matchFinished)) return false;
     this.clockTick = tick; this.protectionEndTick = end; this.downedEndTick = 0;
+    this.downer = null;
     this.state = Object.freeze({ ...current, ...this.life.getSnapshot(), hp: this.life.config.revivedHp, downedHp: 0, lastDamage: 0,
       protected: true, downedSecondsRemaining: 0, eliminationReason: null });
     return true;
@@ -135,13 +145,14 @@ export class PlayerHealthState {
       const applied = apply(); if (typeof applied !== 'boolean') throw new TypeError('Expected spawn transaction result'); if (!applied) return false;
       if (!this.life.transition({ type: 'spawn_completed', ...fact }, matchFinished)) return false;
       this.clockTick = tick; this.protectionEndTick = end; this.downedEndTick = 0; this.lastSequence = 0; this.lastTick = tick; this.lastFireSequence = 0;
+      this.downer = null; this.elimination = null;
       this.state = Object.freeze({ ...current, ...this.life.getSnapshot(), hp: current.maxHp, downedHp: 0, lastDamage: 0,
         protected: true, downedSecondsRemaining: 0, respawnSecondsRemaining: 0, eliminationReason: null });
       return true;
     } finally { this.spawning = false; }
   }
   /** Identity and resolvedDamage are simulation output, never client-provided hit results. */
-  receiveDamage(hit: PlayerDamageIdentity, resolvedDamage: number, matchFinished: boolean): boolean {
+  receiveDamage(hit: PlayerDamageIdentity, resolvedDamage: number, matchFinished: boolean, source: DamageActor | null = null): boolean {
     const keys = ['lifeId', 'tick', 'sequence'];
     if (!hit || typeof hit !== 'object' || Array.isArray(hit) || ![Object.prototype, null].includes(Object.getPrototypeOf(hit))
       || Reflect.ownKeys(hit).length !== keys.length || keys.some(key => {
@@ -151,6 +162,8 @@ export class PlayerHealthState {
       || !Number.isSafeInteger(hit.tick) || hit.tick < 0) throw new RangeError('Invalid player damage identity values');
     if (!Number.isSafeInteger(resolvedDamage) || resolvedDamage <= 0) throw new RangeError('Expected resolved positive integer damage');
     if (typeof matchFinished !== 'boolean') throw new TypeError('Expected finished gate');
+    const actor = source === null ? null : parseDamageActor(source);
+    if (actor && this.owner && (actor.playerId === this.owner.playerId || actor.teamId === this.owner.teamId)) return false;
     let current = this.state;
     if (matchFinished || (current.status !== 'normal' && current.status !== 'downed') || hit.lifeId !== current.lifeId
       || hit.sequence <= this.lastSequence || hit.tick < this.lastTick || hit.tick < this.clockTick) return false;
@@ -163,6 +176,7 @@ export class PlayerHealthState {
       const lastDamage = Math.min(resolvedDamage, current.downedHp), downedHp = current.downedHp - lastDamage;
       if (downedHp === 0 && !this.life.transition({ type: 'hp_depleted', hp: 0, lifeId: current.lifeId, revision: current.revision }, matchFinished)) return false;
       if (downedHp === 0) this.eliminatedTick = hit.tick;
+      if (downedHp === 0) this.recordElimination(hit.tick, 'finishing-damage', actor);
       this.lastSequence = hit.sequence; this.lastTick = hit.tick;
       this.state = Object.freeze({ ...current, ...this.life.getSnapshot(), downedHp, lastDamage,
         downedSecondsRemaining: downedHp === 0 ? 0 : current.downedSecondsRemaining,
@@ -174,6 +188,7 @@ export class PlayerHealthState {
     const end = hp === 0 ? hit.tick + this.downedTicks : 0;
     if (hp === 0 && !this.life.transition({ type: 'hp_depleted', hp, lifeId: current.lifeId, revision: current.revision }, matchFinished)) return false;
     if (hp === 0) this.downedEndTick = end;
+    if (hp === 0) this.downer = actor;
     this.lastSequence = hit.sequence; this.lastTick = hit.tick;
     this.state = Object.freeze({ ...current, ...this.life.getSnapshot(), hp, lastDamage,
       downedHp: hp === 0 ? current.maxDownedHp : 0, protected: false,

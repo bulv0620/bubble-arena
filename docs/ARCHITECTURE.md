@@ -35,3 +35,6 @@ manifest 记录 assetId、version/hash、source、导出文件、动画/节点�
 ## 版本与工程工具
 
 当前 Node 20.19.3、pnpm 10.12.4 可用于起步；首次安装各库时确认其 engines/peer dependencies，以精确版本和 lockfile 记录结果。版本不兼容时更新工具链决策记录，再安装。避免在准备工作区时提前安装整套未经验证依赖。
+
+
+4.7当前积分集成：纯核心TeamScoreState只接受权威已结算的整tick淘汰批次，双方分数完整累计后交给后续结束判断。当前训练的单个LocalPlayerHealth在物理before回调内把测试伤害/超时事实送积分，出生成功后注册新lifeId；这不是未来多玩家每人独立同tick调用积分的范式。正式服务器必须汇总全部生命结算后一次提交，身份与来源均由服务器生成，见 [SCORING](spec/SCORING.md)。

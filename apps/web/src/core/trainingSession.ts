@@ -1,3 +1,4 @@
+import { LocalTeamScore } from '../player/LocalTeamScore';
 import { LocalRespawn } from '../player/LocalRespawn';
 import { LocalRescuePractice } from '../player/LocalRescuePractice';
 import { LocalPlayerHealth } from '../player/LocalPlayerHealth';
@@ -12,10 +13,10 @@ import type { PrimaryWeaponId } from '@bubble-arena/shared';
 
 /** Replace local training data without replacing the Canvas/HTML portal host. */
 export function createTrainingSession(primary: PrimaryWeaponId = 'rifle') {
-  const loadout = new LocalLoadout(primary), targets = new TrainingTargets(), playerHealth = new LocalPlayerHealth();
+  const score = new LocalTeamScore(), loadout = new LocalLoadout(primary), targets = new TrainingTargets(), playerHealth = new LocalPlayerHealth(score);
   const rescue = new LocalRescuePractice(playerHealth, loadout), recoil = new RifleRecoil(), feedback = new ShotFeedback(), motion = new RifleMotion(loadout);
   return {
-    range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets, playerHealth.canCauseControl), playerHealth, rescue, respawn: new LocalRespawn(playerHealth, loadout, rescue, motion, feedback, recoil),
+    score, range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets, playerHealth.canCauseControl), playerHealth, rescue, respawn: new LocalRespawn(playerHealth, loadout, rescue, motion, feedback, recoil),
     recoil, feedback, motion, loadout,
   };
 }
