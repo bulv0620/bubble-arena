@@ -880,7 +880,7 @@
       "title": "救援判定",
       "acceptance": "验证队伍、距离、角色状态和交互对象。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.3"

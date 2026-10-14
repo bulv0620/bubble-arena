@@ -1,5 +1,7 @@
 # Shared
 
+4.4.1 rescue提供2m距离配置、内部玩家/生命/队伍/位置/接地/连接/目标占用事实和严格深冻结解析；不是客户端坐标或救援成功消息。规则见 [RESCUE](../../docs/spec/RESCUE.md)。
+
 4.1 playerLife提供四状态/快照/内部权威事实类型与严格解析，downedHp50/救起HP50/倒地20s/救援3s/复活等待5s单源配置，普通最大HP仍复用playerVitals。不是客户端生命消息schema，后续服务器自行结算事实；详见 [PLAYER_LIFE](../../docs/spec/PLAYER_LIFE.md)。
 
 3.12.1训练靶配置version2，TRAINING_TARGET_LAYOUT为左右中三个唯一ID/位置，TRAINING_RANGE_CONFIG声明训练区出生点；whitebox新增range-backdrop并分散箱/台阶/坡位置，视觉与碰撞同源。当前碰撞hash为fnv1a64:5c84d22467198a7b；下文旧哈希是历史记录。

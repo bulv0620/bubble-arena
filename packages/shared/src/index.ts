@@ -9,6 +9,8 @@ export { TRAINING_TARGET_CONFIG, TRAINING_TARGET_LAYOUT, TRAINING_RANGE_CONFIG }
 export { PLAYER_VITALS_CONFIG } from './playerVitals';
 export { TRAINING_PLAYER_HEALTH_CONFIG } from './trainingPlayerHealth';
 export { PLAYER_LIFE_CONTROL_CONFIG } from './playerLifeControl';
+export { RESCUE_CONFIG, parseRescueConfig, parseRescueTargetId, parseRescuePosition, parseRescueEligibilityFacts,
+  type RescueConfig, type RescueTeamId, type RescuePosition, type RescueParticipant, type RescueEligibilityFacts } from './rescue';
 export { PLAYER_LIFE_CONFIG, PLAYER_LIFE_STATUSES, parsePlayerLifeConfig, parsePlayerLifeEvent,
   type PlayerLifeStatus, type PlayerLifeSnapshot, type PlayerLifeConfig, type PlayerLifeEvent } from './playerLife';
 export { RIFLE_RECOIL_CONFIG, createRifleRecoilTuning, type RifleRecoilTuning } from './rifleRecoil';
