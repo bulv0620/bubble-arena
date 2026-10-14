@@ -2,7 +2,9 @@
 
 更新时间：2026-10-14。
 
-最新4.8 implemented：共享3秒倒计时/5分钟/20分配置、waiting/countdown/playing/finished核心与加载就绪单机HUD、非playing动作/生命/武器/救援/复活门控完成。pnpm check：89文件562测试、169卡、build708modules；开发实际开始3秒→04:52与error=[]，见 [4.8](reports/4.8.md)、[MATCH](spec/MATCH.md)。阶段4未关闭；用户授权剩余批次，继续4.9胜负结算。本地提交候选未推送。
+最新4.9 implemented：整帧时间/比分结束、红蓝胜负/平局、只读结果及淘汰/助攻/真实救援统计，15秒/1分单机配置预设完成；finished冻结全部玩法、释放鼠标/关闭设置。pnpm check通过：89文件574测试、169卡、build708modules；开发15秒0:0平局，A击倒/B补刀蓝1分胜/A助攻1/B淘汰1、超过5秒未复活、error=[]，见 [4.9](reports/4.9.md)、[MATCH](spec/MATCH.md)。阶段4未关闭，继续授权4.10完整重开；本地候选未推送。
+
+历史4.8 implemented：共享3秒倒计时/5分钟/20分配置、waiting/countdown/playing/finished核心与加载就绪单机HUD、非playing动作/生命/武器/救援/复活门控完成。pnpm check：89文件562测试、169卡、build708modules；开发实际开始3秒→04:52与error=[]，见 [4.8](reports/4.8.md)、[MATCH](spec/MATCH.md)。阶段4未关闭；用户授权剩余批次，继续4.9胜负结算。本地提交候选未推送。
 
 历史4.7 implemented：shared红蓝TeamId统一、真实伤害来源/击倒者快照、补刀/自然超时归属及异人助攻完成；纯核心整tick积分批次、当前lifeId一次消费、复活新作用域、重复/旧/冲突/finished/归档身份守卫。单机来源预设/重放与左侧比分/个人统计HUD接入，靶子不计玩家分数。新增20测试，pnpm check通过：87文件556测试、169卡、typecheck/lint/build703modules。开发tick4989异人补刀蓝1/B淘汰1/A助攻1，tick9431自然超时蓝2/A淘汰1；当前及复活后旧生命重放均不加。生产同人补刀/复活保留1分、未归属不加、三次重置/默认来源/禁重放/四条100HP和error=[]，见 [4.7](reports/4.7.md)、[SCORING](spec/SCORING.md)。碰撞/出生hash及12刚体15碰撞体不变；固定单机模拟来源，无正式敌人/联机/环境死亡触发/比赛计时胜负/模型动画，阶段4未关闭。下一项4.8比赛计时与状态，本轮停止。本地stage-4-scoring-playtest候选，未推送。
 

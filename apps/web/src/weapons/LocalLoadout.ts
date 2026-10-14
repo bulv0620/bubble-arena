@@ -23,7 +23,7 @@ export class LocalLoadout {
   private snapshot: LoadoutSnapshot;
   private listeners = new Set<() => void>();
   readonly infiniteReserve = true;
-  constructor(primary: PrimaryWeaponId = 'rifle', readonly matchCanPlay: () => boolean = () => true) {
+  constructor(primary: PrimaryWeaponId = 'rifle', readonly matchCanPlay: () => boolean = () => true, private readonly canConfigure: () => boolean = matchCanPlay) {
     if (!isPrimaryWeaponId(primary)) throw new TypeError('Invalid primary weapon');
     this.primary = primary; this.active = primary;
     this.snapshot = this.buildSnapshot();
@@ -93,7 +93,7 @@ export class LocalLoadout {
   }
   setPrimary(id: PrimaryWeaponId) {
     if (!isPrimaryWeaponId(id)) throw new TypeError('Invalid primary weapon');
-    if (!playerActionPolicy(this.lifeStatus).canUseWeapons || this.rescuing) return false;
+    if (!this.canConfigure() || !playerActionPolicy(this.lifeStatus).canUseWeapons || this.rescuing) return false;
     this.primary = id; this.equip(id); this.publish(); return true;
   }
   private equip(id: WeaponId) {

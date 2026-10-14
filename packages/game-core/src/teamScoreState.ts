@@ -1,5 +1,5 @@
 import { SCORE_CONFIG, parseScoreRoster, parseEliminationFrame, type DamageActor, type EliminationFact, type ScoreParticipant, type TeamId } from '@bubble-arena/shared';
-export interface PlayerScoreLine extends DamageActor { readonly eliminations: number; readonly assists: number }
+export interface PlayerScoreLine extends DamageActor { readonly eliminations: number; readonly assists: number; readonly rescues: number }
 export interface ScoreResolution { readonly fact: EliminationFact; readonly killer: DamageActor | null; readonly assistant: DamageActor | null; readonly points: number }
 export interface TeamScoreSnapshot { readonly revision: number; readonly teams: Readonly<Record<TeamId, number>>; readonly players: readonly PlayerScoreLine[]; readonly lastEvents: readonly ScoreResolution[] }
 interface LifeScope { lifeId: number; bornTick: number; scored: boolean }
@@ -10,11 +10,12 @@ export class TeamScoreState {
   private readonly identities: Map<string, ScoreParticipant>;
   private lives: Map<string, LifeScope>;
   private clock = -1;
+  private readonly rescueScopes = new Map<string, { lifeId: number; revision: number }>();
   private state: TeamScoreSnapshot;
   constructor(roster: readonly ScoreParticipant[]) {
     this.roster = parseScoreRoster(roster); this.identities = new Map(this.roster.map(p => [p.playerId, p]));
     this.lives = new Map(this.roster.map(p => [p.playerId, { lifeId: p.lifeId, bornTick: 0, scored: false }]));
-    this.state = Object.freeze({ revision: 0, teams: Object.freeze({ red: 0, blue: 0 }), players: Object.freeze(this.roster.map(p => Object.freeze({ playerId: p.playerId, teamId: p.teamId, eliminations: 0, assists: 0 }))), lastEvents: Object.freeze([]) });
+    this.state = Object.freeze({ revision: 0, teams: Object.freeze({ red: 0, blue: 0 }), players: Object.freeze(this.roster.map(p => Object.freeze({ playerId: p.playerId, teamId: p.teamId, eliminations: 0, assists: 0, rescues: 0 }))), lastEvents: Object.freeze([]) });
   }
   getSnapshot = () => this.state;
   /** Authority calls after a successful new-life spawn. Scores remain cumulative. */
@@ -24,6 +25,16 @@ export class TeamScoreState {
     const current = this.lives.get(playerId);
     if (matchFinished || tick < this.clock || !current || lifeId !== current.lifeId + 1) return false;
     this.lives.set(playerId, { lifeId, bornTick: tick, scored: false }); this.clock = tick; return true;
+  }
+  /** Only the authority invokes this after a successful RescueProgress completion. */
+  recordRescue(rescuerId: string, targetId: string, lifeId: number, revision: number, tick: number, matchFinished: boolean) {
+    validateTick(tick, matchFinished);
+    if (typeof rescuerId !== 'string' || typeof targetId !== 'string' || !Number.isSafeInteger(lifeId) || lifeId < 1 || !Number.isSafeInteger(revision) || revision < 1) throw new TypeError('Invalid rescue score identity');
+    const rescuer = this.identities.get(rescuerId), target = this.identities.get(targetId), life = this.lives.get(targetId), previous = this.rescueScopes.get(targetId);
+    if (matchFinished || tick < this.clock || !rescuer || !target || rescuerId === targetId || rescuer.teamId !== target.teamId || life?.lifeId !== lifeId || life.scored || tick < life.bornTick || previous && (lifeId < previous.lifeId || lifeId === previous.lifeId && revision <= previous.revision)) return false;
+    const players = this.state.players.map(p => Object.freeze(p.playerId === rescuerId ? { ...p, rescues: increment(p.rescues) } : p));
+    const state = Object.freeze({ ...this.state, revision: increment(this.state.revision), players: Object.freeze(players) });
+    this.rescueScopes.set(targetId, { lifeId, revision }); this.clock = tick; this.state = state; return true;
   }
   step(tick: number, events: readonly EliminationFact[], matchFinished: boolean) {
     validateTick(tick, matchFinished); const frame = parseEliminationFrame(events);

@@ -1,0 +1,8 @@
+[
+  {
+    "level": "info",
+    "message": "[match.finished] {\"result\":{\"reason\":\"time-limit\",\"winner\":null,\"teams\":{\"red\":0,\"blue\":0},\"endedTick\":1524},\"phase\":\"finished\",\"secondsRemaining\":0,\"countdownRemaining\":0,\"revision\":20,\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0,\"rescues\":0},{\"playerId\":\"training-ally\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0,\"rescues\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":0,\"assists\":0,\"rescues\":0},{\"playerId\":\"training-enemy-b\",\"teamId\":\"blue\",\"eliminations\":0,\"assists\":0,\"rescues\":0}]}",
+    "timestamp": "2026-10-14T12:45:57.200Z",
+    "url": "http://127.0.0.1:5173/src/core/LocalMatch.ts?t=1791981844006"
+  }
+]

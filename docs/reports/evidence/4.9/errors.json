@@ -1,0 +1,122 @@
+[
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:43:56.718Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:43:57.679Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:43:58.652Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:43:59.625Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:44:00.599Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:44:01.560Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:44:02.532Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: loadout.refreshMatchGate is not a function\n    at http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765:221:11\n    at LocalMatch.notify (http://127.0.0.1:5173/src/core/LocalMatch.ts:35:42)\n    at LocalMatch.step (http://127.0.0.1:5173/src/core/LocalMatch.ts:44:43)\n    at Object.current (http://127.0.0.1:5173/src/core/MatchSimulation.tsx:6:35)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:797:5\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:952:16\n    at Object.current (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:141:3)",
+    "timestamp": "2026-10-14T12:44:03.507Z",
+    "url": "http://127.0.0.1:5173/src/core/BasicScene.tsx?t=1791981648765"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:44:04.179Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:44:04.180Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:44:04.180Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:44:04.180Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:46:54.323Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:46:54.325Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:46:54.326Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:46:54.332Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:48:08.842Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:48:08.842Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:48:08.842Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  },
+  {
+    "level": "error",
+    "message": "Attempted to synchronously unmount a root while React was already rendering. React cannot finish unmounting the root until the current render has completed, which may lead to a race condition.",
+    "timestamp": "2026-10-14T12:48:08.842Z",
+    "url": "http://127.0.0.1:5173/@vite/client"
+  }
+]

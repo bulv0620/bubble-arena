@@ -15,8 +15,8 @@ import type { MatchConfig, PrimaryWeaponId } from '@bubble-arena/shared';
 /** Replace local training data without replacing the Canvas/HTML portal host. */
 export function createTrainingSession(primary: PrimaryWeaponId = 'rifle', options: { match?: boolean; config?: MatchConfig } = {}) {
   const match = new LocalMatch(options.match ?? false, options.config);
-  const score = new LocalTeamScore(), loadout = new LocalLoadout(primary, match.canPlay), targets = new TrainingTargets(), playerHealth = new LocalPlayerHealth(score, match.canPlay);
-  const rescue = new LocalRescuePractice(playerHealth, loadout), recoil = new RifleRecoil(), feedback = new ShotFeedback(), motion = new RifleMotion(loadout);
+  const score = new LocalTeamScore(match.canPlay), loadout = new LocalLoadout(primary, match.canPlay, () => !match.enabled || match.getSnapshot().phase === 'waiting' || match.canPlay()), targets = new TrainingTargets(), playerHealth = new LocalPlayerHealth(score, match.canPlay);
+  const rescue = new LocalRescuePractice(playerHealth, loadout, score), recoil = new RifleRecoil(), feedback = new ShotFeedback(), motion = new RifleMotion(loadout);
   return {
     match, score, range: new LocalTrainingRange(), targets, bubbles: new LocalBubbleFlight(targets, playerHealth.canCauseControl), playerHealth, rescue, respawn: new LocalRespawn(playerHealth, loadout, rescue, motion, feedback, recoil),
     recoil, feedback, motion, loadout,

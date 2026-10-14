@@ -61,3 +61,20 @@ test('reset/disable/unsubscribe discard pending fixture and locks; normal health
     const fresh = createTrainingSession(); expect(fresh.rescue.getSnapshot().mode).toBe('off'); expect(fresh.loadout.canOperate()).toBe(true);
   } finally { session.rescue.dispose(); world.free(); }
 });
+
+test('two distinct real fixture rescues count twice, interruptions and repeated idle completions never add stats', () => {
+  const world = new RAPIER.World({ x: 0, y: -20, z: 0 }), s = createTrainingSession();
+  try {
+    world.step();
+    const step = (held = false) => { s.playerHealth.step(); return s.rescue.step(world, at, true, { ...idle, held }); };
+    for (let run = 0; run < 2; run++) {
+      s.rescue.configure('stationary'); step();
+      for (let tick = 0; tick < 180; tick++) step(true);
+      expect(s.score.getSnapshot().players.find(p => p.playerId === 'training-player')?.rescues).toBe(run + 1);
+      for (let tick = 0; tick < 30; tick++) step();
+    }
+    s.rescue.configure('stationary'); step(); for (let tick = 0; tick < 30; tick++) step(true); step();
+    expect(s.score.getSnapshot().players.find(p => p.playerId === 'training-player')?.rescues).toBe(2);
+    expect(s.score.getSnapshot().teams).toEqual({ red: 0, blue: 0 });
+  } finally { s.rescue.dispose(); world.free(); }
+});

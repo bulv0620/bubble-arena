@@ -1,5 +1,5 @@
 import { MatchHud } from '../HUD/MatchHud';
-import { MatchSimulation } from './MatchSimulation';
+import { MatchSimulation, MatchResolution } from './MatchSimulation';
 import { TeamScoreHint, ScorePracticePanel } from '../HUD/TeamScoreHint';
 import { RescueInput } from '../input/RescueInput';
 import { RescueSimulation } from '../player/RescueSimulation';
@@ -38,7 +38,8 @@ export function BasicScene() {
   const opened = useRef(false);
   const [revision, setRevision] = useState(0);
   const [session, setSession] = useState(() => createTrainingSession('rifle', { match: true }));
-  const primaryDisabled = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().lifeStatus !== 'normal' || session.loadout.getSnapshot().rescuing);
+  const matchState = useSyncExternalStore(session.match.subscribe, session.match.getSnapshot);
+  const lifeDisabled = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().lifeStatus !== 'normal' || session.loadout.getSnapshot().rescuing);
   const primary = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().primary);
   const [speed, setSpeed] = useState(() => {
     try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
@@ -49,6 +50,7 @@ export function BasicScene() {
   const openSettings = useCallback(() => {
     opened.current = true; setOpen(true); pointer.release();
   }, [pointer]);
+  useEffect(() => session.match.subscribe(() => { if (session.match.getSnapshot().phase === 'finished') { pointer.release(); opened.current = false; setOpen(false); } }), [session, pointer]);
   useEffect(() => {
     const key = (event: KeyboardEvent) => { if (event.code === 'Escape') openSettings(); };
     let previous = pointer.getSnapshot();
@@ -63,7 +65,7 @@ export function BasicScene() {
   }, [pointer, openSettings]);
   return <>
     <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel primaryDisabled={primaryDisabled} lifeTest={<><PlayerLifeTestPanel player={session.playerHealth} /><ScorePracticePanel score={session.score} player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
+    {open && <SettingsPanel primaryDisabled={lifeDisabled || matchState.phase === 'finished' || matchState.phase === 'countdown'} lifeTest={<fieldset className="match-test-gate" disabled={!session.match.canPlay()}><PlayerLifeTestPanel player={session.playerHealth} /><ScorePracticePanel score={session.score} player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></fieldset>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
@@ -85,6 +87,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [reload] = useState(() => new ReloadInput());
   const [switchInput] = useState(() => new WeaponSwitchInput());
   const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue, respawn, score, match } = session;
+  const phase = useSyncExternalStore(match.subscribe, () => match.getSnapshot().phase);
   const weaponsEnabled = useCallback(() => enabled() && loadout.canOperate(), [enabled, loadout]);
   useEffect(() => reload.attach(window, document, weaponsEnabled), [reload, weaponsEnabled]);
   useEffect(() => switchInput.attach(window, document, weaponsEnabled), [switchInput, weaponsEnabled]);
@@ -139,6 +142,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
             ]} />
             <RifleSimulation playerHealth={playerHealth} aim={aim} bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             <RescueSimulation practice={rescue} input={rescueInput} body={playerBody} grounded={grounded} enabled={enabled} pointer={pointer} aim={aim} />
+            <MatchResolution match={match} score={score} />
             <ShotEffects feedback={feedback} />
             <BubbleVisuals bubbles={bubbles} />
             <FollowCamera respawn={respawn} loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
@@ -150,15 +154,15 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
         </Suspense>
       </Canvas>
       <div className="hud-brand"><i>BA</i><span>BUBBLE ARENA<small>训练模式</small></span></div>
-      <PointerLockHint control={pointer} loadout={loadout} />
+      {phase !== 'finished' && <PointerLockHint control={pointer} loadout={loadout} />}
       <SpreadHint loadout={loadout} motion={motion} />
-      <RescueHint practice={rescue} player={playerHealth} />
+      {phase !== 'finished' && <RescueHint practice={rescue} player={playerHealth} />}
       <MatchHud match={match} /><TeamScoreHint score={score} /><HealthHint player={playerHealth} />
-      <PlayerLifeHint player={playerHealth} />
+      {phase !== 'finished' && <PlayerLifeHint player={playerHealth} />}
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />
-      <Crosshair loadout={loadout} input={crosshair} motion={motion} />
-      <ReloadProgress loadout={loadout} motion={motion} />
+      {phase !== 'finished' && <Crosshair loadout={loadout} input={crosshair} motion={motion} />}
+      {phase !== 'finished' && <ReloadProgress loadout={loadout} motion={motion} />}
       {import.meta.env.DEV && <details className="hud-debug"><summary>调试</summary><label><input type="checkbox" checked={showAimDiagnostics} onChange={event => setShowAimDiagnostics(event.target.checked)} />显示瞄准调试点</label><FireInputHint loadout={loadout} input={fire} pointer={pointer} /><InputDiagnostics input={input} /></details>}
 
     </>

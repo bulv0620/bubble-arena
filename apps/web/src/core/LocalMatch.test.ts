@@ -31,3 +31,24 @@ test('subscriptions release and unloading cancels the queued ready intent', () =
   m.requestStart(); m.setSceneReady(false); m.step(); expect(m.getSnapshot().phase).toBe('waiting');
   release(); release(); m.setSceneReady(true); m.requestStart(); m.step(); expect(notify).toHaveBeenCalledTimes(2);
 });
+
+test('whole local elimination resolves score limit once and captures frozen result before respawn', () => {
+  const s = createTrainingSession('rifle', { match: true, config: { countdownSeconds: 1, durationSeconds: 300, scoreLimit: 1 } });
+  s.match.setSceneReady(true); s.match.requestStart(); for (let i = 0; i <= 60; i++) s.match.step();
+  const frame = () => { s.match.step(); s.playerHealth.step(); s.match.resolve(s.score.getSnapshot()); };
+  s.playerHealth.configureTestSource('enemy-a'); s.playerHealth.requestTest('down'); frame(); expect(s.match.getSnapshot().phase).toBe('playing');
+  s.playerHealth.configureTestSource('enemy-b'); for (let i = 0; i < 3; i++) { s.playerHealth.requestTest('hit'); frame(); }
+  expect(s.match.getSnapshot()).toMatchObject({ phase: 'finished', result: { winner: 'blue', reason: 'score-limit', teams: { red: 0, blue: 1 } } });
+  const final = s.match.getFinalScores(); expect(final?.players.find(p => p.playerId === 'training-enemy-a')?.assists).toBe(1);
+  expect(final?.players.find(p => p.playerId === 'training-enemy-b')?.eliminations).toBe(1);
+  for (let i = 0; i < 360; i++) frame(); expect(s.playerHealth.getSnapshot().status).toBe('eliminated'); expect(s.match.getFinalScores()).toBe(final);
+  expect(s.match.configure({ countdownSeconds: 1, durationSeconds: 15, scoreLimit: 20 })).toBe(false);
+});
+test('time test uses fixed clock while settings-style idle has no input, draw freezes an ongoing downed deadline', () => {
+  const s = createTrainingSession('rifle', { match: true, config: { countdownSeconds: 1, durationSeconds: 1, scoreLimit: 20 } });
+  s.match.setSceneReady(true); s.match.requestStart(); for (let i = 0; i <= 60; i++) s.match.step();
+  s.playerHealth.requestTest('down'); s.playerHealth.step();
+  for (let i = 0; i < 60; i++) { s.match.step(); s.playerHealth.step(); s.match.resolve(s.score.getSnapshot()); }
+  expect(s.match.getSnapshot().result).toMatchObject({ winner: null, reason: 'time-limit' });
+  const life = s.playerHealth.getSnapshot(); for (let i = 0; i < 1500; i++) s.playerHealth.step(); expect(s.playerHealth.getSnapshot()).toBe(life);
+});

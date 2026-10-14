@@ -28,3 +28,22 @@ test('reject invalid duration, fields, accessors and ticks without running gette
   expect(() => parseMatchConfig(config)).toThrow('Invalid match config field');
   expect(Object.isFrozen(new MatchState().config)).toBe(true);
 });
+
+test.each([{ red: 20, blue: 19, winner: 'red' }, { red: 19, blue: 20, winner: 'blue' }, { red: 20, blue: 20, winner: null }, { red: 20, blue: 21, winner: 'blue' }])('whole score batch determines winner including simultaneous limits: %j', ({ red, blue, winner }) => {
+  const m = new MatchState(); m.start(0, true); m.advance(180);
+  expect(m.resolve(180, { red, blue })).toBe(true);
+  expect(m.getSnapshot().result).toMatchObject({ winner, reason: 'score-limit', teams: { red, blue }, endedTick: 180 });
+  const final = m.getSnapshot(); expect(m.resolve(180, { red: 99, blue: 0 })).toBe(false); expect(m.advance(1000)).toBe(final);
+});
+test.each([{ red: 0, blue: 0, winner: null }, { red: 3, blue: 2, winner: 'red' }, { red: 1, blue: 2, winner: 'blue' }])('exact time deadline uses final scores: %j', ({ red, blue, winner }) => {
+  const m = new MatchState({ countdownSeconds: 3, durationSeconds: 1, scoreLimit: 20 }); m.start(0, true); m.advance(239);
+  expect(m.resolve(239, { red, blue })).toBe(false); m.advance(240); expect(m.resolve(240, { red, blue })).toBe(true);
+  expect(m.getSnapshot().result).toMatchObject({ winner, reason: 'time-limit' });
+});
+test('rejects unfinished frame, invalid/claimed scores and getters atomically; overflow start keeps waiting', () => {
+  const m = new MatchState(); expect(() => m.start(Number.MAX_SAFE_INTEGER, true)).toThrow(); expect(m.start(0, true)).toBe(true); m.advance(180);
+  const before = m.getSnapshot(); expect(() => m.resolve(181, { red: 20, blue: 0 })).toThrow();
+  for (const scores of [{ red: -1, blue: 0 }, { red: .5, blue: 0 }, { red: Infinity, blue: 0 }, { red: 20, blue: 0, winner: 'red' }]) expect(() => m.resolve(180, scores)).toThrow();
+  expect(() => m.resolve(180, { get red() { throw Error('getter executed'); }, blue: 0 })).toThrow('Invalid match scores');
+  expect(m.getSnapshot()).toBe(before); expect(m.resolve(179, { red: 20, blue: 0 })).toBe(false);
+});

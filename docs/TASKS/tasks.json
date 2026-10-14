@@ -964,7 +964,7 @@
       "title": "胜负与结算页面",
       "acceptance": "到时间/分数上限触发结算；平局处理明确。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.8"

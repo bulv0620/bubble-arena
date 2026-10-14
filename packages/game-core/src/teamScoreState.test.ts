@@ -61,3 +61,19 @@ test('no-op steps keep stable references; instances and new match resets have no
   const s = new TeamScoreState(TRAINING_SCORE_ROSTER), initial = s.getSnapshot(); for (let i = 0; i < 60; i++) expect(s.step(i, [], false)).toBe(initial);
   s.step(60, [fact(60)], false); const fresh = new TeamScoreState(TRAINING_SCORE_ROSTER); expect(fresh.getSnapshot().teams.blue).toBe(0); fresh.step(1, [fact()], false); expect(fresh.getSnapshot().teams.blue).toBe(1);
 });
+
+test('rescue authority statistics dedupe target life/revision, reject enemies/stale/finished and award no team points', () => {
+  const s = new TeamScoreState(TRAINING_SCORE_ROSTER);
+  const rescuer = a.player.playerId, target = a.ally.playerId;
+  expect(s.recordRescue(rescuer, target, 1, 1, 10, false)).toBe(true);
+  expect(line(s, rescuer).rescues).toBe(1); expect(s.getSnapshot().teams).toEqual({ red: 0, blue: 0 });
+  expect(s.recordRescue(rescuer, target, 1, 1, 11, false)).toBe(false);
+  expect(s.recordRescue(rescuer, target, 1, 3, 9, false)).toBe(false);
+  expect(s.recordRescue(a['enemy-a'].playerId, target, 1, 3, 11, false)).toBe(false);
+  expect(s.recordRescue(rescuer, rescuer, 1, 3, 11, false)).toBe(false);
+  expect(s.recordRescue(rescuer, target, 1, 3, 11, true)).toBe(false);
+  expect(s.recordRescue(rescuer, target, 1, 3, 11, false)).toBe(true);
+  s.beginLife(target, 2, 12, false);
+  expect(s.recordRescue(rescuer, target, 1, 5, 13, false)).toBe(false);
+  expect(s.recordRescue(rescuer, target, 2, 1, 13, false)).toBe(true); expect(line(s, rescuer).rescues).toBe(3);
+});

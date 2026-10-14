@@ -1,3 +1,4 @@
+import type { LocalTeamScore } from './LocalTeamScore';
 import { PlayerHealthState, RescueProgress, type PlayerHealthSnapshot, type RescueChannel, type RescueInterruptReason } from '@bubble-arena/game-core';
 import { TRAINING_RESCUE_CONFIG as config, TRAINING_RESCUE_MODES, PHYSICS_CONFIG,
   type TrainingRescueMode, type RescueParticipant, type RescueControl, type RescuePosition } from '@bubble-arena/shared';
@@ -18,9 +19,10 @@ export class LocalRescuePractice {
   private injuryQueued = false;
   private previousDamageRevision;
   private allyHealth = new PlayerHealthState();
+  private allyLife = 0;
   private state: RescuePracticeSnapshot = Object.freeze({ mode: 'off', ally: null, allyHealth: null, channel: null, message: '' });
   private readonly listeners = new Set<() => void>();
-  constructor(private readonly health: LocalPlayerHealth, private readonly loadout: LocalLoadout) { this.previousDamageRevision = health.getDamageRevision(); }
+  constructor(private readonly health: LocalPlayerHealth, private readonly loadout: LocalLoadout, private readonly score?: LocalTeamScore) { this.previousDamageRevision = health.getDamageRevision(); }
   getSnapshot = () => this.state;
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   configure = (mode: TrainingRescueMode) => {
@@ -50,8 +52,11 @@ export class LocalRescuePractice {
     if (this.pending !== null) {
       this.mode = this.pending; this.pending = null; this.rule.clear(); this.injuryQueued = false;
       this.ally = this.mode === 'off' ? null : Object.freeze({ x: position.x + config.offsetX, y: position.y, z: position.z + config.offsetZ });
-      this.allyHealth = new PlayerHealthState();
-      if (this.ally && this.mode !== 'self-rescue') this.allyHealth.receiveDamage({ lifeId: 1, sequence: 1, tick }, this.allyHealth.getSnapshot().maxHp, false);
+      if (this.ally) {
+        this.allyLife++; this.allyHealth = new PlayerHealthState(this.allyLife);
+        if (this.allyLife > 1) this.score?.beginLife(config.allyId, this.allyLife, this.health.getTick(), false);
+      }
+      if (this.ally && this.mode !== 'self-rescue') this.allyHealth.receiveDamage({ lifeId: this.allyLife, sequence: 1, tick }, this.allyHealth.getSnapshot().maxHp, false);
       this.publish(null, '');
     }
     this.allyHealth.advanceTick(tick, false);
@@ -74,9 +79,15 @@ export class LocalRescuePractice {
       let snapshot = this.rule.step(tick, { players, controls,
         damagedPlayerIds: damaged ? [config.playerId] : [], matchFinished: false }, (from, to) => isRescueLineClear(world, from, to));
       for (const event of snapshot.events) if (event.kind === 'ready') this.rule.complete(tick, event.rescuerId, channel => {
-        if (channel.target.playerId === config.playerId) return this.health.completeRescue(channel);
+        if (channel.target.playerId === config.playerId) {
+          const accepted = this.health.completeRescue(channel);
+          if (accepted) this.score?.recordRescue(channel.rescuer.playerId, channel.target.playerId, channel.target.lifeId, channel.target.revision, this.health.getTick());
+          return accepted;
+        }
         if (channel.target.playerId !== config.allyId) return false;
-        return this.allyHealth.completeRescue({ lifeId: channel.target.lifeId, revision: channel.target.revision, elapsedTicks: channel.elapsedTicks }, tick, false);
+        const accepted = this.allyHealth.completeRescue({ lifeId: channel.target.lifeId, revision: channel.target.revision, elapsedTicks: channel.elapsedTicks }, tick, false);
+        if (accepted) this.score?.recordRescue(channel.rescuer.playerId, channel.target.playerId, channel.target.lifeId, channel.target.revision, this.health.getTick());
+        return accepted;
       }, false);
       snapshot = this.rule.getSnapshot();
       const channel = snapshot.channels[0] ?? null, event = snapshot.events[0];
