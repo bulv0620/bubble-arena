@@ -1,3 +1,7 @@
+import { RescueInput } from '../input/RescueInput';
+import { RescueSimulation } from '../player/RescueSimulation';
+import { RescuePracticePanel, RescueHint, RescuePracticeAlly } from '../HUD/RescuePractice';
+import { bindRescueActions } from './bindRescueActions';
 import { SettingsPanel } from '../settings/SettingsPanel';
 import { bindLifeActions } from './bindLifeActions';
 import { PlayerLifeHint } from '../HUD/PlayerLifeHint';
@@ -56,7 +60,7 @@ export function BasicScene() {
   }, [pointer, openSettings]);
   return <>
     <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel primaryDisabled={primaryDisabled} lifeTest={<PlayerLifeTestPanel player={session.playerHealth} />} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
+    {open && <SettingsPanel primaryDisabled={primaryDisabled} lifeTest={<><PlayerLifeTestPanel player={session.playerHealth} /><RescuePracticePanel practice={session.rescue} /></>} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
@@ -70,21 +74,24 @@ export function BasicScene() {
 function SceneSession({ session, revision, pointer, enabled, sensitivity }: { session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
   const input = useKeyboardInput(enabled);
   const [showAimDiagnostics, setShowAimDiagnostics] = useState(false);
+  const grounded = useRef(false);
+  const [rescueInput] = useState(() => new RescueInput());
   const playerBody = useRef<RapierRigidBody | null>(null);
   const [aim] = useState(() => new AimInput());
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   const [switchInput] = useState(() => new WeaponSwitchInput());
-  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles } = session;
+  const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles, rescue } = session;
   const weaponsEnabled = useCallback(() => enabled() && loadout.canOperate(), [enabled, loadout]);
   useEffect(() => reload.attach(window, document, weaponsEnabled), [reload, weaponsEnabled]);
   useEffect(() => switchInput.attach(window, document, weaponsEnabled), [switchInput, weaponsEnabled]);
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
   const clearWeaponInput = useCallback(() => clearWeaponActions({ aim, fire, reload, switchInput }), [aim, fire, reload, switchInput]);
-  const clearInput = useCallback(() => { input.clear(); clearWeaponInput(); }, [input, clearWeaponInput]);
+  const clearInput = useCallback(() => { input.clear(); clearWeaponInput(); rescueInput.clear(); rescue.cancel(); }, [input, clearWeaponInput, rescueInput, rescue]);
   useEffect(() => bindWeaponChanges(loadout, { aim, fire, reload, switchInput }, motion, recoil), [loadout, aim, fire, reload, switchInput, recoil, motion]);
   useEffect(() => bindLifeActions(playerHealth, loadout, { aim, fire, reload, switchInput, keyboard: input, feedback, recoil }),
     [playerHealth, loadout, aim, fire, reload, switchInput, input, feedback, recoil]);
+  useEffect(() => bindRescueActions(loadout, { aim, fire, reload, switchInput }, input, recoil), [loadout, aim, fire, reload, switchInput, input, recoil]);
   const facingYaw = useRef(0);
   const shotRay = useRef<MuzzleRayResult | null>(null);
   const aimTarget = useRef<ScreenAimTarget | null>(null);
@@ -119,12 +126,14 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
             <WhiteboxMap />
             <PlayerHealthSimulation player={playerHealth} />
             {range.entries.map(entry => <TrainingTarget key={entry.id} registry={targets} target={entry.target} label={entry.label} position={entry.position} />)}
-            <CapsulePlayer loadout={loadout} playerHealth={playerHealth} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
+            <RescuePracticeAlly practice={rescue} />
+            <CapsulePlayer groundedRef={grounded} loadout={loadout} playerHealth={playerHealth} input={input} bodyRef={playerBody} view={view} motion={motion} facingYaw={facingYaw} position={[
               TRAINING_RANGE_CONFIG.playerSpawnXZ[0],
               WHITEBOX_CONFIG.groundTopY + PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance,
               TRAINING_RANGE_CONFIG.playerSpawnXZ[1],
             ]} />
             <RifleSimulation aim={aim} bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
+            <RescueSimulation practice={rescue} input={rescueInput} body={playerBody} grounded={grounded} enabled={enabled} pointer={pointer} aim={aim} />
             <ShotEffects feedback={feedback} />
             <BubbleVisuals bubbles={bubbles} />
             <FollowCamera loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
@@ -138,6 +147,7 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
       <div className="hud-brand"><i>BA</i><span>BUBBLE ARENA<small>训练模式</small></span></div>
       <PointerLockHint control={pointer} loadout={loadout} />
       <SpreadHint loadout={loadout} motion={motion} />
+      <RescueHint practice={rescue} player={playerHealth} />
       <HealthHint player={playerHealth} />
       <PlayerLifeHint player={playerHealth} />
       <AmmoHint loadout={loadout} />

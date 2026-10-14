@@ -1,0 +1,8 @@
+Browser tab: 15, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~				37 text YOU 80
+~				38 level indicator Description: YOU生命值, Value: 80
+~			43 text 救援练习 受到伤害 · 救援中断 松键、移动或武器操作会中断 · 鼠标可观察
+~		8 container 自身 HP：80 / 100
+~				12 text 80  /  100 HP
+The focused UI element is 0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/

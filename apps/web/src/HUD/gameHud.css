@@ -79,3 +79,9 @@
 .life-state-hint { position: absolute; z-index: 50; top: 116px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 32px); padding: 10px 24px; border: 1px solid #ffc98caa; border-radius: 12px; background: #59371deb; color: #fff0d9; text-align: center; font: 12px 'PingFang SC', sans-serif; pointer-events: none; }
 .life-state-hint b { display: block; font-size: 16px; color: #ffd198; margin-bottom: 4px; }
 .life-state-hint small { display: block; margin-top: 4px; color: #dcbda0; font-size: 10px; }
+.rescue-hint { position: absolute; z-index: 40; left: 50%; top: 116px; transform: translateX(-50%); width: min(300px, calc(100% - 48px)); padding: 12px 18px; box-sizing: border-box; border: 1px solid #99efda88; border-radius: 12px; background: #143d38ed; color: #defff6; font: 12px system-ui, sans-serif; text-align: center; pointer-events: none; }
+.rescue-hint b, .rescue-hint span, .rescue-hint small { display: block; }
+.rescue-hint span { margin-top: 7px; font-variant-numeric: tabular-nums; }
+.rescue-hint small { margin-top: 7px; font-size: 10px; color: #a8cfc5; }
+.rescue-track { height: 7px; background: #06231e; border-radius: 6px; margin-top: 10px; overflow: hidden; }
+.rescue-track i { display: block; height: 100%; background: linear-gradient(90deg,#64ceac,#b9ffe4); }

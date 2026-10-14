@@ -1,5 +1,7 @@
 # 客户端模块边界
 
+2026-10-14现行4.4.2：RescueSimulation在物理after回调推进救援，LocalRescuePractice管理可关闭的单机静止/爬行/受伤夹具，RescueInput独立采集E和中断操作，LocalLoadout.rescuing暂停武器/移动，HUD订阅进度。ready不恢复目标生命；救起待4.4.3。下文为历史交付记录。
+
 2026-10-14现行：阶段3已accepted。4.2训练会话持有LocalPlayerHealth及PlayerHealthSimulation固定物理步消费测试意图；头顶/边缘HUD以useSyncExternalStore订阅真实PlayerHealthState。Esc面板的单机生命测试槽只排队hit/down，生成身份和读取20/100伤害配置在模拟步完成。重置仅重建PhysicsWorld和会话，Canvas/Html宿主仍保持；未提前实现4.3操作门禁或完整救援/复活。下文为历史实现记录。
 
 

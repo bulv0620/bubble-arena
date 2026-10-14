@@ -20,6 +20,7 @@ import { reticleProgress } from '../HUD/reticleProgress';
 interface CapsulePlayerProps {
   playerHealth: LocalPlayerHealth;
   loadout: LocalLoadout;
+  groundedRef: RefObject<boolean>;
   /** World-space capsule center, not the foot position. */
   position: [number, number, number];
   input: KeyboardInput;
@@ -29,8 +30,9 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout }: CapsulePlayerProps) {
+export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
   const lifeStatus = useSyncExternalStore(playerHealth.subscribe, () => playerHealth.getSnapshot().status);
+  const rescuing = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().rescuing);
   const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
@@ -59,13 +61,14 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
         policy.canMove ? { ...input.getSnapshot(), aiming: false } : { forward: false, backward: false, left: false, right: false },
-        policy.canJump && jump, view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed, policy.maximumSpeed ?? undefined);
+        !loadout.getSnapshot().rescuing && policy.canJump && jump, view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed, loadout.getSnapshot().rescuing ? 0 : policy.maximumSpeed ?? undefined);
+      groundedRef.current = Boolean(result?.grounded);
       const speed = result ? Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep : 0;
       motion.setSpeed(speed, Boolean(result && (result.jumped || !result.grounded)));
       facing.step(view.current.yaw);
       facingYaw.current = facing.getYaw();
       if (import.meta.env.DEV) diagnostics.current.result = result;
-    } else motion.reset();
+    } else { groundedRef.current = false; motion.reset(); }
   });
   const [forward] = useState(() => new Vector3());
   useFrame(({ camera, size }) => {
@@ -104,7 +107,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
       <group ref={visual} visible={!scoped && !obscured}>
         <PlayerOverheadHealth anchor={healthAnchor} player={playerHealth} hidden={scoped || obscured} />
-        {lifeStatus === 'normal' && <RiflePlaceholder loadout={loadout} />}
+        {lifeStatus === 'normal' && !rescuing && <RiflePlaceholder loadout={loadout} />}
         <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
       </group>
     </RigidBody>

@@ -1,0 +1,74 @@
+[
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":3173,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":120,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.000003387569904589327},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:46:19.962Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":3203,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":150,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000033875289773277473},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:46:20.463Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":3233,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":180,\"requiredTicks\":180,\"ready\":true}],\"events\":[{\"kind\":\"ready\",\"rescuerId\":\"training-player\",\"targetId\":\"training-ally\"}],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000033874880500661675},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:46:20.976Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":3294,\"channels\":[],\"events\":[{\"kind\":\"interrupted\",\"rescuerId\":\"training-player\",\"targetId\":\"training-ally\",\"reason\":\"released\"}],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000024337280137842754},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:46:21.988Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":697,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":1,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000033909477679117117},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:35.268Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":726,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":30,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000024372313873755047},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:35.763Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":756,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":60,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.000002437190460113925},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:36.256Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":786,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":90,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.000002437149532852345},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:36.799Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":816,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":120,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000024371086055907654},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:37.257Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":846,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":150,\"requiredTicks\":180,\"ready\":false}],\"events\":[],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000024370676783291856},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:37.750Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":876,\"channels\":[{\"rescuer\":{\"playerId\":\"training-player\",\"lifeId\":1,\"revision\":0},\"target\":{\"playerId\":\"training-ally\",\"lifeId\":1,\"revision\":1},\"elapsedTicks\":180,\"requiredTicks\":180,\"ready\":true}],\"events\":[{\"kind\":\"ready\",\"rescuerId\":\"training-player\",\"targetId\":\"training-ally\"}],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.000002437026751067606},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:38.255Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[rescue.check] {\"tick\":937,\"channels\":[],\"events\":[{\"kind\":\"interrupted\",\"rescuerId\":\"training-player\",\"targetId\":\"training-ally\",\"reason\":\"released\"}],\"position\":{\"x\":10.880002975463867,\"y\":0.9100973010063171,\"z\":0.0000033906203498190735},\"mode\":\"stationary\"}",
+    "timestamp": "2026-10-14T06:49:39.270Z",
+    "url": "http://localhost:5173/src/player/RescueSimulation.tsx"
+  }
+]

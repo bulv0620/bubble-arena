@@ -892,7 +892,7 @@
       "title": "救援进度",
       "acceptance": "长按交互累计进度；移出距离可中断。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.4.1"

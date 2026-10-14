@@ -7,6 +7,7 @@ export { PlayerLifeMachine } from './playerLifeMachine';
 export { PlayerHealthState, type PlayerHealthSnapshot, type PlayerDamageIdentity } from './playerHealthState';
 export { playerActionPolicy, type PlayerActionPolicy } from './playerActionPolicy';
 export { evaluateRescueEligibility, type RescueEligibility, type RescueIdentity, type RescueRejection, type RescueVisibilityQuery } from './rescueEligibility';
+export { RescueProgress, type RescueChannel, type RescueProgressSnapshot, type RescueProgressEvent, type RescueInterruptReason } from './rescueProgress';
 export { spreadDirection, rifleSpreadDirection, rifleSpreadAngle } from './rifleSpread';
 export { RifleAccuracy } from './rifleAccuracy';
 export { calculateWeaponDamage } from './weaponDamage';

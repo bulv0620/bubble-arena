@@ -1,5 +1,7 @@
 # Game core
 
+4.4.2 RescueProgress按整体tick推进180步ready，唯一占用/生命身份复核、全部中断清零、旧重复缺步和异常释放；不修改HP或救起。见 [RESCUE](../../docs/spec/RESCUE.md)。
+
 4.4.1 evaluateRescueEligibility提供无状态救援资格判断：同队、正确对象、normal救援者/downed目标、接地、连接、2m三维距、占用及finished/地图查询门禁，成功结果带双方lifeId/revision。无Rapier/UI/网络依赖，不推进进度/占用/救起。规则见 [RESCUE](../../docs/spec/RESCUE.md)。
 
 4.2 PlayerHealthState处理普通受伤并调用4.1归零转downed，普通/倒地血量独立、溢伤裁剪，lifeId/tick/受击sequence去重与finished门禁、冻结快照；当前不处理倒地后的补刀/计时/救援/复活。receiveDamage是权威模拟器内部已结算接口，不是客户端命令。

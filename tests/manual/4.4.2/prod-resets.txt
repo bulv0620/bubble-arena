@@ -1,0 +1,239 @@
+Browser tab: 15, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		24 container
+			25 image
+				26 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			27 container
+				28 text 左靶 100
+				29 level indicator Description: 左靶生命值, Value: 100
+			30 container
+				31 text 中靶 100
+				32 level indicator Description: 中靶生命值, Value: 100
+			33 container
+				34 text 右靶 100
+				35 level indicator Description: 右靶生命值, Value: 100
+			36 container
+				37 text YOU 100
+				38 level indicator Description: YOU生命值, Value: 100
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 步枪 · 稳定射击
+		8 container 自身 HP：100 / 100
+			9 container
+				10 text 泡泡先锋  YOU
+			11 container
+				12 text 100  /  100 HP
+		13 container 步枪弹药：30 / 无限备弹
+			14 container
+				15 text 01 步枪 RIFLE
+			16 text 30
+			17 text /  ∞
+			18 text 按 R 装填
+			19 text 1 ·  步枪 2 · 泡泡
+			20 container
+				21 text 重量  2  · 移速  5.0  m/s
+		22 container
+			23 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+		39 container 游戏设置
+			40 text BUBBLE ARENA / OPTIONS
+			41 heading 游戏设置, Value: 1, ID: settings-title
+				42 text 游戏设置
+			43 container
+				44 text 鼠标速度 1.00 ×
+			45 slider (settable, integer) 鼠标速度, Value: 1, ID: mouse-speed
+			46 text 慢 快
+			47 text 主武器 · 槽位 1
+			48 pop up button (collapsed, settable) 主武器 · 槽位 1, Value: 步枪 · 重量 2 · 5 m/s, ID: primary-weapon, Secondary Actions: Expand
+				49 menu
+					50 (selected) 步枪 · 重量 2 · 5 m/s
+					51 霰弹枪 · 重量 1 · 5.5 m/s
+					52 狙击枪 · 重量 4 · 4 m/s
+			53 container
+				54 text 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+				55 text 游戏中按 1 / 2 切换，弹药分别保留。
+			56 container 单机生命测试
+				57 text 生命测试 · 单机训练
+				58 text 正常 · HP 100 / 100
+				59 button 受伤（20）
+					60 text 受伤（
+					61 text 20
+					62 text ）
+				63 button 击倒测试
+				64 text 倒地后可重置训练，重新测试。
+			65 container 单机救援练习
+				66 text 救援练习 · 单机测试
+				67 pop up button (collapsed, settable) 救援练习 · 单机测试, Value: 关闭, ID: rescue-mode, Secondary Actions: Expand
+					68 menu
+						69 (selected) 关闭
+						70 静止倒地队友
+						71 队友在救援中向外爬行
+						72 救援1秒后受到伤害
+				73 text 在身旁放置测试队友，靠近后长按 E。当前验证3秒进度，队友保持倒地。
+			74 text Esc 打开设置 · 返回游戏后锁定鼠标
+			75 button 重置训练
+			76 button 返回游戏
+			77 text 重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。
+
+The focused UI element is 75 button 重置训练
+
+Browser tab: 15, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		24 container
+			25 image
+				26 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			78 container
+				79 text 左靶 100
+				80 level indicator Description: 左靶生命值, Value: 100
+			81 container
+				82 text 中靶 100
+				83 level indicator Description: 中靶生命值, Value: 100
+			84 container
+				85 text 右靶 100
+				86 level indicator Description: 右靶生命值, Value: 100
+			87 container
+				88 text YOU 100
+				89 level indicator Description: YOU生命值, Value: 100
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 步枪 · 稳定射击
+		8 container 自身 HP：100 / 100
+			9 container
+				10 text 泡泡先锋  YOU
+			11 container
+				12 text 100  /  100 HP
+		13 container 步枪弹药：30 / 无限备弹
+			14 container
+				15 text 01 步枪 RIFLE
+			16 text 30
+			17 text /  ∞
+			18 text 按 R 装填
+			19 text 1 ·  步枪 2 · 泡泡
+			20 container
+				21 text 重量  2  · 移速  5.0  m/s
+		22 container
+			23 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+		39 container 游戏设置
+			40 text BUBBLE ARENA / OPTIONS
+			41 heading 游戏设置, Value: 1, ID: settings-title
+				42 text 游戏设置
+			43 container
+				44 text 鼠标速度 1.00 ×
+			45 slider (settable, integer) 鼠标速度, Value: 1, ID: mouse-speed
+			46 text 慢 快
+			47 text 主武器 · 槽位 1
+			48 pop up button (collapsed, settable) 主武器 · 槽位 1, Value: 步枪 · 重量 2 · 5 m/s, ID: primary-weapon, Secondary Actions: Expand
+				49 menu
+					50 (selected) 步枪 · 重量 2 · 5 m/s
+					51 霰弹枪 · 重量 1 · 5.5 m/s
+					52 狙击枪 · 重量 4 · 4 m/s
+			53 container
+				54 text 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+				55 text 游戏中按 1 / 2 切换，弹药分别保留。
+			56 container 单机生命测试
+				57 text 生命测试 · 单机训练
+				58 text 正常 · HP 100 / 100
+				59 button 受伤（20）
+					60 text 受伤（
+					61 text 20
+					62 text ）
+				63 button 击倒测试
+				64 text 倒地后可重置训练，重新测试。
+			65 container 单机救援练习
+				66 text 救援练习 · 单机测试
+				67 pop up button (collapsed, settable) 救援练习 · 单机测试, Value: 关闭, ID: rescue-mode, Secondary Actions: Expand
+					68 menu
+						69 (selected) 关闭
+						70 静止倒地队友
+						71 队友在救援中向外爬行
+						72 救援1秒后受到伤害
+				73 text 在身旁放置测试队友，靠近后长按 E。当前验证3秒进度，队友保持倒地。
+			74 text Esc 打开设置 · 返回游戏后锁定鼠标
+			75 button 重置训练
+			76 button 返回游戏
+			77 text 重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。
+
+The focused UI element is 75 button 重置训练
+
+Browser tab: 15, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		24 container
+			25 image
+				26 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			78 container
+				79 text 左靶 100
+				80 level indicator Description: 左靶生命值, Value: 100
+			81 container
+				82 text 中靶 100
+				83 level indicator Description: 中靶生命值, Value: 100
+			84 container
+				85 text 右靶 100
+				86 level indicator Description: 右靶生命值, Value: 100
+			87 container
+				88 text YOU 100
+				89 level indicator Description: YOU生命值, Value: 100
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 步枪 · 稳定射击
+		8 container 自身 HP：100 / 100
+			9 container
+				10 text 泡泡先锋  YOU
+			11 container
+				12 text 100  /  100 HP
+		13 container 步枪弹药：30 / 无限备弹
+			14 container
+				15 text 01 步枪 RIFLE
+			16 text 30
+			17 text /  ∞
+			18 text 按 R 装填
+			19 text 1 ·  步枪 2 · 泡泡
+			20 container
+				21 text 重量  2  · 移速  5.0  m/s
+		22 container
+			23 text TRAINING RANGE 三靶练习 命中  0  · 待恢复  0  / 3
+		39 container 游戏设置
+			40 text BUBBLE ARENA / OPTIONS
+			41 heading 游戏设置, Value: 1, ID: settings-title
+				42 text 游戏设置
+			43 container
+				44 text 鼠标速度 1.00 ×
+			45 slider (settable, integer) 鼠标速度, Value: 1, ID: mouse-speed
+			46 text 慢 快
+			47 text 主武器 · 槽位 1
+			48 pop up button (collapsed, settable) 主武器 · 槽位 1, Value: 步枪 · 重量 2 · 5 m/s, ID: primary-weapon, Secondary Actions: Expand
+				49 menu
+					50 (selected) 步枪 · 重量 2 · 5 m/s
+					51 霰弹枪 · 重量 1 · 5.5 m/s
+					52 狙击枪 · 重量 4 · 4 m/s
+			53 container
+				54 text 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+				55 text 游戏中按 1 / 2 切换，弹药分别保留。
+			56 container 单机生命测试
+				57 text 生命测试 · 单机训练
+				58 text 正常 · HP 100 / 100
+				59 button 受伤（20）
+					60 text 受伤（
+					61 text 20
+					62 text ）
+				63 button 击倒测试
+				64 text 倒地后可重置训练，重新测试。
+			65 container 单机救援练习
+				66 text 救援练习 · 单机测试
+				67 pop up button (collapsed, settable) 救援练习 · 单机测试, Value: 关闭, ID: rescue-mode, Secondary Actions: Expand
+					68 menu
+						69 (selected) 关闭
+						70 静止倒地队友
+						71 队友在救援中向外爬行
+						72 救援1秒后受到伤害
+				73 text 在身旁放置测试队友，靠近后长按 E。当前验证3秒进度，队友保持倒地。
+			74 text Esc 打开设置 · 返回游戏后锁定鼠标
+			75 button 重置训练
+			76 button 返回游戏
+			77 text 重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。
+
+The focused UI element is 75 button 重置训练

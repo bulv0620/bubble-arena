@@ -1,4 +1,5 @@
 import { evaluateRescueEligibility } from '../../packages/game-core/src/rescueEligibility';
+import { RescueProgress } from '../../packages/game-core/src/rescueProgress';
 import type { RescueEligibilityFacts } from '../../packages/shared/src/rescue';
 declare const facts: RescueEligibilityFacts;
 evaluateRescueEligibility('target', facts, () => true);
@@ -12,3 +13,8 @@ evaluateRescueEligibility('target', { rescuer: facts.rescuer, target: facts.targ
 evaluateRescueEligibility('target', { ...facts, elapsedTicks: 180 }, () => true);
 // @ts-expect-error Participant positions are read-only snapshots.
 facts.rescuer.position.x = 100;
+const progress = new RescueProgress();
+// @ts-expect-error Progress requires an entire authoritative frame, not an elapsed client clock.
+progress.step(0, { elapsedTicks: 180 }, () => true);
+// @ts-expect-error World query cannot be replaced by a client completion flag.
+progress.step(0, { players: [], controls: [], damagedPlayerIds: [], matchFinished: false }, true);
