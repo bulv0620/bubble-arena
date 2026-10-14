@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
 import { PerspectiveCamera, Vector3, type Group } from 'three';
+import { playerActionPolicy } from '@bubble-arena/game-core';
 import { useFrame } from '@react-three/fiber';
 import { CapsuleCollider, RigidBody, useAfterPhysicsStep, useBeforePhysicsStep, useRapier, type RapierRigidBody } from '@react-three/rapier';
 import { COLLIDER_MATERIALS, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
@@ -29,6 +30,7 @@ interface CapsulePlayerProps {
 }
 
 export function CapsulePlayer({ position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout }: CapsulePlayerProps) {
+  const lifeStatus = useSyncExternalStore(playerHealth.subscribe, () => playerHealth.getSnapshot().status);
   const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
   const { radius, capsuleHalfHeight } = PLAYER_CONFIG;
   const movement = useRef<RapierMovement | null>(null);
@@ -52,10 +54,12 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     };
   }, [world, facing, facingYaw, motion]);
   useBeforePhysicsStep(() => {
+    const policy = playerActionPolicy(playerHealth.getSnapshot().status), jump = input.consumeJump();
     const rigidBody = body.current;
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
-        { ...input.getSnapshot(), aiming: false }, input.consumeJump(), view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed);
+        policy.canMove ? { ...input.getSnapshot(), aiming: false } : { forward: false, backward: false, left: false, right: false },
+        policy.canJump && jump, view.current.yaw, loadout.getSpeed() / PLAYER_CONFIG.speed, policy.maximumSpeed ?? undefined);
       const speed = result ? Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep : 0;
       motion.setSpeed(speed, Boolean(result && (result.jumped || !result.grounded)));
       facing.step(view.current.yaw);
@@ -90,7 +94,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
     sample.ticks += 1;
     if (active !== sample.wasActive || (active && sample.ticks % 30 === 0)) {
       console.info('[movement.check]', JSON.stringify({
-        position: body.current.translation(), active, weapon: loadout.getSnapshot().active, groundSpeed: loadout.getSpeed(), spreadAngle: motion.getSnapshot(), facingYaw: facing.getYaw(), ...sample.result,
+        position: body.current.translation(), active, lifeStatus: playerHealth.getSnapshot().status, weapon: loadout.getSnapshot().active, groundSpeed: loadout.getSpeed(), spreadAngle: motion.getSnapshot(), facingYaw: facing.getYaw(), ...sample.result,
       }));
     }
     sample.wasActive = active;
@@ -100,7 +104,7 @@ export function CapsulePlayer({ position, input, bodyRef: body, view, motion, fa
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
       <group ref={visual} visible={!scoped && !obscured}>
         <PlayerOverheadHealth anchor={healthAnchor} player={playerHealth} hidden={scoped || obscured} />
-        <RiflePlaceholder loadout={loadout} />
+        {lifeStatus === 'normal' && <RiflePlaceholder loadout={loadout} />}
         <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
       </group>
     </RigidBody>

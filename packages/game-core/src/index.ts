@@ -5,6 +5,7 @@ export { TrainingTargetState, type TrainingHit, type TrainingTargetSnapshot } fr
 export { createPlayerVitals, type PlayerVitals } from './playerVitals';
 export { PlayerLifeMachine } from './playerLifeMachine';
 export { PlayerHealthState, type PlayerHealthSnapshot, type PlayerDamageIdentity } from './playerHealthState';
+export { playerActionPolicy, type PlayerActionPolicy } from './playerActionPolicy';
 export { spreadDirection, rifleSpreadDirection, rifleSpreadAngle } from './rifleSpread';
 export { RifleAccuracy } from './rifleAccuracy';
 export { calculateWeaponDamage } from './weaponDamage';

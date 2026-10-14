@@ -2,7 +2,9 @@
 
 更新时间：2026-10-14。
 
-最新4.2 implemented：PlayerHealthState普通伤害/归零转downed，普通HP保留0、独立倒地HP50且不溢伤；身份/去重/finished/异常守卫，LocalPlayerHealth有界测试意图按物理步消费，头顶/边缘订阅真实快照。Esc生命测试实际100→80→倒地，生产五次20依次80/60/40/20/倒地50，狙击此前5→4且倒地仍4∞；开发前后人物坐标完全一致、lifeId1/revision1/hp0/downedHp50日志、12刚体15碰撞体/原hash，三次重置四条血条满血/选枪保留，800×600设置可滚动、error=[]。62文件404测试及pnpm check通过、169任务卡。报告 [4.2](reports/4.2.md)，规则 [PLAYER_LIFE](spec/PLAYER_LIFE.md)。4.3操作限制/爬行、4.4救援、4.5补刀计时、4.6复活仍todo，不声称完整倒地玩法或新动画。阶段4未关闭，下一项4.3；本轮停止。本地stage-4-downed-playtest候选，未推送。
+最新4.3 implemented：共享生命操作策略和1m/s倒地限速已接入，立即限制水平惯性，保留移动/观察，禁止跳/开火/换弹/切枪/开镜及设置换主枪；状态通知清除排队动作、取消所有装填，不补弹，已发射泡泡继续飞行。倒地提示/橙色HP、隐藏举枪/准星/进度环与重置恢复完成。19项新增回归、65文件423测试及完整pnpm check通过，169任务卡/build682modules。开发实际1m/s意图/Space拒绝/镜头转动、生产实际换弹4%→击倒取消/等3.5秒仍4发、三次倒地重置/再开镜及error=[]已验证，截图日志见 [4.3](reports/4.3.md)。人物仍站立分块占位，无正式倒地动画；救援/补刀计时/复活仍todo，阶段4未关闭。下一项4.4.1救援判定，本轮停止。本地stage-4-downed-controls-playtest候选，未推送。
+
+历史4.2 implemented：PlayerHealthState普通伤害/归零转downed，普通HP保留0、独立倒地HP50且不溢伤；身份/去重/finished/异常守卫，LocalPlayerHealth有界测试意图按物理步消费，头顶/边缘订阅真实快照。Esc生命测试实际100→80→倒地，生产五次20依次80/60/40/20/倒地50，狙击此前5→4且倒地仍4∞；开发前后人物坐标完全一致、lifeId1/revision1/hp0/downedHp50日志、12刚体15碰撞体/原hash，三次重置四条血条满血/选枪保留，800×600设置可滚动、error=[]。62文件404测试及pnpm check通过、169任务卡。报告 [4.2](reports/4.2.md)，规则 [PLAYER_LIFE](spec/PLAYER_LIFE.md)。4.3操作限制/爬行、4.4救援、4.5补刀计时、4.6复活仍todo，不声称完整倒地玩法或新动画。阶段4未关闭，下一项4.3；本轮停止。本地stage-4-downed-playtest候选，未推送。
 
 阶段3已于2026-10-11由用户明确验收通过，37项全部accepted，阶段关闭。验收前pnpm check通过：58文件376测试，169任务卡，类型/lint/build通过；本地验收tag stage-3-accepted，未推送。此前段落是历史实现记录。4.1 implemented：纯核心四状态转换守卫与共享配置/内部事实类型已完成，20项新增回归/编译期边界及完整pnpm check通过（60文件396测试、169任务卡、build673modules）。报告 [4.1](reports/4.1.md)，规则 [PLAYER_LIFE](spec/PLAYER_LIFE.md)。训练界面未接入倒地，下一项4.2受伤/HP归零接入；本轮停止。本地stage-4-life-machine-baseline候选，未推送。
 

@@ -1,4 +1,6 @@
 import { SettingsPanel } from '../settings/SettingsPanel';
+import { bindLifeActions } from './bindLifeActions';
+import { PlayerLifeHint } from '../HUD/PlayerLifeHint';
 import { PlayerLifeTestPanel } from '../HUD/PlayerLifeTestPanel';
 import { PlayerHealthSimulation } from '../player/PlayerHealthSimulation';
 import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from '../settings/mouseSettings';
@@ -29,6 +31,7 @@ export function BasicScene() {
   const opened = useRef(false);
   const [revision, setRevision] = useState(0);
   const [session, setSession] = useState(createTrainingSession);
+  const primaryDisabled = useSyncExternalStore(session.loadout.subscribe, () => !session.loadout.canOperate());
   const primary = useSyncExternalStore(session.loadout.subscribe, () => session.loadout.getSnapshot().primary);
   const [speed, setSpeed] = useState(() => {
     try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
@@ -53,7 +56,7 @@ export function BasicScene() {
   }, [pointer, openSettings]);
   return <>
     <SceneSession session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} />
-    {open && <SettingsPanel lifeTest={<PlayerLifeTestPanel player={session.playerHealth} />} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
+    {open && <SettingsPanel primaryDisabled={primaryDisabled} lifeTest={<PlayerLifeTestPanel player={session.playerHealth} />} primary={primary} onPrimary={id => session.loadout.setPrimary(id)} speed={speed} onSpeed={value => {
       if (!validMouseSpeed(value)) return;
       currentSpeed.current = value; setSpeed(value);
       try { saveMouseSpeed(window.localStorage, value); } catch { /* Storage can be blocked. */ }
@@ -72,13 +75,16 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
   const [fire] = useState(() => new FireInput(pointer, aim));
   const [reload] = useState(() => new ReloadInput());
   const [switchInput] = useState(() => new WeaponSwitchInput());
-  useEffect(() => reload.attach(window, document, enabled), [reload, enabled]);
-  useEffect(() => switchInput.attach(window, document, enabled), [switchInput, enabled]);
   const { range, targets, playerHealth, recoil, feedback, motion, loadout, bubbles } = session;
+  const weaponsEnabled = useCallback(() => enabled() && loadout.canOperate(), [enabled, loadout]);
+  useEffect(() => reload.attach(window, document, weaponsEnabled), [reload, weaponsEnabled]);
+  useEffect(() => switchInput.attach(window, document, weaponsEnabled), [switchInput, weaponsEnabled]);
   const [crosshair] = useState(() => new CrosshairInput(pointer, aim, false));
   const clearWeaponInput = useCallback(() => clearWeaponActions({ aim, fire, reload, switchInput }), [aim, fire, reload, switchInput]);
   const clearInput = useCallback(() => { input.clear(); clearWeaponInput(); }, [input, clearWeaponInput]);
   useEffect(() => bindWeaponChanges(loadout, { aim, fire, reload, switchInput }, motion, recoil), [loadout, aim, fire, reload, switchInput, recoil, motion]);
+  useEffect(() => bindLifeActions(playerHealth, loadout, { aim, fire, reload, switchInput, keyboard: input, feedback, recoil }),
+    [playerHealth, loadout, aim, fire, reload, switchInput, input, feedback, recoil]);
   const facingYaw = useRef(0);
   const shotRay = useRef<MuzzleRayResult | null>(null);
   const aimTarget = useRef<ScreenAimTarget | null>(null);
@@ -130,9 +136,10 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity }: { se
         </Suspense>
       </Canvas>
       <div className="hud-brand"><i>BA</i><span>BUBBLE ARENA<small>训练模式</small></span></div>
-      <PointerLockHint control={pointer} />
+      <PointerLockHint control={pointer} loadout={loadout} />
       <SpreadHint loadout={loadout} motion={motion} />
       <HealthHint player={playerHealth} />
+      <PlayerLifeHint player={playerHealth} />
       <AmmoHint loadout={loadout} />
       <TrainingTargetHint range={range} />
       <Crosshair loadout={loadout} input={crosshair} motion={motion} />

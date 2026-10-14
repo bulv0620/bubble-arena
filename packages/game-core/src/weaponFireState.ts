@@ -57,11 +57,15 @@ export class WeaponFireState {
     this.wasFiring = false;
     return true;
   }
-  step(intent: FireIntent, reloadPressed = false): RifleShot | null {
-    if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean' || typeof reloadPressed !== 'boolean') {
+  step(intent: FireIntent, reloadPressed = false, actionsAllowed = true): RifleShot | null {
+    if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean' || typeof reloadPressed !== 'boolean' || typeof actionsAllowed !== 'boolean') {
       throw new TypeError('Expected boolean fire intent');
     }
     const tick = this.tick++;
+    if (!actionsAllowed) {
+      this.cancelReload(); this.wasFiring = false;
+      return null; // Cooldown time still advances, but even completion-tick reload is cancelled.
+    }
     // Reload has priority over fire; repeated requests cannot restart its deadline.
     if (this.state.reloading) {
       if (tick >= this.reloadEndTick) {

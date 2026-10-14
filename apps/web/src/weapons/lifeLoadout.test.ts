@@ -1,0 +1,30 @@
+import { expect, test, vi } from 'vitest';
+import { WEAPON_IDS, type PrimaryWeaponId } from '@bubble-arena/shared';
+import { LocalLoadout } from './LocalLoadout';
+const press = { held: true, pressed: true }, idle = { held: false, pressed: false };
+test.each(WEAPON_IDS)('%s downed speed is 1m/s; all weapon APIs reject actions, cancel reload and preserve ammo', weapon => {
+  const loadout = new LocalLoadout(weapon === 'bubble' ? 'rifle' : weapon as PrimaryWeaponId);
+  if (weapon === 'bubble') loadout.select(2);
+  loadout.step(press); loadout.step(idle, true);
+  const ammo = loadout.getSnapshot().ammo;
+  const listener = vi.fn(), release = loadout.subscribe(listener);
+  loadout.setLifeStatus('downed');
+  expect(loadout.getSpeed()).toBe(1); expect(loadout.canOperate()).toBe(false);
+  expect(loadout.getSnapshot()).toMatchObject({ lifeStatus: 'downed', active: weapon, scoped: false, progress: null, ammo: { ...ammo, reloading: false } });
+  expect(loadout.select(weapon === 'bubble' ? 1 : 2)).toBe(false);
+  expect(loadout.setPrimary('shotgun')).toBe(false); loadout.setScoped(true);
+  expect(loadout.getSnapshot().scoped).toBe(false); expect(loadout.canScope()).toBe(false);
+  for (let tick = 0; tick < 200; tick++) expect(loadout.step(press, true)).toBeNull();
+  expect(loadout.getSnapshot().ammo).toEqual({ ...ammo, reloading: false });
+  expect(loadout.getSnapshot().cooldownProgress).toBeNull();
+  release(); release(); listener.mockClear(); loadout.setLifeStatus('normal'); expect(listener).not.toHaveBeenCalled();
+});
+test('downed closes an open lens, validates state before mutation, restoration does not reopen or reset ammo', () => {
+  const loadout = new LocalLoadout('sniper'); loadout.setScoped(true); expect(loadout.getSnapshot().scoped).toBe(true);
+  const before = loadout.getSnapshot();
+  expect(() => loadout.setLifeStatus('invalid' as 'normal')).toThrow(TypeError); expect(loadout.getSnapshot()).toBe(before);
+  loadout.setLifeStatus('downed'); expect(loadout.getSnapshot().scoped).toBe(false);
+  const downed = loadout.getSnapshot(); loadout.setLifeStatus('downed'); expect(loadout.getSnapshot()).toBe(downed);
+  loadout.setLifeStatus('normal'); expect(loadout.getSpeed()).toBe(4); expect(loadout.getSnapshot().scoped).toBe(false);
+  expect(loadout.getSnapshot().ammo.magazine).toBe(5); expect(loadout.step(press)).not.toBeNull();
+});

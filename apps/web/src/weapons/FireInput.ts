@@ -27,10 +27,10 @@ export class FireInput {
     this.publish(result.held, false);
     return result;
   };
-  attach(canvas: EventTarget, global: EventTarget, doc: FireDocument) {
+  attach(canvas: EventTarget, global: EventTarget, doc: FireDocument, enabled = () => true) {
     this.detachCurrent?.();
     const eligible = () => {
-      if (doc.hidden || (doc.pointerLockElement && doc.pointerLockElement !== canvas)) return false;
+      if (!enabled() || doc.hidden || (doc.pointerLockElement && doc.pointerLockElement !== canvas)) return false;
       const lock = this.pointer.getSnapshot();
       return lock === 'locked' && doc.pointerLockElement === canvas
         || (lock === 'error' || lock === 'unsupported') && this.aim.getSnapshot();

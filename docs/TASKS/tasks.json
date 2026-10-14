@@ -868,7 +868,7 @@
       "title": "限制倒地操作",
       "acceptance": "倒地无法正常射击/奔跑；显示提示。",
       "stage": 4,
-      "status": "todo",
+      "status": "implemented",
       "milestone": "M1",
       "dependencies": [
         "4.2"

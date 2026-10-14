@@ -1,0 +1,14 @@
+[
+  {
+    "level": "info",
+    "message": "[camera.check] {\"target\":{\"x\":10.87089729309082,\"y\":0.9100973606109619,\"z\":-1.1659774780273438},\"camera\":{\"x\":10.593859566146099,\"y\":3.8304402032389184,\"z\":3.299267581798155},\"angles\":{\"yaw\":-0.31500000000000006,\"pitch\":0.27462634015954646},\"aiming\":false,\"shoulderOffset\":1.12,\"avoidance\":{\"status\":\"resolved\",\"focus\":{\"x\":11.93578923747456,\"y\":2.610097360610962,\"z\":-0.8189830302524285},\"distance\":4.5,\"safeDistance\":4.5,\"shoulderProbe\":{\"status\":\"clear\",\"length\":1.1200000000000008},\"obstruction\":{\"status\":\"clear\",\"length\":4.5}},\"probeRadius\":0.2,\"distance\":4.5,\"fov\":70}",
+    "timestamp": "2026-10-14T05:36:17.807Z",
+    "url": "http://localhost:5173/src/camera/FollowCamera.tsx?t=1791955594472"
+  },
+  {
+    "level": "info",
+    "message": "[camera.check] {\"target\":{\"x\":10.87089729309082,\"y\":0.9100973606109619,\"z\":-1.1659774780273438},\"camera\":{\"x\":10.593859566146099,\"y\":3.8304402032389184,\"z\":3.299267581798155},\"angles\":{\"yaw\":-0.31500000000000006,\"pitch\":0.27462634015954646},\"aiming\":false,\"shoulderOffset\":1.12,\"avoidance\":{\"status\":\"resolved\",\"focus\":{\"x\":11.93578923747456,\"y\":2.610097360610962,\"z\":-0.8189830302524285},\"distance\":4.5,\"safeDistance\":4.5,\"shoulderProbe\":{\"status\":\"clear\",\"length\":1.1200000000000008},\"obstruction\":{\"status\":\"clear\",\"length\":4.5}},\"probeRadius\":0.2,\"distance\":4.5,\"fov\":70}",
+    "timestamp": "2026-10-14T05:36:19.408Z",
+    "url": "http://localhost:5173/src/camera/FollowCamera.tsx?t=1791955594472"
+  }
+]

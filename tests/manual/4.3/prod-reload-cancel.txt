@@ -1,0 +1,113 @@
+Browser tab: 13, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		24 container
+			25 image
+				26 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			27 container
+				28 text 左靶 100
+				29 level indicator Description: 左靶生命值, Value: 100
+			30 container
+				31 text 中靶 100
+				32 level indicator Description: 中靶生命值, Value: 100
+			33 container
+				34 text 右靶 100
+				35 level indicator Description: 右靶生命值, Value: 100
+			36 container
+				37 text YOU 100
+				38 level indicator Description: YOU生命值, Value: 100
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 锁定失败：可按住左键拖动镜头，或点击重试 · Esc：设置
+		7 text 狙击枪 · 稳定射击
+		8 container 自身 HP：100 / 100
+			9 container
+				10 text 泡泡先锋  YOU
+			11 container
+				12 text 100  /  100 HP
+		13 container 狙击枪弹药：4 / 无限备弹
+			14 container
+				15 text 01 狙击枪 SNIPER
+			16 text 04
+			17 text /  ∞
+			18 text 装填中 · 3s
+			19 text 1 ·  狙击枪 2 · 泡泡
+			20 container
+				21 text 重量  4  · 移速  4.0  m/s
+		22 container
+			23 text TRAINING RANGE 三靶练习 命中  1  · 待恢复  0  / 3
+		39 image 普通准星
+		40 progress indicator Description: 换弹进度, Value: 4
+
+The focused UI element is 0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+
+Browser tab: 13, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		24 container
+			25 image
+				26 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			27 container
+				28 text 左靶 100
+				29 level indicator Description: 左靶生命值, Value: 100
+			30 container
+				31 text 中靶 100
+				32 level indicator Description: 中靶生命值, Value: 100
+			33 container
+				34 text 右靶 100
+				35 level indicator Description: 右靶生命值, Value: 100
+			36 container
+				37 text 倒地 50
+				38 level indicator Description: 倒地生命值, Value: 50
+		4 container
+			5 text BA BUBBLE ARENA 训练模式
+		6 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 倒地 · 缓慢移动
+		8 container 自身倒地 HP：50 / 50
+			9 container
+				10 text 泡泡先锋  倒地
+			11 container
+				12 text 50  /  50 倒地生命
+		39 container
+			40 text 已倒地 WASD 缓慢移动 · 鼠标观察 无法跳跃、开火、换弹或切换武器
+		13 container 狙击枪弹药：4 / 无限备弹
+			14 container
+				15 text 01 狙击枪 SNIPER
+			16 text 04
+			17 text /  ∞
+			18 text 倒地 · 武器不可用
+			19 text 1 ·  狙击枪 2 · 泡泡
+			20 container
+				21 text 重量  4  · 移速  1.0  m/s
+		22 container
+			23 text TRAINING RANGE 三靶练习 命中  1  · 待恢复  0  / 3
+		41 container 游戏设置
+			42 text BUBBLE ARENA / OPTIONS
+			43 heading 游戏设置, Value: 1, ID: settings-title
+				44 text 游戏设置
+			45 container
+				46 text 鼠标速度 1.00 ×
+			47 slider (settable, integer) 鼠标速度, Value: 1, ID: mouse-speed
+			48 text 慢 快
+			49 text 主武器 · 槽位 1
+			50 pop up button (disabled, collapsed, settable) 主武器 · 槽位 1, Value: 狙击枪 · 重量 4 · 4 m/s, ID: primary-weapon, Secondary Actions: Expand
+				51 menu
+					52 步枪 · 重量 2 · 5 m/s
+					53 霰弹枪 · 重量 1 · 5.5 m/s
+					54 (selected) 狙击枪 · 重量 4 · 4 m/s
+			55 container
+				56 text 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+				57 text 游戏中按 1 / 2 切换，弹药分别保留。
+			58 container 单机生命测试
+				59 text 生命测试 · 单机训练
+				60 text 倒地 · 倒地生命 50 / 50
+				61 button (disabled) 受伤（20）
+					62 text 受伤（ 20 ）
+				63 button (disabled) 击倒测试
+				64 text 倒地后可重置训练，重新测试。
+			65 text Esc 打开设置 · 返回游戏后锁定鼠标
+			66 button 重置训练
+			67 button 返回游戏
+			68 text 重置恢复出生位置、靶子和弹药，保留鼠标速度与所选主武器。
+
+The focused UI element is 0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/

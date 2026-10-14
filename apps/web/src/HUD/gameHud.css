@@ -75,3 +75,7 @@
 .player-health.downed .health-emblem { background: #d17b37; box-shadow: inset 0 -5px 0 #9d5721; }
 .player-health.downed .health-track i, .overhead-health.self.downed .health-track i { background: linear-gradient(#ffcb83, #e99248); }
 .player-health.downed .health-info small span { color: #ffd08b; }
+
+.life-state-hint { position: absolute; z-index: 50; top: 116px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 32px); padding: 10px 24px; border: 1px solid #ffc98caa; border-radius: 12px; background: #59371deb; color: #fff0d9; text-align: center; font: 12px 'PingFang SC', sans-serif; pointer-events: none; }
+.life-state-hint b { display: block; font-size: 16px; color: #ffd198; margin-bottom: 4px; }
+.life-state-hint small { display: block; margin-top: 4px; color: #dcbda0; font-size: 10px; }

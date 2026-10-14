@@ -1,8 +1,8 @@
-import { WeaponAccuracy, WeaponFireState, type RifleAmmoState } from '@bubble-arena/game-core';
+import { WeaponAccuracy, WeaponFireState, playerActionPolicy, type RifleAmmoState } from '@bubble-arena/game-core';
 import { WEAPON_IDS, WEAPON_CONFIGS, WEAPON_HANDLING, TRAINING_RIFLE_AMMO_POLICY, weaponGroundSpeed, isPrimaryWeaponId,
-  type PrimaryWeaponId, type WeaponId, type FireIntent } from '@bubble-arena/shared';
+  type PrimaryWeaponId, type WeaponId, type FireIntent, type PlayerLifeStatus } from '@bubble-arena/shared';
 export type WeaponSlot = 1 | 2;
-export interface LoadoutSnapshot { readonly primary: PrimaryWeaponId; readonly active: WeaponId; readonly scoped: boolean; readonly ammo: RifleAmmoState; readonly progress: number | null; readonly cooldownProgress: number | null; readonly cooldownRemaining: number }
+export interface LoadoutSnapshot { readonly lifeStatus: PlayerLifeStatus; readonly primary: PrimaryWeaponId; readonly active: WeaponId; readonly scoped: boolean; readonly ammo: RifleAmmoState; readonly progress: number | null; readonly cooldownProgress: number | null; readonly cooldownRemaining: number }
 export interface EquippedShot { readonly tick: number; readonly sequence: number; readonly weapon: WeaponId; readonly angle: number }
 const RELEASED = Object.freeze({ held: false, pressed: false });
 
@@ -13,6 +13,7 @@ export class LocalLoadout {
   private primary: PrimaryWeaponId;
   private active: WeaponId;
   private scoped = false;
+  private lifeStatus: PlayerLifeStatus = 'normal';
   private sequence = 0;
   private tick = 0;
   private speed = 0;
@@ -28,22 +29,34 @@ export class LocalLoadout {
   }
   private buildSnapshot(): LoadoutSnapshot {
     const cooldown = WEAPON_HANDLING[this.active].fireMode === 'semi' ? this.rules[this.active].getFireCooldown() : null;
-    return Object.freeze({ primary: this.primary, active: this.active, scoped: this.scoped,
+    return Object.freeze({ lifeStatus: this.lifeStatus, primary: this.primary, active: this.active, scoped: this.scoped,
       ammo: this.rules[this.active].getState(), progress: this.rules[this.active].getReloadProgress(),
       cooldownProgress: cooldown?.progress ?? null, cooldownRemaining: cooldown?.remaining ?? 0 });
   }
   private publish() {
     const next = this.buildSnapshot(), old = this.snapshot;
-    if (next.primary === old.primary && next.active === old.active && next.scoped === old.scoped && next.ammo === old.ammo && next.progress === old.progress
+    if (next.lifeStatus === old.lifeStatus && next.primary === old.primary && next.active === old.active && next.scoped === old.scoped && next.ammo === old.ammo && next.progress === old.progress
       && next.cooldownProgress === old.cooldownProgress && next.cooldownRemaining === old.cooldownRemaining) return;
     this.snapshot = next; for (const listener of this.listeners) listener();
   }
   getSnapshot = () => this.snapshot;
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
-  getSpeed = () => weaponGroundSpeed(this.active, this.scoped);
+  canOperate = () => playerActionPolicy(this.lifeStatus).canUseWeapons;
+  getSpeed = () => playerActionPolicy(this.lifeStatus).maximumSpeed ?? weaponGroundSpeed(this.active, this.scoped);
+  setLifeStatus(status: PlayerLifeStatus) {
+    const policy = playerActionPolicy(status);
+    if (status === this.lifeStatus) return;
+    this.lifeStatus = status;
+    if (!policy.canUseWeapons) {
+      this.scoped = false; this.reloadOnEquip = false;
+      for (const id of WEAPON_IDS) this.rules[id].cancelReload();
+      this.accuracy[this.active].setMotion(this.speed, this.airborne, false);
+    }
+    this.publish();
+  }
   getAngle = () => this.accuracy[this.active].getAngle();
   getTick = () => this.tick - 1;
-  canScope = () => this.active === 'sniper' && this.rules.sniper.getFireCooldown() === null
+  canScope = () => this.canOperate() && this.active === 'sniper' && this.rules.sniper.getFireCooldown() === null
     && !this.rules.sniper.getState().reloading && this.rules.sniper.getState().magazine > 0;
   getWeaponAmmo = (id: WeaponId) => { if (!this.rules[id]) throw new TypeError('Invalid weapon'); return this.rules[id].getState(); };
   setMotion(speed: number, airborne: boolean) {
@@ -59,7 +72,8 @@ export class LocalLoadout {
   }
   setPrimary(id: PrimaryWeaponId) {
     if (!isPrimaryWeaponId(id)) throw new TypeError('Invalid primary weapon');
-    this.primary = id; this.equip(id); this.publish();
+    if (!this.canOperate()) return false;
+    this.primary = id; this.equip(id); this.publish(); return true;
   }
   private equip(id: WeaponId) {
     if (id === this.active) return false;
@@ -72,16 +86,17 @@ export class LocalLoadout {
   /** Returns whether switching actually occurred so inputs can be cleared before a new shot. */
   select(slot: WeaponSlot) {
     if (slot !== 1 && slot !== 2) throw new TypeError('Invalid weapon slot');
+    if (!this.canOperate()) return false;
     const changed = this.equip(slot === 1 ? this.primary : 'bubble'); this.publish(); return changed;
   }
   step(intent: FireIntent, reload = false): EquippedShot | null {
     if (!intent || typeof intent.held !== 'boolean' || typeof intent.pressed !== 'boolean' || typeof reload !== 'boolean') throw new TypeError('Invalid loadout fire intent');
     const tick = this.tick++;
-    const reloadNow = reload || this.reloadOnEquip; this.reloadOnEquip = false;
+    const reloadNow = this.canOperate() && (reload || this.reloadOnEquip); this.reloadOnEquip = false;
     let accepted: EquippedShot | null = null;
     for (const id of WEAPON_IDS) {
       const active = id === this.active;
-      const shot = this.rules[id].step(active ? intent : RELEASED, active && reloadNow);
+      const shot = this.rules[id].step(active ? intent : RELEASED, active && reloadNow, this.canOperate());
       const angle = this.accuracy[id].step(shot !== null);
       if (shot) accepted = Object.freeze({ tick, sequence: ++this.sequence, weapon: id, angle });
     }

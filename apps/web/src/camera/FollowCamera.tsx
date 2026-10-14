@@ -24,13 +24,13 @@ export function FollowCamera({ loadout, target, control, clearInput, view, aim, 
   const [recovery] = useState(() => new CameraDistanceRecovery());
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
   useEffect(() => () => { aimTarget.current = null; recoil.reset(); }, [aimTarget, recoil]);
-  useEffect(() => aim.attach(canvas, window, document, enabled, () => loadout.getSnapshot().active === 'sniper', loadout.canScope), [aim, canvas, enabled, loadout]);
+  useEffect(() => aim.attach(canvas, window, document, () => enabled() && loadout.canOperate(), () => loadout.getSnapshot().active === 'sniper', loadout.canScope), [aim, canvas, enabled, loadout]);
   useEffect(() => control.attach(canvas, window, document,
     (dx, dy) => orbit.rotate(dx, dy, sensitivity()), clearInput, () => enabled() && !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim, enabled, sensitivity]);
   useEffect(() => orbit.attach(canvas, window, document,
     () => enabled() && (control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported') && !aim.getSnapshot(), sensitivity), [canvas, orbit, control, aim, enabled, sensitivity]);
   useEffect(() => crosshair.attach(canvas, window, document), [canvas, crosshair]);
-  useEffect(() => fire.attach(canvas, window, document), [canvas, fire]);
+  useEffect(() => fire.attach(canvas, window, document, () => enabled() && loadout.canOperate()), [canvas, fire, enabled, loadout]);
   useFrame(({ camera }, dt) => {
     loadout.setScoped(enabled() && aim.getSnapshot());
     aimTarget.current = null;

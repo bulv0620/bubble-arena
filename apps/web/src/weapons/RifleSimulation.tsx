@@ -27,6 +27,7 @@ export function RifleSimulation({ aim, input, motion, loadout, switchInput, bubb
   const { world } = useRapier();
   useEffect(() => () => { pending.current = null; shotRay.current = null; feedback.clear(); recoil.reset(); bubbles.clear(); }, [shotRay, feedback, recoil, bubbles]);
   useBeforePhysicsStep(() => {
+    if (!loadout.canOperate()) { aim.clear(); input.clear(); reload.clear(); switchInput.clear(); }
     const slot = switchInput.consume();
     if (slot && loadout.select(slot)) { input.clear(); reload.clear(); }
     const shot = loadout.step(input.consume(), reload.consume());
@@ -38,7 +39,8 @@ export function RifleSimulation({ aim, input, motion, loadout, switchInput, bubb
   });
   useAfterPhysicsStep(() => {
     const accepted = pending.current; pending.current = null;
-    if (accepted) {
+    if (!loadout.canOperate()) shotRay.current = null;
+    if (accepted && loadout.canOperate()) {
       const { shot } = accepted, config = WEAPON_CONFIGS[shot.weapon], handling = WEAPON_HANDLING[shot.weapon];
       recoil.kick(shot.sequence);
       const center = body.current?.translation(), muzzle = center && rifleMuzzlePosition(center, yaw.current, shot.weapon);

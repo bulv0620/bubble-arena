@@ -8,7 +8,7 @@ export function ReloadProgress({ loadout, motion }: { loadout: LocalLoadout; mot
   const snapshot = useSyncExternalStore(loadout.subscribe, loadout.getSnapshot);
   const angle = useSyncExternalStore(motion.subscribe, motion.getSnapshot);
   const action = reticleProgress(snapshot);
-  if (!action) return null;
+  if (!action || snapshot.lifeStatus !== 'normal') return null;
   const size = Math.max(88, crosshairSize(angle) + 24);
   return <div className="reload-reticle" role="progressbar" aria-label={action.kind === 'reload' ? '换弹进度' : '击发冷却进度'}
     style={{ width: size, height: size }} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(action.value * 100)}>
