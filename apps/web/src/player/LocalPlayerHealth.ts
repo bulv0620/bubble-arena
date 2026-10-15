@@ -9,7 +9,8 @@ export class LocalPlayerHealth {
   private source: TrainingDamageSource = 'unowned';
   private lastObserved: EliminationFact | null = null;
   private lastResolved: EliminationFact | null = null;
-  constructor(private readonly score?: LocalTeamScore, readonly canPlay: () => boolean = () => true) {}
+  private deferred: EliminationFact[] = [];
+  constructor(private readonly score?: LocalTeamScore, readonly canPlay: () => boolean = () => true, private readonly batchScoring = false) {}
   getTestSource = () => this.source;
   canReplayScore = () => this.lastResolved !== null;
   configureTestSource = (source: TrainingDamageSource) => {
@@ -34,7 +35,7 @@ export class LocalPlayerHealth {
     else if ((status !== 'normal' && status !== 'downed') || intent === 'down' && status !== 'normal') return false;
     this.pending = { kind: intent, source: this.source }; return true;
   };
-  clearPending = () => { this.pending = null; };
+  clearPending = () => { this.pending = null; this.deferred = []; };
   completeSpawn(apply: () => boolean) {
     if (!this.canPlay()) return false;
     const before = this.getSnapshot();
@@ -59,6 +60,21 @@ export class LocalPlayerHealth {
     return ended;
   }
   canCauseControl = () => this.canPlay() && (this.getTick() < 0 || this.rule.canCauseControl(this.getTick(), false));
+  receiveCombatDamage(damage: number, source: typeof TRAINING_SCORE_ACTORS['enemy-a']) {
+    if (!this.canPlay() || this.getTick() < 0) return false;
+    const before = this.getSnapshot();
+    const accepted = this.rule.receiveDamage({ lifeId: before.lifeId, tick: this.getTick(), sequence: ++this.sequence }, damage, false, source);
+    if (accepted) this.damageRevision++;
+    if (before !== this.getSnapshot()) for (const listener of this.listeners) listener();
+    return accepted;
+  }
+  /** Arena authority drains once AFTER every actor's damage, not once per actor. */
+  drainScoreFacts() {
+    const events = this.deferred; this.deferred = [];
+    const elimination = this.rule.getElimination();
+    if (elimination && elimination !== this.lastObserved) { this.lastObserved = elimination; this.lastResolved = elimination; events.push(elimination); }
+    return events;
+  }
   step() {
     if (!this.canPlay()) { this.pending = null; return false; }
     const tick = this.tick++;
@@ -74,9 +90,8 @@ export class LocalPlayerHealth {
       if (accepted) this.damageRevision++;
     }
     this.rule.advanceTick(tick, false);
-    const elimination = this.rule.getElimination();
-    if (elimination && elimination !== this.lastObserved) { this.lastObserved = elimination; this.lastResolved = elimination; events.push(elimination); }
-    this.score?.step(tick, events, false);
+    if (this.batchScoring) this.deferred.push(...events);
+    else { events.push(...this.drainScoreFacts()); this.score?.step(tick, events, false); }
     if (intent?.kind === 'replay-score' && import.meta.env.DEV) console.info('[score.replay]', JSON.stringify({ tick, lifeId: this.getSnapshot().lifeId, replayLifeId: this.lastResolved?.victim.lifeId, score: this.score?.getSnapshot() }));
     if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
     return accepted;

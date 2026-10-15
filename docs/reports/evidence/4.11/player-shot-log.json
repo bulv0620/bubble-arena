@@ -1,0 +1,20 @@
+[
+  {
+    "level": "info",
+    "message": "[damage.check] {\"tick\":498,\"sequence\":4,\"weapon\":\"sniper\",\"angle\":0,\"region\":\"body\",\"distance\":23.228137969970703,\"damage\":80}",
+    "timestamp": "2026-10-15T01:16:41.087Z",
+    "url": "http://127.0.0.1:5173/src/weapons/TrainingTargets.ts?t=1792026874541"
+  },
+  {
+    "level": "info",
+    "message": "[damage.check] {\"tick\":598,\"sequence\":5,\"weapon\":\"sniper\",\"angle\":0,\"region\":\"body\",\"distance\":17.904071807861328,\"damage\":80}",
+    "timestamp": "2026-10-15T01:16:42.753Z",
+    "url": "http://127.0.0.1:5173/src/weapons/TrainingTargets.ts?t=1792026874541"
+  },
+  {
+    "level": "info",
+    "message": "[damage.check] {\"tick\":1748,\"sequence\":6,\"weapon\":\"sniper\",\"angle\":0,\"region\":\"body\",\"distance\":17.88457489013672,\"damage\":80}",
+    "timestamp": "2026-10-15T01:17:01.918Z",
+    "url": "http://127.0.0.1:5173/src/weapons/TrainingTargets.ts?t=1792026874541"
+  }
+]

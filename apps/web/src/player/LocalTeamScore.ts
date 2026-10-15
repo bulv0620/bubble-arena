@@ -1,11 +1,11 @@
 import { TeamScoreState } from '@bubble-arena/game-core';
-import { TRAINING_SCORE_ROSTER, type EliminationFact } from '@bubble-arena/shared';
+import { TRAINING_SCORE_ROSTER, type EliminationFact, type ScoreParticipant } from '@bubble-arena/shared';
 /** Single training match adapter: subscriptions stay outside the pure rule. */
 export class LocalTeamScore {
-  private readonly rule = new TeamScoreState(TRAINING_SCORE_ROSTER);
+  private readonly rule: TeamScoreState;
   private readonly listeners = new Set<() => void>();
-  constructor(private readonly canPlay: () => boolean = () => true) {}
-  getSnapshot = this.rule.getSnapshot;
+  constructor(private readonly canPlay: () => boolean = () => true, roster: readonly ScoreParticipant[] = TRAINING_SCORE_ROSTER) { this.rule = new TeamScoreState(roster); }
+  getSnapshot = () => this.rule.getSnapshot();
   recordRescue(rescuerId: string, targetId: string, lifeId: number, revision: number, tick: number) {
     const accepted = this.rule.recordRescue(rescuerId, targetId, lifeId, revision, tick, !this.canPlay());
     if (accepted) for (const listener of this.listeners) listener(); return accepted;

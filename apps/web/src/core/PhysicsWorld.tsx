@@ -4,7 +4,7 @@ import { Physics, useAfterPhysicsStep } from '@react-three/rapier';
 import { PHYSICS_CONFIG, WHITEBOX_COLLISION_HASH, WHITEBOX_SPAWN_HASH } from '@bubble-arena/shared';
 
 // Development-only proof that real WASM steps use the configured interval.
-function PhysicsStepDiagnostics() {
+function PhysicsStepDiagnostics({ mapHash, spawnHash }: { mapHash: string; spawnHash: string }) {
   const sample = useRef({ steps: 0, min: Infinity, max: 0 });
 
   useAfterPhysicsStep((world) => {
@@ -18,7 +18,7 @@ function PhysicsStepDiagnostics() {
         ...sample.current,
         bodies: world.bodies.len(),
         colliders: world.colliders.len(),
-        mapHash: WHITEBOX_COLLISION_HASH, spawnHash: WHITEBOX_SPAWN_HASH,
+        mapHash, spawnHash,
       }));
     }
   });
@@ -26,7 +26,7 @@ function PhysicsStepDiagnostics() {
   return null;
 }
 
-export function PhysicsWorld({ children }: { children: ReactNode }) {
+export function PhysicsWorld({ children, mapHash = WHITEBOX_COLLISION_HASH, spawnHash = WHITEBOX_SPAWN_HASH }: { children: ReactNode; mapHash?: string; spawnHash?: string }) {
   const invalidate = useThree((state) => state.invalidate);
 
   // The empty world does not invalidate on body motion. Repaint once after
@@ -42,7 +42,7 @@ export function PhysicsWorld({ children }: { children: ReactNode }) {
       interpolate={false}
     >
       {children}
-      {import.meta.env.DEV && <PhysicsStepDiagnostics />}
+      {import.meta.env.DEV && <PhysicsStepDiagnostics mapHash={mapHash} spawnHash={spawnHash} />}
     </Physics>
   );
 }

@@ -9,7 +9,7 @@ export function MatchSimulation({ match }: { match: LocalMatch }) {
 }
 
 /** Mounted after all damage, score and rescue callbacks: never decide a winner mid-batch. */
-export function MatchResolution({ match, score }: { match: LocalMatch; score: LocalTeamScore }) {
-  useAfterPhysicsStep(() => match.resolve(score.getSnapshot()));
+export function MatchResolution({ match, score, collect }: { match: LocalMatch; score: LocalTeamScore; collect?: () => void }) {
+  useAfterPhysicsStep(() => { collect?.(); match.resolve(score.getSnapshot()); });
   return null;
 }

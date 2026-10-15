@@ -1,0 +1,8 @@
+[
+  {
+    "level": "info",
+    "message": "[player.spawn] {\"tick\":4917,\"position\":{\"x\":11,\"y\":0.9200000166893005,\"z\":22},\"selection\":{\"point\":{\"id\":\"arena-red-3\",\"team\":\"red\",\"primary\":false,\"position\":{\"x\":11,\"y\":0.92,\"z\":22}},\"fallback\":false,\"nearestEnemyDistance\":16.411629630002327,\"catalogHash\":\"fnv1a64:2ed46eb312cb7e93\"},\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0}",
+    "timestamp": "2026-10-15T01:10:45.232Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792026635449"
+  }
+]

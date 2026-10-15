@@ -43,3 +43,11 @@ export function TargetOverheadHealth({ target, label }: { target: LocalTrainingT
     {slow < 1 && <span className="target-slow">减速 50%</span>}
   </Html>;
 }
+
+export function OpponentOverheadHealth({ opponent }: { opponent: import('../player/LocalArenaOpponent').LocalArenaOpponent }) {
+  const state = useSyncExternalStore(opponent.subscribe, opponent.getSnapshot), downed = state.status === 'downed';
+  return <Html center occlude distanceFactor={OVERHEAD_HEALTH_CONFIG.targetDistanceFactor} position={[0, PLAYER_CONFIG.height / 2 + .38, 0]} zIndexRange={[30, 0]} style={{ pointerEvents: 'none' }}>
+    <HealthPlate label={downed ? `蓝队 AI · 倒地 ${state.downedSecondsRemaining}s` : state.protected ? '蓝队 AI · 保护' : '蓝队 AI'} hp={downed ? state.downedHp : state.hp} maxHp={downed ? state.maxDownedHp : state.maxHp} downed={downed} protected={state.protected} />
+    <FloatingDamage queue={opponent.damageNumbers} />
+  </Html>;
+}

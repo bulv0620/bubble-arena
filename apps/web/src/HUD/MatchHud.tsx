@@ -1,7 +1,7 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { MATCH_CONFIG } from '@bubble-arena/shared';
 import type { LocalMatch } from '../core/LocalMatch';
-export function MatchHud({ match, onRestart }: { match: LocalMatch; onRestart: () => void }) {
+export function MatchHud({ match, onRestart, arena = false }: { match: LocalMatch; onRestart: () => void; arena?: boolean }) {
   const state = useSyncExternalStore(match.subscribe, match.getSnapshot);
   const resultPanel = useRef<HTMLDivElement>(null);
   useEffect(() => { if (state.phase === 'finished') resultPanel.current?.querySelector<HTMLButtonElement>('button')?.focus(); }, [state.phase]);
@@ -9,7 +9,7 @@ export function MatchHud({ match, onRestart }: { match: LocalMatch; onRestart: (
   const time = `${Math.floor(state.secondsRemaining / 60).toString().padStart(2, '0')}:${(state.secondsRemaining % 60).toString().padStart(2, '0')}`;
   if (state.phase === 'finished' && state.result) {
     const result = state.result;
-    const labels: Record<string, string> = { 'training-player': '你', 'training-ally': '测试队友', 'training-enemy-a': '模拟敌人 A', 'training-enemy-b': '模拟敌人 B' };
+    const labels: Record<string, string> = { 'training-player': '你', 'training-ally': '测试队友', 'training-enemy-a': arena ? '蓝队 AI' : '模拟敌人 A', 'training-enemy-b': '模拟敌人 B' };
     return <section className="match-results" role="dialog" aria-modal="true" aria-labelledby="match-result-title">
       <div ref={resultPanel} className="result-card" onKeyDown={e => { if (e.key === 'Tab') { e.preventDefault(); resultPanel.current?.querySelector<HTMLButtonElement>('button')?.focus(); } }}><small>BUBBLE ARENA · MATCH RESULTS</small><h1 id="match-result-title">{result.winner === null ? '平局' : result.winner === 'red' ? '红队胜利' : '蓝队胜利'}</h1>
         <p>{result.reason === 'score-limit' ? '达到分数上限' : '比赛时间结束'}</p>

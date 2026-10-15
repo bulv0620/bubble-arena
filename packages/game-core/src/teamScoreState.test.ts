@@ -77,3 +77,11 @@ test('rescue authority statistics dedupe target life/revision, reject enemies/st
   expect(s.recordRescue(rescuer, target, 1, 5, 13, false)).toBe(false);
   expect(s.recordRescue(rescuer, target, 2, 1, 13, false)).toBe(true); expect(line(s, rescuer).rescues).toBe(3);
 });
+
+test('same-tick life registrations do not discard another actor elimination; past frames still rejected', () => {
+  const s = new TeamScoreState(TRAINING_SCORE_ROSTER);
+  s.step(1, [fact()], false); expect(s.beginLife(a.player.playerId, 2, 5, false)).toBe(true);
+  const enemyDeath = { ...fact(5), victim: { ...a['enemy-a'], lifeId: 1 }, finisher: a.player, downer: a.player };
+  expect(s.step(4, [{ ...enemyDeath, tick: 4 }], false).teams.red).toBe(0);
+  expect(s.step(5, [enemyDeath], false).teams).toEqual({ red: 1, blue: 1 });
+});

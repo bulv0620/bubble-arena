@@ -38,3 +38,5 @@ manifest 记录 assetId、version/hash、source、导出文件、动画/节点�
 
 
 4.7当前积分集成：纯核心TeamScoreState只接受权威已结算的整tick淘汰批次，双方分数完整累计后交给后续结束判断。当前训练的单个LocalPlayerHealth在物理before回调内把测试伤害/超时事实送积分，出生成功后注册新lifeId；这不是未来多玩家每人独立同tick调用积分的范式。正式服务器必须汇总全部生命结算后一次提交，身份与来源均由服务器生成，见 [SCORING](spec/SCORING.md)。
+
+4.11对抗Demo：新arena与旧whitebox各自同源碰撞/出生hash。pure ArenaBotBrain仅生成意图，web/Rapier验证移动/LOS/枪口/头身命中；玩家生命在arena模式延后汇总计分，所有角色伤害后一次collect双方淘汰，再MatchResolution。birthClock与积分clock分开，允许同tick出生登记与另一角色淘汰。它是本机模拟原型，未引入网络/DOM到game-core；旧训练继续原适配，详见 [ARENA_DEMO](spec/ARENA_DEMO.md)。

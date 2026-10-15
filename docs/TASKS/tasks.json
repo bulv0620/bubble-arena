@@ -2037,6 +2037,18 @@
       ],
       "file": "docs/TASKS/9.6.2.md",
       "acceptance": "测试伪造时间/超窗/乱序/重复射击和近墙；低中高延迟记录对照，不重复计伤/得分。"
+    },
+    {
+      "id": "4.11",
+      "title": "三路竞技场与单机对抗 Demo",
+      "acceptance": "红蓝独立安全出生区、三路与坡道掩体、地图视觉碰撞同源哈希；单机红队玩家对蓝队AI真实交火/击倒/淘汰/复活/计分/结算/重开可试玩。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.10"
+      ],
+      "file": "docs/TASKS/4.11.md"
     }
   ]
 }

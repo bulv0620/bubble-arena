@@ -10,6 +10,7 @@ export class TeamScoreState {
   private readonly identities: Map<string, ScoreParticipant>;
   private lives: Map<string, LifeScope>;
   private clock = -1;
+  private birthClock = -1;
   private readonly rescueScopes = new Map<string, { lifeId: number; revision: number }>();
   private state: TeamScoreSnapshot;
   constructor(roster: readonly ScoreParticipant[]) {
@@ -23,22 +24,22 @@ export class TeamScoreState {
     validateTick(tick, matchFinished);
     if (typeof playerId !== 'string' || !Number.isSafeInteger(lifeId) || lifeId < 1) throw new TypeError('Invalid scoring life registration');
     const current = this.lives.get(playerId);
-    if (matchFinished || tick < this.clock || !current || lifeId !== current.lifeId + 1) return false;
-    this.lives.set(playerId, { lifeId, bornTick: tick, scored: false }); this.clock = tick; return true;
+    if (matchFinished || tick < Math.max(this.clock, this.birthClock) || !current || lifeId !== current.lifeId + 1) return false;
+    this.lives.set(playerId, { lifeId, bornTick: tick, scored: false }); this.birthClock = tick; return true;
   }
   /** Only the authority invokes this after a successful RescueProgress completion. */
   recordRescue(rescuerId: string, targetId: string, lifeId: number, revision: number, tick: number, matchFinished: boolean) {
     validateTick(tick, matchFinished);
     if (typeof rescuerId !== 'string' || typeof targetId !== 'string' || !Number.isSafeInteger(lifeId) || lifeId < 1 || !Number.isSafeInteger(revision) || revision < 1) throw new TypeError('Invalid rescue score identity');
     const rescuer = this.identities.get(rescuerId), target = this.identities.get(targetId), life = this.lives.get(targetId), previous = this.rescueScopes.get(targetId);
-    if (matchFinished || tick < this.clock || !rescuer || !target || rescuerId === targetId || rescuer.teamId !== target.teamId || life?.lifeId !== lifeId || life.scored || tick < life.bornTick || previous && (lifeId < previous.lifeId || lifeId === previous.lifeId && revision <= previous.revision)) return false;
+    if (matchFinished || tick < Math.max(this.clock, this.birthClock) || !rescuer || !target || rescuerId === targetId || rescuer.teamId !== target.teamId || life?.lifeId !== lifeId || life.scored || tick < life.bornTick || previous && (lifeId < previous.lifeId || lifeId === previous.lifeId && revision <= previous.revision)) return false;
     const players = this.state.players.map(p => Object.freeze(p.playerId === rescuerId ? { ...p, rescues: increment(p.rescues) } : p));
     const state = Object.freeze({ ...this.state, revision: increment(this.state.revision), players: Object.freeze(players) });
     this.rescueScopes.set(targetId, { lifeId, revision }); this.clock = tick; this.state = state; return true;
   }
   step(tick: number, events: readonly EliminationFact[], matchFinished: boolean) {
     validateTick(tick, matchFinished); const frame = parseEliminationFrame(events);
-    if (matchFinished || tick <= this.clock) return this.state;
+    if (matchFinished || tick <= this.clock || tick < this.birthClock) return this.state;
     const seen = new Map<string, string>();
     for (const event of frame) {
       if (event.tick > tick) throw new RangeError('Future elimination fact');

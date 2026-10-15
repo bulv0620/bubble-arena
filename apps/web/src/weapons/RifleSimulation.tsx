@@ -45,7 +45,7 @@ export function RifleSimulation({ playerHealth, aim, input, motion, loadout, swi
   useAfterPhysicsStep(() => {
     const accepted = pending.current; pending.current = null;
     if (!loadout.canOperate()) shotRay.current = null;
-    if (accepted && loadout.canOperate()) {
+    if (accepted && playerHealth.canPlay()) {
       const { shot } = accepted, config = WEAPON_CONFIGS[shot.weapon], handling = WEAPON_HANDLING[shot.weapon];
       recoil.kick(shot.sequence);
       const center = body.current?.translation(), muzzle = center && rifleMuzzlePosition(center, yaw.current, shot.weapon);

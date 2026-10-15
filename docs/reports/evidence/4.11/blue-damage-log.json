@@ -1,0 +1,74 @@
+[
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6557,\"sequence\":169,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:12.559Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6565,\"sequence\":170,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:12.691Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6572,\"sequence\":171,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666815757751465,\"y\":0.9100927710533142,\"z\":14.858952522277832},\"to\":{\"x\":11,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:12.814Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6649,\"sequence\":172,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:14.094Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6657,\"sequence\":173,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:14.224Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6664,\"sequence\":174,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666815757751465,\"y\":0.9100927710533142,\"z\":14.858952522277832},\"to\":{\"x\":11,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:14.345Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6741,\"sequence\":175,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:15.626Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6749,\"sequence\":176,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:15.760Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6756,\"sequence\":177,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666815757751465,\"y\":0.9100927710533142,\"z\":14.858952522277832},\"to\":{\"x\":11,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:15.880Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6833,\"sequence\":178,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:17.159Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6841,\"sequence\":179,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666810989379883,\"y\":0.9100927710533142,\"z\":14.858951568603516},\"to\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:17.308Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  },
+  {
+    "level": "info",
+    "message": "[arena.bot-shot] {\"tick\":6848,\"sequence\":180,\"hit\":false,\"damage\":0,\"health\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"from\":{\"x\":2.8666815757751465,\"y\":0.9100927710533142,\"z\":14.858952522277832},\"to\":{\"x\":11,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T01:11:17.411Z",
+    "url": "http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792026635445"
+  }
+]

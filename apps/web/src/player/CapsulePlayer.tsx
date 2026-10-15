@@ -19,6 +19,7 @@ import { reticleProgress } from '../HUD/reticleProgress';
 
 import type { LocalRespawn } from './LocalRespawn';
 interface CapsulePlayerProps {
+  bodyColor?: string;
   respawn: LocalRespawn;
   clearInput: () => void;
   playerHealth: LocalPlayerHealth;
@@ -33,7 +34,7 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ respawn, clearInput, position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
+export function CapsulePlayer({ bodyColor = '#d87136', respawn, clearInput, position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
   const lifeStatus = useSyncExternalStore(playerHealth.subscribe, () => playerHealth.getSnapshot().status);
   const rescuing = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().rescuing);
   const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
@@ -114,7 +115,7 @@ export function CapsulePlayer({ respawn, clearInput, position, input, bodyRef: b
       <group ref={visual} visible={!scoped && !obscured}>
         <PlayerOverheadHealth anchor={healthAnchor} player={playerHealth} hidden={scoped || obscured} />
         {lifeStatus === 'normal' && !rescuing && <RiflePlaceholder loadout={loadout} />}
-        <BlockAvatar headColor="#efb079" bodyColor="#d87136" />
+        <BlockAvatar headColor="#efb079" bodyColor={bodyColor} />
       </group>
     </RigidBody>
   );

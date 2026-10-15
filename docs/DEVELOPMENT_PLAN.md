@@ -29,3 +29,5 @@ V1 不执行 7.12.1～7.12.3 竞技场和 9.3 八人测试；7.14 的“全地�
 在 docs/reports/stage-<N>.md 记录：任务集合与状态、完整回归命令、真人试玩结论、未解决缺陷、Git commit。核心玩法/视觉标 accepted 前需用户实际验收；阶段退出时必须有可回退提交。阶段 0 已记录在 docs/reports/stage-0.md，基线标识 stage-0-baseline；后续阶段逐一记录。
 
 2026-10-14：阶段4全部12卡implemented，含计时、胜负、救援统计与完整重开。最终候选stage-4-playtest；需按 [阶段4清单](reports/stage-4.md) 人工验收后才关闭并进入阶段5，当前无联机实现。
+
+2026-10-15：用户新授权4.11地图重设计并确认单机玩家对AI。阶段4扩展为13卡implemented，地图/AI试玩见 [4.11](reports/4.11.md)；正式Blender地图和阶段5联机仍按原门槛，未接受阶段4。本轮候选stage-4-arena-demo-playtest。

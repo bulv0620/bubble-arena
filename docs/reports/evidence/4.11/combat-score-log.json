@@ -1,0 +1,20 @@
+[
+  {
+    "level": "info",
+    "message": "[score.check] {\"tick\":920,\"revision\":1,\"teams\":{\"red\":0,\"blue\":1},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0,\"rescues\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0,\"rescues\":0}],\"lastEvents\":[{\"fact\":{\"tick\":920,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":1},\"cause\":\"finishing-damage\",\"finisher\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"assistant\":null,\"points\":1}]}",
+    "timestamp": "2026-10-15T01:13:28.964Z",
+    "url": "http://127.0.0.1:5173/src/player/LocalTeamScore.ts?t=1792026716056"
+  },
+  {
+    "level": "info",
+    "message": "[score.check] {\"tick\":862,\"revision\":1,\"teams\":{\"red\":0,\"blue\":1},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":0,\"assists\":0,\"rescues\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":1,\"assists\":0,\"rescues\":0}],\"lastEvents\":[{\"fact\":{\"tick\":862,\"victim\":{\"playerId\":\"training-player\",\"teamId\":\"red\",\"lifeId\":1},\"cause\":\"finishing-damage\",\"finisher\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"downer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"}},\"killer\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\"},\"assistant\":null,\"points\":1}]}",
+    "timestamp": "2026-10-15T01:15:57.950Z",
+    "url": "http://127.0.0.1:5173/src/player/LocalTeamScore.ts?t=1792026874541"
+  },
+  {
+    "level": "info",
+    "message": "[score.check] {\"tick\":1748,\"revision\":1,\"teams\":{\"red\":1,\"blue\":0},\"players\":[{\"playerId\":\"training-player\",\"teamId\":\"red\",\"eliminations\":1,\"assists\":0,\"rescues\":0},{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"eliminations\":0,\"assists\":0,\"rescues\":0}],\"lastEvents\":[{\"fact\":{\"tick\":1748,\"victim\":{\"playerId\":\"training-enemy-a\",\"teamId\":\"blue\",\"lifeId\":1},\"cause\":\"finishing-damage\",\"finisher\":{\"playerId\":\"training-player\",\"teamId\":\"red\"},\"downer\":{\"playerId\":\"training-player\",\"teamId\":\"red\"}},\"killer\":{\"playerId\":\"training-player\",\"teamId\":\"red\"},\"assistant\":null,\"points\":1}]}",
+    "timestamp": "2026-10-15T01:17:01.918Z",
+    "url": "http://127.0.0.1:5173/src/player/LocalTeamScore.ts?t=1792026874541"
+  }
+]

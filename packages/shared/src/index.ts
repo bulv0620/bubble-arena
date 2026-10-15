@@ -30,3 +30,5 @@ export { SCORE_CONFIG, parseDamageActor, parseScoreParticipant, parseScoreRoster
 export { TRAINING_DAMAGE_SOURCES, TRAINING_SCORE_ACTORS, TRAINING_SCORE_ROSTER, type TrainingDamageSource } from './trainingScore';
 
 export { MATCH_CONFIG, parseMatchConfig, type MatchConfig, type MatchPhase } from './match';
+
+export { ARENA_CONFIG, ARENA_SOLIDS, ARENA_COLLISION, ARENA_COLLISION_HASH, ARENA_SPAWNS, ARENA_SPAWN_HASH, ARENA_DEMO_ROSTER, ARENA_BOT_CONFIG, ARENA_BOT_ROUTE, type ArenaSolid } from './arena';

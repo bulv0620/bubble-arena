@@ -52,7 +52,7 @@ export const WHITEBOX_COLLISION = {
 };
 
 /** Deterministic 64-bit FNV-1a content identity, usable in browser and Node. */
-export function whiteboxCollisionHash(data: typeof WHITEBOX_COLLISION) {
+export function whiteboxCollisionHash(data: unknown) {
   let hash = 0xcbf29ce484222325n;
   for (const byte of new TextEncoder().encode(JSON.stringify(data))) {
     hash = BigInt.asUintN(64, (hash ^ BigInt(byte)) * 0x100000001b3n);

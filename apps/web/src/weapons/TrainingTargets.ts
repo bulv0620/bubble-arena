@@ -3,8 +3,8 @@ import { BUBBLE_CONFIG, COLLISION_GROUPS, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES
 import { calculateWeaponDamage, type TrainingHit } from '@bubble-arena/game-core';
 import { queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
 import type { MuzzleRayResult } from './muzzleRay';
-import type { LocalTrainingTarget } from './LocalTrainingTarget';
-const flags = QueryFilterFlags.EXCLUDE_DYNAMIC | QueryFilterFlags.EXCLUDE_KINEMATIC;
+export interface HitReceiver { receiveHit(hit: TrainingHit, damage?: number): boolean; applySlow(): void; isTargetable?: () => boolean }
+const flags = QueryFilterFlags.EXCLUDE_DYNAMIC;
 // Keep coincident target/map surfaces on the safe map side despite float quantization.
 const mapMargin = 0.00001;
 
@@ -16,9 +16,9 @@ export class TrainingTargets {
   private explosions = new Set<number>();
   private newestExplosion = 0;
   dispose() { this.entries.clear(); this.explosions.clear(); }
-  isRegistered = (handle: number) => this.entries.has(handle);
-  private entries = new Map<number, { target: LocalTrainingTarget; region: HitRegion }>();
-  register(handle: number, target: LocalTrainingTarget, region: HitRegion = 'body') {
+  isRegistered = (handle: number) => { const target = this.entries.get(handle)?.target; return Boolean(target && (target.isTargetable?.() ?? true)); };
+  private entries = new Map<number, { target: HitReceiver; region: HitRegion }>();
+  register(handle: number, target: HitReceiver, region: HitRegion = 'body') {
     if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body') throw new TypeError('Invalid/duplicate target collider or region');
     this.entries.set(handle, { target, region });
     let active = true;
@@ -31,7 +31,7 @@ export class TrainingTargets {
     if (!Number.isFinite(len) || len === 0) return null;
     const direction = { x: ray.direction.x / len, y: ray.direction.y / len, z: ray.direction.z / len };
     const hit = world.castRay(new Ray(ray.origin, direction), ray.range, true, flags, COLLISION_GROUPS.targetQuery,
-      undefined, undefined, collider => this.entries.has(collider.handle));
+      undefined, undefined, collider => { const target = this.entries.get(collider.handle)?.target; return Boolean(target && (target.isTargetable?.() ?? true)); });
     if (!hit || !Number.isFinite(hit.timeOfImpact) || hit.timeOfImpact < 0 || hit.timeOfImpact > ray.range) return null;
     const point = Object.freeze({ x: ray.origin.x + direction.x * hit.timeOfImpact,
       y: ray.origin.y + direction.y * hit.timeOfImpact, z: ray.origin.z + direction.z * hit.timeOfImpact });
@@ -60,7 +60,7 @@ export class TrainingTargets {
       || !WEAPON_CONFIGS[weapon] || !Array.isArray(results) || results.length !== WEAPON_HANDLING[weapon].pellets) throw new TypeError('Invalid local shot/volley');
     if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return { impact: null, pellets: [] };
     this.lastShotSequence = shot.sequence; this.lastShotTick = shot.tick;
-    const damageByTarget = new Map<LocalTrainingTarget, { damage: number; point: ScreenAimTarget['point'] }>();
+    const damageByTarget = new Map<HitReceiver, { damage: number; point: ScreenAimTarget['point'] }>();
     const pellets: { point: ScreenAimTarget['point']; hit: boolean }[] = [];
     for (const result of results) {
       if (!result || result.status === 'blocked-muzzle') continue;
@@ -92,9 +92,9 @@ export class TrainingTargets {
     this.newestExplosion = Math.max(this.newestExplosion, shot.sequence);
     this.explosions.add(shot.sequence);
     for (const sequence of this.explosions) if (sequence <= this.newestExplosion - 64) this.explosions.delete(sequence);
-    const visible = new Set<LocalTrainingTarget>();
+    const visible = new Set<HitReceiver>();
     for (const [handle, { target }] of this.entries) {
-      if (visible.has(target)) continue;
+      if (visible.has(target) || target.isTargetable && !target.isTargetable()) continue;
       const collider = world.getCollider(handle);
       if (!collider) continue;
       const projection = collider.projectPoint(point, true);

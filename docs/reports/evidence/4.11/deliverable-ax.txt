@@ -1,0 +1,51 @@
+Browser tab: 25, Title: "Bubble Arena", URL: "http://127.0.0.1:4173/".
+0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/
+	1 container Bubble Arena · 基础白盒场景
+		38 container
+			39 image
+				40 text 当前浏览器无法显示 3D 场景，请启用 WebGL。
+			131 container
+				132 text YOU 100
+				133 level indicator Description: YOU生命值, Value: 100
+		4 container
+			5 text BA BUBBLE ARENA 单机 1v1 对抗
+		6 text 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+		7 text 步枪 · 稳定射击
+		8 container 比赛状态
+			9 container
+				10 text 等待开始  ·  20  分制
+			11 text 05:00
+			134 container
+				135 text 比赛预设
+				136 pop up button (collapsed, settable) Description: 比赛预设, Value: 标准 · 5分钟 / 20分, Secondary Actions: Expand
+					137 menu
+						138 (selected) 标准 · 5分钟 / 20分
+						139 时间测试 · 15秒 / 20分
+						140 计分测试 · 5分钟 / 1分
+			141 button 开始比赛
+		20 container 队伍比分：红队 0，蓝队 0
+			21 container
+				22 text TEAM SCORE ·  1v1 对抗
+			23 text 红队  0 : 0  蓝队 击倒不计分 · 淘汰 +1
+		24 container 自身 HP：100 / 100
+			25 container
+				26 text 泡泡先锋  YOU
+			27 container
+				28 text 100  /  100 HP
+		29 container 步枪弹药：30 / 无限备弹
+			30 container
+				31 text 01 步枪 RIFLE
+			32 text 30
+			33 text /  ∞
+			34 text 按 R 装填
+			35 text 1 ·  步枪 2 · 泡泡
+			36 container
+				37 text 重量  2  · 移速  0.0  m/s
+		125 container 竞技场小地图
+			126 text ARENA 01 · CROSSFIRE
+			127 text 交叉火线
+			128 text 你 · 红队 vs 蓝队 AI
+			129 container 三路地图：左路、中庭、右侧高台，红蓝两端复活区
+			130 text 左路 · 近战 中庭 高台 · 1.5m 蓝队 AI： 100 HP
+
+The focused UI element is 0 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/

@@ -21,3 +21,5 @@ export { selectSpawnPoint, type SpawnSelection } from './spawnSelection';
 export { TeamScoreState, type TeamScoreSnapshot, type PlayerScoreLine, type ScoreResolution } from './teamScoreState';
 
 export { MatchState, type MatchSnapshot, type MatchResult } from './matchState';
+
+export { ArenaBotBrain, type BotIntent } from './arenaBotBrain';

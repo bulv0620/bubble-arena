@@ -15,7 +15,7 @@ export class LocalBubbleFlight {
     if (this.explosion) this.explosion = this.explosion.ticks > 1 ? { ...this.explosion, ticks: this.explosion.ticks - 1 } : null;
     this.flight.step((origin, direction, distance) => {
       const hit = world.castShape(origin, { x: 0, y: 0, z: 0, w: 1 }, direction, this.shape, 0, distance, true,
-        QueryFilterFlags.EXCLUDE_DYNAMIC | QueryFilterFlags.EXCLUDE_KINEMATIC, COLLISION_GROUPS.projectileQuery,
+        QueryFilterFlags.EXCLUDE_DYNAMIC, COLLISION_GROUPS.projectileQuery,
         undefined, undefined, collider => !collider.isSensor() || this.targets.isRegistered(collider.handle));
       return hit?.time_of_impact ?? null;
     }, (sequence, point) => {
