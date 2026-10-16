@@ -93,7 +93,7 @@ export class LocalRescuePractice {
       const channel = snapshot.channels[0] ?? null, event = snapshot.events[0];
       if (!current && channel) this.injuryQueued = false;
       let message = damaged && health.status === 'downed' ? '' : this.state.message;
-      if (channel) message = channel.ready ? '3秒救援进度测试完成' : '';
+      if (channel) message = channel.ready ? '2秒救援进度测试完成' : '';
       else if (event?.kind === 'completed') message = event.targetId === config.playerId ? '你已被救起 · 50 HP' : '队友已救起 · 50 HP';
       else if (event?.kind === 'interrupted') message = interruptMessage(event.reason);
       this.publish(channel, message);

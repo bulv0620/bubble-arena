@@ -15,3 +15,21 @@ test('digits queue one last slot and settings/repeat/modifiers/hidden/focus/blur
   global.dispatchEvent(editable); expect(input.consume()).toBeNull();
   detach(); detach(); key(global, 'Digit2'); expect(input.consume()).toBeNull();
 });
+test('trackpad bursts quantize once, clear-on-equip retains throttle, reverse and later gestures work', () => {
+  const global = new EventTarget(), canvas = new EventTarget(), doc = Object.assign(new EventTarget(), { hidden: false });
+  const input = new WeaponSwitchInput(), oldDetach = input.attach(global, doc, () => true, canvas);
+  const wheel = (deltaY: number, timeStamp: number, deltaMode = 0) => {
+    const e = Object.assign(new Event('wheel', { cancelable: true }), { deltaY, deltaMode });
+    Object.defineProperty(e, 'timeStamp', { value: timeStamp }); canvas.dispatchEvent(e);
+  };
+  for (let i = 0; i < 9; i++) wheel(4, i);
+  expect(input.consume()).toBeNull(); wheel(4, 10); expect(input.consume()).toBe(2);
+  input.clear(); for (let i = 11; i < 100; i++) wheel(4, i);
+  expect(input.consume('shotgun')).toBeNull();
+  wheel(-1, 100, 1); expect(input.consume('rifle')).toBe(4);
+  wheel(1, 110, 2); expect(input.consume('bubble')).toBe(1);
+  wheel(100, 400); expect(input.consume('rifle')).toBe(2);
+  const detach = input.attach(global, doc, () => true, canvas);
+  input.request(3); oldDetach(); expect(input.consume()).toBe(3);
+  detach(); wheel(100, 600); expect(input.consume()).toBeNull();
+});

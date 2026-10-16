@@ -1,0 +1,404 @@
+[
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":0,\"elapsed\":0,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:13.044Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":60,\"elapsed\":60,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:14.044Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":120,\"elapsed\":120,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:15.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":180,\"elapsed\":180,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":4},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:16.044Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":240,\"elapsed\":240,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":3},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:17.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":300,\"elapsed\":300,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":2},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:18.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":360,\"elapsed\":360,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":1},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:19.047Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":420,\"elapsed\":420,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:20.047Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":480,\"elapsed\":480,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:21.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":540,\"elapsed\":540,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:22.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":600,\"elapsed\":600,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:23.046Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":660,\"elapsed\":660,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":4},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:24.060Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":720,\"elapsed\":720,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":3},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:25.046Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":780,\"elapsed\":780,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":2},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:26.047Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":840,\"elapsed\":840,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":1},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:27.046Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":900,\"elapsed\":900,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:28.048Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":960,\"elapsed\":960,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:29.047Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1020,\"elapsed\":1020,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:30.048Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1080,\"elapsed\":1080,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":3,\"revision\":10,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:31.048Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1140,\"elapsed\":1140,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":3,\"revision\":10,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":4},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:32.048Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1200,\"elapsed\":1200,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":3,\"revision\":10,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":3},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:33.048Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1260,\"elapsed\":1260,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":3,\"revision\":10,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":2},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:34.046Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1320,\"elapsed\":1320,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"eliminated\",\"lifeId\":3,\"revision\":10,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":50,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":1},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:35.047Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1380,\"elapsed\":1380,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:36.048Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1440,\"elapsed\":1440,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:37.049Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1500,\"elapsed\":1500,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:38.049Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1560,\"elapsed\":1560,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:39.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1620,\"elapsed\":1620,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:40.050Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1680,\"elapsed\":1680,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:41.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1740,\"elapsed\":1740,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:42.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1800,\"elapsed\":1800,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:43.050Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1860,\"elapsed\":1860,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:44.050Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1920,\"elapsed\":1920,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:45.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":1980,\"elapsed\":1980,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:46.052Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2040,\"elapsed\":2040,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6,\"y\":0.9100886583328247,\"z\":22.000001907348633}}",
+    "timestamp": "2026-10-15T12:52:47.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2100,\"elapsed\":2100,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":true,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-6.193305015563965,\"y\":0.9115937352180481,\"z\":22.000307083129883}}",
+    "timestamp": "2026-10-15T12:52:48.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2160,\"elapsed\":2160,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":true,\"right\":false},\"speed\":5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11.117191314697266,\"y\":0.9100822806358337,\"z\":21.998205184936523}}",
+    "timestamp": "2026-10-15T12:52:49.052Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2220,\"elapsed\":2220,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.45816707611084,\"y\":2.07120943069458,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:50.064Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2280,\"elapsed\":2280,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:51.052Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2340,\"elapsed\":2340,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:52.051Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2400,\"elapsed\":2400,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":80,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:53.053Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2460,\"elapsed\":2460,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":1,\"revision\":0,\"hp\":20,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:54.053Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2520,\"elapsed\":2520,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":1,\"player\":{\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":30,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:55.053Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2580,\"elapsed\":2580,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":1,\"player\":{\"status\":\"downed\",\"lifeId\":1,\"revision\":1,\"hp\":0,\"maxHp\":100,\"downedHp\":30,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":19,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:56.054Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2640,\"elapsed\":2640,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":30,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:57.053Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2700,\"elapsed\":2700,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":30,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":4},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:58.054Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2760,\"elapsed\":2760,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":30,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":3},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:52:59.054Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2820,\"elapsed\":2820,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":30,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":2},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:53:00.054Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2880,\"elapsed\":2880,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":1,\"revision\":2,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":30,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":1},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-15.534002304077148,\"y\":0.910099983215332,\"z\":21.997161865234375}}",
+    "timestamp": "2026-10-15T12:53:01.054Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":2940,\"elapsed\":2940,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:02.055Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3000,\"elapsed\":3000,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:03.054Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3060,\"elapsed\":3060,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":80,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:04.055Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3120,\"elapsed\":3120,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":2,\"revision\":4,\"hp\":40,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":40,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:05.042Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3180,\"elapsed\":3180,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":1,\"player\":{\"status\":\"downed\",\"lifeId\":2,\"revision\":5,\"hp\":0,\"maxHp\":100,\"downedHp\":30,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":20,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:06.042Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3240,\"elapsed\":3240,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":1,\"player\":{\"status\":\"downed\",\"lifeId\":2,\"revision\":5,\"hp\":0,\"maxHp\":100,\"downedHp\":30,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":19,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:07.042Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3300,\"elapsed\":3300,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":1,\"player\":{\"status\":\"downed\",\"lifeId\":2,\"revision\":5,\"hp\":0,\"maxHp\":100,\"downedHp\":10,\"maxDownedHp\":50,\"lastDamage\":20,\"protected\":false,\"downedSecondsRemaining\":18,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:08.043Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3360,\"elapsed\":3360,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":5},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:09.042Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3420,\"elapsed\":3420,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":4},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:10.043Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3480,\"elapsed\":3480,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":3},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:11.043Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3540,\"elapsed\":3540,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":2},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:12.044Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3600,\"elapsed\":3600,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":0,\"player\":{\"status\":\"eliminated\",\"lifeId\":2,\"revision\":6,\"hp\":0,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":10,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":\"finishing-damage\",\"respawnSecondsRemaining\":1},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":10.999999046325684,\"y\":0.9100925922393799,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:13.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3660,\"elapsed\":3660,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11,\"y\":0.9100955128669739,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:14.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3720,\"elapsed\":3720,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":true,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11,\"y\":0.9100955128669739,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:15.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3780,\"elapsed\":3780,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11,\"y\":0.9100955128669739,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:16.044Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3840,\"elapsed\":3840,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11,\"y\":0.9100955128669739,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:17.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3900,\"elapsed\":3900,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11,\"y\":0.9100955128669739,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:18.046Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  },
+  {
+    "level": "info",
+    "message": "[repro.state] {\"tick\":3960,\"elapsed\":3960,\"enabled\":true,\"keys\":{\"forward\":false,\"backward\":false,\"left\":false,\"right\":false},\"speed\":5.5,\"player\":{\"status\":\"normal\",\"lifeId\":3,\"revision\":8,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"bot\":{\"status\":\"normal\",\"lifeId\":4,\"revision\":12,\"hp\":100,\"maxHp\":100,\"downedHp\":0,\"maxDownedHp\":50,\"lastDamage\":0,\"protected\":false,\"downedSecondsRemaining\":0,\"eliminationReason\":null,\"respawnSecondsRemaining\":0},\"position\":{\"x\":-11,\"y\":0.9100955128669739,\"z\":22}}",
+    "timestamp": "2026-10-15T12:53:19.045Z",
+    "url": "http://127.0.0.1:5173/src/core/ArenaRepro.tsx?t=1792068708256"
+  }
+]

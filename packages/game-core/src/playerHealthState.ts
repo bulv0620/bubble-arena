@@ -48,6 +48,7 @@ export class PlayerHealthState {
   }
   getSnapshot = () => this.state;
   getElimination = () => this.elimination;
+  getDowner = () => this.downer;
   private recordElimination(tick: number, cause: EliminationFact['cause'], finisher: DamageActor | null) {
     if (this.owner) this.elimination = Object.freeze({ tick, cause, victim: Object.freeze({ ...this.owner, lifeId: this.state.lifeId }), finisher, downer: this.downer });
   }
@@ -55,16 +56,17 @@ export class PlayerHealthState {
   advanceTick(tick: number, matchFinished: boolean) {
     validateTick(tick, matchFinished);
     if (matchFinished || tick < this.clockTick || this.spawning) return false;
+    if (this.state.status==='downed'&&tick>=this.downedEndTick&&!Number.isSafeInteger(tick+this.protectionTicks)) throw new RangeError('Bubble recovery tick exhausted');
     const before = this.state;
     this.advanceProtection(tick, matchFinished);
     if (this.state.status === 'downed') {
       if (tick >= this.downedEndTick) {
         if (this.life.transition({ type: 'downed_timeout', lifeId: this.state.lifeId, revision: this.state.revision,
           elapsedTicks: this.downedTicks }, matchFinished)) {
-          this.eliminatedTick = this.downedEndTick;
-          this.recordElimination(this.eliminatedTick, 'downed-timeout', null);
-          this.state = Object.freeze({ ...this.state, ...this.life.getSnapshot(), downedHp: 0, downedSecondsRemaining: 0,
-            lastDamage: 0, protected: false, eliminationReason: 'downed-timeout', respawnSecondsRemaining: Math.ceil(this.respawnTicks / PHYSICS_CONFIG.tickRate) });
+          this.protectionEndTick = tick + this.protectionTicks;
+          this.downedEndTick = 0; this.downer = null; this.elimination = null;
+          this.state = Object.freeze({ ...this.state, ...this.life.getSnapshot(), hp: this.life.config.revivedHp, downedHp: 0, downedSecondsRemaining: 0,
+            lastDamage: 0, protected: true, eliminationReason: null, respawnSecondsRemaining: 0 });
         }
       } else {
         const remaining = Math.ceil((this.downedEndTick - tick) / PHYSICS_CONFIG.tickRate);
@@ -120,6 +122,19 @@ export class PlayerHealthState {
       protected: true, downedSecondsRemaining: 0, eliminationReason: null });
     return true;
   }
+  /** Simulation-validated melee finish: caller must prove range/LOS and current target identity. */
+  finishBubble(fact: PlayerSpawnIdentity, tick: number, source: DamageActor, matchFinished: boolean) {
+    validateData(fact, ['lifeId','revision']); validateTick(tick,matchFinished);
+    if(!Number.isSafeInteger(fact.lifeId)||fact.lifeId<1||!Number.isSafeInteger(fact.revision)||fact.revision<0)throw new RangeError('Invalid bubble finish identity');
+    const actor=parseDamageActor(source),current=this.state;
+    if(matchFinished||tick<this.clockTick||current.status!=='downed'||current.lifeId!==fact.lifeId||current.revision!==fact.revision
+      ||this.owner&&(actor.teamId===this.owner.teamId||actor.playerId===this.owner.playerId))return false;
+    if(tick>=this.downedEndTick){this.advanceTick(tick,false);return false;}
+    if(!this.life.transition({type:'hp_depleted',hp:0,...fact},false))return false;
+    this.clockTick=tick;this.eliminatedTick=tick;this.recordElimination(tick,'finishing-damage',actor);
+    this.state=Object.freeze({...current,...this.life.getSnapshot(),downedHp:0,downedSecondsRemaining:0,lastDamage:0,protected:false,eliminationReason:'finishing-damage',respawnSecondsRemaining:Math.ceil(this.respawnTicks/PHYSICS_CONFIG.tickRate)});
+    return true;
+  }
   onAcceptedFire(fire: PlayerFireIdentity, matchFinished: boolean) {
     validateData(fire, ['lifeId', 'revision', 'tick', 'sequence']); validateTick(fire.tick, matchFinished);
     if (!Number.isSafeInteger(fire.lifeId) || fire.lifeId < 1 || !Number.isSafeInteger(fire.revision) || fire.revision < 0
@@ -167,7 +182,7 @@ export class PlayerHealthState {
     let current = this.state;
     if (matchFinished || (current.status !== 'normal' && current.status !== 'downed') || hit.lifeId !== current.lifeId
       || hit.sequence <= this.lastSequence || hit.tick < this.lastTick || hit.tick < this.clockTick) return false;
-    if (current.status === 'downed' && hit.tick > this.downedEndTick) { this.advanceTick(hit.tick, matchFinished); return false; }
+    if (current.status === 'downed' && hit.tick >= this.downedEndTick) { this.advanceTick(hit.tick, matchFinished); return false; }
     if (current.status === 'normal' && !this.isProtected(hit.tick) && resolvedDamage >= current.hp
       && !Number.isSafeInteger(hit.tick + this.downedTicks)) throw new RangeError('Downed deadline exhausted');
     this.advanceProtection(hit.tick, matchFinished); current = this.state;

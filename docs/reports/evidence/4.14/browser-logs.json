@@ -1,0 +1,17 @@
+{
+  "finalTabErrors": [],
+  "freshProductionLogs": [
+    {
+      "level": "warn",
+      "message": "using deprecated parameters for the initialization function; pass a single object instead",
+      "timestamp": "2026-10-15T12:17:09.396Z",
+      "url": "http://127.0.0.1:4173/assets/BasicScene-BbKcuSIB.js"
+    },
+    {
+      "level": "warn",
+      "message": "using deprecated parameters for the initialization function; pass a single object instead",
+      "timestamp": "2026-10-15T12:20:38.777Z",
+      "url": "http://127.0.0.1:4173/assets/BasicScene-BXOX50sx.js"
+    }
+  ]
+}

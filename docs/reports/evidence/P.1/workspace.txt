@@ -1,0 +1,5 @@
+
+> bubble-arena@0.0.0 check:workspace /Users/bulv/Desktop/bubble-arena
+> node scripts/check-workspace.mjs
+
+Workspace OK: 173 task cards, acyclic dependencies, local Markdown links and asset manifest checked.

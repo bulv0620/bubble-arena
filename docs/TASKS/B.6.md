@@ -29,3 +29,6 @@ Blender 武器源、制作脚本、manifest、狙击导出件、任务报告和�
 ## 交付与停止
 
 docs/reports/B.6.md、改动/输出清单、实际工具结果、限制和状态更新。完成本任务停止。
+
+
+4.14已提供 [sniper三视图概念参考](../../apps/web/public/ui/weapons/sniper-views-v1.png)，[提示词/源记录](../../assets-source/weapons/README.md)。各视图存在生成式结构误差可能，建模时统一正交比例、握把/枪口/水仓；当前只有PNG，不代表本卡或B.1完成，仍须实际Blender MCP、.blend/脚本/GLB和回读验证。

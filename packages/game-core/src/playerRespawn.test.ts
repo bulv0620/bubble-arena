@@ -2,7 +2,7 @@ import { expect, test, vi } from 'vitest';
 import { PLAYER_LIFE_CONFIG, RESCUE_PROTECTION_CONFIG } from '@bubble-arena/shared';
 import { PlayerHealthState } from './playerHealthState';
 const hit = (sequence: number, tick: number, lifeId = 1) => ({ lifeId, sequence, tick });
-function eliminated(lifeId = 1) { const h = new PlayerHealthState(lifeId); h.receiveDamage(hit(1, 0, lifeId), 100, false); h.receiveDamage(hit(2, 1, lifeId), 50, false); return h; }
+function eliminated(lifeId = 1) { const h = new PlayerHealthState(lifeId); h.receiveDamage(hit(1, 0, lifeId), 100, false); h.receiveDamage(hit(2, 1, lifeId), 300, false); return h; }
 const identity = (h: PlayerHealthState) => ({ lifeId: h.getSnapshot().lifeId, revision: h.getSnapshot().revision });
 test('five-second wait updates only whole seconds, finishes at tick301, and spawn is a same-tick new-life transaction', () => {
   const h = eliminated(), apply = vi.fn(() => true), saved = h.getSnapshot();
@@ -15,10 +15,10 @@ test('five-second wait updates only whole seconds, finishes at tick301, and spaw
   expect(h.getSnapshot()).toMatchObject({ status: 'normal', lifeId: 2, revision: 4, hp: 100, downedHp: 0, protected: true, eliminationReason: null, downedSecondsRemaining: 0 });
   expect(h.completeSpawn(fact, 301, apply, false)).toBe(false); expect(apply).toHaveBeenCalledTimes(1);
 });
-test('timeout uses its original tick even after skipped clock steps; no extra five seconds from late observation', () => {
-  const h = new PlayerHealthState(); h.receiveDamage(hit(1, 100), 100, false); h.advanceTick(1599, false);
-  expect(h.getSnapshot()).toMatchObject({ status: 'eliminated', respawnSecondsRemaining: 1 }); h.advanceTick(1600, false); expect(h.getSnapshot().status).toBe('respawning');
-  const late = new PlayerHealthState(); late.receiveDamage(hit(1, 0), 100, false); late.advanceTick(2000, false); expect(late.getSnapshot().status).toBe('respawning');
+test('bubble timeout recovers in place even after skipped steps and never enters a base respawn transaction',()=>{
+  const h=new PlayerHealthState();h.receiveDamage(hit(1,100),100,false);h.advanceTick(1600,false);
+  expect(h.getSnapshot()).toMatchObject({status:'normal',hp:50,lifeId:1,respawnSecondsRemaining:0});
+  expect(h.completeSpawn(identity(h),1600,()=>{throw Error('must not teleport');},false)).toBe(false);
 });
 test('spawn protection is exactly120ticks; old-life damage/fire/revision reject and fresh identities work', () => {
   const h = eliminated(); h.advanceTick(301, false); h.completeSpawn(identity(h), 301, () => true, false);
@@ -65,6 +65,6 @@ test('protection/identity overflow rejects before application and configured spa
     expect(apply).not.toHaveBeenCalled(); expect(h.getSnapshot()).toBe(saved);
   }
   const h = new PlayerHealthState(1, { ...PLAYER_LIFE_CONFIG, respawnDelay: .5 }, RESCUE_PROTECTION_CONFIG, { protectionDuration: .5, clearance: .005 });
-  h.receiveDamage(hit(1, 0), 100, false); h.receiveDamage(hit(2, 1), 50, false); h.advanceTick(31, false); h.completeSpawn(identity(h), 31, () => true, false);
+  h.receiveDamage(hit(1, 0), 100, false); h.receiveDamage(hit(2, 1), 300, false); h.advanceTick(31, false); h.completeSpawn(identity(h), 31, () => true, false);
   expect(h.isProtected(60)).toBe(true); expect(h.isProtected(61)).toBe(false);
 });

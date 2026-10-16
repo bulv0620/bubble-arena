@@ -2,9 +2,9 @@ export { PHYSICS_CONFIG, COLLIDER_MATERIALS } from './physics';
 export { WHITEBOX_CONFIG, WHITEBOX_SOLIDS, WHITEBOX_COLLISION, WHITEBOX_COLLISION_HASH, whiteboxCollisionHash, type WhiteboxSolid } from './whitebox';
 export { PLAYER_CONFIG, createMovementTuning, type MovementTuning } from './player';
 export { CAMERA_CONFIG } from './camera';
-export { COLLISION_GROUPS } from './collision';
+export { COLLISION_GROUPS, HIT_MAP_CLEARANCE } from './collision';
 export type { MovementKeys, CameraHeading, FireIntent } from './input';
-export { WEAPON_IDS, WEAPON_CONFIGS, isWeaponId, parseWeaponConfig, type WeaponId, type WeaponConfig } from './weapons';
+export { WEAPON_IDS, WEAPON_CONFIGS, isWeaponId, parseWeaponConfig, weaponForSlot, weaponSlot, type WeaponSlot, type WeaponId, type WeaponConfig } from './weapons';
 export { TRAINING_TARGET_CONFIG, TRAINING_TARGET_LAYOUT, TRAINING_RANGE_CONFIG } from './trainingTarget';
 export { PLAYER_VITALS_CONFIG } from './playerVitals';
 export { TRAINING_PLAYER_HEALTH_CONFIG } from './trainingPlayerHealth';
@@ -32,3 +32,7 @@ export { TRAINING_DAMAGE_SOURCES, TRAINING_SCORE_ACTORS, TRAINING_SCORE_ROSTER, 
 export { MATCH_CONFIG, parseMatchConfig, type MatchConfig, type MatchPhase } from './match';
 
 export { ARENA_CONFIG, ARENA_SOLIDS, ARENA_COLLISION, ARENA_COLLISION_HASH, ARENA_SPAWNS, ARENA_SPAWN_HASH, ARENA_DEMO_ROSTER, ARENA_BOT_CONFIG, ARENA_BOT_ROUTE, type ArenaSolid } from './arena';
+export { ARENA_TEAM_SIZE, DEFAULT_ARENA_PLAYER_SEAT, DEFAULT_ARENA_BOT_SEATS, parseArenaSeat, parseArenaBotSeats, arenaBotActor, arenaActorLabel, type ArenaBotSeat } from './arenaRoster';
+export { BUBBLE_TRAP_CONFIG } from './bubbleTrap';
+export { LOCOMOTION_CONFIG } from './locomotion';
+export { TEAM_VISION_CONFIG } from './teamVision';

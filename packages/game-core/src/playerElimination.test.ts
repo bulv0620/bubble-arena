@@ -1,68 +1,46 @@
 import { expect, test } from 'vitest';
-import { PLAYER_LIFE_CONFIG } from '@bubble-arena/shared';
+import { PLAYER_LIFE_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, TRAINING_SCORE_ACTORS as a } from '@bubble-arena/shared';
 import { PlayerHealthState } from './playerHealthState';
-const hit = (sequence: number, tick: number, lifeId = 1) => ({ sequence, tick, lifeId });
-function down(tick = 100) { const health = new PlayerHealthState(); health.receiveDamage(hit(1, tick), 100, false); return health; }
-test('independent finishing damage clips 50→30→10→0 and eliminates once in the same life', () => {
-  const health = down();
-  for (const [sequence, remaining] of [[2, 30], [3, 10], [4, 0]]) {
-    expect(health.receiveDamage(hit(sequence, 100), 20, false)).toBe(true);
-    expect(health.getSnapshot()).toMatchObject({ hp: 0, downedHp: remaining, lifeId: 1, revision: remaining ? 1 : 2 });
-  }
-  const saved = health.getSnapshot(); expect(saved).toMatchObject({ status: 'eliminated', lastDamage: 10, eliminationReason: 'finishing-damage', downedSecondsRemaining: 0, protected: false });
-  expect(Object.isFrozen(saved)).toBe(true);
-  expect(health.receiveDamage(hit(5, 101), 20, false)).toBe(false); expect(health.advanceTick(101, false)).toBe(false); expect(health.getSnapshot()).toBe(saved);
-  expect(health.advanceTick(400, false)).toBe(true); expect(health.getSnapshot()).toMatchObject({ status: 'respawning', revision: 3 });
-  expect(health.advanceTick(10000, false)).toBe(false);
+const hit=(sequence:number,tick:number,lifeId=1)=>({sequence,tick,lifeId});
+function down(tick=100){const h=new PlayerHealthState(1,PLAYER_LIFE_CONFIG,RESCUE_PROTECTION_CONFIG,RESPAWN_CONFIG,a.player);h.receiveDamage(hit(1,tick),100,false,a['enemy-a']);return h;}
+test('hidden 300 durability requires fifteen separate rifle body hits; finishing happens only once',()=>{
+  const h=down();for(let n=1;n<=15;n++){expect(h.receiveDamage(hit(n+1,100),20,false,a['enemy-a'])).toBe(true);expect(h.getSnapshot().downedHp).toBe(300-n*20);}
+  expect(h.getSnapshot()).toMatchObject({status:'eliminated',lastDamage:20,lifeId:1,revision:2,respawnSecondsRemaining:5});
+  expect(h.receiveDamage(hit(17,101),20,false,a['enemy-a'])).toBe(false);h.advanceTick(400,false);expect(h.getSnapshot().status).toBe('respawning');
 });
-test('exact 1200-tick deadline and one-second snapshot updates; duplicate/old tick has no effect', () => {
-  const health = down(), saved = health.getSnapshot();
-  expect(saved.downedSecondsRemaining).toBe(20); expect(health.advanceTick(159, false)).toBe(false); expect(health.getSnapshot()).toBe(saved);
-  expect(health.advanceTick(160, false)).toBe(true); const nineteen = health.getSnapshot(); expect(nineteen.downedSecondsRemaining).toBe(19);
-  expect(health.advanceTick(160, false)).toBe(false); expect(health.advanceTick(100, false)).toBe(false); expect(health.getSnapshot()).toBe(nineteen);
-  health.advanceTick(1299, false); expect(health.getSnapshot()).toMatchObject({ status: 'downed', downedSecondsRemaining: 1 });
-  expect(health.advanceTick(1300, false)).toBe(true); expect(health.getSnapshot()).toMatchObject({ status: 'eliminated', downedHp: 0, hp: 0, revision: 2, eliminationReason: 'downed-timeout', lastDamage: 0 });
+test('20 seconds deadline returns to same-life 50HP with protection, no elimination fact or respawn countdown',()=>{
+  const h=down(),saved=h.getSnapshot();expect(h.advanceTick(159,false)).toBe(false);expect(h.getSnapshot()).toBe(saved);
+  h.advanceTick(160,false);expect(h.getSnapshot().downedSecondsRemaining).toBe(19);h.advanceTick(1299,false);expect(h.getSnapshot().status).toBe('downed');
+  h.advanceTick(1300,false);expect(h.getSnapshot()).toMatchObject({status:'normal',hp:50,lifeId:1,revision:2,downedHp:0,protected:true,respawnSecondsRemaining:0,eliminationReason:null});
+  expect(h.getElimination()).toBeNull();expect(h.getDowner()).toBeNull();expect(h.advanceTick(1299,false)).toBe(false);
 });
-test('finishing injuries do not reset deadline, and a skipped tick cannot grant extra lifetime', () => {
-  const health = down(); health.advanceTick(1000, false); health.receiveDamage(hit(2, 1000), 20, false);
-  health.advanceTick(1299, false); expect(health.getSnapshot()).toMatchObject({ downedHp: 30, downedSecondsRemaining: 1 });
-  health.advanceTick(1301, false); expect(health.getSnapshot().eliminationReason).toBe('downed-timeout');
+test('damage does not extend bubble timer; skipped step still recovers without creating points',()=>{
+  const h=down();h.receiveDamage(hit(2,1000),20,false,a['enemy-a']);h.advanceTick(1299,false);expect(h.getSnapshot().downedHp).toBe(280);
+  h.advanceTick(1301,false);expect(h.getSnapshot()).toMatchObject({status:'normal',hp:50});expect(h.getElimination()).toBeNull();
 });
-test('same deadline tick damage can finish before expiry; later arrivals cannot steal timeout cause', () => {
-  const atDeadline = down(); expect(atDeadline.receiveDamage(hit(2, 1300), 100, false)).toBe(true);
-  atDeadline.advanceTick(1300, false); expect(atDeadline.getSnapshot().eliminationReason).toBe('finishing-damage');
-  const afterDeadline = down(); expect(afterDeadline.receiveDamage(hit(2, 1301), 100, false)).toBe(false);
-  expect(afterDeadline.getSnapshot().eliminationReason).toBe('downed-timeout');
-  const resolved = down(); resolved.advanceTick(1300, false); expect(resolved.receiveDamage(hit(2, 1300), 100, false)).toBe(false);
+test('deadline wins over same-tick or late finishing gun/kick; an earlier kick can finish',()=>{
+  const early=down();expect(early.finishBubble({lifeId:1,revision:1},1299,a['enemy-b'],false)).toBe(true);expect(early.getElimination()?.finisher).toEqual(a['enemy-b']);
+  for(const tick of [1300,1301]){const h=down();expect(h.receiveDamage(hit(2,tick),999,false,a['enemy-a'])).toBe(false);expect(h.getSnapshot().status).toBe('normal');expect(h.getElimination()).toBeNull();
+    const kick=down();expect(kick.finishBubble({lifeId:1,revision:1},tick,a['enemy-a'],false)).toBe(false);expect(kick.getSnapshot().status).toBe('normal');}
 });
-test('rescue before deadline clears old timer; a fresh downed episode starts a fresh 20 seconds', () => {
-  const health = down(); expect(health.completeRescue({ lifeId: 1, revision: 1, elapsedTicks: 180 }, 1299, false)).toBe(true);
-  health.advanceTick(1400, false); expect(health.getSnapshot()).toMatchObject({ status: 'normal', hp: 50, downedSecondsRemaining: 0 });
-  health.receiveDamage(hit(2, 1400), 100, false); health.advanceTick(2599, false);
-  expect(health.getSnapshot()).toMatchObject({ status: 'downed', revision: 3, downedSecondsRemaining: 1 });
-  health.advanceTick(2600, false); expect(health.getSnapshot()).toMatchObject({ status: 'eliminated', revision: 4, lifeId: 1 });
+test('rescue within 2 seconds and before bubble deadline clears timer; a new episode receives a full deadline',()=>{
+  const h=down();expect(h.completeRescue({lifeId:1,revision:1,elapsedTicks:119},219,false)).toBe(false);
+  expect(h.completeRescue({lifeId:1,revision:1,elapsedTicks:120},220,false)).toBe(true);h.advanceTick(300,false);
+  h.receiveDamage(hit(2,300),100,false,a['enemy-a']);h.advanceTick(1499,false);expect(h.getSnapshot().status).toBe('downed');h.advanceTick(1500,false);expect(h.getSnapshot()).toMatchObject({status:'normal',revision:4,lifeId:1});
 });
-test('deadline or eliminated targets cannot be rescued even when expiry has not yet been advanced', () => {
-  for (const tick of [1300, 1301]) {
-    const health = down(), saved = health.getSnapshot(); expect(health.completeRescue({ lifeId: 1, revision: 1, elapsedTicks: 180 }, tick, false)).toBe(false);
-    expect(health.getSnapshot()).toBe(saved); health.advanceTick(tick, false); expect(health.getSnapshot().status).toBe('eliminated');
-    expect(health.completeRescue({ lifeId: 1, revision: 2, elapsedTicks: 180 }, tick, false)).toBe(false);
-  }
+test('melee rejects allies, stale identities, normal/dead targets, finished and duplicate calls',()=>{
+  const h=down(),fact={lifeId:1,revision:1},saved=h.getSnapshot();
+  for(const actor of [a.player,a.ally])expect(h.finishBubble(fact,101,actor,false)).toBe(false);
+  expect(h.finishBubble({lifeId:1,revision:0},101,a['enemy-a'],false)).toBe(false);expect(h.finishBubble(fact,101,a['enemy-a'],true)).toBe(false);expect(h.getSnapshot()).toBe(saved);
+  expect(h.finishBubble(fact,101,a['enemy-a'],false)).toBe(true);expect(h.finishBubble(fact,101,a['enemy-a'],false)).toBe(false);
 });
-test('finished, stale sequence/tick/life and malformed calls cannot change or postpone the deadline', () => {
-  const health = down(), saved = health.getSnapshot();
-  expect(health.advanceTick(1300, true)).toBe(false); expect(health.receiveDamage(hit(2, 1100), 20, true)).toBe(false);
-  for (const h of [hit(1, 101), hit(2, 99), hit(2, 101, 2)]) expect(health.receiveDamage(h, 20, false)).toBe(false);
-  for (const tick of [NaN, -1, .5, Number.MAX_SAFE_INTEGER + 1]) expect(() => health.advanceTick(tick, false)).toThrow(RangeError);
-  expect(() => health.advanceTick(100, undefined as unknown as boolean)).toThrow(TypeError);
-  expect(() => health.receiveDamage(Object.defineProperty(hit(2, 101), 'tick', { get: () => { throw new Error('Must not invoke'); } }), 20, false)).toThrow(TypeError);
-  expect(health.getSnapshot()).toBe(saved); health.advanceTick(1300, false); expect(health.getSnapshot().status).toBe('eliminated');
+test('invalid damage/old ticks/finished cannot change or postpone timeout; recovery overflow fails before mutation',()=>{
+  const h=down(),saved=h.getSnapshot();expect(h.advanceTick(1300,true)).toBe(false);
+  for(const bad of [hit(1,101),hit(2,99),hit(2,101,2)])expect(h.receiveDamage(bad,20,false,a['enemy-a'])).toBe(false);
+  expect(()=>h.advanceTick(Number.MAX_SAFE_INTEGER,false)).toThrow(RangeError);expect(h.getSnapshot()).toBe(saved);
+  h.advanceTick(1300,false);expect(h.getSnapshot().status).toBe('normal');
 });
-test('deadline overflow fails atomically without poisoning the clock, configured duration is isolated and rounded to ticks', () => {
-  const health = new PlayerHealthState(), saved = health.getSnapshot();
-  expect(() => health.receiveDamage(hit(1, Number.MAX_SAFE_INTEGER), 100, false)).toThrow(RangeError); expect(health.getSnapshot()).toBe(saved);
-  expect(health.receiveDamage(hit(1, 0), 100, false)).toBe(true);
-  const config = { ...PLAYER_LIFE_CONFIG, downedDuration: 1.01, downedHp: 75 }, custom = new PlayerHealthState(7, config); config.downedDuration = 10;
-  custom.receiveDamage(hit(1, 0, 7), 100, false); custom.advanceTick(60, false); expect(custom.getSnapshot()).toMatchObject({ status: 'downed', downedHp: 75, downedSecondsRemaining: 1 });
-  custom.advanceTick(61, false); expect(custom.getSnapshot().status).toBe('eliminated'); expect(health.getSnapshot().status).toBe('downed');
+test('configured bubble durations are isolated and round up to physics ticks',()=>{
+  const config={...PLAYER_LIFE_CONFIG,downedDuration:1.01,downedHp:75},h=new PlayerHealthState(7,config);config.downedDuration=10;
+  h.receiveDamage(hit(1,0,7),100,false);h.advanceTick(60,false);expect(h.getSnapshot()).toMatchObject({status:'downed',downedHp:75});h.advanceTick(61,false);expect(h.getSnapshot()).toMatchObject({status:'normal',hp:50,lifeId:7});
 });

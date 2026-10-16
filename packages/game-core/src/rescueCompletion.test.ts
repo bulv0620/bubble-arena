@@ -20,7 +20,7 @@ test('completion restores 50 standing HP/normal in the same life with a new revi
 });
 test('early, old, wrong-life/revision, normal and finished completion reject without healing or changing identity', () => {
   const health = downed(), saved = health.getSnapshot();
-  for (const input of [{ ...fact, elapsedTicks: 179 }, { ...fact, lifeId: 2 }, { ...fact, revision: 0 }]) expect(health.completeRescue(input, 180, false)).toBe(false);
+  for (const input of [{ ...fact, elapsedTicks: 119 }, { ...fact, lifeId: 2 }, { ...fact, revision: 0 }]) expect(health.completeRescue(input, 180, false)).toBe(false);
   expect(health.completeRescue(fact, 180, true)).toBe(false); expect(health.getSnapshot()).toBe(saved);
   health.advanceProtection(100, false); expect(health.completeRescue(fact, 99, false)).toBe(false);
   expect(new PlayerHealthState().completeRescue(fact, 180, false)).toBe(false);

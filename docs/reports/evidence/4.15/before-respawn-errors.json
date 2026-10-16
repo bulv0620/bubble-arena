@@ -1,0 +1,20 @@
+[
+  {
+    "level": "error",
+    "message": "TypeError: Expected rescue data object\n    at record (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts:4:141)\n    at parseRescuePosition (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts:24:15)\n    at http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/spawn.ts:79:14\n    at Array.map (<anonymous>)\n    at parseSpawnEnemies (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/spawn.ts:66:39)\n    at selectSpawnPoint (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/game-core/src/spawnSelection.ts?t=1792065780266:4:83)\n    at Object.current (http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792065863435:47:19)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)",
+    "timestamp": "2026-10-15T12:48:32.955Z",
+    "url": "http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: Expected rescue data object\n    at record (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts:4:141)\n    at parseRescuePosition (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts:24:15)\n    at http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/spawn.ts:79:14\n    at Array.map (<anonymous>)\n    at parseSpawnEnemies (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/spawn.ts:66:39)\n    at selectSpawnPoint (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/game-core/src/spawnSelection.ts?t=1792065780266:4:83)\n    at Object.current (http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792065863435:47:19)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)",
+    "timestamp": "2026-10-15T12:48:32.968Z",
+    "url": "http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts"
+  },
+  {
+    "level": "error",
+    "message": "TypeError: Expected rescue data object\n    at record (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts:4:141)\n    at parseRescuePosition (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts:24:15)\n    at http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/spawn.ts:79:14\n    at Array.map (<anonymous>)\n    at parseSpawnEnemies (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/spawn.ts:66:39)\n    at selectSpawnPoint (http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/game-core/src/spawnSelection.ts?t=1792065780266:4:83)\n    at Object.current (http://127.0.0.1:5173/src/player/ArenaOpponent.tsx?t=1792065863435:47:19)\n    at http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:775:14\n    at Set.forEach (<anonymous>)\n    at stepWorld (http://127.0.0.1:5173/node_modules/.vite/deps/@react-three_rapier.js?v=2ea32c98:774:24)",
+    "timestamp": "2026-10-15T12:48:32.980Z",
+    "url": "http://127.0.0.1:5173/@fs/Users/bulv/Desktop/bubble-arena/packages/shared/src/rescue.ts"
+  }
+]

@@ -35,3 +35,14 @@ test('capacity evicts oldest; animation completion removes only its entry; clean
   expect(queue.push(30, 20)).toBe(false); expect(queue.push(31, 20)).toBe(true);
   release(); const saved = notify.mock.calls.length; queue.clear(); expect(notify).toHaveBeenCalledTimes(saved);
 });
+test('simulation expiry and leaving view permanently consume old numbers independent of CSS animation', () => {
+  const queue = new DamageNumbers(); queue.step(100); queue.push(1, 20);
+  queue.step(168); expect(queue.getSnapshot()).toHaveLength(1);
+  queue.step(169); expect(queue.getSnapshot()).toHaveLength(0);
+  queue.push(2, 20); queue.setVisible(false); queue.setVisible(true);
+  expect(queue.getSnapshot()).toHaveLength(0); expect(queue.push(2, 20)).toBe(false);
+  queue.setVisible(false); expect(queue.push(3, 30)).toBe(true);
+  queue.setVisible(true); expect(queue.push(3, 30)).toBe(false); expect(queue.getSnapshot()).toHaveLength(0);
+  queue.push(4, 10); queue.step(1000); expect(queue.getSnapshot()).toHaveLength(0);
+  expect(() => queue.step(999)).toThrow(RangeError); expect(() => queue.step(NaN)).toThrow(RangeError);
+});

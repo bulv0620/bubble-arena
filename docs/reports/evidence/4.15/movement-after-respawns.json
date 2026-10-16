@@ -1,0 +1,56 @@
+[
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-6,\"y\":0.9144444465637207,\"z\":22},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":0,\"spreadAngle\":0.026179938779914945,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":0,\"y\":-0.0055555556900799274,\"z\":0},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":-0.3333333333333333,\"grounded\":false}",
+    "timestamp": "2026-10-15T12:52:10.529Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-6,\"y\":0.9110649824142456,\"z\":22.000001907348633},\"active\":false,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":0,\"spreadAngle\":0.003490658503988659,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.01111111111111111,\"z\":0},\"allowed\":{\"x\":0,\"y\":-0.003379465313628316,\"z\":0.0000012435131111487863},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:10.531Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-6.006886959075928,\"y\":0.9101652503013611,\"z\":21.99998664855957},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.015707963267948967,\"facingYaw\":0,\"desired\":{\"x\":-0.006944444444444446,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-0.0068870424292981625,\"y\":0.00007657794049009681,\"z\":-0.000014350464880408254},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:47.931Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-6.193305015563965,\"y\":0.9115937352180481,\"z\":22.000307083129883},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.015707963267948967,\"facingYaw\":0,\"desired\":{\"x\":-0.048611111111111126,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-0.0486111119389534,\"y\":-0.0055555556900799274,\"z\":0},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:48.037Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-8.622154235839844,\"y\":0.910047709941864,\"z\":21.999792098999023},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.015707963267948967,\"facingYaw\":0,\"desired\":{\"x\":-0.08333333333333333,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-0.08341753482818604,\"y\":-0.00003249574365327135,\"z\":0.00003143293724860996},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:48.531Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-11.117191314697266,\"y\":0.9100822806358337,\"z\":21.998205184936523},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.015707963267948967,\"facingYaw\":0,\"desired\":{\"x\":-0.08333333333333333,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-0.08335749059915543,\"y\":-0.00001762978354236111,\"z\":0.0000150491296153632},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:49.026Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-13.615089416503906,\"y\":0.9100815057754517,\"z\":21.99703025817871},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"rifle\",\"groundSpeed\":5,\"spreadAngle\":0.015707963267948967,\"facingYaw\":0,\"desired\":{\"x\":-0.08333333333333333,\"y\":-0.005555555555555555,\"z\":0},\"allowed\":{\"x\":-0.08333353698253632,\"y\":-0.004166597034782171,\"z\":-6.227147650861298e-7},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:49.532Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-15.45816707611084,\"y\":2.07120943069458,\"z\":21.997161865234375},\"active\":true,\"lifeStatus\":\"normal\",\"weapon\":\"shotgun\",\"groundSpeed\":5.5,\"spreadAngle\":0.15707963267948966,\"facingYaw\":0,\"desired\":{\"x\":-0.022500000000000037,\"y\":0.011111111111111146,\"z\":0},\"allowed\":{\"x\":-0.02250000089406967,\"y\":0.011111111380159855,\"z\":0},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0.6666666666666687,\"grounded\":false}",
+    "timestamp": "2026-10-15T12:52:50.063Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  },
+  {
+    "level": "info",
+    "message": "[movement.check] {\"position\":{\"x\":-15.534001350402832,\"y\":0.9105669260025024,\"z\":21.997161865234375},\"active\":false,\"lifeStatus\":\"normal\",\"weapon\":\"shotgun\",\"groundSpeed\":5.5,\"spreadAngle\":0.10471975511965978,\"facingYaw\":0,\"desired\":{\"x\":0,\"y\":-0.11111111111111104,\"z\":0},\"allowed\":{\"x\":5.534702474108144e-9,\"y\":-0.11064253747463226,\"z\":0},\"aiming\":false,\"cameraYaw\":0,\"jumped\":false,\"velocityY\":0,\"grounded\":true}",
+    "timestamp": "2026-10-15T12:52:50.398Z",
+    "url": "http://127.0.0.1:5173/src/player/CapsulePlayer.tsx?t=1792068656517"
+  }
+]

@@ -1,0 +1,3 @@
+/* A virtual viewport keeps corner offsets and the screen center consistent.
+   Canvas, fullscreen overlays and settings stay outside this layer. */
+.hud-scale-layer { position: absolute; left: 0; top: 0; z-index: 10; transform-origin: top left; pointer-events: none; }

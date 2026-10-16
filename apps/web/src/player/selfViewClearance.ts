@@ -2,13 +2,13 @@ import { Mesh, PerspectiveCamera, Vector3, type Object3D } from 'three';
 interface Plate { readonly anchor: Object3D; readonly width: number; readonly height: number; readonly distanceFactor: number }
 /** Presentation only: project actual own mesh bounds and its HTML plate into the center safe disk. */
 export function createSelfViewClearance() {
-  const point = new Vector3(), cameraPosition = new Vector3();
+  const point = new Vector3(), checkPlate = createSelfPlateClearance();
   return (root: Object3D, camera: PerspectiveCamera, width: number, height: number, radius: number, plate?: Plate) => {
     if (![width, height, radius].every(Number.isFinite) || width <= 0 || height <= 0 || radius < 0) return true;
     camera.updateMatrixWorld(); root.updateWorldMatrix(true, true);
-    const intersects = (minX: number, maxX: number, minY: number, maxY: number) => {
+    const intersects = (minX: number, maxX: number, minY: number, maxY: number, safeRadius = radius) => {
       const dx = Math.max(minX - width / 2, 0, width / 2 - maxX), dy = Math.max(minY - height / 2, 0, height / 2 - maxY);
-      return dx * dx + dy * dy <= radius * radius;
+      return dx * dx + dy * dy <= safeRadius * safeRadius;
     };
     let blocked = false;
     root.traverse(object => {
@@ -29,12 +29,24 @@ export function createSelfViewClearance() {
       blocked = intersects(minX, maxX, minY, maxY);
     });
     if (blocked || !plate) return blocked;
+    return checkPlate(camera, width, height, radius, plate);
+  };
+}
+
+/** Hide only a plate touching the spread/progress ring, without hiding its avatar. */
+export function createSelfPlateClearance() {
+  const point = new Vector3(), cameraPosition = new Vector3();
+  return (camera: PerspectiveCamera, width: number, height: number, radius: number, plate: Plate) => {
+    if (![width, height, radius].every(Number.isFinite) || width <= 0 || height <= 0 || radius < 0) return true;
+    camera.updateMatrixWorld();
     plate.anchor.getWorldPosition(point); camera.getWorldPosition(cameraPosition);
     const scale = plate.distanceFactor / (2 * Math.tan(camera.fov * Math.PI / 360) * point.distanceTo(cameraPosition));
     point.applyMatrix4(camera.matrixWorldInverse);
     if (!Number.isFinite(scale) || point.z >= -camera.near) return true;
     point.applyMatrix4(camera.projectionMatrix);
     const x = (point.x + 1) * width / 2, y = (1 - point.y) * height / 2;
-    return intersects(x - plate.width * scale / 2, x + plate.width * scale / 2, y - plate.height * scale / 2, y + plate.height * scale / 2);
+    const dx = Math.max(Math.abs(x - width / 2) - plate.width * scale / 2, 0);
+    const dy = Math.max(Math.abs(y - height / 2) - plate.height * scale / 2, 0);
+    return dx * dx + dy * dy <= radius * radius;
   };
 }

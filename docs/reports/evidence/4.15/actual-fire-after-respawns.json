@@ -1,0 +1,8 @@
+[
+  {
+    "level": "info",
+    "message": "[weapon.check] {\"tick\":4820,\"sequence\":1,\"weapon\":\"sniper\",\"angle\":0,\"reloading\":false,\"magazine\":4,\"reserve\":20,\"shotsFired\":1}",
+    "timestamp": "2026-10-15T12:53:33.383Z",
+    "url": "http://127.0.0.1:5173/src/weapons/RifleSimulation.tsx?t=1792065863439"
+  }
+]

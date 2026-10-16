@@ -1,9 +1,9 @@
 import type { MovementKeys } from '@bubble-arena/shared';
 export type { MovementKeys } from '@bubble-arena/shared';
 
-const RELEASED: MovementKeys = Object.freeze({ forward: false, backward: false, left: false, right: false });
+const RELEASED: MovementKeys = Object.freeze({ forward: false, backward: false, left: false, right: false, sprinting: false });
 const BINDINGS: Readonly<Record<string, keyof MovementKeys>> = {
-  KeyW: 'forward', KeyS: 'backward', KeyA: 'left', KeyD: 'right',
+  KeyW: 'forward', KeyS: 'backward', KeyA: 'left', KeyD: 'right', ShiftLeft: 'sprinting', ShiftRight: 'sprinting',
 };
 
 function getAction(code: string): keyof MovementKeys | undefined {
@@ -22,6 +22,7 @@ export class KeyboardInput {
   private snapshot = RELEASED;
   private readonly subscribers = new Set<() => void>();
   private detach: (() => void) | undefined;
+  private readonly sprintKeys = new Set<string>();
   private jumpHeld = false;
   private jumpQueued = false;
 
@@ -45,6 +46,7 @@ export class KeyboardInput {
   };
 
   clear = () => {
+    this.sprintKeys.clear();
     this.jumpHeld = false;
     this.jumpQueued = false;
     this.publish(RELEASED);
@@ -65,14 +67,16 @@ export class KeyboardInput {
         return;
       }
       if (!action) return;
-      this.publish({ ...this.snapshot, [action]: true });
+      if(action==='sprinting')this.sprintKeys.add(key.code);
+      this.publish({ ...this.snapshot, [action]: true, ...(action !== 'sprinting' ? { sprinting: this.sprintKeys.size > 0 || key.shiftKey === true } : {}) });
     };
     const onKeyUp = (event: Event) => {
       const code = (event as KeyboardEvent).code;
       if (code === 'Space') this.jumpHeld = false;
       const action = getAction(code);
       // Always release, even if focus or modifiers changed since keydown.
-      if (action) this.publish({ ...this.snapshot, [action]: false });
+      if(action==='sprinting')this.sprintKeys.delete(code);
+      if (action) this.publish({ ...this.snapshot, [action]: action==='sprinting'?this.sprintKeys.size>0:false, ...(action !== 'sprinting' ? { sprinting: this.sprintKeys.size > 0 || (event as KeyboardEvent).shiftKey === true } : {}) });
     };
     const onVisibility = () => {
       if (visibilityTarget.visibilityState === 'hidden') this.clear();

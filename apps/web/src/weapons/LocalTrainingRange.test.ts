@@ -1,6 +1,6 @@
 import { beforeAll, expect, test, vi } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
-import { COLLISION_GROUPS, BLOCK_AVATAR_CONFIG as shape, WHITEBOX_COLLISION, TRAINING_RANGE_CONFIG } from '@bubble-arena/shared';
+import { COLLISION_GROUPS, BLOCK_AVATAR_CONFIG as shape, WHITEBOX_COLLISION, TRAINING_RANGE_CONFIG, PLAYER_CONFIG } from '@bubble-arena/shared';
 import { LocalTrainingRange } from './LocalTrainingRange';
 import { TrainingTargets } from './TrainingTargets';
 import { queryMuzzleRay } from './muzzleRay';
@@ -27,7 +27,7 @@ test('three configured fixtures receive independent damage through real map quer
     world.step();
     const initial = range.getSnapshot(), notify = vi.fn(), unsubscribe = range.subscribe(notify);
     for (let i = 0; i < 3; i++) {
-      const x = range.entries[i].position[0], origin = { x, y: .8, z: 0 };
+      const x = range.entries[i].position[0], origin = { x, y: range.entries[i].position[1] + shape.bodyY, z: 0 };
       const aim = registry.aim(world, { origin, direction: { x: 0, y: 0, z: -1 }, range: 70 })!;
       expect(aim.colliderHandle).toBe(handles[i]);
       const result = queryMuzzleRay(world, origin, { ...origin, z: -0.67 }, aim);
@@ -38,7 +38,7 @@ test('three configured fixtures receive independent damage through real map quer
     expect(range.getSnapshot().hitCount).toBe(3); expect(notify).toHaveBeenCalledTimes(3);
     unsubscribe(); unsubscribe(); range.entries[0].target.receiveHit({ tick: 100, sequence: 10 }); expect(notify).toHaveBeenCalledTimes(3);
     expect(new LocalTrainingRange().getSnapshot().targets.every(s => s.hp === 100)).toBe(true);
-    const spawn = { x: TRAINING_RANGE_CONFIG.playerSpawnXZ[0], y: 0.9, z: TRAINING_RANGE_CONFIG.playerSpawnXZ[1] };
-    expect(world.intersectionWithShape(spawn, { x: 0, y: 0, z: 0, w: 1 }, new RAPIER.Capsule(0.55, 0.35), undefined, COLLISION_GROUPS.player)).toBeNull();
+    const spawn = { x: TRAINING_RANGE_CONFIG.playerSpawnXZ[0], y: PLAYER_CONFIG.height / 2, z: TRAINING_RANGE_CONFIG.playerSpawnXZ[1] };
+    expect(world.intersectionWithShape(spawn, { x: 0, y: 0, z: 0, w: 1 }, new RAPIER.Capsule(PLAYER_CONFIG.capsuleHalfHeight, PLAYER_CONFIG.radius), undefined, COLLISION_GROUPS.player)).toBeNull();
   } finally { releases.forEach(release => release()); world.free(); }
 });

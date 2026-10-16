@@ -9,11 +9,11 @@ test('UI requests are bounded intents: no damage until the next simulation step,
   for (let i = 0; i < 60; i++) expect(player.step()).toBe(false);
   expect(notify).toHaveBeenCalledTimes(1);
   player.requestTest('down'); player.step();
-  const downed = player.getSnapshot(); expect(downed).toMatchObject({ hp: 0, status: 'downed', downedHp: 50, lifeId: 1, lastDamage: 80 });
+  const downed = player.getSnapshot(); expect(downed).toMatchObject({ hp: 0, status: 'downed', downedHp: 300, lifeId: 1, lastDamage: 80 });
   expect(notify).toHaveBeenCalledTimes(2);
   expect(player.requestTest('down')).toBe(false);
   for (let i = 0; i < 1800; i++) player.step();
-  expect(player.getSnapshot()).toMatchObject({ status: 'respawning', eliminationReason: 'downed-timeout', revision: 3 }); expect(notify).toHaveBeenCalledTimes(27);
+  expect(player.getSnapshot()).toMatchObject({ status: 'normal', hp: 50, eliminationReason: null, revision: 2 }); expect(notify).toHaveBeenCalledTimes(23);
   release(); release();
 });
 test('pending input cleanup and subscription release are idempotent, and a rebound subscriber works', () => {

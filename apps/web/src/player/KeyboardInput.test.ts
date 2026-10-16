@@ -26,11 +26,11 @@ function key(type: 'keydown' | 'keyup', code: string, extra = {}, target = keys)
 test('physical WASD codes can be held together and released independently', () => {
   expect(key('keydown', 'KeyW').defaultPrevented).toBe(true);
   key('keydown', 'KeyA'); key('keydown', 'KeyS'); key('keydown', 'KeyD');
-  expect(input.getSnapshot()).toEqual({ forward: true, left: true, backward: true, right: true });
+  expect(input.getSnapshot()).toEqual({ forward: true, left: true, backward: true, right: true, sprinting: false });
   key('keyup', 'KeyW');
-  expect(input.getSnapshot()).toEqual({ forward: false, left: true, backward: true, right: true });
+  expect(input.getSnapshot()).toEqual({ forward: false, left: true, backward: true, right: true, sprinting: false });
   input.clear();
-  expect(Object.values(input.getSnapshot())).toEqual([false, false, false, false]);
+  expect(Object.values(input.getSnapshot())).toEqual([false, false, false, false, false]);
 });
 
 test('repeat and unknown keys do not publish redundant state or steal shortcuts', () => {
@@ -129,4 +129,16 @@ test('Space shortcuts, composition and editor typing do not queue jumps', () => 
   input.attach(editableKeys, visibility);
   expect(key('keydown', 'Space', {}, editableKeys).defaultPrevented).toBe(false);
   expect(input.consumeJump()).toBe(false);
+});
+
+test('both physical Shift keys form a held sprint intent and release independently of WASD, blur clears it',()=>{
+ key('keydown','KeyW');key('keydown','ShiftLeft');key('keydown','ShiftRight');expect(input.getSnapshot().sprinting).toBe(true);
+ key('keyup','ShiftLeft');expect(input.getSnapshot().sprinting).toBe(true);key('keyup','ShiftRight');expect(input.getSnapshot().sprinting).toBe(false);expect(input.getSnapshot().forward).toBe(true);
+ key('keydown','ShiftLeft');keys.dispatchEvent(new Event('blur'));expect(input.getSnapshot().sprinting).toBe(false);
+});
+test('movement events carrying Shift also preserve sprint intent on modifier-only input backends',()=>{
+ const input=new KeyboardInput(),global=new EventTarget(),doc=Object.assign(new EventTarget(),{visibilityState:'visible' as const});
+ const detach=input.attach(global,doc);
+ global.dispatchEvent(Object.assign(new Event('keydown'),{code:'KeyW',shiftKey:true}));expect(input.getSnapshot()).toMatchObject({forward:true,sprinting:true});
+ global.dispatchEvent(Object.assign(new Event('keyup'),{code:'KeyW',shiftKey:false}));expect(input.getSnapshot()).toMatchObject({forward:false,sprinting:false});detach();
 });

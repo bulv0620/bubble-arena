@@ -12,17 +12,17 @@ test('standing damage updates frozen snapshots and five rifle body hits enter do
     expect(state.hp).toBe(100 - 20 * sequence); expect(state.lastDamage).toBe(20); expect(Object.isFrozen(state)).toBe(true);
     expect(state.status).toBe(sequence === 5 ? 'downed' : 'normal');
   }
-  expect(player.getSnapshot()).toMatchObject({ hp: 0, downedHp: 50, maxDownedHp: 50, status: 'downed', lifeId: 1, revision: 1 });
+  expect(player.getSnapshot()).toMatchObject({ hp: 0, downedHp: 300, maxDownedHp: 300, status: 'downed', lifeId: 1, revision: 1 });
 });
 test('overkill is clipped to standing health and cannot spill into the independent downed pool', () => {
   const player = new PlayerHealthState();
   player.receiveDamage(hit(), 160, false);
   const downed = player.getSnapshot();
-  expect(downed).toMatchObject({ hp: 0, downedHp: 50, lastDamage: 100, status: 'downed' });
+  expect(downed).toMatchObject({ hp: 0, downedHp: 300, lastDamage: 100, status: 'downed' });
   // Only a distinct subsequent hit can finish; replay of the standing hit cannot spill.
   expect(player.receiveDamage(hit(), 999, false)).toBe(false); expect(player.getSnapshot()).toBe(downed);
   expect(player.receiveDamage(hit(2, 1), 999, false)).toBe(true);
-  expect(player.getSnapshot()).toMatchObject({ status: 'eliminated', hp: 0, downedHp: 0, lastDamage: 50 });
+  expect(player.getSnapshot()).toMatchObject({ status: 'eliminated', hp: 0, downedHp: 0, lastDamage: 300 });
   const eliminated = player.getSnapshot();
   for (let sequence = 3; sequence < 100; sequence++) expect(player.receiveDamage(hit(sequence, sequence), 999, false)).toBe(false);
   expect(player.getSnapshot()).toBe(eliminated);

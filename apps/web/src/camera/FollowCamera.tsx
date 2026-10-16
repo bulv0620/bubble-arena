@@ -1,7 +1,7 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { CAMERA_CONFIG, type CameraHeading } from '@bubble-arena/shared';
+import { CAMERA_CONFIG, LOCOMOTION_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { useRapier } from '@react-three/rapier';
 import { cameraFocus, updateFollowCamera, type CameraFollowTarget } from './cameraFollowPose';
 import { MouseOrbit } from './MouseOrbit';
@@ -15,12 +15,12 @@ import type { LocalLoadout } from '../weapons/LocalLoadout';
 
 import type { LocalRespawn } from '../player/LocalRespawn';
 
-export function FollowCamera({ respawn, loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity }: { respawn: LocalRespawn; loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
+export function FollowCamera({ respawn, loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity, initialYaw = 0 }: { initialYaw?: number; respawn: LocalRespawn; loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
   control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets; recoil: RifleRecoil }) {
   const diagnostics = useRef(0);
   const previousRecoil = useRef(0);
   const lifeRevision = useRef(respawn.getRevision());
-  const [orbit] = useState(() => new MouseOrbit());
+  const [orbit] = useState(() => new MouseOrbit(initialYaw));
   const canvas = useThree(state => state.gl.domElement);
   const { world } = useRapier();
   const [previous] = useState(() => ({ position: new Vector3(), rotation: new Quaternion() }));
@@ -50,7 +50,7 @@ export function FollowCamera({ respawn, loadout, target, control, clearInput, vi
     previous.position.copy(camera.position);
     previous.rotation.copy(camera.quaternion);
     const aiming = loadout.getSnapshot().scoped;
-    if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles, aiming, aiming ? SNIPER_SCOPE_CONFIG.fov : undefined)) return;
+    if (!(camera instanceof PerspectiveCamera) || !updateFollowCamera(camera, target.current, angles, aiming, aiming ? SNIPER_SCOPE_CONFIG.fov : CAMERA_CONFIG.fov + (loadout.getSnapshot().sprinting ? LOCOMOTION_CONFIG.sprintFovIncrease*Math.min(1,loadout.getMotionSpeed()/PLAYER_CONFIG.speed) : 0))) return;
     const position = target.current!.translation();
     const focus = cameraFocus(position, angles.yaw, aiming);
     const avoidance = avoidCameraObstacles(world, camera,

@@ -1,0 +1,16 @@
+// Temporary browser reproduction fixture; removed before delivery.
+import { useRef, type RefObject } from 'react';
+import { useBeforePhysicsStep } from '@react-three/rapier';
+import type { RapierRigidBody } from '@react-three/rapier';
+import type { createTrainingSession } from './trainingSession';
+import type { KeyboardInput } from '../player/KeyboardInput';
+export function ArenaRepro({ session: s, body, input, enabled }: { session: ReturnType<typeof createTrainingSession>; body: RefObject<RapierRigidBody | null>; input: KeyboardInput; enabled: () => boolean }) {
+  const start = useRef<number | null>(null);
+  useBeforePhysicsStep(() => {
+    if (!s.match.canPlay() || !s.opponent) return;
+    const tick = s.playerHealth.getTick(); start.current ??= tick;
+    const elapsed = tick - start.current;
+    if ((elapsed === 120 || elapsed === 600 || elapsed === 1080)) { s.opponent.receiveHit({ tick, sequence: 1001 }, 100); s.opponent.receiveHit({ tick, sequence: 1002 }, 50); console.info('[repro.kill]', tick); }
+    if (elapsed % 60 === 0) console.info('[repro.state]', JSON.stringify({ tick, elapsed, enabled: enabled(), keys: input.getSnapshot(), speed: s.loadout.getSpeed(), player: s.playerHealth.getSnapshot(), bot: s.opponent.getSnapshot(), position: body.current?.translation() }));
+  }); return null;
+}

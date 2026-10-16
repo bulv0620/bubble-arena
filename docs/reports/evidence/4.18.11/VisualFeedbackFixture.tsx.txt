@@ -1,0 +1,16 @@
+import { useEffect, useRef } from 'react';
+import { useAfterPhysicsStep } from '@react-three/rapier';
+import type { createTrainingSession } from './trainingSession';
+/** TEMPORARY visual diagnosis: real life rules, deterministic damage; no gameplay acceptance claim. */
+export function VisualFeedbackFixture({session}:{session:ReturnType<typeof createTrainingSession>}){
+ const kick = useRef(false);
+ useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.code==='KeyK')kick.current=true;};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key);},[]);
+ useAfterPhysicsStep(()=>{
+  const tick=session.playerHealth.getTick();if(!session.match.canPlay())return;
+  const enemy=session.bots.find(b=>b.actor.teamId!==session.playerHealth.actor.teamId);if(!enemy)return;
+  if(kick.current){kick.current=false;const s=session.playerHealth.getSnapshot();if(s.status==='normal')session.playerHealth.receiveCombatDamage(100,enemy.actor);else if(s.status==='downed')session.playerHealth.finishBubble({lifeId:s.lifeId,revision:s.revision},enemy.actor);}
+  if(tick===300)enemy.receiveCombatDamage(100,session.playerHealth.actor);
+  if(tick===900)session.playerHealth.receiveCombatDamage(100,enemy.actor);
+  if(tick===1500){const s=session.playerHealth.getSnapshot();session.playerHealth.finishBubble({lifeId:s.lifeId,revision:s.revision},enemy.actor);}
+ });return null;
+}

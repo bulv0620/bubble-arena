@@ -25,9 +25,9 @@ test('real bound health finishing locks weapons and horizontal inertia without c
     f.step(); f.session.loadout.step({ held: true, pressed: true }); const ammo = f.session.loadout.getSnapshot().ammo.magazine;
     for (let i = 0; i < 90; i++) { f.adapter.step(f.body, f.collider, { forward: true, backward: false, left: false, right: false }); f.world.step(); }
     f.session.playerHealth.requestTest('down'); f.step();
-    for (const hp of [30, 10, 0]) { expect(f.session.playerHealth.requestTest('hit')).toBe(true); f.step(); expect(f.session.playerHealth.getSnapshot().downedHp).toBe(hp); }
+    for (const hp of Array.from({length:15},(_,i)=>300-(i+1)*20)) { expect(f.session.playerHealth.requestTest('hit')).toBe(true); f.step(); expect(f.session.playerHealth.getSnapshot().downedHp).toBe(hp); }
     expect(f.session.loadout.getSnapshot()).toMatchObject({ lifeStatus: 'eliminated', active: 'sniper', ammo: { magazine: ammo } });
-    expect(f.session.loadout.canOperate()).toBe(false); expect(f.session.loadout.select(2)).toBe(false); f.session.loadout.setScoped(true); expect(f.session.loadout.getSnapshot().scoped).toBe(false);
+    expect(f.session.loadout.canOperate()).toBe(false); expect(f.session.loadout.select(4)).toBe(false); f.session.loadout.setScoped(true); expect(f.session.loadout.getSnapshot().scoped).toBe(false);
     expect(f.session.loadout.step({ held: true, pressed: true }, true)).toBeNull();
     const before = f.body.translation(), bodies = f.world.bodies.len(), colliders = f.world.colliders.len(), policy = playerActionPolicy(f.session.playerHealth.getSnapshot().status);
     const result = f.adapter.step(f.body, f.collider, { forward: false, backward: false, left: false, right: false }, policy.canJump, 0, 1, policy.maximumSpeed ?? undefined)!;
@@ -42,10 +42,10 @@ test('damage interrupts a genuine receiving-rescue channel and finishing cannot 
   const f = fixture();
   try {
     f.session.rescue.configure('self-rescue'); f.step(); f.session.playerHealth.requestTest('down'); f.step();
-    for (let i = 0; i < 179; i++) f.step(); expect(f.session.rescue.getSnapshot().channel?.elapsedTicks).toBe(179);
+    for (let i = 0; i < 119; i++) f.step(); expect(f.session.rescue.getSnapshot().channel?.elapsedTicks).toBe(119);
     f.session.playerHealth.requestTest('hit'); const cancelled = f.step(); expect(cancelled.events).toMatchObject([{ kind: 'interrupted', reason: 'damaged' }]);
-    expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: 'downed', downedHp: 30 });
-    f.session.playerHealth.requestTest('hit'); f.step(); f.session.playerHealth.requestTest('hit'); f.step();
+    expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: 'downed', downedHp: 280 });
+    for(let i=0;i<14;i++){f.session.playerHealth.requestTest('hit');f.step();}
     for (let i = 0; i < 240; i++) f.step();
     expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: 'eliminated', hp: 0, revision: 2 }); expect(f.session.rescue.getSnapshot().channel).toBeNull();
     expect(f.session.loadout.getSnapshot().rescuing).toBe(false);
@@ -56,18 +56,18 @@ test('test ally times out under the same health rule; held rescue from too late 
   try {
     f.session.rescue.configure('stationary'); f.step(); for (let i = 0; i < 1190; i++) f.step();
     for (let i = 0; i < 10; i++) f.step({ ...idle, held: true });
-    expect(f.session.rescue.getSnapshot().allyHealth).toMatchObject({ status: 'eliminated', eliminationReason: 'downed-timeout', downedHp: 0, revision: 2 });
+    expect(f.session.rescue.getSnapshot().allyHealth).toMatchObject({ status: 'normal', hp: 50, eliminationReason: null, downedHp: 0, revision: 2 });
     expect(f.session.rescue.getSnapshot().channel).toBeNull(); expect(f.session.loadout.getSnapshot().rescuing).toBe(false);
     expect(f.session.loadout.getSpeed()).toBe(4);
-    for (let i = 0; i < 240; i++) f.step({ ...idle, held: true }); expect(f.session.rescue.getSnapshot().allyHealth?.status).toBe('eliminated');
+    for (let i = 0; i < 240; i++) f.step({ ...idle, held: true }); expect(f.session.rescue.getSnapshot().allyHealth?.status).toBe('normal');
   } finally { f.dispose(); }
 });
 test('queued cleanup/subscriber release and a fresh training session discard terminal state and countdown', () => {
   const f = fixture(), notify = vi.fn(), unsubscribe = f.session.playerHealth.subscribe(notify);
   try {
     f.session.playerHealth.requestTest('down'); f.step(); const calls = notify.mock.calls.length; unsubscribe(); unsubscribe();
-    f.session.playerHealth.requestTest('hit'); f.session.playerHealth.clearPending(); f.step(); expect(f.session.playerHealth.getSnapshot().downedHp).toBe(50);
-    for (let i = 0; i < 1200; i++) f.step(); expect(f.session.playerHealth.getSnapshot().status).toBe('eliminated'); expect(notify).toHaveBeenCalledTimes(calls);
+    f.session.playerHealth.requestTest('hit'); f.session.playerHealth.clearPending(); f.step(); expect(f.session.playerHealth.getSnapshot().downedHp).toBe(300);
+    for (let i = 0; i < 1200; i++) f.step(); expect(f.session.playerHealth.getSnapshot().status).toBe('normal'); expect(notify).toHaveBeenCalledTimes(calls);
     const fresh = createTrainingSession('sniper'); fresh.playerHealth.step();
     expect(fresh.playerHealth.getSnapshot()).toMatchObject({ status: 'normal', hp: 100, downedSecondsRemaining: 0, eliminationReason: null });
     expect(fresh.loadout.getSnapshot()).toMatchObject({ active: 'sniper', ammo: { magazine: 5 } }); expect(fresh.rescue.getSnapshot().mode).toBe('off'); fresh.rescue.dispose();

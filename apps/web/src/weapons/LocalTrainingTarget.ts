@@ -6,6 +6,7 @@ export class LocalTrainingTarget {
   readonly damageNumbers = new DamageNumbers();
   private readonly slow = new MovementSlow();
   private slowSnapshot = 1;
+  private presentationTick = 0;
   getSlowSnapshot = () => this.slowSnapshot;
   private publishSlow() {
     const next = this.slow.getMultiplier();
@@ -19,7 +20,7 @@ export class LocalTrainingTarget {
   getSnapshot = () => this.rule.getState();
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   step() {
-    this.slow.step(); this.publishSlow();
+    this.damageNumbers.step(++this.presentationTick); this.slow.step(); this.publishSlow();
     if (!this.rule.step()) return false;
     this.damageNumbers.clear();
     for (const listener of this.listeners) listener();

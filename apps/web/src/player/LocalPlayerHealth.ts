@@ -1,16 +1,16 @@
 import type { LocalTeamScore } from './LocalTeamScore';
 import { PlayerHealthState, type RescueChannel } from '@bubble-arena/game-core';
-import { TRAINING_PLAYER_HEALTH_CONFIG, TRAINING_RESCUE_CONFIG, PLAYER_LIFE_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, TRAINING_DAMAGE_SOURCES, TRAINING_SCORE_ACTORS, type TrainingDamageSource, type EliminationFact } from '@bubble-arena/shared';
+import { TRAINING_PLAYER_HEALTH_CONFIG, TRAINING_RESCUE_CONFIG, PLAYER_LIFE_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, TRAINING_DAMAGE_SOURCES, TRAINING_SCORE_ACTORS, type TrainingDamageSource, type EliminationFact, type DamageActor } from '@bubble-arena/shared';
 
 export type HealthTestIntent = 'hit' | 'down' | 'replay-score';
 /** Bounded local test input and subscriptions; damage is consumed by a physics hook. */
 export class LocalPlayerHealth {
-  private readonly rule = new PlayerHealthState(1, PLAYER_LIFE_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, TRAINING_SCORE_ACTORS.player);
+  private readonly rule: PlayerHealthState;
   private source: TrainingDamageSource = 'unowned';
   private lastObserved: EliminationFact | null = null;
   private lastResolved: EliminationFact | null = null;
   private deferred: EliminationFact[] = [];
-  constructor(private readonly score?: LocalTeamScore, readonly canPlay: () => boolean = () => true, private readonly batchScoring = false) {}
+  constructor(private readonly score?: LocalTeamScore, readonly canPlay: () => boolean = () => true, private readonly batchScoring = false, readonly actor: DamageActor = TRAINING_SCORE_ACTORS.player) { this.rule = new PlayerHealthState(1, PLAYER_LIFE_CONFIG, RESCUE_PROTECTION_CONFIG, RESPAWN_CONFIG, actor); }
   getTestSource = () => this.source;
   canReplayScore = () => this.lastResolved !== null;
   configureTestSource = (source: TrainingDamageSource) => {
@@ -24,7 +24,9 @@ export class LocalPlayerHealth {
   private damageRevision = 0;
   getDamageRevision = () => this.damageRevision;
   getTick = () => this.tick - 1;
-  getSnapshot = this.rule.getSnapshot;
+  getSnapshot = () => this.rule.getSnapshot();
+  getDowner = () => this.rule.getDowner();
+  getElimination = () => this.rule.getElimination();
   subscribe = (listener: () => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   requestTest = (intent: HealthTestIntent) => {
     if (intent !== 'hit' && intent !== 'down' && intent !== 'replay-score') throw new TypeError('Invalid health test intent');
@@ -40,7 +42,7 @@ export class LocalPlayerHealth {
     if (!this.canPlay()) return false;
     const before = this.getSnapshot();
     const accepted = this.rule.completeSpawn({ lifeId: before.lifeId, revision: before.revision }, this.getTick(), apply, false);
-    if (accepted) { this.pending = null; this.lastObserved = null; this.score?.beginLife(TRAINING_SCORE_ACTORS.player.playerId, this.getSnapshot().lifeId, this.getTick(), false); }
+    if (accepted) { this.pending = null; this.lastObserved = null; this.score?.beginLife(this.actor.playerId, this.getSnapshot().lifeId, this.getTick(), false); }
     if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
     return accepted;
   }
@@ -52,6 +54,11 @@ export class LocalPlayerHealth {
     if (this.getSnapshot() !== before) for (const listener of this.listeners) listener();
     return accepted;
   }
+  finishBubble(fact: {lifeId:number;revision:number}, source: DamageActor) {
+    if(!this.canPlay())return false;
+    const accepted=this.rule.finishBubble(fact,this.getTick(),source,false);
+    if(accepted){this.damageRevision++;for(const listener of this.listeners)listener();}return accepted;
+  }
   onAcceptedFire(sequence: number) {
     if (!this.canPlay()) return false;
     const before = this.getSnapshot();
@@ -60,8 +67,9 @@ export class LocalPlayerHealth {
     return ended;
   }
   canCauseControl = () => this.canPlay() && (this.getTick() < 0 || this.rule.canCauseControl(this.getTick(), false));
-  receiveCombatDamage(damage: number, source: typeof TRAINING_SCORE_ACTORS['enemy-a']) {
+  receiveCombatDamage(damage: number, source: DamageActor) {
     if (!this.canPlay() || this.getTick() < 0) return false;
+    if (source.teamId === this.actor.teamId) return false;
     const before = this.getSnapshot();
     const accepted = this.rule.receiveDamage({ lifeId: before.lifeId, tick: this.getTick(), sequence: ++this.sequence }, damage, false, source);
     if (accepted) this.damageRevision++;

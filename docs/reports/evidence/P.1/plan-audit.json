@@ -1,0 +1,83 @@
+{
+  "taskCount": 173,
+  "networkTaskCount": 33,
+  "batches": [
+    {
+      "id": "N1",
+      "tasks": [
+        "5.1",
+        "5.2",
+        "5.3",
+        "5.4"
+      ],
+      "milestone": "M1"
+    },
+    {
+      "id": "N2",
+      "tasks": [
+        "6.1",
+        "6.2",
+        "6.3",
+        "6.4",
+        "6.5",
+        "6.6",
+        "6.7",
+        "6.8",
+        "6.9",
+        "6.10"
+      ],
+      "milestone": "M1"
+    },
+    {
+      "id": "N3",
+      "tasks": [
+        "5.5",
+        "5.6",
+        "5.7.1",
+        "5.7.2",
+        "5.7.3",
+        "5.8",
+        "5.9",
+        "5.10",
+        "6.11"
+      ],
+      "milestone": "M1"
+    },
+    {
+      "id": "N4",
+      "tasks": [
+        "5.11",
+        "5.12.1",
+        "5.12.2",
+        "5.13",
+        "5.14",
+        "5.15",
+        "6.12",
+        "5.16"
+      ],
+      "milestone": "M1"
+    },
+    {
+      "id": "N5",
+      "tasks": [
+        "6.13",
+        "5.17"
+      ],
+      "milestone": "M2"
+    }
+  ],
+  "batchCoverageExact": true,
+  "taskCardDependenciesConsistent": true,
+  "dependencyOrderForward": true,
+  "existingStatusChanges": [],
+  "existingStageChanges": [],
+  "protectedApplicationChanges": [],
+  "existingTaskCount": 172,
+  "newPlanningTask": "P.1",
+  "phase4Status": {
+    "4.11": "implemented",
+    "4.12": "in_progress",
+    "4.13": "implemented"
+  },
+  "errors": []
+}

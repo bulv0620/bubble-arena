@@ -10,6 +10,8 @@ Blender 用米制 1 单位=1m，Z 向上。GLB 导出启用 +Y Up；运行时 Y 
 
 角色原点脚底中心；武器原点主握把，节点 grip_main/grip_support/muzzle；角色挂点 weapon_socket 在右手，逻辑枪口按标准姿态/配置计算，不能依赖客户端动画作为命中来源。
 
+4.18.6.1角色比例合同：总高1.4m、大头短身，头高约50%，水平形体不超当前0.35m运动半径；正式手脚与骨架在B.3通过Blender MCP制作，遵循[当前构图](../spec/CAMERA_FRAMING.md)，不得回用旧1.8m长身比例。当前仅共享工程占位已调整，未交付正式模型。
+
 角色动画 clips：idle/run/jump/fall/land/aim/fire/reload/downed/crawl/revive。移动动画 in-place，不用 root motion 驱动坐标。不同武器可有 reload 变体并由 manifest 指定；动作长度不决定权威换弹时间。
 
 地图集合 VISUAL/COLLISION/SPAWNS。碰撞节点 col_*，出生节点 spawn_red_01/spawn_blue_01 等。简化碰撞导出到 shared 地图 JSON（位置、尺寸、旋转/顶点），两端使用相同文件/hash。场景禁止有视觉墙无碰撞或反之。

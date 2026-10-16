@@ -27,7 +27,7 @@ test.each([-1, 1])('real capsule ascends the %i ramp, traverses deck and descend
     const collider = world.createCollider(RAPIER.ColliderDesc.capsule(PLAYER_CONFIG.capsuleHalfHeight, PLAYER_CONFIG.radius).setCollisionGroups(COLLISION_GROUPS.player), body); world.step();
     let high = 0;
     for (let tick = 0; tick < 450; tick++) { movement.step(body, collider, { forward: true, backward: false, left: false, right: false }, false, side > 0 ? 0 : Math.PI); world.step(); high = Math.max(high, body.translation().y); }
-    expect(high).toBeGreaterThan(2.35); expect(body.translation().z * side).toBeLessThan(-15); expect(body.translation().y).toBeLessThan(1);
+    expect(high - PLAYER_CONFIG.height / 2).toBeGreaterThan(1.45); expect(body.translation().z * side).toBeLessThan(-15); expect(body.translation().y).toBeLessThan(1);
   } finally { movement.dispose(); world.free(); }
 });
 
@@ -57,7 +57,7 @@ test('kinematic opponent head/body accept real registered rays, wall blocks both
     expect(s.targets.receiveExplosion(world, { tick: 0, sequence: 10 }, { x: -14, y: 1, z: .5 })).toBe(1); expect(bot.getSnapshot().hp).toBe(35);
     s.playerHealth.step(); bot.advance(1); expect(s.targets.receiveExplosion(world, { tick: 1, sequence: 10 }, { x: -14, y: 1, z: .5 })).toBe(0);
     world.removeCollider(wall, true); world.step();
-    for (let sequence = 2; sequence <= 4; sequence++) s.targets.receiveShotImpact(world, { tick: 1, sequence }, result);
+    for (let sequence = 2; sequence <= 10; sequence++) s.targets.receiveShotImpact(world, { tick: 1, sequence }, result);
     expect(bot.getSnapshot().status).toBe('eliminated'); s.score.step(1, bot.drainScoreFacts(), false); expect(s.score.getSnapshot().teams.red).toBe(1);
     expect(s.targets.isRegistered(head.handle)).toBe(false); // corpses cannot intercept new bubbles
     const afterDeath = bot.getSnapshot(); for (let tick = 2; tick <= 300; tick++) bot.advance(tick); expect(bot.getSnapshot().status).toBe('eliminated');
@@ -73,8 +73,8 @@ test('both real health eliminations are submitted together, draw and restart ret
   const s = createTrainingSession('sniper', { arena: true, match: true, config: { countdownSeconds: 1, durationSeconds: 300, scoreLimit: 1 } });
   s.match.setSceneReady(true); s.match.requestStart(); for (let i = 0; i <= 60; i++) s.match.step();
   s.playerHealth.step(); s.opponent!.advance(0);
-  s.playerHealth.receiveCombatDamage(100, actors['enemy-a']); s.playerHealth.receiveCombatDamage(50, actors['enemy-a']);
-  s.opponent!.receiveHit({ tick: 0, sequence: 1 }, 100); s.opponent!.receiveHit({ tick: 0, sequence: 2 }, 50);
+  s.playerHealth.receiveCombatDamage(100, actors['enemy-a']); s.playerHealth.receiveCombatDamage(300, actors['enemy-a']);
+  s.opponent!.receiveHit({ tick: 0, sequence: 1 }, 100); s.opponent!.receiveHit({ tick: 0, sequence: 2 }, 300);
   const facts = [...s.playerHealth.drainScoreFacts(), ...s.opponent!.drainScoreFacts()]; expect(facts).toHaveLength(2);
   s.score.step(0, facts, false); s.match.resolve(s.score.getSnapshot()); expect(s.match.getSnapshot().result).toMatchObject({ winner: null, teams: { red: 1, blue: 1 } });
   const state = s.opponent!.getSnapshot(); s.opponent!.advance(2000); expect(s.opponent!.getSnapshot()).toBe(state);

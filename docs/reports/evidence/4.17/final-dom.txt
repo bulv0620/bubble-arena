@@ -1,0 +1,58 @@
+- main:
+  - generic: B!
+  - text: BUBBLE ARENA
+  - generic: 泡泡竞技场
+  - generic: ✦ 泡泡先锋
+  - heading "泡泡先锋的房间" [active] [level=1]
+  - button "← 房间列表"
+  - complementary:
+    - text: ★ 房主
+    - heading "泡泡先锋" [level=2]
+    - generic: READY!
+    - button "开始游戏": 开始游戏 ▶
+  - region "房间席位":
+    - region "红队":
+      - heading "红队" [level=2]
+      - generic: 4 / 4
+      - article:
+        - generic: 泡泡先锋
+        - generic: ★
+        - generic: 房主 READY
+      - article:
+        - generic: 红队 2 号
+        - button "移除红队 2 号机器人": ×
+        - generic: AI READY
+      - article:
+        - generic: 红队 3 号
+        - button "移除红队 3 号机器人": ×
+        - generic: AI READY
+      - article:
+        - generic: 红队 4 号
+        - button "移除红队 4 号机器人": ×
+        - generic: AI READY
+    - region "蓝队":
+      - heading "蓝队" [level=2]
+      - generic: 4 / 4
+      - article:
+        - generic: 蓝队 1 号
+        - button "移除蓝队 1 号机器人": ×
+        - generic: AI READY
+      - article:
+        - generic: 蓝队 2 号
+        - button "移除蓝队 2 号机器人": ×
+        - generic: AI READY
+      - article:
+        - generic: 蓝队 3 号
+        - button "移除蓝队 3 号机器人": ×
+        - generic: AI READY
+      - article:
+        - generic: 蓝队 4 号
+        - button "移除蓝队 4 号机器人": ×
+        - generic: AI READY
+    - img "交叉火线地图预览"
+    - heading "交叉火线" [level=3]
+    - text: 基地对抗
+    - generic: 05:00
+    - generic: 20 分
+    - generic: 基地复活
+    - button "关闭房间"

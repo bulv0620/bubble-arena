@@ -1,0 +1,40 @@
+{
+  "clock": "04:32",
+  "events": "蓝队 3 号击倒红队 3 号蓝队 1 号淘汰红队 3 号红队 4 号淘汰蓝队 2 号蓝队 4 号淘汰红队 2 号",
+  "health": [
+    {
+      "hidden": false,
+      "text": "YOU100"
+    },
+    {
+      "hidden": true,
+      "text": "蓝队 1 号60"
+    },
+    {
+      "hidden": true,
+      "text": "蓝队 2 号0"
+    },
+    {
+      "hidden": true,
+      "text": "蓝队 3 号40"
+    },
+    {
+      "hidden": true,
+      "text": "蓝队 4 号 · 倒地 4s50"
+    },
+    {
+      "hidden": true,
+      "text": "红队 2 号0"
+    },
+    {
+      "hidden": true,
+      "text": "红队 3 号0"
+    },
+    {
+      "hidden": true,
+      "text": "红队 4 号 · 倒地 4s50"
+    }
+  ],
+  "mapActors": 5,
+  "score": "Blue 3, Red 1"
+}

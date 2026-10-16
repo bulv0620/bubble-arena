@@ -1,4 +1,4 @@
-export const MOUSE_SETTINGS = Object.freeze({ min: 0.25, max: 3, step: 0.05, default: 1, storageKey: 'bubble-arena.mouse-speed.v1' });
+export const MOUSE_SETTINGS = Object.freeze({ min: 0.05, max: 3, step: 0.01, default: 1, storageKey: 'bubble-arena.mouse-speed.v1' });
 interface Storage { getItem(key: string): string | null; setItem(key: string, value: string): void }
 export function validMouseSpeed(value: number) {
   return Number.isFinite(value) && value >= MOUSE_SETTINGS.min && value <= MOUSE_SETTINGS.max;

@@ -14,8 +14,8 @@ function fixture() {
   const no = { clear: () => {} }, detach = bindLifeActions(session.playerHealth, session.loadout, { aim: no, fire: no, reload: no, switchInput: no, keyboard: { consumeJump: () => false }, recoil: session.recoil, feedback: session.feedback });
   const step = () => { session.playerHealth.step(); session.respawn.step(world, body, movement, () => {}); };
   const down = () => { session.playerHealth.requestTest('down'); step(); };
-  const finish = () => { for (let i = 0; i < 3; i++) { session.playerHealth.requestTest('hit'); step(); } };
-  return { world, session, step, down, finish, cleanup: () => { detach(); session.rescue.dispose(); movement.dispose(); world.free(); } };
+  const finish = () => { for (let i = 0; i < 15; i++) { session.playerHealth.requestTest('hit'); step(); } };
+  return { world, session, body, step, down, finish, cleanup: () => { detach(); session.rescue.dispose(); movement.dispose(); world.free(); } };
 }
 test('real health/down/finisher binding awards only at elimination; replay during death and after real spawn cannot add points', () => {
   const f = fixture();
@@ -31,13 +31,14 @@ test('real health/down/finisher binding awards only at elimination; replay durin
     expect(f.world.bodies.len()).toBe(bodies); expect(f.world.colliders.len()).toBe(colliders);
   } finally { f.cleanup(); }
 });
-test('source is captured when intent is queued; timeout preserves that downer rather than later source selection', () => {
+test('source is captured on queue but bubble timeout self-recovery never awards the downer', () => {
   const f = fixture();
   try {
     f.session.playerHealth.configureTestSource(sourceA); f.session.playerHealth.requestTest('down'); f.session.playerHealth.configureTestSource(sourceB); f.step();
-    f.session.playerHealth.requestTest('hit'); f.step(); for (let i = 0; i < 1199; i++) f.step();
-    expect(f.session.score.getSnapshot().teams.blue).toBe(1); const resolution = f.session.score.getSnapshot().lastEvents[0];
-    expect(resolution).toMatchObject({ fact: { cause: 'downed-timeout' }, killer: a['enemy-a'], assistant: null });
+    const position=f.body.translation(); f.session.playerHealth.requestTest('hit'); f.step(); for (let i = 0; i < 1199; i++) f.step();
+    expect(f.body.translation()).toEqual(position);expect(f.session.respawn.getRevision()).toBe(0);
+    expect(f.session.score.getSnapshot().teams.blue).toBe(0); expect(f.session.score.getSnapshot().lastEvents).toEqual([]);
+    expect(f.session.playerHealth.getSnapshot()).toMatchObject({status:'normal',hp:50,lifeId:1}); expect(f.session.playerHealth.getElimination()).toBeNull();
   } finally { f.cleanup(); }
 });
 test('unowned test deaths and training-target defeat do not give team points; reset has a fresh scoreboard and replay scope', () => {

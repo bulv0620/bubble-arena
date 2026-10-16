@@ -6,7 +6,7 @@ test('loading/start are intents consumed by physics, gameplay gates release only
   expect(m.requestStart()).toBe(false); expect(m.canPlay()).toBe(false);
   expect(s.playerHealth.requestTest('down')).toBe(false);
   expect(s.loadout.step({ held: true, pressed: true })).toBeNull();
-  expect(s.loadout.select(2)).toBe(false); expect(s.loadout.getSpeed()).toBe(0);
+  expect(s.loadout.select(4)).toBe(false); expect(s.loadout.getSpeed()).toBe(0);
   m.setSceneReady(true); m.requestStart(); expect(m.getSnapshot().phase).toBe('waiting');
   m.step(); for (let i = 0; i < 179; i++) m.step();
   expect(m.getSnapshot().phase).toBe('countdown'); m.step(); expect(m.canPlay()).toBe(true);
@@ -37,7 +37,7 @@ test('whole local elimination resolves score limit once and captures frozen resu
   s.match.setSceneReady(true); s.match.requestStart(); for (let i = 0; i <= 60; i++) s.match.step();
   const frame = () => { s.match.step(); s.playerHealth.step(); s.match.resolve(s.score.getSnapshot()); };
   s.playerHealth.configureTestSource('enemy-a'); s.playerHealth.requestTest('down'); frame(); expect(s.match.getSnapshot().phase).toBe('playing');
-  s.playerHealth.configureTestSource('enemy-b'); for (let i = 0; i < 3; i++) { s.playerHealth.requestTest('hit'); frame(); }
+  s.playerHealth.configureTestSource('enemy-b'); for (let i = 0; i < 15; i++) { s.playerHealth.requestTest('hit'); frame(); }
   expect(s.match.getSnapshot()).toMatchObject({ phase: 'finished', result: { winner: 'blue', reason: 'score-limit', teams: { red: 0, blue: 1 } } });
   const final = s.match.getFinalScores(); expect(final?.players.find(p => p.playerId === 'training-enemy-a')?.assists).toBe(1);
   expect(final?.players.find(p => p.playerId === 'training-enemy-b')?.eliminations).toBe(1);

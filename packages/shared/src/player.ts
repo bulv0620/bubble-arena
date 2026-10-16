@@ -1,4 +1,4 @@
-const HEIGHT = 1.8;
+const HEIGHT = 1.4;
 const RADIUS = 0.35;
 const CONTROLLER_OFFSET = 0.01;
 

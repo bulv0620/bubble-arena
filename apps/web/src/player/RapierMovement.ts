@@ -1,5 +1,5 @@
 import { HorizontalMovement, VerticalMovement } from '@bubble-arena/game-core';
-import { COLLISION_GROUPS, PLAYER_CONFIG, createMovementTuning, type MovementKeys, type MovementTuning } from '@bubble-arena/shared';
+import { COLLISION_GROUPS, PLAYER_CONFIG, createMovementTuning, PHYSICS_CONFIG, type MovementKeys, type MovementTuning } from '@bubble-arena/shared';
 import { QueryFilterFlags, type Collider, type RigidBody, type World } from '@dimforge/rapier3d-compat';
 
 /** Owns a controller in an existing world. Only static map obstacles participate. */
@@ -9,6 +9,7 @@ export class RapierMovement {
   private readonly vertical = new VerticalMovement();
   private readonly controller;
   private disposed = false;
+  private lastHorizontalSpeed = 0;
 
   constructor(private readonly world: World, tuning: Partial<MovementTuning> = {}) {
     this.tuning = createMovementTuning(tuning);
@@ -42,7 +43,7 @@ export class RapierMovement {
         && normal.y < PLAYER_CONFIG.slopeSnapMaxNormalY) onSlope = true;
     }
     const horizontal = this.intent.step(keys, this.vertical.getState().grounded ? 1 : this.tuning.airControl, cameraYaw, speedScale, maximumSpeed);
-    const vertical = this.vertical.step(jumpPressed);
+    const vertical = this.vertical.step(jumpPressed,this.lastHorizontalSpeed);
     // Follow descending slopes while supported, preserving ordinary flat/wall motion.
     if (onSlope && this.vertical.getState().grounded && vertical.y <= 0) {
       this.controller.enableSnapToGround(PLAYER_CONFIG.groundSnapDistance);
@@ -54,6 +55,7 @@ export class RapierMovement {
       COLLISION_GROUPS.player,
     );
     const allowed = this.controller.computedMovement();
+    this.lastHorizontalSpeed = Math.hypot(allowed.x,allowed.z)/PHYSICS_CONFIG.timeStep;
     const current = body.translation();
     let ceilingContact = false;
     for (let i = 0; i < this.controller.numComputedCollisions(); i += 1) {
@@ -73,6 +75,6 @@ export class RapierMovement {
   }
   reset() {
     if (this.disposed) throw new Error('Movement controller disposed');
-    this.intent.reset(); this.vertical.reset(); this.controller.disableSnapToGround();
+    this.intent.reset(); this.vertical.reset(); this.lastHorizontalSpeed = 0; this.controller.disableSnapToGround();
   }
 }

@@ -1,0 +1,20 @@
+{
+  "canvasCount": 0,
+  "heading": "泡泡先锋的房间",
+  "horizontalOverflow": false,
+  "images": [
+    {
+      "loaded": true,
+      "src": "/ui/bubble-mascot-v1.png"
+    },
+    {
+      "loaded": true,
+      "src": "/ui/bubble-mascot-v1.png"
+    }
+  ],
+  "selected": [
+    "步枪均衡连射✓",
+    "⚑泡泡对抗1v1✓",
+    "标准赛5分钟 / 20分"
+  ]
+}

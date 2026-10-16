@@ -30,14 +30,14 @@ test('20s timeout requires all 1200 authoritative ticks and early/repeated facts
   const life = inState('downed'), saved = life.getSnapshot();
   expect(send(life, { type: 'downed_timeout', elapsedTicks: 1199 })).toBe(false); expect(life.getSnapshot()).toBe(saved);
   const due = eventFor(life, { type: 'downed_timeout', elapsedTicks: 1200 });
-  expect(life.transition(due, false)).toBe(true); const eliminated = life.getSnapshot();
-  expect(life.transition(due, false)).toBe(false); expect(life.getSnapshot()).toBe(eliminated);
+  expect(life.transition(due, false)).toBe(true); const recovered = life.getSnapshot(); expect(recovered.status).toBe('normal');
+  expect(life.transition(due, false)).toBe(false); expect(life.getSnapshot()).toBe(recovered);
 });
-test('completed 3s rescue returns to the same life, rejecting an old depletion even after returning to normal', () => {
+test('completed 2s rescue returns to the same life, rejecting an old depletion even after returning to normal', () => {
   const life = new PlayerLifeMachine(), old = eventFor(life, { type: 'hp_depleted', hp: 0 });
   life.transition(old, false);
-  expect(send(life, { type: 'rescue_completed', elapsedTicks: 179 })).toBe(false);
-  expect(send(life, { type: 'rescue_completed', elapsedTicks: 180 })).toBe(true);
+  expect(send(life, { type: 'rescue_completed', elapsedTicks: 119 })).toBe(false);
+  expect(send(life, { type: 'rescue_completed', elapsedTicks: 120 })).toBe(true);
   const revived = life.getSnapshot(); expect(revived).toEqual({ status: 'normal', lifeId: 1, revision: 2 });
   expect(life.transition(old, false)).toBe(false); expect(life.getSnapshot()).toBe(revived);
 });
@@ -60,7 +60,7 @@ test.each(['normal', 'downed'] as const)('environmental elimination can bypass %
 test.each(['normal', 'downed', 'eliminated', 'respawning'] as const)('%s rejects incompatible facts and finished blocks every transition', status => {
   const life = inState(status), original = life.getSnapshot();
   const facts: FactOnly<PlayerLifeEvent>[] = [{ type: 'hp_depleted', hp: 0 }, { type: 'downed_timeout', elapsedTicks: 1200 },
-    { type: 'rescue_completed', elapsedTicks: 180 }, { type: 'environment_death' }, { type: 'respawn_due', elapsedTicks: 300 }, { type: 'spawn_completed' }];
+    { type: 'rescue_completed', elapsedTicks: 120 }, { type: 'environment_death' }, { type: 'respawn_due', elapsedTicks: 300 }, { type: 'spawn_completed' }];
   const allowed = { normal: ['hp_depleted', 'environment_death'], downed: ['hp_depleted', 'downed_timeout', 'rescue_completed', 'environment_death'],
     eliminated: ['respawn_due'], respawning: ['spawn_completed'] }[status];
   for (const fact of facts) {

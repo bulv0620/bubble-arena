@@ -19,19 +19,20 @@ test('removing and restoring a real wall recovers gradually, then immediately co
     return result.distance;
   };
   let distance = frame(0);
+  const initialDistance = distance;
   world.removeCollider(wall, false); world.step();
   for (let i = 0; i < 30; i++) {
     const next = frame(1 / 60);
     expect(next).toBeGreaterThanOrEqual(distance);
-    expect(next).toBeLessThan(4.5);
+    expect(next).toBeLessThan(CAMERA_CONFIG.distance);
     distance = next;
   }
-  expect(distance).toBeGreaterThan(3.9);
+  expect(distance).toBeGreaterThan(initialDistance + (CAMERA_CONFIG.distance - initialDistance) * .85);
   wall = box(0, 1, 1, 1, 1, 0.1); world.step();
   expect(frame(1 / 60)).toBeLessThan(0.65);
   world.removeCollider(wall, false); world.step();
   for (let i = 0; i < 180; i++) distance = frame(1 / 60);
-  expect(distance).toBe(4.5);
+  expect(distance).toBe(CAMERA_CONFIG.distance);
 });
 
 let world: RAPIER.World;
@@ -57,9 +58,9 @@ function expectOutside(camera: PerspectiveCamera) {
     undefined, COLLISION_GROUPS.player)).toBeNull();
 }
 
-test('clear orbit keeps 4.5m; a wall immediately contracts without double-counting clearance', () => {
+test('clear orbit keeps configured distance; a wall immediately contracts without double-counting clearance', () => {
   setup(); world.step();
-  expect(apply().result).toMatchObject({ status: 'resolved', distance: 4.5 });
+  expect(apply().result).toMatchObject({ status: 'resolved', distance: CAMERA_CONFIG.distance });
   box(0, 1, 2, 1, 1, 0.1); world.step();
   const { camera, result } = apply();
   expect(result.status).toBe('resolved');
@@ -74,7 +75,7 @@ test('negative pitch stops the camera above the floor with its safety envelope c
   const { camera, result } = apply({ x: -2, y: 0.91, z: 0 }, 0, CAMERA_CONFIG.minPitch);
   expect(result.status).toBe('resolved');
   expect(camera.position.y).toBeGreaterThan(0.25);
-  expect(camera.position.y).toBeLessThan(0.26);
+  expect(camera.position.y).toBeLessThan(0.262); // New shoulder slope changes swept-sphere rounding by < 2mm.
   expectOutside(camera);
 });
 

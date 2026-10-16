@@ -3,7 +3,7 @@ import { PLAYER_LIFE_CONFIG, PLAYER_LIFE_STATUSES, parsePlayerLifeConfig, parseP
 
 test('life parameters match the current four-state rules and parsed config is an immutable independent copy', () => {
   expect(PLAYER_LIFE_STATUSES).toEqual(['normal', 'downed', 'eliminated', 'respawning']);
-  expect(PLAYER_LIFE_CONFIG).toEqual({ downedHp: 50, revivedHp: 50, downedDuration: 20, rescueDuration: 3, respawnDelay: 5 });
+  expect(PLAYER_LIFE_CONFIG).toEqual({ downedHp: 300, revivedHp: 50, downedDuration: 20, rescueDuration: 2, respawnDelay: 5 });
   const input = { ...PLAYER_LIFE_CONFIG }, parsed = parsePlayerLifeConfig(input);
   input.downedDuration = 999;
   expect(parsed.downedDuration).toBe(20); expect(Object.isFrozen(parsed)).toBe(true);

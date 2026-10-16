@@ -1,20 +1,23 @@
 import { useSyncExternalStore } from 'react';
-import { ARENA_CONFIG, ARENA_SOLIDS } from '@bubble-arena/shared';
+import { ARENA_CONFIG, ARENA_SOLIDS, WHITEBOX_SOLIDS, WHITEBOX_CONFIG, TRAINING_TARGET_LAYOUT } from '@bubble-arena/shared';
 import type { ArenaTelemetry } from '../player/ArenaTelemetry';
-import type { LocalArenaOpponent } from '../player/LocalArenaOpponent';
-export function ArenaHud({ telemetry, opponent }: { telemetry: ArenaTelemetry; opponent: LocalArenaOpponent }) {
-  const map = useSyncExternalStore(telemetry.subscribe, telemetry.getSnapshot), enemy = useSyncExternalStore(opponent.subscribe, opponent.getSnapshot);
-  const x = (v: number) => v + ARENA_CONFIG.width / 2, z = (v: number) => v + ARENA_CONFIG.length / 2;
-  return <aside className="arena-hud hud-panel" aria-label="竞技场小地图">
-    <small>ARENA 01 · CROSSFIRE</small><b>交叉火线</b><span>你 · 红队 vs 蓝队 AI</span>
-    <svg viewBox="0 0 48 56" role="img" aria-label="三路地图：左路、中庭、右侧高台，红蓝两端复活区">
-      <rect width="48" height="56" rx="2" fill="#ede7d6" /><rect x="1" y="1" width="46" height="8" fill="#8bb9d4" /><rect x="1" y="47" width="46" height="8" fill="#d99d93" />
-      {ARENA_SOLIDS.filter(s => s.kind !== 'wall').map(s => <rect key={s.id} x={x(s.position[0] - s.size[0] / 2)} y={z(s.position[2] - s.size[2] / 2)} width={s.size[0]} height={s.size[2]} fill={s.kind === 'cover' ? '#b19b6a' : s.kind === 'ramp' || s.kind === 'deck' ? '#a9bcae' : '#6e8290'} />)}
-      <text x="24" y="6" textAnchor="middle">BLUE</text><text x="24" y="53" textAnchor="middle">RED</text>
-      <circle cx={x(map.player.x)} cy={z(map.player.z)} r="1.2" fill="#f1534d" stroke="white" strokeWidth=".4" />
-      {enemy.status !== 'eliminated' && enemy.status !== 'respawning' && <circle cx={x(map.enemy.x)} cy={z(map.enemy.z)} r="1.2" fill="#278cc3" stroke="white" strokeWidth=".4" />}
-    </svg>
-    <div className="arena-lanes"><span>左路 · 近战</span><span>中庭</span><span>高台 · 1.5m</span></div>
-    <span className="arena-enemy-status">蓝队 AI：{enemy.status === 'normal' ? `${enemy.hp} HP` : enemy.status === 'downed' ? `倒地 ${enemy.downedHp} HP` : `复活 ${enemy.respawnSecondsRemaining}s`}</span>
+export function ArenaHud({ telemetry, arena }: { telemetry: ArenaTelemetry; arena: boolean }) {
+  const map = useSyncExternalStore(telemetry.subscribe, telemetry.getSnapshot);
+  return <aside className="combat-minimap" aria-label={arena ? '竞技场小地图' : '训练场小地图'}>
+    {arena ? <ArenaMap map={map} /> : <svg viewBox={`${map.player.x - 20} ${map.player.z - 20} 40 40`} role="img" aria-label="训练场地图">
+      <rect x={-WHITEBOX_CONFIG.groundSize / 2} y={-WHITEBOX_CONFIG.groundSize / 2} width={WHITEBOX_CONFIG.groundSize} height={WHITEBOX_CONFIG.groundSize} fill="#193948" fillOpacity=".34" />
+      {WHITEBOX_SOLIDS.map(s => <rect key={s.id} x={s.position[0] - s.size[0] / 2} y={s.position[2] - s.size[2] / 2} width={s.size[0]} height={s.size[2]} fill={s.kind === 'wall' ? '#dfebee' : '#b4cdd0'} fillOpacity=".65" />)}
+      {TRAINING_TARGET_LAYOUT.map(t => <circle key={t.id} cx={t.position[0]} cy={t.position[2]} r="1" fill="#ffd968" />)}
+      <circle cx={map.player.x} cy={map.player.z} r="1.7" fill="#ff7971" stroke="white" strokeWidth=".6" />
+    </svg>}
   </aside>;
+}
+export function ArenaMap({ map }: { map: ReturnType<ArenaTelemetry['getSnapshot']> }) {
+  const x = (v: number) => v + ARENA_CONFIG.width / 2, z = (v: number) => v + ARENA_CONFIG.length / 2;
+  return <svg viewBox="0 0 48 56" role="img" aria-label="三路地图：红蓝复活区、掩体与高台">
+    <rect width="48" height="56" fill="#193948" fillOpacity=".34" /><rect x="1" y="1" width="46" height="8" fill="#70cbff" fillOpacity=".28" /><rect x="1" y="47" width="46" height="8" fill="#ff8e85" fillOpacity=".28" />
+    {ARENA_SOLIDS.filter(s => s.kind !== 'wall').map(s => <rect key={s.id} x={x(s.position[0] - s.size[0] / 2)} y={z(s.position[2] - s.size[2] / 2)} width={s.size[0]} height={s.size[2]} fill={s.kind === 'cover' ? '#ebd5a8' : s.kind === 'ramp' || s.kind === 'deck' ? '#a6d5cf' : '#cfdee4'} fillOpacity=".65" />)}
+    <circle cx={x(map.player.x)} cy={z(map.player.z)} r="1.25" fill={map.playerTeam === 'red' ? '#ff7971' : '#59c6ff'} stroke="white" strokeWidth=".4" />
+    {map.actors.map(actor=><circle key={actor.id} cx={x(actor.position.x)} cy={z(actor.position.z)} r="1.1" fill={actor.team==='red'?'#ff7971':'#59c6ff'} stroke="white" strokeWidth=".4" />)}
+  </svg>;
 }

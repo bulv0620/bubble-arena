@@ -1,9 +1,9 @@
-import { PLAYER_CONFIG, type WeaponId } from '@bubble-arena/shared';
+import { BLOCK_AVATAR_CONFIG, PLAYER_CONFIG, type WeaponId } from '@bubble-arena/shared';
 import type { AimVector } from './screenAimRay';
 
 /** Engineering placeholder dimensions only; formal Blender muzzle socket replaces this later. */
 export const RIFLE_PLACEHOLDER_POSE = Object.freeze({
-  socket: Object.freeze({ x: PLAYER_CONFIG.radius + 0.1, y: 0.2, z: -0.08 }),
+  socket: Object.freeze({ x: PLAYER_CONFIG.radius + 0.1, y: BLOCK_AVATAR_CONFIG.headY - BLOCK_AVATAR_CONFIG.headRadius, z: -0.08 }),
   front: Object.freeze({ y: 0.15, z: 0.58, depth: 0.02 }),
 });
 export const WEAPON_PLACEHOLDER_SCALE = Object.freeze({ rifle: 1, shotgun: .8, sniper: 1.5, bubble: .55 });

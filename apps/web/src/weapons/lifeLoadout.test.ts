@@ -4,7 +4,7 @@ import { LocalLoadout } from './LocalLoadout';
 const press = { held: true, pressed: true }, idle = { held: false, pressed: false };
 test.each(WEAPON_IDS)('%s downed speed is 1m/s; all weapon APIs reject actions, cancel reload and preserve ammo', weapon => {
   const loadout = new LocalLoadout(weapon === 'bubble' ? 'rifle' : weapon as PrimaryWeaponId);
-  if (weapon === 'bubble') loadout.select(2);
+  if (weapon === 'bubble') loadout.select(4);
   loadout.step(press); loadout.step(idle, true);
   const ammo = loadout.getSnapshot().ammo;
   const listener = vi.fn(), release = loadout.subscribe(listener);
@@ -12,7 +12,7 @@ test.each(WEAPON_IDS)('%s downed speed is 1m/s; all weapon APIs reject actions, 
   expect(loadout.getSpeed()).toBe(1); expect(loadout.canOperate()).toBe(false);
   expect(loadout.getSnapshot()).toMatchObject({ lifeStatus: 'downed', active: weapon, scoped: false, progress: null, ammo: { ...ammo, reloading: false } });
   expect(loadout.select(weapon === 'bubble' ? 1 : 2)).toBe(false);
-  expect(loadout.setPrimary('shotgun')).toBe(false); loadout.setScoped(true);
+  expect(loadout.select(2)).toBe(false); loadout.setScoped(true);
   expect(loadout.getSnapshot().scoped).toBe(false); expect(loadout.canScope()).toBe(false);
   for (let tick = 0; tick < 200; tick++) expect(loadout.step(press, true)).toBeNull();
   expect(loadout.getSnapshot().ammo).toEqual({ ...ammo, reloading: false });

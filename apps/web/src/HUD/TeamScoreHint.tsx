@@ -2,11 +2,11 @@ import { useSyncExternalStore } from 'react';
 import type { LocalTeamScore } from '../player/LocalTeamScore';
 import { TRAINING_SCORE_ACTORS } from '@bubble-arena/shared';
 import type { LocalPlayerHealth } from '../player/LocalPlayerHealth';
-export function TeamScoreHint({ score, arena = false }: { score: LocalTeamScore; arena?: boolean }) {
+export function TeamScoreHint({ score }: { score: LocalTeamScore }) {
   const state = useSyncExternalStore(score.subscribe, score.getSnapshot);
-  return <aside className="hud-panel team-score" aria-label={`队伍比分：红队 ${state.teams.red}，蓝队 ${state.teams.blue}`}>
-    <small>TEAM SCORE · {arena ? '1v1 对抗' : '计分练习'}</small><div className="team-score-row"><span className="red">红队 <b>{state.teams.red}</b></span><span className="versus">:</span><span className="blue"><b>{state.teams.blue}</b> 蓝队</span></div>
-    <span className="score-note">击倒不计分 · 淘汰 +1</span>
+  return <aside className="combat-score" aria-label={`Blue ${state.teams.blue}, Red ${state.teams.red}`}>
+    <span className="blue" aria-label="Blue score">{String(state.teams.blue).padStart(2, '0')}</span>
+    <span className="red" aria-label="Red score">{String(state.teams.red).padStart(2, '0')}</span>
   </aside>;
 }
 export function ScorePracticePanel({ score, player }: { score: LocalTeamScore; player: LocalPlayerHealth }) {

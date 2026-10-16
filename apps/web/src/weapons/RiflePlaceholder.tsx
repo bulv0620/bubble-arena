@@ -1,36 +1,29 @@
-import { useSyncExternalStore } from 'react';
+import { useSyncExternalStore, type RefObject } from 'react';
+import type { Group } from 'three';
+import type { WeaponId } from '@bubble-arena/shared';
 import { RIFLE_PLACEHOLDER_POSE, WEAPON_PLACEHOLDER_SCALE } from './riflePose';
 import type { LocalLoadout } from './LocalLoadout';
-
-// Engineering whitebox, not a Blender asset. Socket is relative to capsule center.
-// The weapon uses asset-standard +Z forward; the current whitebox player faces -Z.
 const { socket, front } = RIFLE_PLACEHOLDER_POSE;
-
-export function RiflePlaceholder({ loadout }: { loadout: LocalLoadout }) {
-  const { active } = useSyncExternalStore(loadout.subscribe, loadout.getSnapshot);
-  const colors = { rifle: '#3c8bb5', shotgun: '#dc994e', sniper: '#8e7fc6', bubble: '#65d9cf' };
-  return <group name="weapon_socket" position={[socket.x, socket.y, socket.z]} rotation={[0, Math.PI, 0]}>
-    <group name={`${active}-placeholder`} scale={[1, 1, WEAPON_PLACEHOLDER_SCALE[active]]}>
-      <mesh name="rifle-body" position={[0, 0.13, 0.12]} castShadow receiveShadow>
-        <boxGeometry args={[0.18, 0.22, 0.42]} />
-        <meshStandardMaterial color={colors[active]} roughness={0.65} />
-      </mesh>
-      <mesh name="rifle-stock" position={[0, 0.12, -0.18]} castShadow receiveShadow>
-        <boxGeometry args={[0.13, 0.16, 0.2]} />
-        <meshStandardMaterial color="#25475a" roughness={0.7} />
-      </mesh>
-      <mesh name="rifle-grip" position={[0, -0.04, 0]} castShadow receiveShadow>
-        <boxGeometry args={[0.1, 0.2, 0.12]} />
-        <meshStandardMaterial color="#25475a" roughness={0.7} />
-      </mesh>
-      <mesh name="rifle-barrel" position={[0, 0.15, 0.43]} rotation={[Math.PI / 2, 0, 0]} castShadow receiveShadow>
-        <cylinderGeometry args={[0.07, 0.07, 0.28, 12]} />
-        <meshStandardMaterial color="#e9bd5d" roughness={0.6} />
-      </mesh>
-      <mesh name="rifle-front" position={[0, front.y, front.z]} rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.045, 0.045, front.depth, 12]} />
-        <meshStandardMaterial color="#25475a" roughness={0.7} />
-      </mesh>
+/** Engineering toy whitebox only. The visual tip and query socket share the same transform. */
+export function ToyWeapon({ weapon, muzzleAnchor }: { weapon: WeaponId; muzzleAnchor?: RefObject<Group | null> }) {
+  const color = { rifle:'#36b5ec', shotgun:'#ffad4b', sniper:'#9a83df', bubble:'#5bded0' }[weapon];
+  return <group name="weapon_socket" position={[socket.x,socket.y,socket.z]} rotation={[0,Math.PI,0]}>
+    <group name={`${weapon}-placeholder`} scale={[1,1,WEAPON_PLACEHOLDER_SCALE[weapon]]}>
+      <mesh position={[0,.13,.12]} castShadow><boxGeometry args={[.2,.23,.42]}/><meshToonMaterial color={color}/></mesh>
+      <mesh position={[0,.13,-.18]} castShadow><boxGeometry args={[.17,.18,.2]}/><meshToonMaterial color="#b3e8ef"/></mesh>
+      <mesh position={[0,-.04,0]} rotation={[-.2,0,0]} castShadow><boxGeometry args={[.12,.22,.13]}/><meshToonMaterial color={color}/></mesh>
+      <mesh position={[.104,.14,.12]}><boxGeometry args={[.012,.13,.27]}/><meshToonMaterial color="#fff9dc"/></mesh>
+      <mesh position={[0,.15,.43]} rotation={[Math.PI/2,0,0]} castShadow><cylinderGeometry args={[.09,.09,.28,10]}/><meshToonMaterial color="#ffe18b"/></mesh>
+      <mesh position={[0,front.y,front.z]} rotation={[Math.PI/2,0,0]}><cylinderGeometry args={[.055,.055,front.depth,10]}/><meshToonMaterial color="#285477"/></mesh>
+      {weapon === 'rifle' && <mesh position={[0,.32,.1]} rotation={[Math.PI/2,0,0]} castShadow><cylinderGeometry args={[.13,.13,.24,12]}/><meshToonMaterial color="#81e8ff"/></mesh>}
+      {weapon === 'shotgun' && <mesh position={[0,.02,.42]} rotation={[Math.PI/2,0,0]} castShadow><cylinderGeometry args={[.085,.085,.29,10]}/><meshToonMaterial color="#ffcc66"/></mesh>}
+      {weapon === 'sniper' && <mesh position={[0,.33,.12]} rotation={[Math.PI/2,0,0]} castShadow><cylinderGeometry args={[.075,.09,.24,12]}/><meshToonMaterial color="#b7eaf9"/></mesh>}
+      {weapon === 'bubble' && <mesh position={[0,.29,.15]} castShadow><sphereGeometry args={[.22,16,12]}/><meshToonMaterial color="#8be9ff"/></mesh>}
+      <group ref={muzzleAnchor} name="muzzle" userData={{ weapon }} position={[0, front.y, front.z + front.depth / 2]} />
     </group>
   </group>;
+}
+export function RiflePlaceholder({ loadout, muzzleAnchor }: { loadout: LocalLoadout; muzzleAnchor: RefObject<Group | null> }) {
+  const { active } = useSyncExternalStore(loadout.subscribe,loadout.getSnapshot);
+  return <ToyWeapon weapon={active} muzzleAnchor={muzzleAnchor}/>;
 }

@@ -98,3 +98,8 @@ test('scattered direction drives actual map collision, with unchanged close-wall
   blocker.setTranslation({ x: 0, y: 1, z: -3 }); world.step();
   expect(queryMuzzleRay(world, anchor, muzzle, target(), 70, { x: NaN, y: 0, z: -1 })).toBeNull();
 });
+test.each(['rifle','shotgun','sniper','bubble'] as const)('%s socket still blocks center-to-muzzle cover, and clears when cover is removed', weapon => {
+  setup(); const center={x:0,y:1,z:0}, actual=rifleMuzzlePosition(center,0,weapon)!;
+  const blocker=wall(-.3);world.step();expect(queryMuzzleRay(world,center,actual,target())?.status).toBe('blocked-muzzle');
+  world.removeCollider(blocker,true);world.step();expect(queryMuzzleRay(world,center,actual,target())?.status).toBe('clear');
+});

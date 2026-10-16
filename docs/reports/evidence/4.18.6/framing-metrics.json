@@ -1,0 +1,63 @@
+{
+  "note": "Default unoccluded 70-degree vertical FOV, 8-degree pitch, normalized screen coordinates top-left origin. Positions are mathematical projections, not live DOM measurements.",
+  "before": {
+    "head": {
+      "x": 0.3704515963993324,
+      "y": 0.6647150041233013
+    },
+    "top": {
+      "x": 0.3681500101401871,
+      "y": 0.5773729391538208
+    },
+    "foot": {
+      "x": 0.37918845958756314,
+      "y": 0.996267067046771
+    },
+    "plate": {
+      "x": 0.36645530638879037,
+      "y": 0.513061239094623
+    }
+  },
+  "after": {
+    "distance": 2.6,
+    "shoulder": 0.9,
+    "height": 0.8,
+    "head": {
+      "x": 0.3627975987324216,
+      "y": 0.5670948923110868
+    },
+    "top": {
+      "x": 0.3602133003643367,
+      "y": 0.4726565323290931
+    },
+    "foot": {
+      "x": 0.3725584522884201,
+      "y": 0.923787065798777
+    },
+    "plate": {
+      "x": 0.35830695564022874,
+      "y": 0.40299272279053333
+    }
+  },
+  "oldAvatarHeight": 0.4188941278929502,
+  "newAvatarHeight": 0.4511305334696839,
+  "plateClearance": [
+    {
+      "width": 1280,
+      "height": 720,
+      "plateGapBeyond76pxDisk": 79.07
+    },
+    {
+      "width": 960,
+      "height": 720,
+      "plateGapBeyond76pxDisk": 79.07
+    },
+    {
+      "width": 800,
+      "height": 600,
+      "plateGapBeyond76pxDisk": 46.68
+    }
+  ],
+  "weaponCenterProtectionRadius": 26,
+  "avatarAndPlateProtectionRadius": 76
+}

@@ -21,7 +21,7 @@ function setup(height: number, slopeDegrees = 0) {
     .setTranslation(length * Math.cos(angle) / 2, slopeDegrees ? length * Math.sin(angle) / 2 - thickness * Math.cos(angle) / 2 : height / 2, 0)
     .setRotation({ x: 0, y: 0, z: Math.sin(angle / 2), w: Math.cos(angle / 2) }).setCollisionGroups(COLLISION_GROUPS.map));
   obstacles.push(obstacle);
-  const body = world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(-1, 0.92, 0));
+  const body = world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(-1, PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance, 0));
   const collider = world.createCollider(RAPIER.ColliderDesc.capsule(PLAYER_CONFIG.capsuleHalfHeight, PLAYER_CONFIG.radius).setCollisionGroups(COLLISION_GROUPS.player), body);
   movement = new RapierMovement(world);
   world.step();
@@ -44,7 +44,7 @@ test.each([0.15, 0.29, 0.3])('walks onto a %sm step without a jump and remains s
   const player = setup(height);
   for (let i = 0; i < 35; i += 1) expect(tick(player, { ...idle, right: true }).jumped).toBe(false);
   expect(player.body.translation().x).toBeGreaterThan(0.5);
-  expect(player.body.translation().y).toBeCloseTo(0.91 + height, 2);
+  expect(player.body.translation().y).toBeCloseTo(PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.controllerOffset + height, 2);
   for (let i = 0; i < 20; i += 1) tick(player);
   expect(tick(player).grounded).toBe(true);
   expect(tick(player, idle, true).jumped).toBe(true);
@@ -73,7 +73,7 @@ test.each([30, 45])('climbs and descends a %s degree slope without jumping or pe
   }
   expect(unsupported).toBeLessThanOrEqual(1);
   expect(player.body.translation().x).toBeLessThan(-0.5);
-  expect(player.body.translation().y).toBeCloseTo(0.91, 2);
+  expect(player.body.translation().y).toBeCloseTo(PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.controllerOffset, 2);
 });
 
 test.each([45.1, 55])('a %s degree slope cannot be climbed by continuous horizontal input', angle => {
@@ -95,12 +95,13 @@ test('jumping from a slope detaches immediately and cannot be restarted in the a
   expect(player.body.translation().y).toBeGreaterThan(start + 0.8);
 });
 
-test.each([30, 45])('jumping while moving up a %s degree slope preserves launch velocity', angle => {
+test.each([30, 45])('speed-linked jumping up a %s degree slope preserves positive launch velocity', angle => {
   const player = setup(0, angle);
   for (let i = 0; i < 45; i += 1) tick(player, { ...idle, right: true });
   const launch = tick(player, { ...idle, right: true }, true);
   expect(launch.jumped).toBe(true);
-  expect(launch.velocityY).toBeCloseTo(PLAYER_CONFIG.jumpSpeed + PHYSICS_CONFIG.gravity[1] * PHYSICS_CONFIG.timeStep, 5);
+  expect(launch.velocityY).toBeGreaterThanOrEqual(PLAYER_CONFIG.jumpSpeed + PHYSICS_CONFIG.gravity[1] * PHYSICS_CONFIG.timeStep);
+  expect(launch.velocityY).toBeLessThanOrEqual(PLAYER_CONFIG.jumpSpeed*Math.sqrt(1.3));
   expect(launch.grounded).toBe(false);
 });
 
@@ -128,9 +129,9 @@ test.each([30, 45])('moving uphill on a %s degree slope still creates a positive
 test('autostep refuses a platform when the ceiling leaves insufficient headroom', () => {
   const player = setup(0.3);
   obstacles.push(world.createCollider(RAPIER.ColliderDesc.cuboid(2, 0.2, 1)
-    .setTranslation(1, 2.25, 0).setCollisionGroups(COLLISION_GROUPS.map)));
+    .setTranslation(1, PLAYER_CONFIG.height + .45, 0).setCollisionGroups(COLLISION_GROUPS.map)));
   world.step();
   for (let i = 0; i < 90; i += 1) tick(player, { ...idle, right: true });
   expect(player.body.translation().x).toBeLessThan(0.5);
-  expect(player.body.translation().y + PLAYER_CONFIG.height / 2).toBeLessThanOrEqual(2.051);
+  expect(player.body.translation().y + PLAYER_CONFIG.height / 2).toBeLessThanOrEqual(PLAYER_CONFIG.height + .251);
 });

@@ -1,0 +1,12 @@
+[
+  {
+    "file": "apps/web/public/ui/water-splash-v1.png",
+    "colorType": 6,
+    "hasAlphaChannel": true
+  },
+  {
+    "file": "apps/web/public/ui/bubble-mascot-v1.png",
+    "colorType": 6,
+    "hasAlphaChannel": true
+  }
+]

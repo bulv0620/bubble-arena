@@ -1,0 +1,20 @@
+[
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":32,\"colliders\":34,\"mapHash\":\"fnv1a64:9e1401985b739f46\",\"spawnHash\":\"fnv1a64:b1e173ad1a1ec69f\"}",
+    "timestamp": "2026-10-15T06:25:45.867Z",
+    "url": "http://127.0.0.1:5173/src/core/PhysicsWorld.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":12,\"colliders\":15,\"mapHash\":\"fnv1a64:5c84d22467198a7b\",\"spawnHash\":\"fnv1a64:0634c343957c90f1\"}",
+    "timestamp": "2026-10-15T06:26:41.318Z",
+    "url": "http://127.0.0.1:5173/src/core/PhysicsWorld.tsx"
+  },
+  {
+    "level": "info",
+    "message": "[physics.check] {\"steps\":60,\"min\":0.01666666753590107,\"max\":0.01666666753590107,\"bodies\":12,\"colliders\":15,\"mapHash\":\"fnv1a64:5c84d22467198a7b\",\"spawnHash\":\"fnv1a64:0634c343957c90f1\"}",
+    "timestamp": "2026-10-15T06:27:01.131Z",
+    "url": "http://127.0.0.1:5173/src/core/PhysicsWorld.tsx"
+  }
+]

@@ -2,6 +2,7 @@ import { ARENA_BOT_CONFIG as config, ARENA_BOT_ROUTE, type PlayerLifeStatus } fr
 export interface BotIntent { readonly x: number; readonly z: number; readonly fire: boolean; readonly yaw: number }
 /** Tiny deterministic local opponent: patrol, react to LOS, controlled bursts, no omniscient damage. */
 export class ArenaBotBrain {
+  constructor(private readonly route = ARENA_BOT_ROUTE) {}
   private waypoint = 1;
   private acquiredAt: number | null = null;
   private clock = -1;
@@ -21,8 +22,8 @@ export class ArenaBotBrain {
       return this.intent = Object.freeze({ x: distance ? dx / distance * move : 0, z: distance ? dz / distance * move : 0, yaw: Math.atan2(-dx, -dz), fire });
     }
     this.acquiredAt = null;
-    let waypoint = ARENA_BOT_ROUTE[this.waypoint];
-    if (Math.hypot(waypoint.x - self.x, waypoint.z - self.z) < config.waypointRadius) { this.waypoint = (this.waypoint + 1) % ARENA_BOT_ROUTE.length; waypoint = ARENA_BOT_ROUTE[this.waypoint]; }
+    let waypoint = this.route[this.waypoint];
+    if (Math.hypot(waypoint.x - self.x, waypoint.z - self.z) < config.waypointRadius) { this.waypoint = (this.waypoint + 1) % this.route.length; waypoint = this.route[this.waypoint]; }
     const x = waypoint.x - self.x, z = waypoint.z - self.z, length = Math.hypot(x, z);
     return this.intent = Object.freeze({ x: length ? x / length : 0, z: length ? z / length : 0, fire: false, yaw: Math.atan2(-x, -z) });
   }

@@ -7,6 +7,7 @@ const wrap = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
 /** Direct presentation angles: the next render frame consumes all received mouse delta. */
 export class MouseOrbit {
   private angles: OrbitAngles = { yaw: 0, pitch: CAMERA_CONFIG.initialPitch };
+  constructor(initialYaw = 0) { if (!Number.isFinite(initialYaw)) throw new TypeError('Invalid initial yaw'); this.angles.yaw = wrap(initialYaw); }
   private detachCurrent?: () => void;
 
   rotate(dx: number, dy: number, sensitivityMultiplier = 1) {

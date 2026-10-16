@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-15",
+  "tool": "built-in image_gen",
+  "skill": "imagegen",
+  "mode": "generate",
+  "transparentBackgroundRequested": true,
+  "assets": [
+    {
+      "id": "rifle",
+      "prompt": "Use case: stylized-concept. Asset type: original Bubble Arena water-gun three-view modeling reference sheet, also used as an in-game weapon HUD sprite. A balanced medium length water assault rifle. White ABS body, cyan pressure tank, cobalt grip and stock, small coral red nozzle, twin visible transparent water tubes. Rounded thick toy shapes with believable molded seams, screws and metal fittings. High quality physically shaded stylized 3D product rendering, polished but readable at small scale. A single weapon design shown exactly THREE times, three orthographic projections in three strictly separated equal-height horizontal rows on one landscape canvas. TOP ROW: complete right-side profile, gun muzzle pointing RIGHT, level and centered, occupies x=8%..92%, y=4%..29%. MIDDLE ROW: matching true TOP view, muzzle pointing RIGHT, centered y=50%. BOTTOM ROW: matching FRONT view looking straight into the muzzle, centered y=83%. Consistent mechanical shape in all views; top view reveals same parts as side view. Top side profile is the primary HUD sprite and must be completely isolated from lower rows with empty padding. No perspective, no extra detail insets, NO TEXT, NO LABELS, no logos, no characters, no frame, no floor, no shadows outside the gun. Genuinely transparent alpha background everywhere except the weapon surfaces. Do not bake a checkerboard. Original playful water blaster, not a realistic firearm. Landscape 3:2 composition.",
+      "original": "/Users/bulv/.codex/generated_images/01a11a1b-41cf-7713-a822-e4002bea66c2/exec-6784bc9c-6ba9-409a-b02a-81e097c4cdcd.png",
+      "file": "apps/web/public/ui/weapons/rifle-views-v1.png",
+      "views": [
+        "side",
+        "top",
+        "front"
+      ],
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    },
+    {
+      "id": "shotgun",
+      "prompt": "Use case: stylized-concept. Asset type: original Bubble Arena water-gun three-view modeling reference sheet, also used as an in-game weapon HUD sprite. A short powerful water shotgun, two large horizontal parallel barrels, white ABS shell with warm orange panels, turquoise blue pressure bottles and grip. Wide chunky foregrip, compact stock. Believable molded seams, screws and fittings. High quality physically shaded stylized 3D product rendering, polished but readable at small scale. A single weapon design shown exactly THREE times, three orthographic projections in three strictly separated equal-height horizontal rows on one landscape canvas. TOP ROW: complete right-side profile, gun muzzle pointing RIGHT, level and centered, occupies x=8%..92%, y=4%..29%. MIDDLE ROW: matching true TOP view, muzzle pointing RIGHT, centered y=50%. BOTTOM ROW: matching FRONT view looking straight into the muzzle, centered y=83%. Consistent mechanical shape in all views; top view reveals same parts as side view. Top side profile is the primary HUD sprite and must be completely isolated from lower rows with empty padding. No perspective, no extra detail insets, NO TEXT, NO LABELS, no logos, no characters, no frame, no floor, no shadows outside the gun. Genuinely transparent alpha background everywhere except the weapon surfaces. Do not bake a checkerboard. Original playful water blaster, not a realistic firearm. Landscape 3:2 composition.",
+      "original": "/Users/bulv/.codex/generated_images/01a11a1b-41cf-7713-a822-e4002bea66c2/exec-bad5c6c7-99b7-4010-b511-b132e4c0c874.png",
+      "file": "apps/web/public/ui/weapons/shotgun-views-v1.png",
+      "views": [
+        "side",
+        "top",
+        "front"
+      ],
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    },
+    {
+      "id": "sniper",
+      "prompt": "Use case: stylized-concept. Asset type: original Bubble Arena water-gun three-view modeling reference sheet, also used as an in-game weapon HUD sprite. A long precision water sniper rifle, slender white body with navy blue chassis and long barrel, turquoise transparent pressure reservoir under the body, prominent scope with golden yellow adjustment rings, padded navy stock. Believable molded seams and fittings. High quality physically shaded stylized 3D product rendering, polished but readable at small scale. A single weapon design shown exactly THREE times, three orthographic projections in three strictly separated equal-height horizontal rows on one landscape canvas. TOP ROW: complete right-side profile, gun muzzle pointing RIGHT, level and centered, occupies x=8%..92%, y=4%..29%. MIDDLE ROW: matching true TOP view, muzzle pointing RIGHT, centered y=50%. BOTTOM ROW: matching FRONT view looking straight into the muzzle, centered y=83%. Consistent mechanical shape in all views; top view reveals same parts as side view. Top side profile is the primary HUD sprite and must be completely isolated from lower rows with empty padding. No perspective, no extra detail insets, NO TEXT, NO LABELS, no logos, no characters, no frame, no floor, no shadows outside the gun. Genuinely transparent alpha background everywhere except the weapon surfaces. Do not bake a checkerboard. Original playful water blaster, not a realistic firearm. Landscape 3:2 composition.",
+      "original": "/Users/bulv/.codex/generated_images/01a11a1b-41cf-7713-a822-e4002bea66c2/exec-dec8eca5-80f5-475f-a11f-19620a3db364.png",
+      "file": "apps/web/public/ui/weapons/sniper-views-v1.png",
+      "views": [
+        "side",
+        "top",
+        "front"
+      ],
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    },
+    {
+      "id": "bubble",
+      "prompt": "Use case: stylized-concept. Asset type: original Bubble Arena water-gun three-view modeling reference sheet, also used as an in-game weapon HUD sprite. A compact bubble water pistol with a short round nozzle, lavender white shell, cyan grip, large spherical transparent water reservoir containing glossy blue water. Small coral trigger, stout friendly shape, four charge indicator recesses. Believable molded seams and fittings. High quality physically shaded stylized 3D product rendering, polished but readable at small scale. A single weapon design shown exactly THREE times, three orthographic projections in three strictly separated equal-height horizontal rows on one landscape canvas. TOP ROW: complete right-side profile, gun muzzle pointing RIGHT, level and centered, occupies x=8%..92%, y=4%..29%. MIDDLE ROW: matching true TOP view, muzzle pointing RIGHT, centered y=50%. BOTTOM ROW: matching FRONT view looking straight into the muzzle, centered y=83%. Consistent mechanical shape in all views; top view reveals same parts as side view. Top side profile is the primary HUD sprite and must be completely isolated from lower rows with empty padding. No perspective, no extra detail insets, NO TEXT, NO LABELS, no logos, no characters, no frame, no floor, no shadows outside the gun. Genuinely transparent alpha background everywhere except the weapon surfaces. Do not bake a checkerboard. Original playful water blaster, not a realistic firearm. Landscape 3:2 composition.",
+      "original": "/Users/bulv/.codex/generated_images/01a11a1b-41cf-7713-a822-e4002bea66c2/exec-8aec986c-e12c-4be3-9628-41bc2c3a7a68.png",
+      "file": "apps/web/public/ui/weapons/bubble-views-v1.png",
+      "views": [
+        "side",
+        "top",
+        "front"
+      ],
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    }
+  ]
+}

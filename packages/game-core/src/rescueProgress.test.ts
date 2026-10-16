@@ -9,13 +9,13 @@ const frame = (): RescueProgressFrame => ({ players: [
   { playerId: 'c', teamId: 'red', life: { status: 'normal', lifeId: 1, revision: 0 }, position: { x: 0, y: .9, z: 0 }, grounded: true, connected: true },
 ], controls: [control()], damagedPlayerIds: [], matchFinished: false });
 const run = (rule: RescueProgress, count: number, input = frame()) => { for (let tick = 0; tick < count; tick++) rule.step(tick, input, () => true); return rule.getSnapshot(); };
-test('exactly 180 consecutive ticks become ready once, freeze immutable identities, cap at 100%, and never change life/HP', () => {
+test('exactly 120 consecutive ticks become ready once, freeze immutable identities, cap at 100%, and never change life/HP', () => {
   const rule = new RescueProgress(), input = frame(), before = structuredClone(input);
-  expect(run(rule, 179).channels[0]).toMatchObject({ elapsedTicks: 179, requiredTicks: 180, ready: false });
-  expect(rule.step(179, input, () => true)).toMatchObject({ channels: [{ elapsedTicks: 180, ready: true }], events: [{ kind: 'ready', rescuerId: 'a', targetId: 'b' }] });
+  expect(run(rule, 119).channels[0]).toMatchObject({ elapsedTicks: 119, requiredTicks: 120, ready: false });
+  expect(rule.step(119, input, () => true)).toMatchObject({ channels: [{ elapsedTicks: 120, ready: true }], events: [{ kind: 'ready', rescuerId: 'a', targetId: 'b' }] });
   const ready = rule.getSnapshot().channels[0]; expect(Object.isFrozen(ready)).toBe(true); expect(Object.isFrozen(ready.target)).toBe(true);
-  expect(rule.step(180, input, () => true)).toMatchObject({ channels: [{ elapsedTicks: 180, ready: true }], events: [] }); expect(input).toEqual(before);
-  expect(rule.step(181, { ...input, controls: [control('a', { held: false })] }, () => true).channels).toHaveLength(0);
+  expect(rule.step(120, input, () => true)).toMatchObject({ channels: [{ elapsedTicks: 120, ready: true }], events: [] }); expect(input).toEqual(before);
+  expect(rule.step(121, { ...input, controls: [control('a', { held: false })] }, () => true).channels).toHaveLength(0);
 });
 test.each(['move', 'jump', 'fire', 'reload', 'weaponSwitch', 'aim'] as const)('%s attempt interrupts, clears progress/ownership, and requires E release before restarting', field => {
   const rule = new RescueProgress(); run(rule, 30);
@@ -25,8 +25,8 @@ test.each(['move', 'jump', 'fire', 'reload', 'weaponSwitch', 'aim'] as const)('%
   expect(rule.step(33, frame(), () => true).channels[0].elapsedTicks).toBe(1);
 });
 test.each(['a', 'b'])('effective damage to %s cancels before the exact completion tick', damaged => {
-  const rule = new RescueProgress(); run(rule, 179);
-  expect(rule.step(179, { ...frame(), damagedPlayerIds: [damaged] }, () => true)).toMatchObject({ channels: [], events: [{ kind: 'interrupted', reason: 'damaged' }] });
+  const rule = new RescueProgress(); run(rule, 119);
+  expect(rule.step(119, { ...frame(), damagedPlayerIds: [damaged] }, () => true)).toMatchObject({ channels: [], events: [{ kind: 'interrupted', reason: 'damaged' }] });
 });
 test('target movement outside range, obstruction and inactive input all cancel without inherited progress', () => {
   for (const reason of ['out-of-range', 'blocked', 'inactive'] as const) {
@@ -72,10 +72,10 @@ test('invalid frame/query clears locks, and a partial ready event is suppressed 
   const rule = new RescueProgress(); run(rule, 10);
   expect(() => rule.step(10, { ...frame(), matchFinished: 'yes' as unknown as boolean }, () => true)).toThrow(TypeError);
   expect(rule.getSnapshot().channels).toHaveLength(0);
-  rule.clear(); run(rule, 179);
+  rule.clear(); run(rule, 119);
   const input = frame(), extra = { ...input.players[1], playerId: 'd' };
   let calls = 0;
-  expect(() => rule.step(179, { ...input, players: [...input.players, extra], controls: [control(), control('c', { targetPlayerId: 'd' })] }, () => { if (++calls === 2) throw new Error('World failure'); return true; })).toThrow('World failure');
+  expect(() => rule.step(119, { ...input, players: [...input.players, extra], controls: [control(), control('c', { targetPlayerId: 'd' })] }, () => { if (++calls === 2) throw new Error('World failure'); return true; })).toThrow('World failure');
   expect(rule.getSnapshot().channels).toHaveLength(0); expect(rule.getSnapshot().events.some(e => e.kind === 'ready')).toBe(false);
 });
 test('clear is idempotent, frees channel/blocked history, and separate instances/configured duration remain isolated', () => {

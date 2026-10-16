@@ -29,7 +29,7 @@ export class PlayerLifeMachine {
         if (fact.hp === 0) next = current.status === 'normal' ? 'downed' : current.status === 'downed' ? 'eliminated' : undefined;
         break;
       case 'downed_timeout':
-        if (current.status === 'downed' && fact.elapsedTicks >= this.downedTicks) next = 'eliminated';
+        if (current.status === 'downed' && fact.elapsedTicks >= this.downedTicks) next = 'normal';
         break;
       case 'rescue_completed':
         if (current.status === 'downed' && fact.elapsedTicks >= this.rescueTicks) next = 'normal';

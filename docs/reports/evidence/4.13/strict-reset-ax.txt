@@ -1,0 +1,141 @@
+- main "Bubble Arena · 游戏场景":
+  - generic: 左靶
+  - generic: "100"
+  - meter "左靶生命值"
+  - generic: 中靶
+  - generic: "100"
+  - meter "中靶生命值"
+  - generic: 右靶
+  - generic: "100"
+  - meter "右靶生命值"
+  - generic: YOU
+  - generic: "100"
+  - meter "YOU生命值"
+  - generic: B!
+  - text: BUBBLE ARENA
+  - generic: 训练模式
+  - status: 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+  - status: 步枪 · 稳定射击
+  - complementary "队伍比分：红队 0，蓝队 0":
+    - emphasis:
+      - text: 红队
+      - generic: RED
+    - generic: "00"
+    - generic: "00"
+    - emphasis:
+      - text: 蓝队
+      - generic: BLUE
+  - region "比赛状态":
+    - generic: 准备开始 · 20 分制
+    - strong: "3"
+  - status "自身 HP：100 / 100":
+    - generic: 泡泡先锋 YOU
+    - text: "100"
+    - generic: / 100 HP
+  - status "步枪弹药：30 / 无限备弹":
+    - text: 01 步枪
+    - generic: RIFLE
+    - generic: "30"
+    - generic: / ∞
+    - generic: 按 R 装填
+    - generic: 1 · 步枪
+    - generic: 2 · 泡泡
+    - generic: 重量 2 · 移速 0.0 m/s
+  - generic: TRAINING RANGE
+  - generic: 三靶练习
+  - text: 命中
+  - strong: "0"
+  - text: · 待恢复
+  - strong: "0"
+  - text: / 3
+  - generic "调试"
+  - button "打开游戏设置": Esc 设置
+  - dialog "整装，再出发！":
+    - text: TAKE A BUBBLE BREAK
+    - heading "整装，再出发！" [level=1]
+    - paragraph: 调整你的手感，挑一把趁手的水枪。
+    - region "操作与装备":
+      - heading "01 操作与装备" [level=2]:
+        - generic: "01"
+        - text: 操作与装备
+      - text: 鼠标速度
+      - status: 1.00×
+      - slider "鼠标速度": "1"
+      - generic: 慢
+      - generic: 快
+      - group "主武器 槽位 01":
+        - generic: 主武器 槽位 01
+        - button "步枪 稳定连射 5 m/s · 重量 2" [disabled] [pressed]:
+          - generic: ✓
+          - generic: 步枪
+          - generic: 稳定连射
+          - generic: 5 m/s · 重量 2
+        - button "霰弹枪 近身爆发 5.5 m/s · 重量 1" [disabled]:
+          - generic: +
+          - generic: 霰弹枪
+          - generic: 近身爆发
+          - generic: 5.5 m/s · 重量 1
+        - button "狙击枪 远距精准 4 m/s · 重量 4" [disabled]:
+          - generic: +
+          - generic: 狙击枪
+          - generic: 远距精准
+          - generic: 4 m/s · 重量 4
+      - text: 槽位 2 固定携带泡泡发射器 · 4 发弹匣
+      - text: 游戏中按 1 / 2 切换，弹药分别保留。
+    - region "场地与练习":
+      - heading "02 场地与练习" [level=2]:
+        - generic: "02"
+        - text: 场地与练习
+      - generic: 当前模式 · 自由练习
+      - generic: 返回房间可重新选择模式和赛制。
+      - region "单机生命测试":
+        - text: 生命测试 · 单机训练
+        - status: 正常 · HP 100 / 100
+        - button "受伤（20）" [disabled]
+        - button "击倒测试" [disabled]
+        - generic: 倒地后可测试补刀；20秒内未被救起会淘汰，5秒后自动复活。
+      - region "单机计分测试":
+        - text: 计分测试 · 模拟伤害来源
+        - generic: 生命测试伤害来源
+        - combobox "生命测试伤害来源" [disabled]:
+          - option "未归属 · 不计分" [disabled] [selected]
+          - option "模拟敌人 A · 蓝队" [disabled]
+          - option "模拟敌人 B · 蓝队" [disabled]
+        - generic: 为受伤/击倒/补刀按钮指定来源。击倒不计分；换另一来源补刀可测试助攻。
+        - button "重放上次淘汰" [disabled]
+        - generic: 你 · 红队
+        - generic: 0 淘汰 · 0 助攻
+        - generic: 模拟敌人 A · 蓝队
+        - generic: 0 淘汰 · 0 助攻
+        - generic: 模拟敌人 B · 蓝队
+        - generic: 0 淘汰 · 0 助攻
+        - generic: 模拟来源没有场景人物；重复淘汰不重复得分，重置训练清空比分。
+      - region "单机救援练习":
+        - generic: 救援练习 · 单机测试
+        - combobox "救援练习 · 单机测试" [disabled]:
+          - option "关闭" [disabled] [selected]
+          - option "静止倒地队友" [disabled]
+          - option "队友在救援中向外爬行" [disabled]
+          - option "救援1秒后受到伤害" [disabled]
+          - option "队友救我（先击倒自己）" [disabled]
+        - generic: 在身旁放置测试队友，长按 E 救起，恢复50HP和1秒保护；“队友救我”场景在你倒地后自动救援。
+      - complementary "操作提示":
+        - generic: 出战小抄
+        - generic: W A S D
+        - generic: 移动
+        - generic: Space
+        - generic: 跳跃
+        - generic: 鼠标左键
+        - generic: 射击
+        - generic: R
+        - generic: 装填
+        - generic: 1 / 2
+        - generic: 切换武器
+        - generic: Esc
+        - generic: 设置
+        - generic: 瞄准、击倒，再补刀得分！
+    - paragraph: Esc 打开设置 · 返回游戏后锁定鼠标
+    - button "重开本局" [active]
+    - button "返回游戏 ▶"
+    - generic: 重开本局会重新倒计时 · 保留装备与房间设置
+    - button "离开对局 · 返回房间"

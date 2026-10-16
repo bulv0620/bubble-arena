@@ -15,14 +15,14 @@ function fixture(primary: typeof PRIMARY_WEAPON_IDS[number] = 'sniper') {
   const detach = bindLifeActions(session.playerHealth, session.loadout, { aim: clear, fire: clear, reload: clear, switchInput: clear,
     keyboard: { consumeJump: () => false }, recoil: session.recoil, feedback: session.feedback });
   const step = () => { session.playerHealth.step(); return session.respawn.step(world, body, movement, clearInput); };
-  const eliminate = () => { session.playerHealth.requestTest('down'); step(); for (let i = 0; i < 3; i++) { session.playerHealth.requestTest('hit'); step(); } };
+  const eliminate = () => { session.playerHealth.requestTest('down'); step(); for (let i = 0; i < 15; i++) { session.playerHealth.requestTest('hit'); step(); } };
   return { world, session, movement, body, collider, clearInput, step, eliminate, cleanup: () => { detach(); movement.dispose(); session.rescue.dispose(); world.free(); } };
 }
 test.each(PRIMARY_WEAPON_IDS)('%s respawn preserves equip/settings/world/targets but restores all ammo, clears inertia/flight velocity and accepts only fresh fire', primary => {
   const f = fixture(primary);
   try {
     const first = f.session.loadout.step(fire)!; f.session.playerHealth.step(); f.session.playerHealth.onAcceptedFire(first.sequence);
-    f.session.loadout.select(2); const second = f.session.loadout.step(fire)!; f.session.playerHealth.onAcceptedFire(second.sequence);
+    f.session.loadout.select(4); const second = f.session.loadout.step(fire)!; f.session.playerHealth.onAcceptedFire(second.sequence);
     f.session.range.entries[0].target.receiveHit({ sequence: 1, tick: 0 }, 20);
     for (let i = 0; i < 10; i++) { f.movement.step(f.body, f.collider, { forward: true, backward: false, left: false, right: false }); f.world.step(); }
     f.session.recoil.kick(1); const objects = [f.world.bodies.len(), f.world.colliders.len()]; f.eliminate(); const deadPosition = f.body.translation();
@@ -30,7 +30,7 @@ test.each(PRIMARY_WEAPON_IDS)('%s respawn preserves equip/settings/world/targets
     expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: 'eliminated', respawnSecondsRemaining: 1, lifeId: 1 }); expect(f.body.translation()).toEqual(deadPosition);
     expect(f.step()).toBe(true); expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: 'normal', lifeId: 2, revision: 4, hp: 100, protected: true });
     for (const axis of ['x', 'y', 'z'] as const) expect(f.body.translation()[axis]).toBeCloseTo(WHITEBOX_SPAWNS.points[0].position[axis], 5); expect(f.clearInput).toHaveBeenCalledTimes(1);
-    expect(f.session.loadout.getSnapshot()).toMatchObject({ primary, active: 'bubble', rescuing: false, scoped: false, progress: null, cooldownProgress: null });
+    expect(f.session.loadout.getSnapshot()).toMatchObject({ active: 'bubble', rescuing: false, scoped: false, progress: null, cooldownProgress: null });
     for (const id of [primary, 'bubble'] as const) expect(f.session.loadout.getWeaponAmmo(id)).toMatchObject({ magazine: WEAPON_CONFIGS[id].magazineSize, reserve: WEAPON_CONFIGS[id].reserveAmmo, reloading: false, shotsFired: 0 });
     expect(f.session.rescue.getSnapshot()).toMatchObject({ mode: 'off', channel: null, ally: null }); expect(f.session.recoil.getState()).toEqual({ riseAngle: 0, pulseAngle: 0 });
     const result = f.movement.step(f.body, f.collider, { forward: false, backward: false, left: false, right: false })!;

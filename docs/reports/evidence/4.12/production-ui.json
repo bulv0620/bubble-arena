@@ -1,0 +1,82 @@
+{
+  "focus": "BODY",
+  "height": 755,
+  "horizontalOverflow": false,
+  "hud": [
+    {
+      "box": {
+        "h": 78,
+        "w": 346,
+        "x": 160,
+        "y": 15
+      },
+      "class": "hud-panel team-score",
+      "pointerEvents": "none"
+    },
+    {
+      "box": {
+        "h": 77,
+        "w": 124,
+        "x": 271,
+        "y": 15
+      },
+      "class": "match-hud hud-panel",
+      "pointerEvents": "none"
+    },
+    {
+      "box": {
+        "h": 286,
+        "w": 300,
+        "x": 183,
+        "y": 156
+      },
+      "class": "match-ready",
+      "pointerEvents": "auto"
+    },
+    {
+      "box": {
+        "h": 98,
+        "w": 220,
+        "x": 14,
+        "y": 640
+      },
+      "class": "hud-panel player-health  ",
+      "pointerEvents": "none"
+    },
+    {
+      "box": {
+        "h": 167.5,
+        "w": 225,
+        "x": 427,
+        "y": 570.5
+      },
+      "class": "hud-panel weapon-ammo ",
+      "pointerEvents": "none"
+    },
+    {
+      "box": {
+        "h": 261.5,
+        "w": 140,
+        "x": 512,
+        "y": 78
+      },
+      "class": "arena-hud hud-panel",
+      "pointerEvents": "none"
+    }
+  ],
+  "images": [
+    {
+      "loaded": true,
+      "naturalHeight": 793,
+      "naturalWidth": 1983,
+      "src": "/ui/water-splash-v1.png"
+    },
+    {
+      "loaded": true,
+      "naturalHeight": 1254,
+      "naturalWidth": 1254,
+      "src": "/ui/bubble-mascot-v1.png"
+    }
+  ],
+  "width": 666
+}

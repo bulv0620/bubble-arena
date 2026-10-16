@@ -1,5 +1,7 @@
 // Rapier membership in the high 16 bits, filter in the low 16 bits.
 // Players interact with the static map only; the demonstration cube also only hits the map.
+// Rapier capsule ray casts can differ by ~0.5mm at coincident map surfaces.
+export const HIT_MAP_CLEARANCE = .001;
 export const COLLISION_GROUPS = {
   map: (1 << 16) | 2 | 4,
   player: (2 << 16) | 1,

@@ -1,1 +1,109 @@
-{"schemaVersion":1,"assets":[]}
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "assetId": "ui-bubble-mascot-v1",
+      "file": "apps/web/public/ui/bubble-mascot-v1.png",
+      "kind": "ui-illustration",
+      "source": "assets-source/ui/generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1633507,
+      "sha256": "ab72aadbecdc56c901b88970e8f83808a81dc1778dca22bef92d0f13545e8c99",
+      "usage": "Original Bubble Arena decorative UI art; live text and values remain DOM."
+    },
+    {
+      "assetId": "ui-water-splash-v1",
+      "file": "apps/web/public/ui/water-splash-v1.png",
+      "kind": "ui-illustration",
+      "source": "assets-source/ui/generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1983,
+      "height": 793,
+      "bytes": 1115773,
+      "sha256": "7eef72f701fa1e8242d114733ec4349edc787ae607508b951862ba73e387e302",
+      "usage": "Original Bubble Arena decorative UI art; live text and values remain DOM."
+    },
+    {
+      "assetId": "ui-bubble-duel-v2",
+      "file": "apps/web/public/ui/bubble-duel-v2.png",
+      "kind": "ui-illustration",
+      "source": "assets-source/ui/generation-v2.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1935877,
+      "sha256": "5aae474d112f2b7f7b1b43884a2c4e917c3f6537fb41cda895008a7578306d56",
+      "usage": "Original red/blue water duel emblem for pre-match and results UI."
+    },
+    {
+      "assetId": "ui-seaside-lobby-v1",
+      "file": "apps/web/public/ui/seaside-lobby-v1.png",
+      "kind": "ui-background",
+      "source": "assets-source/ui/lobby-generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": false,
+      "width": 1672,
+      "height": 941,
+      "bytes": 2152624,
+      "sha256": "0109a79ad4213bd33dc52c0a79aac116a2a3afff5ad18aec30e283877587e37b",
+      "usage": "Original illustrated start / lobby background. Not a rendered gameplay map or a 3D model."
+    },
+    {
+      "assetId": "weapon-rifle-views-v1",
+      "file": "apps/web/public/ui/weapons/rifle-views-v1.png",
+      "kind": "weapon-concept-and-ui",
+      "source": "assets-source/weapons/generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1756624,
+      "sha256": "4afd49640b332acf13b1fc54ba7691304e0fbe1b00d03d6d4e136c01cd2166dd",
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    },
+    {
+      "assetId": "weapon-shotgun-views-v1",
+      "file": "apps/web/public/ui/weapons/shotgun-views-v1.png",
+      "kind": "weapon-concept-and-ui",
+      "source": "assets-source/weapons/generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1739617,
+      "sha256": "4bf2ed845d773d5a9ddb868b046cbfe4bffc4dd62643159739bf70a6c41403bd",
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    },
+    {
+      "assetId": "weapon-sniper-views-v1",
+      "file": "apps/web/public/ui/weapons/sniper-views-v1.png",
+      "kind": "weapon-concept-and-ui",
+      "source": "assets-source/weapons/generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1575095,
+      "sha256": "970559e4ebd879a8d7ba71d0080f6dba7084a4310b979465d39753772bc24e0d",
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    },
+    {
+      "assetId": "weapon-bubble-views-v1",
+      "file": "apps/web/public/ui/weapons/bubble-views-v1.png",
+      "kind": "weapon-concept-and-ui",
+      "source": "assets-source/weapons/generation-v1.json",
+      "generator": "built-in image_gen",
+      "transparent": true,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1460526,
+      "sha256": "14f07d905f391e4db27c5e0ccd100daf88f51c70f6d6f756e7d90136fef66c29",
+      "usage": "Top side-view region displayed in HUD with CSS clipping. Full PNG retained for Blender concept reference; not validated orthographic CAD or a model."
+    }
+  ]
+}

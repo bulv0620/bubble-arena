@@ -7,18 +7,19 @@ import { COLLIDER_MATERIALS, COLLISION_GROUPS, PHYSICS_CONFIG, PLAYER_CONFIG, ty
 import type { KeyboardInput } from './KeyboardInput';
 import { RapierMovement } from './RapierMovement';
 import { PlayerFacing } from './PlayerFacing';
-import { BlockAvatar } from '../visuals';
+import { BubbleAvatar } from '../visuals';
 import type { LocalPlayerHealth } from './LocalPlayerHealth';
 import { PlayerOverheadHealth } from '../HUD/OverheadHealth';
 import { RiflePlaceholder, type RifleMotion } from '../weapons';
 import type { LocalLoadout } from '../weapons/LocalLoadout';
-import { createSelfViewClearance } from './selfViewClearance';
+import { createSelfPlateClearance, createSelfViewClearance } from './selfViewClearance';
 import { OVERHEAD_HEALTH_CONFIG } from '../HUD/overheadHealthConfig';
 import { crosshairSize } from '../HUD/crosshairSize';
 import { reticleProgress } from '../HUD/reticleProgress';
 
 import type { LocalRespawn } from './LocalRespawn';
 interface CapsulePlayerProps {
+  muzzleAnchor: RefObject<Group | null>;
   bodyColor?: string;
   respawn: LocalRespawn;
   clearInput: () => void;
@@ -34,7 +35,7 @@ interface CapsulePlayerProps {
   facingYaw: RefObject<number>;
 }
 
-export function CapsulePlayer({ bodyColor = '#d87136', respawn, clearInput, position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
+export function CapsulePlayer({ muzzleAnchor, bodyColor = '#d87136', respawn, clearInput, position, input, bodyRef: body, view, motion, facingYaw, playerHealth, loadout, groundedRef }: CapsulePlayerProps) {
   const lifeStatus = useSyncExternalStore(playerHealth.subscribe, () => playerHealth.getSnapshot().status);
   const rescuing = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().rescuing);
   const scoped = useSyncExternalStore(loadout.subscribe, () => loadout.getSnapshot().scoped);
@@ -44,7 +45,10 @@ export function CapsulePlayer({ bodyColor = '#d87136', respawn, clearInput, posi
   const healthAnchor = useRef<Group | null>(null);
   const [obscured, setObscured] = useState(false);
   const lastObscured = useRef(false);
+  const [plateObscured, setPlateObscured] = useState(false);
+  const lastPlateObscured = useRef(false);
   const [checkClearance] = useState(createSelfViewClearance);
+  const [checkPlateClearance] = useState(createSelfPlateClearance);
   const [facing] = useState(() => new PlayerFacing());
   const diagnostics = useRef({ ticks: 0, wasActive: false, result: undefined as ReturnType<RapierMovement['step']> });
   const { world } = useRapier();
@@ -64,6 +68,9 @@ export function CapsulePlayer({ bodyColor = '#d87136', respawn, clearInput, posi
     if (rigidBody && movement.current && respawn.step(world, rigidBody, movement.current, clearInput) && import.meta.env.DEV) {
       console.info('[player.spawn]', JSON.stringify({ tick: playerHealth.getTick(), position: rigidBody.translation(), selection: respawn.getSelection(), ...playerHealth.getSnapshot() }));
     }
+    const keys=input.getSnapshot();
+    const wantsMove=Number(keys.forward)!==Number(keys.backward)||Number(keys.left)!==Number(keys.right);
+    loadout.setSprinting(Boolean(keys.sprinting&&wantsMove&&playerHealth.canPlay()&&playerHealth.getSnapshot().status==='normal'&&!loadout.getSnapshot().rescuing));
     const policy = playerActionPolicy(playerHealth.getSnapshot().status), jump = input.consumeJump();
     if (rigidBody && rigidBody.numColliders() > 0) {
       const result = movement.current?.step(rigidBody, rigidBody.collider(0),
@@ -86,14 +93,17 @@ export function CapsulePlayer({ bodyColor = '#d87136', respawn, clearInput, posi
       visual.current.rotation.y = facing.getYaw();
       const reticle = crosshairSize(loadout.getAngle());
       const radius = (reticleProgress(loadout.getSnapshot()) ? Math.max(88, reticle + 24) : reticle) / 2 + OVERHEAD_HEALTH_CONFIG.reticleClearance;
-      const blocked = !scoped && camera instanceof PerspectiveCamera && checkClearance(visual.current, camera, size.width, size.height, radius,
-        healthAnchor.current ? { anchor: healthAnchor.current, width: OVERHEAD_HEALTH_CONFIG.selfWidth, height: OVERHEAD_HEALTH_CONFIG.selfHeightBound,
-          distanceFactor: OVERHEAD_HEALTH_CONFIG.selfDistanceFactor } : undefined);
-      visual.current.visible = !scoped && !blocked;
+      const normalView = lifeStatus === 'normal' && !scoped && camera instanceof PerspectiveCamera;
+      const blocked = normalView && checkClearance(visual.current, camera, size.width, size.height, OVERHEAD_HEALTH_CONFIG.aimCenterClearance);
+      const plateBlocked = blocked || Boolean(normalView && healthAnchor.current && checkPlateClearance(camera, size.width, size.height, radius,
+        { anchor: healthAnchor.current, width: OVERHEAD_HEALTH_CONFIG.selfWidth, height: OVERHEAD_HEALTH_CONFIG.selfHeightBound,
+          distanceFactor: OVERHEAD_HEALTH_CONFIG.selfDistanceFactor }));
+      visual.current.visible = (lifeStatus==='normal'||lifeStatus==='downed') && !scoped && !blocked;
       if (blocked !== lastObscured.current) {
         lastObscured.current = blocked; setObscured(blocked);
         if (import.meta.env.DEV) console.info('[self.clearance]', JSON.stringify({ hidden: blocked, radius }));
       }
+      if (plateBlocked !== lastPlateObscured.current) { lastPlateObscured.current = plateBlocked; setPlateObscured(plateBlocked); }
     }
   });
   useAfterPhysicsStep(() => {
@@ -112,10 +122,10 @@ export function CapsulePlayer({ bodyColor = '#d87136', respawn, clearInput, posi
   return (
     <RigidBody ref={body} type="kinematicPosition" position={position} colliders={false}>
       <CapsuleCollider args={[capsuleHalfHeight, radius]} {...COLLIDER_MATERIALS.player} collisionGroups={COLLISION_GROUPS.player} />
-      <group ref={visual} visible={!scoped && !obscured}>
-        <PlayerOverheadHealth anchor={healthAnchor} player={playerHealth} hidden={scoped || obscured} />
-        {lifeStatus === 'normal' && !rescuing && <RiflePlaceholder loadout={loadout} />}
-        <BlockAvatar headColor="#efb079" bodyColor={bodyColor} />
+      <group ref={visual} visible={(lifeStatus==='normal'||lifeStatus==='downed') && !scoped && !obscured}>
+        <PlayerOverheadHealth anchor={healthAnchor} player={playerHealth} hidden={scoped || obscured || plateObscured} />
+        {lifeStatus === 'normal' && !rescuing && <RiflePlaceholder loadout={loadout} muzzleAnchor={muzzleAnchor} />}
+        <BubbleAvatar bubbled={lifeStatus==='downed'} headColor="#efb079" bodyColor={bodyColor} />
       </group>
     </RigidBody>
   );

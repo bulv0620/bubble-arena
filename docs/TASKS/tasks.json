@@ -986,386 +986,437 @@
     {
       "id": "5.1",
       "title": "创建 Colyseus 服务",
-      "acceptance": "独立服务启动、健康检测、控制台日志可读。",
+      "acceptance": "独立服务启动/关闭、健康检查和配置错误有明确日志；依赖先做兼容验证，再按精确版本锁定。 定义LobbyRoom/PartyRoom/MatchRoom职责和版本握手入口，不在此实现整套大厅或权威战斗。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
-        "4.10"
+        "4.13"
       ],
-      "file": "docs/TASKS/5.1.md"
+      "file": "docs/TASKS/5.1.md",
+      "executionBatch": "N1"
     },
     {
       "id": "5.2",
       "title": "客户端连接和断开",
-      "acceptance": "连接成功、失败、主动断开均有明确状态。",
+      "acceptance": "客户端连接成功、失败、主动断开可见，重复连接/切页释放监听；失败不能静默回退成本地模拟。 传输连接状态与房间/比赛状态分离，不把临时sessionId当成稳定玩家身份。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.1"
       ],
-      "file": "docs/TASKS/5.2.md"
+      "file": "docs/TASKS/5.2.md",
+      "executionBatch": "N1"
     },
     {
       "id": "5.3",
       "title": "双人加入测试 Room",
-      "acceptance": "浏览器 A/B 共享 roomId 并能观察双方加入。",
+      "acceptance": "两个真实浏览器加入同一服务端测试Room并观察双方；服务器发roomId，不以本机数组或AI替代第二客户端。 测试Room验证连接合同即可；6.3起接真实Lobby/Party，不建立第二套长期入口。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.2"
       ],
-      "file": "docs/TASKS/5.3.md"
+      "file": "docs/TASKS/5.3.md",
+      "executionBatch": "N1"
     },
     {
       "id": "5.4",
       "title": "成员与 sessionId 生命周期",
-      "acceptance": "加入、退出后无残留状态，同名玩家可区分。",
+      "acceptance": "稳定playerId与每次连接sessionId区分，同名用户可区分；主动退出立即释放，意外断开按15秒成员席位宽限保留至重连或到期，重复处理幂等，无幽灵席位或订阅。 重连凭据生命周期接口与NETWORK一致；完整15秒比赛重连在5.15实现，不提前声称已完成。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.3"
       ],
-      "file": "docs/TASKS/5.4.md"
+      "file": "docs/TASKS/5.4.md",
+      "executionBatch": "N1"
+    },
+    {
+      "id": "6.1",
+      "title": "游客身份与昵称接入",
+      "acceptance": "复用开始页加入游客昵称，2～16Unicode码点/字符规则由服务端复核；昵称只做显示，身份按5.4处理。 同名游客可加入，非法昵称明确反馈；不引入账号数据库或复刻开始页。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.4",
+        "4.13"
+      ],
+      "file": "docs/TASKS/6.1.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.2",
+      "title": "接入既有大厅页面与连接状态",
+      "acceptance": "复用4.13的开始/列表/创建/房间视图与生成资源，用网络适配层接收真实连接/房间状态。 空列表、请求中、错误/重试及离开可区分；本地练习/模拟入口保留且与真实房间隔离，不重做UI。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.1"
+      ],
+      "file": "docs/TASKS/6.2.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.3",
+      "title": "房间列表实时查询",
+      "acceptance": "服务端发布可加入PartyRoom摘要，创建/解散/占用状态变化在两个客户端一致；不泄露密码或准入凭据。 离开列表取消订阅，旧响应不覆盖新页面；无在线房间时显示真实空状态。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.2"
+      ],
+      "file": "docs/TASKS/6.3.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.4",
+      "title": "服务端创建房间与配置校验",
+      "acceptance": "服务端校验房间名2～24码点、1v1/2v2容量与可选4～16字符密码，密码哈希保存且不返回列表。 创建/失败回滚/重复请求幂等，一位玩家最多一个Party；配置支持四席位不代表2v2战斗已验收，实际能力由服务端声明。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.3"
+      ],
+      "file": "docs/TASKS/6.4.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.5",
+      "title": "加入/退出房间",
+      "acceptance": "加入/主动退出由服务端裁定，满员/密码错误/比赛中不可加入有可识别反馈；退出释放席位且清客户端订阅。 真实房间不自动补本地机器人；房主高级迁移路径由6.13最终验收，基本移除/空房清理不能遗留无效状态。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.4"
+      ],
+      "file": "docs/TASKS/6.5.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.6",
+      "title": "房间成员信息",
+      "acceptance": "两客户端显示相同昵称、稳定身份、房主、队伍和初始未准备状态；不沿用本地YOU/AI固定席位作为真实成员。 成员离开/重复消息/旧roomId不能污染当前视图；准备操作在6.9接入。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.5"
+      ],
+      "file": "docs/TASKS/6.6.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.7",
+      "title": "红蓝换队",
+      "acceptance": "红蓝换队由服务端校验人数上限，客户端不能越权改别人队伍；变更广播一致。 为6.9准备失效规则提供统一变更事实，不用UI点击直接改权威状态。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.6"
+      ],
+      "file": "docs/TASKS/6.7.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.8",
+      "title": "房间地图、规则与装备同步",
+      "acceptance": "房主地图/模式/比赛规则分权校验并广播；改规则取消所有准备，改队伍取消本人准备。按4.14/D24取消成员主武器选择，配发槽位由服务能力决定，局内仅提交切换意图。 复用既有模式/规则组件和固定四枪快捷栏；服务端能力目录限定已支持的地图、队伍规模和武器，不能承诺未实现的联机能力。基础装备同步在本任务完成，7.9只扩展正式四武器资源/状态集成。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.7"
+      ],
+      "file": "docs/TASKS/6.8.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.9",
+      "title": "准备/取消准备",
+      "acceptance": "准备/取消准备由服务端保存，两个客户端一致；成员、队伍、规则或本人装备改变按约定清准备。 大厅准备意愿与6.11资源loaded确认是两个不同状态；未全员ready不能发起有效开局。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.8"
+      ],
+      "file": "docs/TASKS/6.9.md",
+      "executionBatch": "N2"
+    },
+    {
+      "id": "6.10",
+      "title": "开局准入校验",
+      "acceptance": "服务端验证房主、双方等人数、容量和全员准备，幂等保留一个matchId/配置版本及短期入场凭据；伪造/过期/跨房间准入拒绝。 建立Party到Match的唯一启动描述及无模拟的Match容器/工厂骨架供5.5接入；此时用合同/服务集成测试验收，实际物理/加载/倒计时分别由5.x和6.11完成，不以本地开局冒充多人游戏。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.9"
+      ],
+      "file": "docs/TASKS/6.10.md",
+      "executionBatch": "N2"
     },
     {
       "id": "5.5",
       "title": "同步静态玩家位置",
-      "acceptance": "A/B 可互相看到胶囊体，不做运动预测。",
+      "acceptance": "使用6.10签发的真实matchId/roster，在MatchRoom同步两位静态玩家；A/B看到相同胶囊与身份，不做输入预测。 复用既有地图/玩家视图与Lobby→Party→Match边界，不信任客户端坐标或另开永久测试页面。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
-        "5.4"
+        "6.10"
       ],
-      "file": "docs/TASKS/5.5.md"
+      "file": "docs/TASKS/5.5.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.6",
       "title": "共享输入协议与校验",
-      "acceptance": "客户端发送移动和操作序号；无效参数在服务端被拒绝。",
+      "acceptance": "共享输入/快照/事件协议带版本、seq/tick/ack，校验有限数值、消息大小/频率、重复和越界字段。 先兼容当前已批准武器槽位/交互意图；客户端只发操作，不提交有效位置、伤害或比分。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.5"
       ],
-      "file": "docs/TASKS/5.6.md"
+      "file": "docs/TASKS/5.6.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.7.1",
       "title": "服务端 Rapier 初始化",
-      "acceptance": "服务端创建白盒碰撞和两位玩家碰撞体。",
+      "acceptance": "服务端初始化相同版本Rapier、地图碰撞与本场roster出生/命中体，校验地图和出生hash。 复用当前已验收白盒尺寸和纯核心，房间退出/加载失败销毁世界与注册，不单独复制一套地图数值。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.6"
       ],
-      "file": "docs/TASKS/5.7.1.md"
+      "file": "docs/TASKS/5.7.1.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.7.2",
       "title": "服务端移动与跳跃",
-      "acceptance": "服务端根据输入模拟位置；客户端传坐标无效。",
+      "acceptance": "服务端按固定步消费意图模拟移动/跳跃，客户端坐标无效；保留已批准墙边跳、坡道及枪械重量规则。 意外断线输入归零的接口留给5.15完成，不因消息数量增加移动距离。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.7.1"
       ],
-      "file": "docs/TASKS/5.7.2.md"
+      "file": "docs/TASKS/5.7.2.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.7.3",
       "title": "固定 tick 与快照",
-      "acceptance": "快照带 tick/ackSeq，客户端可识别顺序。",
+      "acceptance": "共享60Hz模拟/30Hz输入样本/20Hz快照初值，带serverTick与ackSeq，顺序/丢包边界可测。 同tick整批事实统一结算，服务端时钟不由UI或客户端dt控制。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.7.2"
       ],
-      "file": "docs/TASKS/5.7.3.md"
+      "file": "docs/TASKS/5.7.3.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.8",
       "title": "本地玩家输入预测",
-      "acceptance": "本机移动无需等待网络往返。",
+      "acceptance": "本地输入预测复用同一移动规则，输入缓存有界；复活/切场/退出完整清空。 视觉预测不提前确认伤害、生命或得分。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.7.3"
       ],
-      "file": "docs/TASKS/5.8.md"
+      "file": "docs/TASKS/5.8.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.9",
       "title": "服务端状态校正",
-      "acceptance": "人为注入预测偏差后能逐步回到权威位置。",
+      "acceptance": "按权威快照重放未确认输入，较小误差仅平滑视觉，大偏差/复活直接重定位；乱序/重复快照拒绝。 地图/身份不一致不能继续预测，不用平滑掩盖错误物理状态。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.8"
       ],
-      "file": "docs/TASKS/5.9.md"
+      "file": "docs/TASKS/5.9.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.10",
       "title": "其他玩家位置插值",
-      "acceptance": "A/B 远端角色运动不因广播间隔频繁瞬移。",
+      "acceptance": "远端按快照插值，初值100ms缓冲/最多100ms外推；超时冻结，不无限预测。 两个真实客户端移动/转向可见，开始/结束/复活/离场清插值缓存。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.9"
       ],
-      "file": "docs/TASKS/5.10.md"
+      "file": "docs/TASKS/5.10.md",
+      "executionBatch": "N3"
+    },
+    {
+      "id": "6.11",
+      "title": "资源加载与进入对局",
+      "acceptance": "连接N2的真实准入与N3权威移动场景，验证地图/hash/协议/配置版本，loaded只报资源就绪，不接受客户端有效坐标。 服务端等待全员loaded才开始原3秒倒计时；30秒加载超时/失败/退出回滚Party并清准备、撤销凭据及销毁空Match。 复用4.13懒加载/错误出口，不能再次点击本地开始或退回本地AI场景冒充联机。",
+      "stage": 6,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "6.10",
+        "5.10"
+      ],
+      "file": "docs/TASKS/6.11.md",
+      "executionBatch": "N3"
     },
     {
       "id": "5.11",
       "title": "权威射速和弹药",
-      "acceptance": "快速伪造连续开火不能超过服务器允许射速。",
+      "acceptance": "服务端验证射速/弹药/装填/冷却/生命和交互门禁；快速伪造输入不能超射速或增弹。 只开放当前已迁移并验证的联机武器能力，房间目录与实际支持一致；本地四武器练习不受影响。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
-        "5.10"
+        "6.11"
       ],
-      "file": "docs/TASKS/5.11.md"
+      "file": "docs/TASKS/5.11.md",
+      "executionBatch": "N4"
     },
     {
       "id": "5.12.1",
       "title": "服务端枪口射线判定",
-      "acceptance": "有掩体时无法击中墙后玩家。",
+      "acceptance": "服务端权威位姿推导枪口和准星方向，保留枪口安全段、地图遮挡与部位/距离合同。 M1用当前tick命中，不提前实现9.6历史回溯，也不接受客户端自报命中。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.11"
       ],
-      "file": "docs/TASKS/5.12.1.md"
+      "file": "docs/TASKS/5.12.1.md",
+      "executionBatch": "N4"
     },
     {
       "id": "5.12.2",
       "title": "权威伤害广播",
-      "acceptance": "双方看到相同生命值，客户端伪造伤害无效。",
+      "acceptance": "服务器结算实际伤害/目标部位/距离并广播，双端生命一致；事件按matchId/eventId去重。 已有浮字/血条只订阅权威结果，不因输入重放重复出现有效伤害或得分。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.12.1"
       ],
-      "file": "docs/TASKS/5.12.2.md"
+      "file": "docs/TASKS/5.12.2.md",
+      "executionBatch": "N4"
     },
     {
       "id": "5.13",
       "title": "同步击倒/救援/复活",
-      "acceptance": "两客户端一致地显示状态切换。",
+      "acceptance": "双方击倒、救援状态/中断/复活与保护一致；服务端统一生命身份/计时，退出清输入。 1v1的无队友场景以核心/服务测试覆盖救援规则，不用伪造队友宣称真实协作通过；真实2v2救援在5.17验收。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.12.2"
       ],
-      "file": "docs/TASKS/5.13.md"
+      "file": "docs/TASKS/5.13.md",
+      "executionBatch": "N4"
     },
     {
       "id": "5.14",
       "title": "同步计时/得分/结算",
-      "acceptance": "服务器结束对局，两客户端比分一致。",
+      "acceptance": "服务器在整tick伤害/淘汰批次后统一判胜，广播时间/比分/真实统计和finished冻结。 双端胜负一致、重复淘汰不加分；为6.12提供权威完成/返回事实，不让结算页面自行重开世界。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.13"
       ],
-      "file": "docs/TASKS/5.14.md"
+      "file": "docs/TASKS/5.14.md",
+      "executionBatch": "N4"
     },
     {
       "id": "5.15",
       "title": "断线清理和重连规则",
-      "acceptance": "刷新/断网不产生幽灵玩家；重连策略记录明确。",
+      "acceptance": "比赛意外断线15秒保留席位且角色留场/输入归零，凭据校验后重连原生命，主动退出立即释放；队伍缺席按NETWORK判定。 复用5.4身份，不重复创建玩家；Party与Match连接/身份分开。房主迁移/服务重启综合路径留6.13，比赛连接边界在本任务必须通过。",
       "stage": 5,
       "status": "todo",
       "milestone": "M1",
       "dependencies": [
         "5.14"
       ],
-      "file": "docs/TASKS/5.15.md"
-    },
-    {
-      "id": "5.16",
-      "title": "双人整局回归",
-      "acceptance": "独立浏览器可从开局玩到结算并重开。",
-      "stage": 5,
-      "status": "todo",
-      "milestone": "M1",
-      "dependencies": [
-        "5.15"
-      ],
-      "file": "docs/TASKS/5.16.md"
-    },
-    {
-      "id": "6.1",
-      "title": "游客昵称入口",
-      "acceptance": "昵称合法性校验，进入大厅。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "5.17"
-      ],
-      "file": "docs/TASKS/6.1.md"
-    },
-    {
-      "id": "6.2",
-      "title": "大厅基础布局",
-      "acceptance": "房间列表区、创建入口和状态提示渲染正确。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.1"
-      ],
-      "file": "docs/TASKS/6.2.md"
-    },
-    {
-      "id": "6.3",
-      "title": "房间列表实时查询",
-      "acceptance": "创建/解散房间后列表更新。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.2"
-      ],
-      "file": "docs/TASKS/6.3.md"
-    },
-    {
-      "id": "6.4",
-      "title": "创建房间配置",
-      "acceptance": "名称、人数限制、可选密码校验生效。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.3"
-      ],
-      "file": "docs/TASKS/6.4.md"
-    },
-    {
-      "id": "6.5",
-      "title": "加入/退出房间",
-      "acceptance": "满员/密码错误提示；退出释放席位。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.4"
-      ],
-      "file": "docs/TASKS/6.5.md"
-    },
-    {
-      "id": "6.6",
-      "title": "房间成员信息",
-      "acceptance": "玩家昵称、房主、队伍、准备状态同步。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.5"
-      ],
-      "file": "docs/TASKS/6.6.md"
-    },
-    {
-      "id": "6.7",
-      "title": "红蓝换队",
-      "acceptance": "超员禁止切换；不同客户端同步。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.6"
-      ],
-      "file": "docs/TASKS/6.7.md"
-    },
-    {
-      "id": "6.8",
-      "title": "房主地图/规则选择",
-      "acceptance": "只允许房主操作，选择在房间内同步。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.7"
-      ],
-      "file": "docs/TASKS/6.8.md"
-    },
-    {
-      "id": "6.9",
-      "title": "准备/取消准备",
-      "acceptance": "按钮和全部成员准备状态同步。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.8"
-      ],
-      "file": "docs/TASKS/6.9.md"
-    },
-    {
-      "id": "6.10",
-      "title": "开局准入校验",
-      "acceptance": "人数、队伍、准备状态满足时可开局；重复点击无多局。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.9"
-      ],
-      "file": "docs/TASKS/6.10.md"
-    },
-    {
-      "id": "6.11",
-      "title": "资源加载与进入对局",
-      "acceptance": "成员进入正确地图，加载失败可以反馈。",
-      "stage": 6,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "6.10"
-      ],
-      "file": "docs/TASKS/6.11.md"
+      "file": "docs/TASKS/5.15.md",
+      "executionBatch": "N4"
     },
     {
       "id": "6.12",
       "title": "结算返回房间",
-      "acceptance": "返回原房间，准备状态重置。",
+      "acceptance": "收到5.14权威结果后回同一Party，保留地图/队伍/主武器、清准备和比赛临时状态，释放客户端输入/Canvas/Match监听。 双端返回顺序不同、重复返回/旧比赛消息均安全；新局新matchId，所有人回房或超时回收Match，再次开局不沿用旧生命/比分。",
       "stage": 6,
       "status": "todo",
-      "milestone": "M2",
+      "milestone": "M1",
       "dependencies": [
-        "6.11"
+        "6.11",
+        "5.15"
       ],
-      "file": "docs/TASKS/6.12.md"
+      "file": "docs/TASKS/6.12.md",
+      "executionBatch": "N4"
+    },
+    {
+      "id": "5.16",
+      "title": "双人整局回归",
+      "acceptance": "两个独立浏览器从现有开始页/真实列表创建加入，经选队/装备/准备/全员loaded、权威1v1、自然结算、返回同一房间，再开新局。 重放输入、墙后命中、双方状态、加载失败/15秒断线重连和资源清理有记录；无本地AI替代真人。N1～N4人工验收和回退提交齐全才宣称M1。",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M1",
+      "dependencies": [
+        "5.15",
+        "6.12"
+      ],
+      "file": "docs/TASKS/5.16.md",
+      "executionBatch": "N4"
     },
     {
       "id": "6.13",
       "title": "房主离开与异常路径",
-      "acceptance": "转移房主或关闭房间，状态明确无卡死。",
+      "acceptance": "房主离开转最早加入的已连接成员，暂无人连接保留至宽限结束，重连不夺回；空房回收、比赛中不能补人。 整合5.15比赛重连与6.11加载回滚/6.12返回，覆盖同帧退出、旧返回和重复关闭；进程重启提示中断回大厅，不恢复对局或遗留席位。",
       "stage": 6,
       "status": "todo",
       "milestone": "M2",
       "dependencies": [
-        "6.12"
+        "6.12",
+        "5.16"
       ],
-      "file": "docs/TASKS/6.13.md"
+      "file": "docs/TASKS/6.13.md",
+      "executionBatch": "N5"
+    },
+    {
+      "id": "5.17",
+      "title": "提前验证真实 2v2 协作",
+      "stage": 5,
+      "status": "todo",
+      "milestone": "M2",
+      "dependencies": [
+        "5.16",
+        "6.13"
+      ],
+      "file": "docs/TASKS/5.17.md",
+      "acceptance": "四个独立真人客户端通过真实房间两队各两人，全员准备/loaded，完整验证击倒/3秒救援/中断/补刀/复活/计分/结算与返回重开。 先通过6.13异常生命周期，真实队友替代1v1中无法进行的协作验收；不以机器人/模拟队友作为第四客户端。N1～N5验收和回退齐全才达M2。",
+      "executionBatch": "N5"
     },
     {
       "id": "7.1",
@@ -1375,7 +1426,8 @@
       "status": "todo",
       "milestone": "V1",
       "dependencies": [
-        "6.13"
+        "6.13",
+        "5.17"
       ],
       "file": "docs/TASKS/7.1.md"
     },
@@ -1892,18 +1944,6 @@
       "file": "docs/TASKS/9.10.md"
     },
     {
-      "id": "5.17",
-      "title": "提前验证真实 2v2 协作",
-      "stage": 5,
-      "status": "todo",
-      "milestone": "M2",
-      "dependencies": [
-        "5.16"
-      ],
-      "file": "docs/TASKS/5.17.md",
-      "acceptance": "四个独立客户端，两队各两人，同步击倒/3s 救援/中断/补刀/复活/计分，完整结算重开；禁止假队友代替真实客户端。"
-    },
-    {
       "id": "B.1",
       "title": "接入 Blender MCP 与导出烟测",
       "stage": "B",
@@ -1934,10 +1974,11 @@
       "milestone": "V1",
       "dependencies": [
         "B.2",
-        "6.13"
+        "6.13",
+        "5.17"
       ],
       "file": "docs/TASKS/B.3.md",
-      "acceptance": "角色 1.8m，原点/weapon_socket/全部基础 clip 符合规范，保存源/脚本/GLB，回读查骨骼、材质和预算。"
+      "acceptance": "角色 1.4m，原点/weapon_socket/全部基础 clip 符合规范，保存源/脚本/GLB，回读查骨骼、材质和预算。"
     },
     {
       "id": "B.4",
@@ -2049,6 +2090,399 @@
         "4.10"
       ],
       "file": "docs/TASKS/4.11.md"
+    },
+    {
+      "id": "4.12",
+      "title": "卡通水枪风格 HUD 与生成 UI 资源",
+      "stage": 4,
+      "status": "in_progress",
+      "milestone": "M1",
+      "dependencies": [
+        "4.11"
+      ],
+      "file": "docs/TASKS/4.12.md",
+      "acceptance": "原创透明 UI 插画入库并实际用于 HUD/设置/结算；统一卡通水枪色彩、轮廓、按钮与层级；保留准星净空、真实比赛/武器/生命订阅和键盘操作，浏览器验证等待/游戏/设置/结算与窄屏，pnpm check通过。"
+    },
+    {
+      "id": "4.13",
+      "title": "开始页、模拟自定义房间与游戏往返",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.12"
+      ],
+      "file": "docs/TASKS/4.13.md",
+      "acceptance": "开始页→空房间列表→创建/命名房间→自动机器人→选对抗或练习/赛制/装备→直接开始已有场景，退出/结算返回原房间；状态与视图适度分离、生命周期释放、原创资源入库，浏览器全流程及pnpm check通过；不声称联机房间。"
+    },
+    {
+      "id": "P.1",
+      "title": "按现有模拟房间重排联机与房间开发计划",
+      "stage": "P",
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.13"
+      ],
+      "file": "docs/TASKS/P.1.md",
+      "acceptance": "保留已有任务ID和实际状态，重排5/6的N1～N5批次/依赖/里程碑，补充房间复用和生命周期边界，所有任务卡/规格/索引一致且无循环，不实施联网代码。"
+    },
+    {
+      "id": "4.14",
+      "title": "精简战斗HUD、水球生命与四武器快捷栏",
+      "acceptance": "真实FPS/0ms、透明小地图、水球HP、简化比分计时、真实战斗事件列表及1–4/滚轮/按钮四枪切换完成；移除房间与设置选枪，三视图参考入库；相关测试、浏览器验证与pnpm check通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.11",
+        "4.13"
+      ],
+      "file": "docs/TASKS/4.14.md"
+    },
+    {
+      "id": "4.14.1",
+      "title": "修复泡泡枪HUD图片下方残片",
+      "acceptance": "泡泡枪展开与收起卡片在桌面/窄屏保留完整侧视、无下方俯视残片；typecheck/build/workspace通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.14"
+      ],
+      "file": "docs/TASKS/4.14.1.md"
+    },
+    {
+      "id": "4.15",
+      "title": "修复敌方掩体血条与复活后操作冻结",
+      "acceptance": "敌方本体被地图完全遮挡时隐藏血条与浮字；多次敌方淘汰复活后玩家仍可移动、跳跃、切枪和开火，物理与计分继续；回归和浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.11",
+        "4.14"
+      ],
+      "file": "docs/TASKS/4.15.md"
+    },
+    {
+      "id": "4.16",
+      "title": "精简Esc设置窗口",
+      "acceptance": "设置仅保留标题、鼠标速度及必要操作按钮，移除提示文案和训练调试区；保留返回、重开、回房及焦点循环行为，桌面与窄屏验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.13",
+        "4.14"
+      ],
+      "file": "docs/TASKS/4.16.md"
+    },
+    {
+      "id": "4.16.1",
+      "title": "扩大鼠标低速调节范围",
+      "acceptance": "鼠标速度最低0.05倍，步长0.01，低速倍率在镜头和本地存储中生效；原设置兼容，验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.16"
+      ],
+      "file": "docs/TASKS/4.16.1.md"
+    },
+    {
+      "id": "4.16.2",
+      "title": "Esc 设置与局内 HUD 缩放",
+      "acceptance": "HUD 缩放50%～150%、5%步长，实时预览及本地保存；重开/回房重入保留，角落锚点与计时居中，窄窗防溢出；准星/场景/设置窗口保持原尺寸；检查及浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M2",
+      "dependencies": [
+        "4.16.1",
+        "4.14"
+      ],
+      "file": "docs/TASKS/4.16.2.md"
+    },
+    {
+      "id": "4.16.3",
+      "title": "Esc 设置仅保留两个操作按钮",
+      "acceptance": "Esc仅退出游戏/返回游戏两按钮，保留设置滑杆；返回继续游戏、退出回房并释放Canvas，检查及浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M2",
+      "dependencies": [
+        "4.16.2"
+      ],
+      "file": "docs/TASKS/4.16.3.md"
+    },
+    {
+      "id": "4.17",
+      "title": "席位式房间与手动机器人编队",
+      "acceptance": "大厅房间无描述区；红蓝各4席手动添加移除机器人，单地图标准赛，编队实际入局且生命/计分/复活/往返正常，完整检查和浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.13",
+        "4.15",
+        "4.16"
+      ],
+      "file": "docs/TASKS/4.17.md"
+    },
+    {
+      "id": "4.18.1",
+      "title": "水世界房间、空位换座与开局准入",
+      "acceptance": "水世界透明大厅/房间；移除关闭房间按钮，房主离开且无真人时自动解散；8席中央换位，右上加AI，允许与AI交换席位；双方至少1人且所有成员准备才开始，编队/队伍实际入局。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.17"
+      ],
+      "file": "docs/TASKS/4.18.1.md"
+    },
+    {
+      "id": "4.18.2",
+      "title": "困泡耐久、超时原地恢复与计分规则",
+      "acceptance": "倒地隐藏300耐久；倒地超时原地恢复、不产生淘汰事实/积分；枪伤耗尽仍可淘汰，近身终结独立入口；救援2秒，基地复活规则保留。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.1"
+      ],
+      "file": "docs/TASKS/4.18.2.md"
+    },
+    {
+      "id": "4.18.3",
+      "title": "实战踢泡终结与两秒队友救援",
+      "acceptance": "E按下踢爆附近敌方困泡，按住E两秒解救己方；距离/视线/目标生命/伤害/松键/状态中断和多人唯一占用，AI按相同规则做近身交互；固定tick处理，正确归属/统计。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.2"
+      ],
+      "file": "docs/TASKS/4.18.3.md"
+    },
+    {
+      "id": "4.18.4",
+      "title": "困泡表现、队伍血条与复活遮罩",
+      "acceptance": "倒地角色外包水球并漂浮、自身困泡屏幕效果；困泡不显示生命条/耐久；自身绿/友方蓝/敌方红血条；淘汰遮罩中央复活倒计时、无准星。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.3"
+      ],
+      "file": "docs/TASKS/4.18.4.md"
+    },
+    {
+      "id": "4.18.5",
+      "title": "Shift奔跑与地速关联跳跃",
+      "acceptance": "按住Shift且移动时奔跑，禁射/开镜及禁用准星、轻量奔跑画面效果；起跳高度按起跳当前水平速度连续变化，武器重量/减速/落地规则兼容。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.3"
+      ],
+      "file": "docs/TASKS/4.18.5.md"
+    },
+    {
+      "id": "4.18.6",
+      "title": "第三人称准星与枪口遮挡协调",
+      "acceptance": "调整镜头/枪械持枪投影以减少准星与枪口视差；保留真实枪口安全段，受阻时给简洁准星反馈；墙/坡/肩位/狙击回归和浏览器视觉检查。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.4",
+        "4.18.5"
+      ],
+      "file": "docs/TASKS/4.18.6.md"
+    },
+    {
+      "id": "4.18.6.1",
+      "title": "泡泡战士式短身人物与跟随构图",
+      "acceptance": "短身占位与运动/命中同步，图片参考构图量化，中心视线/避障/血条回归及生产浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M2",
+      "dependencies": [
+        "4.18.6"
+      ],
+      "file": "docs/TASKS/4.18.6.1.md"
+    },
+    {
+      "id": "4.18.7",
+      "title": "滚轮切枪修复",
+      "acceptance": "复现滚轮量化/多事件/连续滚动问题；按实际方向和累积意图切换，控件区域不抢滚动、移动/跳跃/冷却/重开/离场兼容。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.1"
+      ],
+      "file": "docs/TASKS/4.18.7.md"
+    },
+    {
+      "id": "4.18.8",
+      "title": "伤害浮字离开视野后重复修复",
+      "acceptance": "浮字以物理tick生命周期到期，不依赖可见性或CSS动画结束；遮挡恢复不重播旧伤害，队列容量/重开/离场清理。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.2"
+      ],
+      "file": "docs/TASKS/4.18.8.md"
+    },
+    {
+      "id": "4.18.9",
+      "title": "无限备弹展示、团队视野与Tab记分板",
+      "acceptance": "隐藏枪械备弹及无限标记；敌人只有在团队当前视野中才显示地图位置；Tab按住显示半透明左地图右计分表，松开/失焦清除，不影响移动/战斗。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.1",
+        "4.18.3",
+        "4.18.4"
+      ],
+      "file": "docs/TASKS/4.18.9.md"
+    },
+    {
+      "id": "4.18.9.1",
+      "title": "Tab 比分列对齐与居中缩小",
+      "acceptance": "两人/满4v4红蓝表头数据列对齐，面板缩小居中，窄窗可见及Tab释放正常；检查与生产浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M2",
+      "dependencies": [
+        "4.18.9"
+      ],
+      "file": "docs/TASKS/4.18.9.1.md"
+    },
+    {
+      "id": "4.18.10",
+      "title": "简洁卡通枪械表现",
+      "acceptance": "参考附件的粗线条/大色块水枪感，简化HUD枪图和现有占位持枪表现，四枪轮廓明确；不冒充Blender正式模型，不新增外部生成服务。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.6"
+      ],
+      "file": "docs/TASKS/4.18.10.md"
+    },
+    {
+      "id": "4.18.10.1",
+      "title": "弹道曳光与随枪口击发闪光",
+      "acceptance": "步枪/狙击曳光、霰弹短时八丸轨迹、枪口闪光随挂点移动；生命周期/曳光与挂点回归、完整检查及浏览器验证通过。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M2",
+      "dependencies": [
+        "4.18.10",
+        "4.18.6.1"
+      ],
+      "file": "docs/TASKS/4.18.10.1.md"
+    },
+    {
+      "id": "4.18.11",
+      "title": "测试修改项完整回归与交付",
+      "acceptance": "逐条19项覆盖审计；核心/集成/完整check、浏览器实际交互/视觉/异常路径，更新报告/规格/计划/任务状态，implemented待人工验收，不自动进入联网阶段。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.7",
+        "4.18.8",
+        "4.18.9",
+        "4.18.10"
+      ],
+      "file": "docs/TASKS/4.18.11.md"
+    }
+  ],
+  "executionBatches": [
+    {
+      "id": "N1",
+      "title": "联机服务与身份基础",
+      "milestone": "M1",
+      "taskIds": [
+        "5.1",
+        "5.2",
+        "5.3",
+        "5.4"
+      ],
+      "entryGate": "阶段4实际验收关闭并记录覆盖当前版本的Git回退提交；P.1仅完成计划调整，不代替验收。",
+      "exitCriteria": "服务可独立启停；两个真实客户端连接同一测试房间，身份、加入/退出和订阅释放可验证。"
+    },
+    {
+      "id": "N2",
+      "title": "接入真实大厅与房间",
+      "milestone": "M1",
+      "taskIds": [
+        "6.1",
+        "6.2",
+        "6.3",
+        "6.4",
+        "6.5",
+        "6.6",
+        "6.7",
+        "6.8",
+        "6.9",
+        "6.10"
+      ],
+      "entryGate": "N1验收通过；复用4.13页面，将本地模拟入口与联网状态明确分开。",
+      "exitCriteria": "两个真实客户端看到同一房间/成员/配置/准备；服务端拒绝越权、满员和重复开局，签发唯一比赛准入，不假装联机战斗已完成。"
+    },
+    {
+      "id": "N3",
+      "title": "同步移动与真实加载准入",
+      "milestone": "M1",
+      "taskIds": [
+        "5.5",
+        "5.6",
+        "5.7.1",
+        "5.7.2",
+        "5.7.3",
+        "5.8",
+        "5.9",
+        "5.10",
+        "6.11"
+      ],
+      "entryGate": "N2验收通过；使用其partyId/matchId与服务端准入，不另建永久调试入口。",
+      "exitCriteria": "两客户端共享权威地图/出生版本，移动预测/校正/远端插值；全员loaded后开始、30秒加载失败可回房间。此时不宣称联机伤害完成。"
+    },
+    {
+      "id": "N4",
+      "title": "权威战斗与1v1完整闭环",
+      "milestone": "M1",
+      "taskIds": [
+        "5.11",
+        "5.12.1",
+        "5.12.2",
+        "5.13",
+        "5.14",
+        "5.15",
+        "6.12",
+        "5.16"
+      ],
+      "entryGate": "N3验收通过；加载/比赛身份和输入协议已稳定。",
+      "exitCriteria": "从现有页面创建/加入到权威战斗、断线重连、自然结算、回原房间再开均通过；5.16明确验收后达到M1。"
+    },
+    {
+      "id": "N5",
+      "title": "房间异常与真实2v2验证",
+      "milestone": "M2",
+      "taskIds": [
+        "6.13",
+        "5.17"
+      ],
+      "entryGate": "N4/M1验收通过；先完成房主/空房/服务重启等生命周期，再开启真实四人回归。",
+      "exitCriteria": "四个独立客户端两队各两人，真实救援/中断/补刀/复活/计分/返回重开通过；N1～N5全部验收后达到M2，才进入依赖M2的正式内容批次。"
     }
   ]
 }

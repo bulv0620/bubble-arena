@@ -4,7 +4,7 @@ import { reticleProgress } from './reticleProgress';
 const idle = { held: false, pressed: false }, press = { held: true, pressed: true };
 test.each(['shotgun', 'sniper', 'bubble'] as const)('%s last shot selects only reload, while prior shots select cooldown with exactly one word', id => {
   const loadout = new LocalLoadout(id === 'bubble' ? 'rifle' : id);
-  if (id === 'bubble') loadout.select(2);
+  if (id === 'bubble') loadout.select(4);
   expect(reticleProgress(loadout.getSnapshot())).toBeNull();
   loadout.step(press); expect(reticleProgress(loadout.getSnapshot())).toEqual({ kind: 'cooldown', value: 0, label: '冷却' });
   while (loadout.getSnapshot().ammo.magazine > 0) {
@@ -22,7 +22,7 @@ test.each(['shotgun', 'sniper', 'bubble'] as const)('%s last shot selects only r
 test('manual reload overrides active cooldown immediately; switching reads actual selected weapon progress', () => {
   const loadout = new LocalLoadout('sniper'); loadout.step(press); loadout.step(idle, true);
   expect(reticleProgress(loadout.getSnapshot())?.kind).toBe('reload');
-  loadout.select(2); expect(reticleProgress(loadout.getSnapshot())).toBeNull();
-  loadout.select(1); expect(reticleProgress(loadout.getSnapshot())).toMatchObject({ kind: 'cooldown', label: '冷却' });
+  loadout.select(4); expect(reticleProgress(loadout.getSnapshot())).toBeNull();
+  loadout.select(3); expect(reticleProgress(loadout.getSnapshot())).toMatchObject({ kind: 'cooldown', label: '冷却' });
   expect(reticleProgress(new LocalLoadout('sniper').getSnapshot())).toBeNull();
 });

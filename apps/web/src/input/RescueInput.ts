@@ -1,7 +1,7 @@
 import type { RescueControl } from '@bubble-arena/shared';
 export type RescueInputState = Omit<RescueControl, 'playerId' | 'targetPlayerId'>;
 type Action = 'move' | 'jump' | 'fire' | 'reload' | 'weaponSwitch' | 'aim';
-const bindings: Record<string, Action> = { KeyW: 'move', KeyA: 'move', KeyS: 'move', KeyD: 'move', Space: 'jump', KeyR: 'reload', Digit1: 'weaponSwitch', Digit2: 'weaponSwitch' };
+const bindings: Record<string, Action> = { KeyW: 'move', KeyA: 'move', KeyS: 'move', KeyD: 'move', Space: 'jump', KeyR: 'reload', Digit1: 'weaponSwitch', Digit2: 'weaponSwitch', Digit3: 'weaponSwitch', Digit4: 'weaponSwitch' };
 const editable = (target: EventTarget | null) => {
   const element = target as HTMLElement | null;
   return Boolean(element?.isContentEditable || element?.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"])'));
@@ -41,18 +41,19 @@ export class RescueInput {
       if (action) { this.buttons.add(action); this.queued.add(action); }
     };
     const mouseUp = (event: Event) => { if ((event as MouseEvent).button === 0) this.buttons.delete('fire'); if ((event as MouseEvent).button === 2) this.buttons.delete('aim'); };
+    const wheel = (event: Event) => { if (this.active() && Number.isFinite((event as WheelEvent).deltaY) && (event as WheelEvent).deltaY !== 0) this.queued.add('weaponSwitch'); };
     const move = (event: Event) => { const buttons = (event as MouseEvent).buttons; if (!(buttons & 1)) this.buttons.delete('fire'); if (!(buttons & 2)) this.buttons.delete('aim'); };
     const hidden = () => { if (doc.hidden) stop(); };
     const focus = (event: Event) => { if (editable(event.target)) stop(); };
     global.addEventListener('keydown', down); global.addEventListener('keyup', up); global.addEventListener('blur', stop);
     global.addEventListener('mouseup', mouseUp); global.addEventListener('mousemove', move);
-    canvas.addEventListener('mousedown', mouseDown); doc.addEventListener('visibilitychange', hidden); doc.addEventListener('focusin', focus);
+    canvas.addEventListener('mousedown', mouseDown); canvas.addEventListener('wheel', wheel); doc.addEventListener('visibilitychange', hidden); doc.addEventListener('focusin', focus);
     let attached = true;
     const detach = () => {
       if (!attached) return; attached = false;
       global.removeEventListener('keydown', down); global.removeEventListener('keyup', up); global.removeEventListener('blur', stop);
       global.removeEventListener('mouseup', mouseUp); global.removeEventListener('mousemove', move);
-      canvas.removeEventListener('mousedown', mouseDown); doc.removeEventListener('visibilitychange', hidden); doc.removeEventListener('focusin', focus);
+      canvas.removeEventListener('mousedown', mouseDown); canvas.removeEventListener('wheel', wheel); doc.removeEventListener('visibilitychange', hidden); doc.removeEventListener('focusin', focus);
       if (this.detachCurrent === detach) { this.detachCurrent = undefined; this.active = () => false; stop(); }
     };
     this.detachCurrent = detach; return detach;

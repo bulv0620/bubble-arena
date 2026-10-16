@@ -5,7 +5,7 @@ import { updateFollowCamera } from '../camera/cameraFollowPose';
 import { createScreenAimRay } from '../weapons/screenAimRay';
 import { rifleMuzzlePosition } from '../weapons/riflePose';
 import { OVERHEAD_HEALTH_CONFIG as health } from '../HUD/overheadHealthConfig';
-import { createSelfViewClearance } from './selfViewClearance';
+import { createSelfPlateClearance, createSelfViewClearance } from './selfViewClearance';
 
 function fixture(weapon: 'rifle' | 'shotgun' | 'sniper' | 'bubble') {
   const root = new Group(), anchor = new Group(); anchor.position.set(...health.selfPosition); root.add(anchor);
@@ -13,11 +13,11 @@ function fixture(weapon: 'rifle' | 'shotgun' | 'sniper' | 'bubble') {
   const body = new Mesh(new CapsuleGeometry(shape.bodyRadius, shape.bodyHalfHeight * 2, 8, 16)); body.position.y = shape.bodyY; root.add(body);
   // A conservative muzzle-tip sphere complements the shared actual head/body silhouette.
   const muzzle = new Mesh(new SphereGeometry(.08, 8, 6)), point = rifleMuzzlePosition({ x: 0, y: 0, z: 0 }, 0, weapon)!;
-  muzzle.position.copy(point); root.add(muzzle);
+  muzzle.position.copy(point); const socket = new Group(); socket.name = 'weapon_socket'; socket.add(muzzle); root.add(socket);
   return { root, plate: { anchor, width: health.selfWidth, height: health.selfHeightBound, distanceFactor: health.selfDistanceFactor },
     dispose: () => { head.geometry.dispose(); body.geometry.dispose(); muzzle.geometry.dispose(); } };
 }
-test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('%s default pitch leaves the largest reticle ring and centered own plate clear across viewport/yaw/jump positions', weapon => {
+test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('%s keeps the aiming center clear across viewport/yaw/jump positions without hiding the closer-centered avatar', weapon => {
   const f = fixture(weapon), check = createSelfViewClearance();
   try {
     for (const [width, height] of [[1280, 720], [960, 720], [800, 600]]) {
@@ -26,7 +26,7 @@ test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('%s default pitch l
         for (const position of [{ x: TRAINING_RANGE_CONFIG.playerSpawnXZ[0], y: .91, z: 0 }, { x: -3, y: 2.4, z: -7 }]) {
           f.root.position.copy(position); f.root.rotation.y = yaw;
           updateFollowCamera(camera, { translation: () => position }, { yaw, pitch });
-          expect(check(f.root, camera, width, height, 76, f.plate), JSON.stringify({ weapon, width, height, yaw, pitch, position })).toBe(false);
+          expect(check(f.root, camera, width, height, health.aimCenterClearance), JSON.stringify({ weapon, width, height, yaw, pitch, position })).toBe(false);
         }
       }
     }
@@ -39,7 +39,7 @@ test('a compressed camera crossing the player triggers protection and a hidden g
     expect(check(f.root, camera, 1280, 720, 76, f.plate)).toBe(true);
     f.root.visible = false;
     updateFollowCamera(camera, { translation: () => ({ x: 0, y: 0, z: 0 }) });
-    expect(check(f.root, camera, 1280, 720, 76, f.plate)).toBe(false);
+    expect(check(f.root, camera, 1280, 720, health.aimCenterClearance)).toBe(false);
     expect(check(f.root, camera, 0, 0, 76, f.plate)).toBe(true);
   } finally { f.dispose(); }
 });
@@ -55,5 +55,33 @@ test('a central overhead plate is protected even when the own mesh is off-center
     expect(ray.origin.x).toBeCloseTo(TRAINING_TARGET_LAYOUT[1].position[0]);
     expect(ray.direction.x).toBeCloseTo(0);
     expect(new Vector3().copy(ray.direction).distanceTo(camera.getWorldDirection(new Vector3()))).toBeLessThan(1e-10);
+  } finally { f.dispose(); }
+});
+
+test('an outer spread overlap can retain the avatar while central geometry still triggers protection', () => {
+  const root = new Group(), socket = new Group(); socket.name = 'weapon_socket'; root.add(socket);
+  const gun = new Mesh(new SphereGeometry(.05,8,6)); socket.add(gun);
+  const camera = new PerspectiveCamera(70,16/9,.1,200); camera.position.set(0,0,4.5); camera.lookAt(0,0,0);
+  const check = createSelfViewClearance();
+  try {
+    gun.position.x = .4; expect(check(root,camera,1280,720,health.aimCenterClearance)).toBe(false);
+    gun.position.x = 0; expect(check(root,camera,1280,720,health.aimCenterClearance)).toBe(true);
+    gun.position.x = .4; socket.name = 'block-avatar'; expect(check(root,camera,1280,720,health.aimCenterClearance)).toBe(false);
+    expect(check(root,camera,1280,720,76)).toBe(true);
+  } finally { gun.geometry.dispose(); }
+});
+
+test('expanding the reticle hides only the own plate, which returns when the reticle recovers', () => {
+  const f = fixture('rifle'), check = createSelfViewClearance(), plate = createSelfPlateClearance();
+  try {
+    for (const [width,height] of [[1280,720],[800,600]]) {
+      const camera = new PerspectiveCamera(CAMERA_CONFIG.fov,width/height,.1,200);
+      updateFollowCamera(camera,{translation:()=>({x:0,y:0,z:0})});
+      expect(check(f.root,camera,width,height,health.aimCenterClearance)).toBe(false);
+      expect(plate(camera,width,height,26,f.plate)).toBe(false);
+      expect(plate(camera,width,height,76,f.plate)).toBe(true);
+      expect(check(f.root,camera,width,height,health.aimCenterClearance)).toBe(false);
+      expect(plate(camera,width,height,26,f.plate)).toBe(false);
+    }
   } finally { f.dispose(); }
 });

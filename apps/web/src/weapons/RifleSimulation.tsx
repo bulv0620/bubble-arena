@@ -30,7 +30,7 @@ export function RifleSimulation({ playerHealth, aim, input, motion, loadout, swi
   useEffect(() => () => { pending.current = null; shotRay.current = null; feedback.clear(); recoil.reset(); bubbles.clear(); }, [shotRay, feedback, recoil, bubbles]);
   useBeforePhysicsStep(() => {
     if (!loadout.canOperate()) { aim.clear(); input.clear(); reload.clear(); switchInput.clear(); }
-    const slot = switchInput.consume();
+    const slot = switchInput.consume(loadout.getSnapshot().active);
     if (slot && loadout.select(slot)) { input.clear(); reload.clear(); }
     const shot = loadout.step(input.consume(), reload.consume());
     if (shot && playerHealth.onAcceptedFire(shot.sequence) && import.meta.env.DEV) {
@@ -43,6 +43,10 @@ export function RifleSimulation({ playerHealth, aim, input, motion, loadout, swi
     if (shot && import.meta.env.DEV) console.info('[weapon.check]', JSON.stringify({ ...shot, ...loadout.getSnapshot().ammo }));
   });
   useAfterPhysicsStep(() => {
+    const currentCenter = body.current?.translation();
+    const currentMuzzle = currentCenter && rifleMuzzlePosition(currentCenter, yaw.current, loadout.getSnapshot().active);
+    loadout.setMuzzleBlocked(Boolean(loadout.canOperate() && currentCenter && currentMuzzle && target.current &&
+      queryMuzzleRay(world, currentCenter, currentMuzzle, target.current, WEAPON_CONFIGS[loadout.getSnapshot().active].range)?.status === 'blocked-muzzle'));
     const accepted = pending.current; pending.current = null;
     if (!loadout.canOperate()) shotRay.current = null;
     if (accepted && playerHealth.canPlay()) {
@@ -56,18 +60,15 @@ export function RifleSimulation({ playerHealth, aim, input, motion, loadout, swi
         return center && muzzle && accepted.target && direction ? queryMuzzleRay(world, center, muzzle, accepted.target, config.range, direction) : null;
       });
       shotRay.current = results[0] ?? null;
-      let impact = null;
       let pellets: ReturnType<TrainingTargets['resolveVolley']>['pellets'] = [];
       if (shot.weapon === 'bubble') {
         const result = results[0];
         if (muzzle && result && result.status !== 'blocked-muzzle') bubbles.flight.spawn(shot.sequence, muzzle, result.direction);
       } else {
         const resolved = targets.resolveVolley(world, shot, results, shot.weapon);
-        impact = resolved.impact; pellets = resolved.pellets;
+        pellets = resolved.pellets;
       }
-      if (muzzle) feedback.emit({ sequence: shot.sequence, muzzle,
-        impact: shot.weapon === 'shotgun' ? null : impact ?? (shot.weapon !== 'bubble' && shotRay.current?.status === 'hit' ? shotRay.current.point : null),
-        ...(shot.weapon === 'shotgun' ? { pellets } : {}) });
+      if (muzzle) feedback.emit({ sequence: shot.sequence, weapon: shot.weapon, muzzle, impact: null, pellets });
       if (import.meta.env.DEV) console.info('[shot.ray]', JSON.stringify({ ...shot, muzzle, pellets: results.length, result: shotRay.current }));
     }
     if (playerHealth.canPlay()) bubbles.step(world, loadout.getTick());

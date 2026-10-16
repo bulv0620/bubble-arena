@@ -6,11 +6,11 @@ import { ReloadInput } from '../weapons/ReloadInput';
 
 const event = (target: EventTarget, type: string, values = {}) => target.dispatchEvent(Object.assign(new Event(type), values));
 test('stored mouse speed validates bounds, empty/corrupt values and blocked storage', () => {
-  for (const raw of [null, '', 'bad', 'NaN', 'Infinity', '0', '3.1']) {
+  for (const raw of [null, '', 'bad', 'NaN', 'Infinity', '0', '0.049', '3.1']) {
     expect(readMouseSpeed({ getItem: () => raw, setItem: vi.fn() })).toBe(1);
   }
   const setItem = vi.fn();
-  for (const value of [.25, 1, 3]) {
+  for (const value of [.05, .06, .1, .25, 1, 3]) {
     const storage = { getItem: () => String(value), setItem };
     expect(readMouseSpeed(storage)).toBe(value);
     expect(saveMouseSpeed(storage, value)).toBe(true);
@@ -31,6 +31,15 @@ test('mouse speed applies equally to yaw/pitch and rejects invalid settings', ()
   const unchanged = fast.step();
   expect(unchanged.yaw).toBeCloseTo(previous.yaw, 12);
   expect(unchanged.pitch).toBeCloseTo(previous.pitch, 12);
+});
+test('low mouse speeds keep yaw and pitch proportional down to 0.05', () => {
+  for (const speed of [.05, .06, .1]) {
+    const normal = new MouseOrbit(), slow = new MouseOrbit();
+    const initial = slow.step().pitch;
+    normal.rotate(40, 40); slow.rotate(40, 40, speed);
+    expect(slow.step().yaw).toBeCloseTo(normal.step().yaw * speed, 12);
+    expect(slow.step().pitch - initial).toBeCloseTo((normal.step().pitch - initial) * speed, 12);
+  }
 });
 test('open menu rejects movement, jumping and reload; return requires fresh presses; cleanup releases', () => {
   const global = new EventTarget();

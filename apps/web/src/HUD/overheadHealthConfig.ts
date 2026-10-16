@@ -10,4 +10,5 @@ export const OVERHEAD_HEALTH_CONFIG = Object.freeze({
   selfHeightBound: 32,
   selfPosition: Object.freeze([0, PLAYER_CONFIG.height / 2 + .25, 0] as const),
   reticleClearance: 8,
+  aimCenterClearance: 26,
 });

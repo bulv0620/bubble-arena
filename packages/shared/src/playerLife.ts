@@ -37,7 +37,7 @@ export function parsePlayerLifeConfig(value: unknown): PlayerLifeConfig {
   }
   return Object.freeze(Object.fromEntries(configKeys.map(key => [key, data[key]]))) as unknown as PlayerLifeConfig;
 }
-export const PLAYER_LIFE_CONFIG = parsePlayerLifeConfig({ downedHp: 50, revivedHp: 50, downedDuration: 20, rescueDuration: 3, respawnDelay: 5 });
+export const PLAYER_LIFE_CONFIG = parsePlayerLifeConfig({ downedHp: 300, revivedHp: 50, downedDuration: 20, rescueDuration: 2, respawnDelay: 5 });
 
 type EventIdentity = Readonly<Pick<PlayerLifeSnapshot, 'lifeId' | 'revision'>>;
 /** Internal authoritative facts, never client commands or a network message schema. */

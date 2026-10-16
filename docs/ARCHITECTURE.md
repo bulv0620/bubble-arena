@@ -40,3 +40,12 @@ manifest 记录 assetId、version/hash、source、导出文件、动画/节点�
 4.7当前积分集成：纯核心TeamScoreState只接受权威已结算的整tick淘汰批次，双方分数完整累计后交给后续结束判断。当前训练的单个LocalPlayerHealth在物理before回调内把测试伤害/超时事实送积分，出生成功后注册新lifeId；这不是未来多玩家每人独立同tick调用积分的范式。正式服务器必须汇总全部生命结算后一次提交，身份与来源均由服务器生成，见 [SCORING](spec/SCORING.md)。
 
 4.11对抗Demo：新arena与旧whitebox各自同源碰撞/出生hash。pure ArenaBotBrain仅生成意图，web/Rapier验证移动/LOS/枪口/头身命中；玩家生命在arena模式延后汇总计分，所有角色伤害后一次collect双方淘汰，再MatchResolution。birthClock与积分clock分开，允许同tick出生登记与另一角色淘汰。它是本机模拟原型，未引入网络/DOM到game-core；旧训练继续原适配，详见 [ARENA_DEMO](spec/ARENA_DEMO.md)。
+
+
+4.13本地页面入口：App只管理home/rooms/room/game分支与游戏惰性加载，lobby/localRoom负责纯本地房间转换/校验和独立GameLaunch快照，LobbyPages负责DOM。BasicScene接收启动配置/返回回调，场景ready后仍消费LocalMatch原开始意图与3秒倒计时，UI不推进tick。退出完整卸载Canvas/输入/会话，StrictMode代际dispose及DeferredScene宿主就绪避免重放误清理/嵌套root竞争。未来用服务器快照/命令替换本地适配入口，正式PartyRoom权限、ready、token、loading超时、重连仍按阶段5/6实现；本地成员已准备不是权威协议。见 [LOCAL_ROOMS](spec/LOCAL_ROOMS.md)。
+
+
+P.1 / D23执行批次：N1建立服务/身份；N2复用4.13页面接真实Lobby/Party、轻量房间协议与6.10唯一启动/准入（无模拟Match骨架）；N3在该Match接移动同步，6.11绑定真实loaded和倒计时；N4装配战斗/重连、6.12回Party后5.16整局验证；N5处理6.13综合异常，再做5.17真实四人。没有新增通用RPC层或全局物理store；本次仅调整文档，后续按最小接口实现。详见 [NETWORK_ROADMAP](spec/NETWORK_ROADMAP.md)。
+
+
+4.14 / D24：shared 的 WEAPON_IDS/weaponSlot/weaponForSlot 是固定四槽单源；LocalLoadout 无房间主枪偏好，四枪独立规则保留，WeaponSwitchInput 收集数字/按钮/画布滚轮，RifleSimulation 固定步消费。CombatLog 订阅已接受生命转换及只读归属，不消费计分事实；MatchResolution 既有物理回调推进事件过期，会话dispose释放订阅。FrameStats只采样渲染帧率，不接管物理。水球/武器栏/比分/地图组件订阅既有状态，HUD无业务计时器。LocalRoom/GameLaunch取消primary字段，只有模式与赛制；退出不再回写主枪。见 [COMBAT_HUD](spec/COMBAT_HUD.md)。

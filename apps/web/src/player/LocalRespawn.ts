@@ -1,5 +1,5 @@
 import { selectSpawnPoint, type SpawnSelection } from '@bubble-arena/game-core';
-import { WHITEBOX_COLLISION_HASH, WHITEBOX_SPAWNS, type SpawnCatalog, type SpawnEnemy } from '@bubble-arena/shared';
+import { WHITEBOX_COLLISION_HASH, WHITEBOX_SPAWNS, type SpawnCatalog, type SpawnEnemy, PLAYER_CONFIG } from '@bubble-arena/shared';
 import type { World } from '@dimforge/rapier3d-compat';
 import type { RapierRigidBody } from '@react-three/rapier';
 import type { LocalPlayerHealth } from './LocalPlayerHealth';
@@ -21,9 +21,11 @@ export class LocalRespawn {
   step(world: World, body: RapierRigidBody, movement: RapierMovement, clearInput: () => void) {
     if (!body.isValid() || this.health.getSnapshot().status !== 'respawning') return false;
     if (this.catalog === WHITEBOX_SPAWNS && this.catalog.collisionHash !== WHITEBOX_COLLISION_HASH) throw new Error('Spawn/map version mismatch');
-    const selected = selectSpawnPoint('red', this.enemies(), p => isSpawnClear(world, p), false, this.catalog)!;
+    const peers = this.enemies();
+    const clear = (p: { x: number; y: number; z: number }) => isSpawnClear(world, p) && peers.every(c => c.status === 'eliminated' || c.status === 'respawning' || Math.hypot(c.position.x-p.x, c.position.z-p.z) >= PLAYER_CONFIG.radius * 2 + .1);
+    const selected = selectSpawnPoint(this.health.actor.teamId, peers, clear, false, this.catalog)!;
     // Revalidate the primary fallback too. Corrupt/changed geometry must never cause an embedded spawn.
-    if (!isSpawnClear(world, selected.point.position)) return false;
+    if (!clear(selected.point.position)) return false;
     const accepted = this.health.completeSpawn(() => {
       movement.reset(); clearInput(); this.rescue.resetForRespawn(); this.loadout.resetForRespawn(); this.motion.reset(); this.feedback.clear(); this.recoil.reset();
       body.setTranslation(selected.point.position, true); body.setNextKinematicTranslation(selected.point.position);

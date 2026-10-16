@@ -13,18 +13,18 @@ test.each(['stationary', 'crawl-away', 'injury'] as const)('%s practice uses rea
   try {
     world.createCollider(RAPIER.ColliderDesc.cuboid(40, .5, 40).setTranslation(0, -.5, 0).setCollisionGroups(COLLISION_GROUPS.map)); world.step();
     session.rescue.configure(mode); session.rescue.step(world, at, true, idle);
-    for (let tick = 0; tick < 180; tick++) {
+    for (let tick = 0; tick < 120; tick++) {
       session.playerHealth.step(); session.rescue.step(world, at, true, { ...idle, held: true });
-      if (mode === 'stationary' && tick < 179) {
+      if (mode === 'stationary' && tick < 119) {
         expect(session.loadout.canOperate()).toBe(false); expect(session.loadout.getSpeed()).toBe(0);
-        expect(session.loadout.step({ held: true, pressed: true }, true)).toBeNull(); expect(session.loadout.select(2)).toBe(false);
+        expect(session.loadout.step({ held: true, pressed: true }, true)).toBeNull(); expect(session.loadout.select(4)).toBe(false);
       }
     }
     if (mode === 'stationary') { expect(session.rescue.getSnapshot().channel).toBeNull(); expect(session.rescue.getSnapshot().allyHealth).toMatchObject({ status: 'normal', hp: 50, downedHp: 0, revision: 2, protected: true }); }
     else { expect(session.rescue.getSnapshot().channel).toBeNull(); expect(session.loadout.canOperate()).toBe(true); }
     if (mode === 'injury') { expect(session.playerHealth.getSnapshot().hp).toBe(80); expect(session.rescue.getSnapshot().message).toContain('受到伤害'); }
     if (mode === 'crawl-away') expect(session.rescue.getSnapshot().message).toContain('移出2米');
-    expect(session.rescue.getAllyHp()).toBe(50); expect(session.loadout.getSnapshot().ammo.magazine).toBe(5);
+    expect(session.rescue.getAllyHp()).toBe(mode === 'stationary' ? 50 : 300); expect(session.loadout.getSnapshot().ammo.magazine).toBe(5);
     session.rescue.step(world, at, true, idle); expect(session.loadout.getSpeed()).toBe(4); expect(session.loadout.canOperate()).toBe(true);
     session.rescue.dispose(); session.rescue.dispose();
   } finally { world.free(); }
@@ -69,7 +69,7 @@ test('two distinct real fixture rescues count twice, interruptions and repeated 
     const step = (held = false) => { s.playerHealth.step(); return s.rescue.step(world, at, true, { ...idle, held }); };
     for (let run = 0; run < 2; run++) {
       s.rescue.configure('stationary'); step();
-      for (let tick = 0; tick < 180; tick++) step(true);
+      for (let tick = 0; tick < 120; tick++) step(true);
       expect(s.score.getSnapshot().players.find(p => p.playerId === 'training-player')?.rescues).toBe(run + 1);
       for (let tick = 0; tick < 30; tick++) step();
     }

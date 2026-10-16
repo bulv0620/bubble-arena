@@ -1,12 +1,12 @@
 import { Ray, QueryFilterFlags, type World } from '@dimforge/rapier3d-compat';
-import { BUBBLE_CONFIG, COLLISION_GROUPS, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, WEAPON_HANDLING, type WeaponId, type HitRegion } from '@bubble-arena/shared';
+import { BUBBLE_CONFIG, COLLISION_GROUPS, HIT_MAP_CLEARANCE, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, WEAPON_HANDLING, type WeaponId, type HitRegion } from '@bubble-arena/shared';
 import { calculateWeaponDamage, type TrainingHit } from '@bubble-arena/game-core';
 import { queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
 import type { MuzzleRayResult } from './muzzleRay';
 export interface HitReceiver { receiveHit(hit: TrainingHit, damage?: number): boolean; applySlow(): void; isTargetable?: () => boolean }
 const flags = QueryFilterFlags.EXCLUDE_DYNAMIC;
 // Keep coincident target/map surfaces on the safe map side despite float quantization.
-const mapMargin = 0.00001;
+const mapMargin = HIT_MAP_CLEARANCE;
 
 /** Owns registration only; R3F owns and removes the sensor/collider. */
 export class TrainingTargets {
@@ -16,11 +16,11 @@ export class TrainingTargets {
   private explosions = new Set<number>();
   private newestExplosion = 0;
   dispose() { this.entries.clear(); this.explosions.clear(); }
-  isRegistered = (handle: number) => { const target = this.entries.get(handle)?.target; return Boolean(target && (target.isTargetable?.() ?? true)); };
-  private entries = new Map<number, { target: HitReceiver; region: HitRegion }>();
-  register(handle: number, target: HitReceiver, region: HitRegion = 'body') {
-    if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body') throw new TypeError('Invalid/duplicate target collider or region');
-    this.entries.set(handle, { target, region });
+  isRegistered = (handle: number) => { const entry = this.entries.get(handle); return Boolean(entry && (entry.enabled?.() ?? true) && (entry.target.isTargetable?.() ?? true)); };
+  private entries = new Map<number, { target: HitReceiver; region: HitRegion; enabled?: () => boolean }>();
+  register(handle: number, target: HitReceiver, region: HitRegion = 'body', enabled?: () => boolean) {
+    if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body' || enabled !== undefined && typeof enabled !== 'function') throw new TypeError('Invalid/duplicate target collider or region');
+    this.entries.set(handle, { target, region, enabled });
     let active = true;
     return () => { if (active) { active = false; this.entries.delete(handle); } };
   }
@@ -31,7 +31,7 @@ export class TrainingTargets {
     if (!Number.isFinite(len) || len === 0) return null;
     const direction = { x: ray.direction.x / len, y: ray.direction.y / len, z: ray.direction.z / len };
     const hit = world.castRay(new Ray(ray.origin, direction), ray.range, true, flags, COLLISION_GROUPS.targetQuery,
-      undefined, undefined, collider => { const target = this.entries.get(collider.handle)?.target; return Boolean(target && (target.isTargetable?.() ?? true)); });
+      undefined, undefined, collider => { const entry = this.entries.get(collider.handle); return Boolean(entry && (entry.enabled?.() ?? true) && (entry.target.isTargetable?.() ?? true)); });
     if (!hit || !Number.isFinite(hit.timeOfImpact) || hit.timeOfImpact < 0 || hit.timeOfImpact > ray.range) return null;
     const point = Object.freeze({ x: ray.origin.x + direction.x * hit.timeOfImpact,
       y: ray.origin.y + direction.y * hit.timeOfImpact, z: ray.origin.z + direction.z * hit.timeOfImpact });
@@ -93,8 +93,8 @@ export class TrainingTargets {
     this.explosions.add(shot.sequence);
     for (const sequence of this.explosions) if (sequence <= this.newestExplosion - 64) this.explosions.delete(sequence);
     const visible = new Set<HitReceiver>();
-    for (const [handle, { target }] of this.entries) {
-      if (visible.has(target) || target.isTargetable && !target.isTargetable()) continue;
+    for (const [handle, { target, enabled }] of this.entries) {
+      if (enabled && !enabled() || visible.has(target) || target.isTargetable && !target.isTargetable()) continue;
       const collider = world.getCollider(handle);
       if (!collider) continue;
       const projection = collider.projectPoint(point, true);

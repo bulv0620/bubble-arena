@@ -1,0 +1,47 @@
+- main "Bubble Arena · 游戏场景":
+  - generic: YOU
+  - generic: "100"
+  - meter "YOU生命值"
+  - generic: B!
+  - text: BUBBLE ARENA
+  - generic: 单机 1v1 对抗
+  - status: 点击画布锁定鼠标 · WASD：移动 · Space：跳跃
+  - status: 狙击枪 · 稳定射击
+  - complementary "队伍比分：红队 0，蓝队 0":
+    - emphasis:
+      - text: 红队
+      - generic: YOU
+    - generic: "00"
+    - generic: "00"
+    - emphasis:
+      - text: 蓝队
+      - generic: AI
+  - region "比赛状态":
+    - generic: 比赛进行中 · 20 分制
+    - strong: 00:09
+  - status "自身 HP：100 / 100":
+    - generic: 泡泡先锋 YOU
+    - text: "100"
+    - generic: / 100 HP
+  - status "狙击枪弹药：5 / 无限备弹":
+    - text: 01 狙击枪
+    - generic: SNIPER
+    - generic: "05"
+    - generic: / ∞
+    - generic: 按 R 装填
+    - generic: 1 · 狙击枪
+    - generic: 2 · 泡泡
+    - generic: 重量 4 · 移速 4.0 m/s
+  - complementary "竞技场小地图":
+    - generic: ARENA 01 · CROSSFIRE
+    - generic: 交叉火线
+    - generic: 你 · 红队 vs 蓝队 AI
+    - img "三路地图：左路、中庭、右侧高台，红蓝两端复活区":
+      - generic: BLUE
+      - generic: RED
+    - generic: 左路 · 近战
+    - generic: 中庭
+    - generic: 高台 · 1.5m
+    - generic: 蓝队 AI：100 HP
+  - generic "调试"
+  - button "打开游戏设置": Esc 设置

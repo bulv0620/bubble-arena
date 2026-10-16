@@ -20,13 +20,13 @@ function fixture() {
 }
 function rescue(f: ReturnType<typeof fixture>) {
   f.session.playerHealth.requestTest('down'); f.step();
-  for (let tick = 0; tick < 179; tick++) f.step(); expect(f.session.playerHealth.getSnapshot().status).toBe('downed');
+  for (let tick = 0; tick < 119; tick++) f.step(); expect(f.session.playerHealth.getSnapshot().status).toBe('downed');
   f.step(); expect(f.session.playerHealth.getSnapshot()).toMatchObject({ status: 'normal', hp: 50, protected: true, lifeId: 1, revision: 2 });
 }
-test.each(WEAPON_IDS)('%s self rescue preserves weapon/ammo and world objects, restores normal control after 180 fresh ticks', weapon => {
+test.each(WEAPON_IDS)('%s self rescue preserves weapon/ammo and world objects, restores normal control after 120 fresh ticks', weapon => {
   const f = fixture();
   try {
-    if (weapon === 'bubble') f.session.loadout.select(2); else f.session.loadout.setPrimary(weapon);
+    f.session.loadout.select(weapon === 'bubble' ? 4 : weapon === 'sniper' ? 3 : weapon === 'shotgun' ? 2 : 1);
     const shot = f.session.loadout.step(press)!; f.session.playerHealth.onAcceptedFire(shot.sequence);
     const ammo = f.session.loadout.getSnapshot().ammo.magazine, bodies = f.world.bodies.len(), colliders = f.world.colliders.len();
     rescue(f);
@@ -44,7 +44,7 @@ test('protection ignores actual queued hurt for 59 ticks, expires at 60; pause r
   try {
     f.session.playerHealth.requestTest('down'); f.step(); for (let tick = 0; tick < 30; tick++) f.step();
     f.step({ ...input, active: false }); expect(f.session.rescue.getSnapshot().channel).toBeNull();
-    for (let tick = 0; tick < 179; tick++) f.step(); expect(f.session.playerHealth.getSnapshot().status).toBe('downed');
+    for (let tick = 0; tick < 119; tick++) f.step(); expect(f.session.playerHealth.getSnapshot().status).toBe('downed');
     f.step(); expect(f.session.playerHealth.getSnapshot().hp).toBe(50);
     for (let tick = 0; tick < 59; tick++) { f.session.playerHealth.requestTest('hit'); f.step(); }
     expect(f.session.playerHealth.getSnapshot()).toMatchObject({ hp: 50, protected: true });
@@ -57,7 +57,7 @@ test('rejected reload-time fire does not end protection; accepted bubble fire en
     f.session.loadout.step(press); rescue(f);
     f.session.loadout.step(idle, true); const denied = f.session.loadout.step(press);
     expect(denied).toBeNull(); expect(f.session.playerHealth.getSnapshot().protected).toBe(true); expect(f.session.playerHealth.canCauseControl()).toBe(false);
-    f.session.loadout.select(2); const accepted = f.session.loadout.step(press)!;
+    f.session.loadout.select(4); const accepted = f.session.loadout.step(press)!;
     expect(f.session.playerHealth.onAcceptedFire(accepted.sequence)).toBe(true); expect(f.session.playerHealth.canCauseControl()).toBe(true);
     f.session.playerHealth.requestTest('hit'); f.step(); expect(f.session.playerHealth.getSnapshot().hp).toBe(30);
   } finally { f.cleanup(); }

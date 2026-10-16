@@ -1,4 +1,4 @@
-import { PHYSICS_CONFIG, PLAYER_CONFIG } from '@bubble-arena/shared';
+import { PHYSICS_CONFIG, PLAYER_CONFIG, LOCOMOTION_CONFIG } from '@bubble-arena/shared';
 
 /** Fixed-step gravity and jump state; collision feedback supplies actual grounding. */
 export class VerticalMovement {
@@ -19,10 +19,11 @@ export class VerticalMovement {
     this.grounded = supported && this.velocityY <= 0;
   }
 
-  step(jumpPressed: boolean) {
+  step(jumpPressed: boolean, groundSpeed = 0) {
+    if(!Number.isFinite(groundSpeed)||groundSpeed<0)throw new RangeError('Invalid jump ground speed');
     const jumped = jumpPressed && this.grounded;
     if (jumped) {
-      this.velocityY = this.settings.jumpSpeed;
+      this.velocityY = this.settings.jumpSpeed * Math.sqrt(1+LOCOMOTION_CONFIG.jumpHeightBoost*Math.min(1,groundSpeed/LOCOMOTION_CONFIG.jumpReferenceSpeed));
       this.grounded = false;
     }
     this.velocityY += this.settings.gravity * PHYSICS_CONFIG.timeStep;

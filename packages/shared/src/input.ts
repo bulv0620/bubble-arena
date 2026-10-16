@@ -1,4 +1,5 @@
 export interface MovementKeys {
+  readonly sprinting?: boolean;
   readonly forward: boolean;
   readonly backward: boolean;
   readonly left: boolean;

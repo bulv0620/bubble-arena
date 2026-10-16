@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 import { PerspectiveCamera, Vector3 } from 'three';
-import { CAMERA_CONFIG } from '@bubble-arena/shared';
+import { BLOCK_AVATAR_CONFIG, CAMERA_CONFIG, PLAYER_CONFIG } from '@bubble-arena/shared';
 import { updateFollowCamera } from './cameraFollowPose';
 
 test('orbit rotates shoulder offset and retains distance, focus and upright orientation', () => {
@@ -11,7 +11,7 @@ test('orbit rotates shoulder offset and retains distance, focus and upright orie
       expect(updateFollowCamera(camera, { translation: () => position }, { yaw, pitch })).toBe(true);
       const focus = new Vector3(position.x + Math.cos(yaw) * CAMERA_CONFIG.shoulderOffset,
         position.y + CAMERA_CONFIG.focusHeight, position.z - Math.sin(yaw) * CAMERA_CONFIG.shoulderOffset);
-      expect(camera.position.distanceTo(focus)).toBeCloseTo(4.5, 10);
+      expect(camera.position.distanceTo(focus)).toBeCloseTo(CAMERA_CONFIG.distance, 10);
       expect(camera.getWorldDirection(new Vector3()).distanceTo(focus.sub(camera.position).normalize())).toBeLessThan(1e-10);
       expect(new Vector3(0, 1, 0).applyQuaternion(camera.quaternion).y).toBeGreaterThan(0);
     }
@@ -77,19 +77,17 @@ test('right button retains the same camera pose and projection', () => {
   expect(position).toEqual({ x: 2, y: 1, z: 4 });
 });
 
-test('default framing keeps the head below the center reticle and the full body in view', () => {
-  const position = { x: -2, y: 0.91, z: 0 };
-  for (const aspect of [16 / 9, 4 / 3]) {
-    for (const aiming of [false, true]) {
-      const camera = new PerspectiveCamera(CAMERA_CONFIG.fov, aspect, CAMERA_CONFIG.near, CAMERA_CONFIG.far);
-      updateFollowCamera(camera, { translation: () => position }, undefined, aiming);
-      camera.updateMatrixWorld();
-      const head = new Vector3(position.x, position.y + 0.9, position.z).project(camera);
-      const foot = new Vector3(position.x, position.y - 0.9, position.z).project(camera);
-      expect(head.x).toBeLessThan(-0.05); // Player stays left of the viewing center.
-      expect(head.y).toBeLessThan(-0.05); // Viewing center is above the head.
-      expect(foot.y).toBeGreaterThan(-1);
-      expect((head.y - foot.y) / 2).toBeLessThan(0.5); // No majority-screen capsule while aiming.
-    }
+test('Bubble-style composition places a short large-headed avatar below the reticle and close to the center', () => {
+  const position = { x: -2, y: PLAYER_CONFIG.height / 2 + .01, z: 0 };
+  for (const aspect of [16/9, 4/3]) for (const aiming of [false,true]) {
+    const camera = new PerspectiveCamera(CAMERA_CONFIG.fov,aspect,CAMERA_CONFIG.near,CAMERA_CONFIG.far);
+    updateFollowCamera(camera,{translation:()=>position},undefined,aiming); camera.updateMatrixWorld();
+    const point = (y: number) => { const v = new Vector3(position.x,position.y+y,position.z).project(camera); return {x:(v.x+1)/2,y:(1-v.y)/2}; };
+    const head = point(BLOCK_AVATAR_CONFIG.headY), top = point(BLOCK_AVATAR_CONFIG.headY+BLOCK_AVATAR_CONFIG.headRadius), foot = point(-PLAYER_CONFIG.height/2);
+    expect(head.x).toBeGreaterThan(.38); expect(head.x).toBeLessThan(.43);
+    expect(head.y).toBeGreaterThan(.65); expect(head.y).toBeLessThan(.70);
+    expect(top.y).toBeGreaterThan(.55); expect(top.y).toBeLessThan(.60);
+    expect(foot.y).toBeGreaterThan(.92); expect(foot.y).toBeLessThan(.98);
+    expect(foot.y-top.y).toBeGreaterThan(.35); expect(foot.y-top.y).toBeLessThan(.41);
   }
 });

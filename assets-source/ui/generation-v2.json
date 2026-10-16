@@ -1,0 +1,10 @@
+{
+  "generator": "built-in image_gen (imagegen skill), transparent_background=true",
+  "date": "2026-10-15",
+  "assets": [
+    {
+      "file": "apps/web/public/ui/bubble-duel-v2.png",
+      "prompt": "Use case: stylized-concept\nAsset type: finished transparent 2D game UI battle emblem for an original playful water fight arena, displayed at 180px in pre-match and results panels.\nPrimary request: Two large glossy toy-like water bubbles collide with a chunky golden four-point splash spark in the center. Left bubble vivid coral-red, right bubble electric cyan-blue. Each has lively curved water fins and a few large droplets arcing outward; a little foamy white water at their base. Bold navy outlines, strong readable silhouette, broad graphic shapes and polished 2.5D cartoon shading with white glints. Joyful arcade sports energy, saturated candy colors, simple and iconic, not photorealistic. Wide symmetrical compact emblem, 3:2 canvas, generous transparent padding, all droplets fully contained.\nConstraints: genuinely transparent background, no panel or backdrop, no characters, no guns, no text, no letters, no logos, no watermark. This is a production decorative UI asset, not a screenshot."
+    }
+  ]
+}

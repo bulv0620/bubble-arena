@@ -1,5 +1,15 @@
 export const WEAPON_IDS = Object.freeze(['rifle', 'shotgun', 'sniper', 'bubble'] as const);
 export type WeaponId = typeof WEAPON_IDS[number];
+/** Fixed carried arsenal; input, simulation and HUD share this order. */
+export type WeaponSlot = 1 | 2 | 3 | 4;
+export function weaponForSlot(slot: WeaponSlot): WeaponId {
+  if (!Number.isInteger(slot) || slot < 1 || slot > WEAPON_IDS.length) throw new TypeError('Invalid weapon slot');
+  return WEAPON_IDS[slot - 1]!;
+}
+export function weaponSlot(id: WeaponId): WeaponSlot {
+  if (!isWeaponId(id)) throw new TypeError('Invalid weapon');
+  return (WEAPON_IDS.indexOf(id) + 1) as WeaponSlot;
+}
 
 /** Configuration only, not mutable ammo, cooldowns or client-authoritative damage. */
 export interface WeaponConfig {

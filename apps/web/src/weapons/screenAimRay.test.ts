@@ -1,7 +1,7 @@
 import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
 import { Object3D, PerspectiveCamera, Vector3 } from 'three';
-import { COLLISION_GROUPS, WEAPON_CONFIGS } from '@bubble-arena/shared';
+import { CAMERA_CONFIG, COLLISION_GROUPS, WEAPON_CONFIGS } from '@bubble-arena/shared';
 import { createScreenAimRay, queryScreenAimTarget, type ScreenAimRay } from './screenAimRay';
 import { updateFollowCamera } from '../camera/cameraFollowPose';
 import { avoidCameraObstacles } from '../camera/cameraAvoidance';
@@ -81,11 +81,11 @@ test('uses camera world pose, immutable results and does not mutate camera/ray/w
   expect(JSON.stringify(ray)).toBe(before); expect([world.bodies.len(), world.colliders.len()]).toEqual(count);
 });
 test('ray follows final obstacle-contracted camera, not its original desired position', () => {
-  setup(); world.createCollider(RAPIER.ColliderDesc.cuboid(5, 4, 0.1).setTranslation(0, 1, 2).setCollisionGroups(COLLISION_GROUPS.map)); world.step();
+  setup(); world.createCollider(RAPIER.ColliderDesc.cuboid(5, 4, 0.1).setTranslation(0, 1, 1.5).setCollisionGroups(COLLISION_GROUPS.map)); world.step();
   const camera = new PerspectiveCamera(70, 16 / 9, 0.1, 200), position = { x: 0, y: 0, z: 0 };
   updateFollowCamera(camera, { translation: () => position }, { yaw: 0, pitch: 0.14 });
   const ideal = camera.position.clone();
-  expect(avoidCameraObstacles(world, camera, { x: 0, y: 1.1, z: 0 }, cameraFocus(position, 0)).status).toBe('resolved');
+  expect(avoidCameraObstacles(world, camera, { x: 0, y: CAMERA_CONFIG.focusHeight, z: 0 }, cameraFocus(position, 0)).status).toBe('resolved');
   expect(camera.position.distanceTo(ideal)).toBeGreaterThan(1);
   const actual = createScreenAimRay(camera)!;
   expect(actual.origin).toEqual({ x: camera.position.x, y: camera.position.y, z: camera.position.z });

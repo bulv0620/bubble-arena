@@ -1,24 +1,27 @@
-.settings-overlay { position: absolute; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; background: #07182ba8; backdrop-filter: blur(8px); }
-.settings-panel { width: min(420px, 100%); box-sizing: border-box; padding: 32px; border: 1px solid #a8d8ff60; border-radius: 22px; background: linear-gradient(145deg, #173855, #0c2139); box-shadow: 0 24px 80px #0008; color: #edf7ff; font-family: system-ui, sans-serif; }
-.settings-eyebrow { color: #85cfff; letter-spacing: 2px; font-size: 11px; font-weight: 800; }
-.settings-panel h1 { font-size: 28px; margin: 10px 0 30px; }
-.settings-panel label { display: flex; justify-content: space-between; font-weight: 700; }
-.settings-panel output { color: #8feadf; font-variant-numeric: tabular-nums; }
-.settings-panel input { width: 100%; margin: 22px 0 8px; accent-color: #66dbc8; cursor: pointer; }
-.settings-scale { display: flex; justify-content: space-between; color: #99b6cd; font-size: 12px; }
-.settings-panel p { font-size: 12px; color: #b0c7da; margin: 26px 0 18px; }
+.settings-overlay { position: absolute; inset: 0; z-index: 100; display: grid; place-items: center; box-sizing: border-box; padding: 20px; background: radial-gradient(ellipse at 35% 25%, #37becb88, #13385ae0); backdrop-filter: blur(6px); }
+.settings-panel { width: min(420px, 100%); max-height: calc(100dvh - 40px); box-sizing: border-box; overflow-y: auto; border: 4px solid var(--game-ink); border-radius: 24px; background: #e4f6fb; box-shadow: 0 6px 0 #103253, inset 0 0 0 3px white, 0 24px 80px #061d4066; color: var(--game-ink); font-family: var(--game-font); font-synthesis: weight; scrollbar-color: #69c4db #e0f1f6; }
+.settings-header { padding: 20px 24px; border-bottom: 3px solid var(--game-ink); background: linear-gradient(120deg, #64e8e5, #30b4ec); }
+.settings-panel h1 { margin: 0; color: white; font-size: 25px; font-weight: 1000; text-align: center; text-shadow: 0 2px #1c7094, 2px 0 #1c7094, -2px 0 #1c7094, 0 -2px #1c7094; }
+.settings-body { padding: 28px 24px; }
+.settings-body input + label { margin-top: 24px; }
+.settings-panel label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 900; }
+.settings-panel output { color: #167fa3; font-variant-numeric: tabular-nums; }
+.settings-panel input[type=range] { appearance: none; -webkit-appearance: none; box-sizing: border-box; width: 100%; height: 12px; border: 2px solid #2c7897; border-radius: 8px; background: linear-gradient(90deg, #43d8dc, #c9eff5); margin: 24px 0 8px; cursor: pointer; }
+.settings-panel input[type=range]::-webkit-slider-thumb { appearance: none; width: 24px; height: 26px; border-radius: 9px; border: 3px solid var(--game-ink); background: #ffe276; box-shadow: 0 3px #b57927, inset 0 2px white; }
+.settings-panel input[type=range]::-moz-range-thumb { width: 20px; height: 22px; border-radius: 9px; border: 3px solid var(--game-ink); background: #ffe276; }
+.settings-footer { padding: 20px 24px 24px; background: #c3ebf4; border-top: 2px solid #b2dae5; }
 .settings-actions { display: flex; gap: 12px; }
-.settings-actions button { flex: 1; border: 1px solid #88b4d85c; border-radius: 11px; padding: 13px 8px; color: #e2f3ff; background: #264461; font: inherit; font-weight: 800; cursor: pointer; }
-.settings-actions .settings-return { color: #082b32; background: #71e0cb; border-color: #9cf4e4; }
-.settings-actions button:hover { filter: brightness(1.12); }
-.settings-panel :focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
-.settings-panel small { display: block; font-size: 11px; color: #a1bbcf; margin-top: 16px; }
-.settings-panel .settings-weapon-label { margin-top: 24px; }
-.settings-panel select { width: 100%; margin-top: 12px; padding: 12px; border: 1px solid #88b4d85c; border-radius: 10px; color: #e2f3ff; background: #264461; font: inherit; }
-
-.settings-panel { max-height: calc(100dvh - 40px); overflow-y: auto; }
-.life-test { border-top: 1px solid #88b4d844; margin-top: 18px; padding-top: 16px; }
-.life-test > b { font-size: 12px; color: #bfdfee; }
-.life-test > output { display: block; margin: 8px 0 12px; font-size: 12px; }
-.life-test small { margin-top: 8px; }
-.settings-actions button:disabled { cursor: default; opacity: .45; }
+.settings-panel button { border: 3px solid var(--game-ink); border-radius: 12px; padding: 12px 8px; color: var(--game-ink); background: linear-gradient(#fff, #deedf4); box-shadow: 0 3px 0 #83aabd; font: 800 14px var(--game-font); cursor: pointer; }
+.settings-actions button { flex: 1; }
+.settings-actions .settings-return { color: #3d5428; background: linear-gradient(#f0ffb0, #bfe571); box-shadow: 0 4px 0 #718a39; }
+.settings-panel button:hover { filter: brightness(1.04); }
+.settings-panel button:active { transform: translateY(2px); box-shadow: 0 1px 0 #83aabd; }
+.settings-panel :focus-visible { outline: 3px solid #d76729; outline-offset: 4px; }
+@media (max-width: 600px) {
+  .settings-overlay { padding: 12px; }
+  .settings-panel { max-height: calc(100dvh - 24px); }
+  .settings-header { padding: 18px 20px; }
+  .settings-panel h1 { font-size: 23px; }
+  .settings-body { padding: 24px 20px; }
+  .settings-footer { padding: 18px 20px 22px; }
+}

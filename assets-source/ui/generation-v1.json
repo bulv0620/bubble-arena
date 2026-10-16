@@ -1,0 +1,14 @@
+{
+  "generator": "built-in image_gen (imagegen skill), transparent_background=true",
+  "date": "2026-10-15",
+  "assets": [
+    {
+      "file": "apps/web/public/ui/bubble-mascot-v1.png",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent illustrated game UI emblem, for a colorful cartoon water-gun arena game's settings and victory panels.\nPrimary request: A joyful glossy aqua water-bubble mascot wearing coral red swimming goggles pushed up on its round forehead, small happy face, holding up a chunky golden five-point star medal. A sculptural blue water splash curves behind the mascot with a few floating translucent bubbles. Polished playful 2.5D mobile/PC cartoon action game illustration, clean confident navy edge lines, bright white specular highlights, cyan, coral, sunny yellow.\nComposition: single centered compact emblem, square image, all elements fit comfortably with transparent padding. Strong readable silhouette even at 160px. Transparent background, no ground plane, no rectangular backdrop.\nConstraints: original character, no known franchise characters, no letters, no text, no logos, no watermark. This is a finished decorative UI asset, not a screenshot or UI mockup."
+    },
+    {
+      "file": "apps/web/public/ui/water-splash-v1.png",
+      "prompt": "Use case: stylized-concept\nAsset type: original wide transparent water-splash ornament for cartoon water-gun game dialog headers.\nPrimary request: One sweeping curved aqua water splash, glossy turquoise water with translucent round bubbles and bright white highlights, a few tiny coral and yellow star-shaped confetti pieces. Playful polished 2.5D game UI illustration, strong clean dark blue edges. Wide horizontal composition, splash concentrated along lower edge and rising at the two ends, open transparent middle and upper area for live interface text. Everything contained with padding. Transparent background. No characters, no text, no lettering, no logos, no watermark, no rectangular frame."
+    }
+  ]
+}
