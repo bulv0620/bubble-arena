@@ -22,10 +22,11 @@ export function ArenaMap() {
     </RigidBody>
     <Paint position={[-15, .003, 0]} size={[11, 40]} color="#d5d3c7" /><Paint position={[0, .004, 0]} size={[10, 28]} color="#dbe0d6" />
     <Paint position={[0, .006, 23]} size={[43, 8]} color="#e5aaa0" /><Paint position={[0, .006, -23]} size={[43, 8]} color="#a3cce0" />
-    {ARENA_SOLIDS.map(s => <RigidBody key={s.id} type="fixed" colliders={false} position={[...s.position]} rotation={[...s.rotation]}>
+    {ARENA_SOLIDS.map(s => <RigidBody key={s.id} userData={{ bulletMaterial: s.bulletMaterial }} type="fixed" colliders={false} position={[...s.position]} rotation={[...s.rotation]}>
       <CuboidCollider args={s.size.map(v => v / 2) as [number, number, number]} {...COLLIDER_MATERIALS.solid} collisionGroups={COLLISION_GROUPS.map} />
       <mesh castShadow receiveShadow><boxGeometry args={[...s.size]} /><meshStandardMaterial color={s.color} roughness={.9} /></mesh>
       {s.kind === 'building' && <mesh position={[0, s.size[1] / 2 - .06, 0]}><boxGeometry args={[s.size[0] + .04, .12, s.size[2] + .04]} /><meshStandardMaterial color="#edf0e5" /></mesh>}
+      {s.bulletMaterial === 'wood' && <group>{[-1, 1].map(sign => <mesh key={sign} position={[0, 0, s.size[2] / 2 + .008]} rotation={[0, 0, sign * .45]}><boxGeometry args={[s.size[0] * .8, .12, .025]} /><meshStandardMaterial color="#795431" /></mesh>)}</group>}
       {s.kind === 'cover' && <mesh position={[0, 0, s.size[2] / 2 + .003]}><planeGeometry args={[s.size[0] * .8, .1]} /><meshStandardMaterial color="#eee4c9" /></mesh>}
     </RigidBody>)}
     <Sign text="RED BASE" position={[0, 2.2, 18.02]} color="#a4453a" /><Sign text="BLUE BASE" position={[0, 2.2, -15.98]} color="#2f6d9b" />

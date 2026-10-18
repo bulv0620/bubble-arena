@@ -1,0 +1,27 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "nearWallUi": "- main \"Bubble Arena · 游戏场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - status \"性能状态\": 61 FPS · 0 ms\n  - list \"战斗事件\"\n  - complementary \"Blue 2, Red 1\":\n    - generic \"Blue score\": \"02\"\n    - generic \"Red score\": \"01\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\" [pressed]:\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\":\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:30",
+  "weaponSwitches": [
+    {
+      "slot": "2",
+      "snapshot": "- main \"Bubble Arena · 游戏场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - status \"性能状态\": 56 FPS · 0 ms\n  - list \"战斗事件\":\n    - generic: 蓝队 1 号\n    - generic: 击倒\n    - generic: 红队 3 号\n    - generic: 蓝队 1 号\n    - generic: 淘汰\n    - generic: 红队 3 号\n  - complementary \"Blue 3, Red 1\":\n    - generic \"Blue score\": \"03\"\n    - generic \"Red score\": \"01\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\":\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\" [pressed]:\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\":\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:23"
+    },
+    {
+      "slot": "3",
+      "snapshot": "- main \"Bubble Arena · 游戏场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - status \"性能状态\": 56 FPS · 0 ms\n  - list \"战斗事件\":\n    - generic: 蓝队 1 号\n    - generic: 击倒\n    - generic: 红队 3 号\n    - generic: 蓝队 1 号\n    - generic: 淘汰\n    - generic: 红队 3 号\n  - complementary \"Blue 3, Red 1\":\n    - generic \"Blue score\": \"03\"\n    - generic \"Red score\": \"01\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\":\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\" [pressed]:\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\":\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:23"
+    },
+    {
+      "slot": "4",
+      "snapshot": "- main \"Bubble Arena · 游戏场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - status \"性能状态\": 75 FPS · 0 ms\n  - list \"战斗事件\":\n    - generic: 蓝队 1 号\n    - generic: 击倒\n    - generic: 红队 3 号\n    - generic: 蓝队 1 号\n    - generic: 淘汰\n    - generic: 红队 3 号\n  - complementary \"Blue 3, Red 1\":\n    - generic \"Blue score\": \"03\"\n    - generic \"Red score\": \"01\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\":\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\" [pressed]:\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:23"
+    }
+  ],
+  "nearWallAttemptUi": "- main \"Bubble Arena · 游戏场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - status \"性能状态\": 59 FPS · 0 ms\n  - list \"战斗事件\":\n    - generic: 红队 2 号\n    - generic: 击倒\n    - generic: 蓝队 1 号\n  - complementary \"Blue 3, Red 1\":\n    - generic \"Blue score\": \"03\"\n    - generic \"Red score\": \"01\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\" [pressed]:\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\":\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:15\n  - img \"枪口被遮挡\": ×",
+  "observations": {
+    "staticForwardGunVisible": true,
+    "nearWallNoUpwardTracking": true,
+    "muzzleBlockedUi": true,
+    "acceptedShotObserved": false
+  },
+  "canvasAfterExit": 0,
+  "errors": []
+}

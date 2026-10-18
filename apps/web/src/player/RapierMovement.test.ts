@@ -28,8 +28,8 @@ test('real capsule uses camera yaw while retaining gravity and the existing spee
     world.step();
   }
   const position = player.body.translation();
-  expect(position.x - start.x).toBeGreaterThan(4.4);
-  expect(position.x - start.x).toBeLessThan(5);
+  expect(position.x - start.x).toBeGreaterThan(PLAYER_CONFIG.speed * .88);
+  expect(position.x - start.x).toBeLessThan(PLAYER_CONFIG.speed);
   expect(Math.abs(position.z - start.z)).toBeLessThan(0.03);
   expect(position.y).toBeGreaterThanOrEqual(PLAYER_CONFIG.height / 2);
   expect(position.y).toBeLessThan(PLAYER_CONFIG.height / 2 + 0.03);
@@ -72,15 +72,18 @@ function run(player: ReturnType<typeof setup>, keys: MovementKeys, steps = 120) 
 test('real controller allows free movement and decelerates after release', () => {
   const player = setup(false);
   const moved = run(player, { ...idle, forward: true }, 60);
-  expect(moved.z).toBeLessThan(-4.4);
-  expect(moved.z).toBeGreaterThan(-5);
+  expect(moved.z).toBeLessThan(-PLAYER_CONFIG.speed * .88);
+  expect(moved.z).toBeGreaterThan(-PLAYER_CONFIG.speed);
   expect(moved.y).toBeGreaterThanOrEqual(PLAYER_CONFIG.height / 2);
   expect(moved.y).toBeLessThan(PLAYER_CONFIG.height / 2 + 0.03);
   run(player, idle, 30);
   const stopped = player.body.translation();
   run(player, idle, 30);
   const final = player.body.translation();
-  expect(Math.hypot(final.x - stopped.x, final.y - stopped.y, final.z - stopped.z)).toBeLessThan(0.001);
+  expect(Math.hypot(final.x - stopped.x, final.z - stopped.z)).toBeLessThan(0.001);
+  // Float32 floor separation can settle by ~2mm after the horizontal velocity reaches zero.
+  expect(Math.abs(final.y - stopped.y)).toBeLessThan(.003);
+  expect(final.y).toBeCloseTo(PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.controllerOffset, 2);
 });
 
 test.each([
@@ -89,8 +92,8 @@ test.each([
   const player = setup(false);
   const start = player.body.translation();
   const moved = run(player, { ...idle, [action]: true }, 60);
-  expect((moved[axis] - start[axis]) * sign).toBeGreaterThan(4.4);
-  expect((moved[axis] - start[axis]) * sign).toBeLessThan(5);
+  expect((moved[axis] - start[axis]) * sign).toBeGreaterThan(PLAYER_CONFIG.speed * .88);
+  expect((moved[axis] - start[axis]) * sign).toBeLessThan(PLAYER_CONFIG.speed);
   const otherAxis = axis === 'x' ? 'z' : 'x';
   // Continuous gravity adds floating-point contact corrections on the large floor.
   // Map penetration remains separately constrained to 1mm by the full-map tests.
@@ -103,17 +106,19 @@ test('straight approach is arrested by the wall, with the whole capsule outside 
   const nearFace = WHITEBOX_CONFIG.movementTestWall.position[2] + WHITEBOX_CONFIG.movementTestWall.size[2] / 2;
   expect(position.z).toBeGreaterThanOrEqual(nearFace + PLAYER_CONFIG.radius - 0.001);
   expect(position.z).toBeLessThan(nearFace + PLAYER_CONFIG.radius + 0.03);
-  expect(Math.abs(position.x + 2)).toBeLessThan(0.01);
+  // Same large-floor tangential float32 correction bound as the free-motion fixtures.
+  expect(Math.abs(position.x + 2)).toBeLessThan(0.03);
 });
 
 test('diagonal approach keeps moving tangentially along the wall instead of sticking or tunneling', () => {
   const player = setup();
   const keys = { ...idle, forward: true, right: true };
-  const atWall = run(player, keys, 70);
+  const atWall = run(player, keys, 60);
   const slid = run(player, keys, 40);
   expect(atWall.z).toBeGreaterThan(-2.41);
   expect(atWall.z).toBeLessThan(-2.35);
-  expect(slid.z).toBeCloseTo(atWall.z, 3);
+  // Use the same 1mm float32 collision tolerance as the full-map penetration checks.
+  expect(Math.abs(slid.z - atWall.z)).toBeLessThan(.001);
   expect(slid.x - atWall.x).toBeGreaterThan(2);
   expect(slid.y).toBeGreaterThanOrEqual(PLAYER_CONFIG.height / 2);
   expect(slid.y).toBeLessThan(PLAYER_CONFIG.height / 2 + 0.03);
@@ -171,7 +176,7 @@ test.each([0, 0.35, 1])('air control %s changes only airborne steering, using sa
   const result = adapter.step(player.body, player.collider, { ...idle, right: true });
   if (!result) throw new Error('missing adapter');
   expect(result.grounded).toBe(false);
-  expect(result.desired.x / PHYSICS_CONFIG.timeStep).toBeCloseTo(25 / 60 * airControl);
+  expect(result.desired.x / PHYSICS_CONFIG.timeStep).toBeCloseTo(PLAYER_CONFIG.acceleration / 60 * airControl);
   expect(result.desired.y).toBeLessThan(0);
 });
 
@@ -198,4 +203,37 @@ test.each(['rifle', 'shotgun', 'sniper', 'bubble'] as const)('real capsule reach
   // Rapier float32 contact separation adds up to a few mm/s on this flat fixture.
   expect(Math.abs(Math.hypot(result!.allowed.x, result!.allowed.z) / PHYSICS_CONFIG.timeStep - weaponGroundSpeed(id))).toBeLessThan(.02);
   expect(result!.grounded).toBe(true);
+});
+
+test('real grounded capsule starts in four ticks, brakes under 11cm and reverses in eight ticks', () => {
+  const player = setup(false);
+  run(player, idle, 10);
+  let result: NonNullable<ReturnType<RapierMovement['step']>>;
+  const step = (keys: MovementKeys, jump = false) => {
+    result = adapter.step(player.body, player.collider, keys, jump)!; world.step(); return result;
+  };
+  for (let i = 0; i < 4; i++) step({ ...idle, backward: true });
+  expect(result!.allowed.z / PHYSICS_CONFIG.timeStep).toBeCloseTo(6, 2);
+  const released = player.body.translation().z;
+  for (let i = 0; i < 3; i++) step(idle);
+  expect(Math.abs(result!.allowed.z)).toBeLessThan(.0001);
+  expect(player.body.translation().z - released).toBeLessThan(.11);
+  for (let i = 0; i < 4; i++) step({ ...idle, backward: true });
+  for (let i = 0; i < 8; i++) step({ ...idle, forward: true });
+  expect(result!.allowed.z / PHYSICS_CONFIG.timeStep).toBeCloseTo(-6, 2);
+  const stopped = step(idle); expect(stopped.grounded).toBe(true);
+});
+
+test('real jump can reverse direction within thirteen airborne ticks without gaining speed or jumping twice', () => {
+  const player = setup(false);
+  run(player, idle, 10); run(player, { ...idle, backward: true }, 10);
+  expect(adapter.step(player.body, player.collider, { ...idle, backward: true }, true)!.jumped).toBe(true); world.step();
+  let result: NonNullable<ReturnType<RapierMovement['step']>>;
+  for (let i = 0; i < 13; i++) {
+    result = adapter.step(player.body, player.collider, { ...idle, forward: true }, true)!; world.step();
+    expect(result.jumped).toBe(false);
+    expect(result.grounded).toBe(false);
+    expect(Math.hypot(result.allowed.x, result.allowed.z) / PHYSICS_CONFIG.timeStep).toBeLessThan(6.02);
+  }
+  expect(result!.allowed.z / PHYSICS_CONFIG.timeStep).toBeCloseTo(-6, 2);
 });

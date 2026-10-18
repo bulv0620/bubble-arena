@@ -85,13 +85,15 @@ export function CapsulePlayer({ muzzleAnchor, bodyColor = '#d87136', respawn, cl
     } else { groundedRef.current = false; motion.reset(); }
   });
   const [forward] = useState(() => new Vector3());
-  useFrame(({ camera, size }) => {
+  useFrame(({ camera }) => {
     camera.getWorldDirection(forward);
     facing.step(Math.atan2(-forward.x, -forward.z));
     facingYaw.current = facing.getYaw();
+    if (visual.current) visual.current.rotation.y = facing.getYaw();
+  }, -.5);
+  useFrame(({ camera, size }) => {
     if (visual.current) {
-      visual.current.rotation.y = facing.getYaw();
-      const reticle = crosshairSize(loadout.getAngle());
+      const reticle = crosshairSize(loadout.getAngle(),size.height,camera instanceof PerspectiveCamera?camera.fov:undefined);
       const radius = (reticleProgress(loadout.getSnapshot()) ? Math.max(88, reticle + 24) : reticle) / 2 + OVERHEAD_HEALTH_CONFIG.reticleClearance;
       const normalView = lifeStatus === 'normal' && !scoped && camera instanceof PerspectiveCamera;
       const blocked = normalView && checkClearance(visual.current, camera, size.width, size.height, OVERHEAD_HEALTH_CONFIG.aimCenterClearance);

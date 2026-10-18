@@ -5,10 +5,15 @@ import { ARENA_SPAWNS } from './arena';
 import { TRAINING_TARGET_LAYOUT } from './trainingTarget';
 
 test('short avatar visual and damage regions fit the shared movement capsule and stand on the same floor', () => {
-  expect(avatar.headRadius * 2 / player.height).toBeCloseTo(.5);
+  expect(avatar.headRadius * 2 / player.height).toBeCloseTo(.6 / 1.3);
   expect(avatar.headY + avatar.headRadius).toBeCloseTo(player.height / 2);
   expect(avatar.bodyY - avatar.bodyHalfHeight - avatar.bodyRadius).toBeCloseTo(-player.height / 2);
   expect(avatar.headY - avatar.headRadius).toBeCloseTo(avatar.bodyY + avatar.bodyHalfHeight + avatar.bodyRadius);
+  expect(avatar.headRadius).toBeCloseTo(.3);
+  // Head is smaller; torso dimensions and the ground-relative shoulder remain unchanged.
+  expect((avatar.bodyHalfHeight + avatar.bodyRadius) * 2).toBeCloseTo(.7);
+  expect(player.height / 2 + avatar.bodyY).toBeCloseTo(.35);
+  expect(player.height / 2 + avatar.headY - avatar.headRadius).toBeCloseTo(.7);
   expect(avatar.bodyHalfHeight).toBeGreaterThan(0);
   expect(avatar.headRadius).toBeLessThanOrEqual(player.radius);
   expect(avatar.bodyRadius).toBeLessThanOrEqual(player.radius);

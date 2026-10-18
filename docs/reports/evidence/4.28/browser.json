@@ -1,0 +1,4 @@
+{
+  "state": "Browser tab: 2, Title: \"Bubble Arena\", URL: \"http://127.0.0.1:4173/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\nRemoved element IDs: 49\n~\t\t\t\t14 text 72  FPS  ·  0 ms\n~\t\t\t44 text 04:19\nThe focused UI element is 1 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/",
+  "errors": []
+}

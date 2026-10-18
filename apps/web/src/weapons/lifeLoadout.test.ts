@@ -25,6 +25,6 @@ test('downed closes an open lens, validates state before mutation, restoration d
   expect(() => loadout.setLifeStatus('invalid' as 'normal')).toThrow(TypeError); expect(loadout.getSnapshot()).toBe(before);
   loadout.setLifeStatus('downed'); expect(loadout.getSnapshot().scoped).toBe(false);
   const downed = loadout.getSnapshot(); loadout.setLifeStatus('downed'); expect(loadout.getSnapshot()).toBe(downed);
-  loadout.setLifeStatus('normal'); expect(loadout.getSpeed()).toBe(4); expect(loadout.getSnapshot().scoped).toBe(false);
+  loadout.setLifeStatus('normal'); expect(loadout.getSpeed()).toBeCloseTo(4.8); expect(loadout.getSnapshot().scoped).toBe(false);
   expect(loadout.getSnapshot().ammo.magazine).toBe(5); expect(loadout.step(press)).not.toBeNull();
 });

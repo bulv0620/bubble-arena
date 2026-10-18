@@ -1,10 +1,11 @@
+import type { BulletMaterial } from './weaponPenetration';
 import { PLAYER_CONFIG } from './player';
 import { parseSpawnCatalog, spawnCatalogHash } from './spawn';
 import { whiteboxCollisionHash } from './whitebox';
 import { TRAINING_SCORE_ACTORS } from './trainingScore';
 import { parseScoreRoster } from './scoring';
-export interface ArenaSolid { readonly id: string; readonly kind: 'wall' | 'building' | 'cover' | 'deck' | 'ramp'; readonly position: readonly [number, number, number]; readonly size: readonly [number, number, number]; readonly rotation: readonly [number, number, number]; readonly color: string }
-const solid = (id: string, kind: ArenaSolid['kind'], position: [number, number, number], size: [number, number, number], color: string, rotation: [number, number, number] = [0, 0, 0]): ArenaSolid => Object.freeze({ id, kind, position: Object.freeze(position), size: Object.freeze(size), color, rotation: Object.freeze(rotation) });
+export interface ArenaSolid { readonly id: string; readonly kind: 'wall' | 'building' | 'cover' | 'deck' | 'ramp'; readonly position: readonly [number, number, number]; readonly size: readonly [number, number, number]; readonly rotation: readonly [number, number, number]; readonly color: string; readonly bulletMaterial: BulletMaterial }
+const solid = (id: string, kind: ArenaSolid['kind'], position: [number, number, number], size: [number, number, number], color: string, rotation: [number, number, number] = [0, 0, 0], bulletMaterial: BulletMaterial = 'solid'): ArenaSolid => Object.freeze({ id, kind, position: Object.freeze(position), size: Object.freeze(size), color, bulletMaterial, rotation: Object.freeze(rotation) });
 const rampAngle = Math.atan(1.5 / 5), rampLength = Math.hypot(1.5, 5);
 export const ARENA_CONFIG = Object.freeze({ name: '交叉火线', width: 48, length: 56, groundTopY: 0, groundThickness: 1, deckHeight: 1.5 });
 /** Every playable mass uses these exact transforms for rendering AND collision. */
@@ -16,7 +17,7 @@ export const ARENA_SOLIDS: readonly ArenaSolid[] = Object.freeze([
   ...[-1, 1].flatMap(side => [-1, 1].map(end => solid(`spawn-screen-${side}-${end}`, 'building', [side * 11, 1.4, end * 18], [5, 2.8, 1.2], end > 0 ? '#c78e80' : '#7facc4'))),
   solid('mid-pillar', 'building', [0, 1.6, 0], [3.2, 3.2, 3.2], '#8c9d91'),
   solid('mid-red-cover', 'cover', [-2, .625, 6], [2.4, 1.25, 1.4], '#ccab77'), solid('mid-blue-cover', 'cover', [2, .625, -6], [2.4, 1.25, 1.4], '#ccab77'),
-  solid('west-red-crate', 'cover', [-19, .9, 8], [3, 1.8, 3], '#bdac86'), solid('west-blue-crate', 'cover', [-19, .9, -8], [3, 1.8, 3], '#bdac86'),
+  solid('west-red-crate', 'cover', [-19, .9, 8], [3, 1.8, 3], '#bdac86', [0, 0, 0], 'wood'), solid('west-blue-crate', 'cover', [-19, .9, -8], [3, 1.8, 3], '#bdac86', [0, 0, 0], 'wood'),
   solid('west-link-cover', 'cover', [-10.5, .625, 0], [2.4, 1.25, 3], '#ccb489'),
   solid('east-deck', 'deck', [14, .75, 0], [8, 1.5, 14], '#9aaab7'),
   solid('east-red-ramp', 'ramp', [14, .75 - Math.cos(rampAngle) * .1, 9.5], [8, .2, rampLength], '#adc0bc', [rampAngle, 0, 0]),
@@ -25,12 +26,12 @@ export const ARENA_SOLIDS: readonly ArenaSolid[] = Object.freeze([
   solid('red-west-return', 'cover', [-17, .625, 18], [2, 1.25, 2], '#c99585'), solid('blue-west-return', 'cover', [-17, .625, -18], [2, 1.25, 2], '#83aec6'),
   solid('red-east-return', 'cover', [17, .625, 18], [2, 1.25, 2], '#c99585'), solid('blue-east-return', 'cover', [17, .625, -18], [2, 1.25, 2], '#83aec6'),
 ]);
-export const ARENA_COLLISION = Object.freeze({ schemaVersion: 1, ground: Object.freeze({ width: ARENA_CONFIG.width, length: ARENA_CONFIG.length, thickness: 1, topY: 0 }), solids: Object.freeze(ARENA_SOLIDS.map(({ id, kind, position, size, rotation }) => Object.freeze({ id, kind, position, size, rotation }))) });
+export const ARENA_COLLISION = Object.freeze({ schemaVersion: 2, ground: Object.freeze({ width: ARENA_CONFIG.width, length: ARENA_CONFIG.length, thickness: 1, topY: 0 }), solids: Object.freeze(ARENA_SOLIDS.map(({ id, kind, position, size, rotation, bulletMaterial }) => Object.freeze({ id, kind, position, size, rotation, bulletMaterial }))) });
 // Hash utility is geometry-agnostic; this overload keeps legacy whitebox identities unchanged.
 export const ARENA_COLLISION_HASH = whiteboxCollisionHash(ARENA_COLLISION);
 const y = PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance;
 export const ARENA_SPAWNS = parseSpawnCatalog({ collisionHash: ARENA_COLLISION_HASH, points: ['red', 'blue'].flatMap(team => [-6, 6, -11, 11].map((x, i) => ({ id: `arena-${team}-${i}`, team, primary: i === 0, position: { x, y, z: team === 'red' ? 22 : -22 } }))) });
 export const ARENA_SPAWN_HASH = spawnCatalogHash(ARENA_SPAWNS);
 export const ARENA_DEMO_ROSTER = parseScoreRoster([TRAINING_SCORE_ACTORS.player, TRAINING_SCORE_ACTORS['enemy-a']].map(p => ({ ...p, lifeId: 1 })));
-export const ARENA_BOT_CONFIG = Object.freeze({ speed: 3.2, viewRange: 28, stopDistance: 11, reactionTicks: 45, burstTicks: 20, restTicks: 72, spreadDegrees: 3.5, waypointRadius: .9 });
+export const ARENA_BOT_CONFIG = Object.freeze({ speed: PLAYER_CONFIG.speed * .64, viewRange: 28, stopDistance: 11, reactionTicks: 45, burstTicks: 20, restTicks: 72, spreadDegrees: 3.5, waypointRadius: .9 });
 export const ARENA_BOT_ROUTE = Object.freeze([[-6, -22], [-6, -14], [-14, -14], [-14, 12], [-6, 13], [0, 12], [0, 6], [3.5, 2.5], [3.5, -2.5], [0, -3], [0, -14], [-14, -14]].map(([x, z]) => Object.freeze({ x, z })));

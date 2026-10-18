@@ -1,0 +1,16 @@
+{
+  "state": "Browser tab: 2, Title: \"Bubble Arena\", URL: \"http://127.0.0.1:4173/\".\n1 AXWebArea Bubble Arena, URL: 127.0.0.1:4173/\n\t2 container\n\t\t3 text B! BUBBLE ARENA\n\t\t4 text 泡泡竞技场\n\t\t5 text ✦ 泡泡先锋\n\t\t6 heading 泡泡先锋的房间, Value: 1\n\t\t\t7 text 泡泡先锋的房间\n\t\t8 button ← 退出房间\n\t\t\t9 text ← \n\t\t\t10 text 退出房间\n\t\t11 text ★ 房主 ·  红 1\n\t\t12 heading 泡泡先锋, Value: 2\n\t\t\t13 text 泡泡先锋\n\t\t14 button 开始游戏 \n\t\t15 container 房间席位\n\t\t\t16 container 红队\n\t\t\t\t17 container\n\t\t\t\t\t18 heading 红队, Value: 2\n\t\t\t\t\t\t19 text 红队\n\t\t\t\t\t20 text 1  /  4\n\t\t\t\t21 container\n\t\t\t\t\t22 text 红1 泡泡先锋 ★\n\t\t\t\t23 container\n\t\t\t\t\t24 text 红2\n\t\t\t\t\t25 button 添加红2机器人\n\t\t\t\t\t26 button 换到红2\n\t\t\t\t27 container\n\t\t\t\t\t28 text 红3\n\t\t\t\t\t29 button 添加红3机器人\n\t\t\t\t\t30 button 换到红3\n\t\t\t\t31 container\n\t\t\t\t\t32 text 红4\n\t\t\t\t\t33 button 添加红4机器人\n\t\t\t\t\t34 button 换到红4\n\t\t\t35 container 蓝队\n\t\t\t\t36 container\n\t\t\t\t\t37 heading 蓝队, Value: 2\n\t\t\t\t\t\t38 text 蓝队\n\t\t\t\t\t39 text 1  /  4\n\t\t\t\t40 container\n\t\t\t\t\t41 container\n\t\t\t\t\t\t42 text 蓝1 AI\n\t\t\t\t\t43 button 移除蓝1机器人\n\t\t\t\t\t44 text READY\n\t\t\t\t45 container\n\t\t\t\t\t46 text 蓝2\n\t\t\t\t\t47 button 添加蓝2机器人\n\t\t\t\t\t48 button 换到蓝2\n\t\t\t\t49 container\n\t\t\t\t\t50 text 蓝3\n\t\t\t\t\t51 button 添加蓝3机器人\n\t\t\t\t\t52 button 换到蓝3\n\t\t\t\t53 container\n\t\t\t\t\t54 text 蓝4\n\t\t\t\t\t55 button 添加蓝4机器人\n\t\t\t\t\t56 button 换到蓝4\n\t\t\t57 container\n\t\t\t\t58 image 交叉火线地图预览\n\t\t\t\t59 heading 交叉火线, Value: 3\n\t\t\t\t\t60 text 交叉火线\n\t\t\t\t61 text 基地对抗 05:00 20  分 基地复活\n\nThe focused UI element is 6 heading 泡泡先锋的房间, Value: 1",
+  "dom": {
+    "canvasCount": 0,
+    "fixture": false
+  },
+  "productionErrors": [],
+  "previousDevCleanupErrors": [
+    {
+      "level": "error",
+      "message": "[vite] Failed to reload /src/core/InteractionVisualCheck.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "timestamp": "2026-10-17T16:11:59.562Z",
+      "url": "http://127.0.0.1:5173/@vite/client"
+    }
+  ]
+}

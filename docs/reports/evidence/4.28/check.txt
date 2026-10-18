@@ -1,0 +1,61 @@
+
+> bubble-arena@0.0.0 check /Users/bulv/Desktop/bubble-arena
+> pnpm check:workspace && pnpm typecheck && pnpm lint && pnpm test && pnpm build
+
+
+> bubble-arena@0.0.0 check:workspace /Users/bulv/Desktop/bubble-arena
+> node scripts/check-workspace.mjs
+
+Workspace OK: 205 task cards, acyclic dependencies, local Markdown links and asset manifest checked.
+
+> bubble-arena@0.0.0 typecheck /Users/bulv/Desktop/bubble-arena
+> pnpm --filter @bubble-arena/web typecheck && tsc --noEmit -p tsconfig.tools.json
+
+
+> @bubble-arena/web@0.0.0 typecheck /Users/bulv/Desktop/bubble-arena/apps/web
+> tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json
+
+
+> bubble-arena@0.0.0 lint /Users/bulv/Desktop/bubble-arena
+> eslint . --max-warnings 0
+
+
+> bubble-arena@0.0.0 test /Users/bulv/Desktop/bubble-arena
+> vitest run
+
+
+ RUN  v4.1.11 /Users/bulv/Desktop/bubble-arena
+
+
+ Test Files  114 passed (114)
+      Tests  712 passed (712)
+   Start at  00:31:54
+   Duration  5.16s (transform 4.38s, setup 0ms, import 17.42s, tests 9.57s, environment 13ms)
+
+
+> bubble-arena@0.0.0 build /Users/bulv/Desktop/bubble-arena
+> pnpm --filter @bubble-arena/web build
+
+
+> @bubble-arena/web@0.0.0 build /Users/bulv/Desktop/bubble-arena/apps/web
+> vite build
+
+vite v8.3.3 building client environment for production...
+transforming...
+✓ 752 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               0.53 kB │ gzip:     0.32 kB
+dist/assets/BasicScene-DPApNTfb.css           3.13 kB │ gzip:     1.21 kB
+dist/assets/index-xdD8CzsS.css               61.27 kB │ gzip:    14.87 kB
+dist/assets/rolldown-runtime-hePW80VL.js      0.71 kB │ gzip:     0.42 kB
+dist/assets/rapier-nK377c_M.js                1.92 kB │ gzip:     0.83 kB
+dist/assets/index-Iy2fJaey.js               264.45 kB │ gzip:    82.55 kB
+dist/assets/BasicScene-WboZS5t8.js        3,331.46 kB │ gzip: 1,142.07 kB
+
+✓ built in 325ms
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

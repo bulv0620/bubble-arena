@@ -25,7 +25,7 @@ test.each(['stationary', 'crawl-away', 'injury'] as const)('%s practice uses rea
     if (mode === 'injury') { expect(session.playerHealth.getSnapshot().hp).toBe(80); expect(session.rescue.getSnapshot().message).toContain('受到伤害'); }
     if (mode === 'crawl-away') expect(session.rescue.getSnapshot().message).toContain('移出2米');
     expect(session.rescue.getAllyHp()).toBe(mode === 'stationary' ? 50 : 300); expect(session.loadout.getSnapshot().ammo.magazine).toBe(5);
-    session.rescue.step(world, at, true, idle); expect(session.loadout.getSpeed()).toBe(4); expect(session.loadout.canOperate()).toBe(true);
+    session.rescue.step(world, at, true, idle); expect(session.loadout.getSpeed()).toBeCloseTo(4.8); expect(session.loadout.canOperate()).toBe(true);
     session.rescue.dispose(); session.rescue.dispose();
   } finally { world.free(); }
 });
@@ -44,7 +44,7 @@ test('same Rapier controller stops existing inertia immediately during rescue; q
     const result = adapter.step(body, collider, stationary, false, 0, session.loadout.getSpeed() / 5, 0)!; world.step();
     expect(Math.hypot(result.desired.x, result.desired.z)).toBe(0); expect(result.jumped).toBe(false);
     expect(world.bodies.len()).toBe(bodies); expect(world.colliders.len()).toBe(colliders);
-    session.rescue.cancel(); expect(session.loadout.getSpeed()).toBe(5);
+    session.rescue.cancel(); expect(session.loadout.getSpeed()).toBe(6);
     expect(adapter.step(body, collider, { ...stationary, right: true })!.desired.x).toBeGreaterThan(0);
   } finally { session.rescue.dispose(); adapter.dispose(); world.free(); }
 });

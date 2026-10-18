@@ -24,7 +24,7 @@ function check(from: RescuePosition, to: RescuePosition) {
   return evaluateRescueEligibility('b', facts, (origin, end) => isRescueLineClear(world, origin, end));
 }
 test('actual shared-map wall denies even a 2m teammate; same side and moved-around edge allow rescue', () => {
-  setup(); expect(WHITEBOX_COLLISION_HASH).toBe('fnv1a64:5c84d22467198a7b');
+  setup(); expect(WHITEBOX_COLLISION_HASH).toBe('fnv1a64:eec4606e04cf6656');
   expect(check({ x: 1, y: .9, z: -2 }, { x: 1, y: .9, z: -4 })).toEqual({ eligible: false, reason: 'blocked' });
   expect(check({ x: 1, y: .9, z: -2 }, { x: 2, y: .9, z: -2 }).eligible).toBe(true);
   expect(check({ x: 5.5, y: .9, z: -2 }, { x: 5.5, y: .9, z: -4 }).eligible).toBe(true);

@@ -35,14 +35,14 @@ test('eight real shotgun rays aggregate mixed head/body pellets into one HP even
     expect(entry.target.getSnapshot().hp).toBe(0);
   } finally { world.free(); }
 });
-test('close full body volley kills but one missing pellet leaves two HP; visual endpoints stop at actual sensors', () => {
+test('close full body volley kills but one missing pellet leaves two HP; visual paths continue past sensors with contact flashes', () => {
   const world = new RAPIER.World({ x: 0, y: 0, z: 0 });
   try {
     const registry = new TrainingTargets(), full = dummy(world, registry, -1), partial = dummy(world, registry, 1); world.step();
     const body = ray(world, registry, 'body', 25, -1), partialBody = ray(world, registry, 'body', 25, 1);
     const resolved = registry.resolveVolley(world, { tick: 0, sequence: 1 }, Array.from({ length: 8 }, () => body), 'shotgun');
     expect(full.target.getSnapshot()).toMatchObject({ hp: 0, lastDamage: 100, hitCount: 1 });
-    expect(resolved.pellets).toHaveLength(8); expect(resolved.pellets.every(p => p.hit && p.point.z > -3)).toBe(true);
+    expect(resolved.pellets).toHaveLength(8); expect(resolved.pellets.every(p => !p.hit && p.point.z < -25 && p.contacts?.length === 1 && p.contacts[0].z > -3)).toBe(true);
     registry.receiveVolley(world, { tick: 60, sequence: 2 }, [...Array.from({ length: 7 }, () => partialBody), null], 'shotgun');
     expect(partial.target.getSnapshot()).toMatchObject({ hp: 2, lastDamage: 98 });
     expect(registry.resolveVolley(world, { tick: 60, sequence: 2 }, Array.from({ length: 8 }, () => body), 'shotgun').pellets).toEqual([]);

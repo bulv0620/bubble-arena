@@ -4,7 +4,7 @@ import type { WeaponId } from '@bubble-arena/shared';
 import { RIFLE_PLACEHOLDER_POSE, WEAPON_PLACEHOLDER_SCALE } from './riflePose';
 import type { LocalLoadout } from './LocalLoadout';
 const { socket, front } = RIFLE_PLACEHOLDER_POSE;
-/** Engineering toy whitebox only. The visual tip and query socket share the same transform. */
+/** Engineering toy whitebox only. The static tip and query socket share one transform. */
 export function ToyWeapon({ weapon, muzzleAnchor }: { weapon: WeaponId; muzzleAnchor?: RefObject<Group | null> }) {
   const color = { rifle:'#36b5ec', shotgun:'#ffad4b', sniper:'#9a83df', bubble:'#5bded0' }[weapon];
   return <group name="weapon_socket" position={[socket.x,socket.y,socket.z]} rotation={[0,Math.PI,0]}>

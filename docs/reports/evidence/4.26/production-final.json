@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "ui": "- main \"Bubble Arena · 游戏场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - status \"性能状态\": 75 FPS · 0 ms\n  - list \"战斗事件\"\n  - complementary \"Blue 0, Red 0\":\n    - generic \"Blue score\": \"00\"\n    - generic \"Red score\": \"00\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\":\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\" [pressed]:\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:56",
+  "diagnosticLabelAbsent": true,
+  "canvasAfterExit": 0,
+  "errors": [],
+  "priorDevCleanupLogs": [
+    {
+      "level": "error",
+      "message": "[vite] Failed to reload /src/core/InteractionVisualCheck.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "timestamp": "2026-10-17T12:21:09.113Z",
+      "url": "http://127.0.0.1:5173/@vite/client"
+    }
+  ]
+}

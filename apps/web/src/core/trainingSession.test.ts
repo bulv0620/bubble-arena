@@ -44,7 +44,7 @@ test('reset isolates downed health, queued damage and subscribers while preservi
   expect(old.playerHealth.getSnapshot().status).toBe('downed');
   const fresh = createTrainingSession(old.loadout.getSnapshot().active), notify = vi.fn(), release = fresh.playerHealth.subscribe(notify);
   expect(fresh.playerHealth.getSnapshot()).toMatchObject({ hp: 100, downedHp: 0, status: 'normal', lifeId: 1, lastDamage: 0 });
-  expect(fresh.loadout.getSnapshot()).toMatchObject({ active: 'shotgun', ammo: { magazine: 6 } });
+  expect(fresh.loadout.getSnapshot()).toMatchObject({ active: 'shotgun', ammo: { magazine: 2 } });
   old.playerHealth.step(); expect(notify).not.toHaveBeenCalled();
   const pending = createTrainingSession(); pending.playerHealth.requestTest('down');
   const another = createTrainingSession(); pending.playerHealth.step();

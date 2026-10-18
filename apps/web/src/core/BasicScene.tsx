@@ -1,3 +1,4 @@
+import { BubbleRescueProgress } from '../HUD/BubbleRescueProgress';
 import { ArenaTelemetrySimulation } from '../player/ArenaTelemetrySimulation';
 import { ScoreboardInput } from '../input/ScoreboardInput';
 import { Scoreboard } from '../HUD/Scoreboard';
@@ -21,7 +22,7 @@ import { HudScaleLayer, useHudScale } from '../HUD/HudScaleLayer';
 import { bindLifeActions } from './bindLifeActions';
 import { PlayerLifeHint } from '../HUD/PlayerLifeHint';
 import { PlayerHealthSimulation } from '../player/PlayerHealthSimulation';
-import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed } from '../settings/mouseSettings';
+import { MOUSE_SETTINGS, readMouseSpeed, saveMouseSpeed, validMouseSpeed, SCOPE_MOUSE_SETTINGS, readScopeMouseMultiplier, saveScopeMouseMultiplier, validScopeMouseMultiplier } from '../settings/mouseSettings';
 import { createTrainingSession, restartTrainingSession } from './trainingSession';
 import { BubblePopEffects } from '../effects/BubblePopEffects';
 import { ShotEffects } from '../effects';
@@ -66,6 +67,11 @@ export function BasicScene({ launch, onLeaveRoom }: { launch?: GameLaunch; onLea
     try { return readMouseSpeed(window.localStorage); } catch { return MOUSE_SETTINGS.default; }
   });
   const currentSpeed = useRef(speed);
+  const [scopeSpeed, setScopeSpeed] = useState(() => {
+    try { return readScopeMouseMultiplier(window.localStorage); } catch { return SCOPE_MOUSE_SETTINGS.default; }
+  });
+  const currentScopeSpeed = useRef(scopeSpeed);
+  const scopeSensitivity = useCallback(() => currentScopeSpeed.current, []);
   const [hudScale, setHudScale] = useState(() => {
     try { return readHudScale(window.localStorage); } catch { return HUD_SETTINGS.default; }
   });
@@ -93,8 +99,12 @@ export function BasicScene({ launch, onLeaveRoom }: { launch?: GameLaunch; onLea
   }, [pointer, session]);
   const returnWaiting = useCallback(() => { restart(); opened.current = false; setOpen(false); }, [restart]);
   return <>
-    <SceneSession hudScale={hudScale} session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} onRestart={leaveToRoom ?? returnWaiting} roomManaged={Boolean(launch)} />
-    {open && <SettingsPanel hudScale={hudScale} onHudScale={value => {
+    <SceneSession hudScale={hudScale} session={session} revision={revision} pointer={pointer} enabled={enabled} sensitivity={sensitivity} scopeSensitivity={scopeSensitivity} onRestart={leaveToRoom ?? returnWaiting} roomManaged={Boolean(launch)} />
+    {open && <SettingsPanel scopeSpeed={scopeSpeed} onScopeSpeed={value => {
+      if (!validScopeMouseMultiplier(value)) return;
+      currentScopeSpeed.current = value; setScopeSpeed(value);
+      try { saveScopeMouseMultiplier(window.localStorage, value); } catch { /* Storage can be blocked. */ }
+    }} hudScale={hudScale} onHudScale={value => {
       if (!validHudScale(value)) return;
       setHudScale(value);
       try { saveHudScale(window.localStorage, value); } catch { /* Storage can be blocked. */ }
@@ -109,7 +119,7 @@ export function BasicScene({ launch, onLeaveRoom }: { launch?: GameLaunch; onLea
   </>;
 }
 
-function SceneSession({ session, revision, pointer, enabled, sensitivity, onRestart, roomManaged, hudScale }: { hudScale: number; roomManaged: boolean; onRestart: () => void; session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number }) {
+function SceneSession({ session, revision, pointer, enabled, sensitivity, scopeSensitivity, onRestart, roomManaged, hudScale }: { hudScale: number; roomManaged: boolean; onRestart: () => void; session: ReturnType<typeof createTrainingSession>; revision: number; pointer: PointerLockInput; enabled: () => boolean; sensitivity: () => number; scopeSensitivity: () => number }) {
   const input = useKeyboardInput(enabled);
   const [scoreboard] = useState(() => new ScoreboardInput());
   useEffect(() => scoreboard.attach(window, document, enabled), [scoreboard, enabled]);
@@ -190,13 +200,14 @@ function SceneSession({ session, revision, pointer, enabled, sensitivity, onRest
             <RifleSimulation playerHealth={playerHealth} aim={aim} bubbles={bubbles} input={fire} switchInput={switchInput} loadout={loadout} motion={motion} reload={reload} body={playerBody} yaw={facingYaw} target={aimTarget} shotRay={shotRay} targets={targets} feedback={feedback} recoil={recoil} />
             {bots.map(bot => <ArenaOpponent interaction={interactions} key={bot.actor.playerId} opponent={bot} bots={bots} health={playerHealth} targets={targets} player={playerBody} feedback={bot.feedback} />)}
             {!arena && <RescueSimulation practice={rescue} input={rescueInput} body={playerBody} grounded={grounded} enabled={enabled} pointer={pointer} aim={aim} />}
+            {arena && <BubbleRescueProgress interaction={interactions} />}
             {arena && <ArenaInteractionSimulation interaction={interactions} input={rescueInput} body={playerBody} grounded={grounded} enabled={enabled} pointer={pointer} aim={aim} />}
             <ArenaTelemetrySimulation arena={arena} player={playerBody} view={view} health={playerHealth} bots={bots} telemetry={telemetry}/>
             <MatchResolution match={match} score={score} collect={collectScores} />
             <ShotEffects feedback={feedback} muzzleAnchor={muzzleAnchor} />
             {arena && <BubblePopEffects interaction={interactions} />}
             <BubbleVisuals bubbles={bubbles} />
-            <FollowCamera initialYaw={playerHealth.actor.teamId === 'blue' ? Math.PI : 0} respawn={respawn} loadout={loadout} enabled={enabled} sensitivity={sensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
+            <FollowCamera initialYaw={playerHealth.actor.teamId === 'blue' ? Math.PI : 0} respawn={respawn} loadout={loadout} enabled={enabled} sensitivity={sensitivity} scopeSensitivity={scopeSensitivity} target={playerBody} control={pointer} clearInput={clearInput} view={view} aim={aim} crosshair={crosshair} fire={fire} aimTarget={aimTarget} targets={targets} recoil={recoil} />
           </PhysicsWorld>
         </Suspense></DeferredScene>
       </Canvas>

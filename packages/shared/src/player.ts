@@ -1,19 +1,21 @@
-const HEIGHT = 1.4;
+const HEIGHT = 1.3;
+const HEAD_RADIUS = 0.30;
 const RADIUS = 0.35;
 const CONTROLLER_OFFSET = 0.01;
 
 // Metres, seconds, radians. Body position is the capsule center, not the feet.
 export const PLAYER_CONFIG = {
   height: HEIGHT,
+  headRadius: HEAD_RADIUS,
   radius: RADIUS,
   capsuleHalfHeight: HEIGHT / 2 - RADIUS,
-  speed: 5,
-  aimSpeed: 3.5,
+  speed: 6,
+  aimSpeed: 4.2,
   turnResponse: 12,
   turnMinSpeed: 0.05,
-  acceleration: 25,
-  deceleration: 30,
-  airControl: 0.35,
+  acceleration: 90,
+  deceleration: 120,
+  airControl: 0.65,
   jumpSpeed: 7,
   maxSlopeAngle: Math.PI / 4,
   // Allow float32 contact normals at the inclusive 45-degree boundary.

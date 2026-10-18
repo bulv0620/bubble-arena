@@ -63,3 +63,15 @@ test('invalid weapon is rejected before sequence consumption', () => {
   expect(() => feedback.emit({ sequence: 1, weapon: 'invalid' as 'rifle', muzzle: p, impact: null })).toThrow(TypeError);
   expect(feedback.emit({ sequence: 1, weapon: 'rifle', muzzle: p, impact: null })).toBe(true);
 });
+
+test('penetration contact flashes are isolated copies, bounded, expiring and cleared', () => {
+  const feedback = new ShotFeedback(), contacts = [{ x: 1, y: 1, z: -2 }, { x: 1, y: 1, z: -5 }];
+  feedback.emit({ sequence: 1, weapon: 'sniper', muzzle: p, impact: null, pellets: [{ point: { x: 1, y: 1, z: -100 }, hit: false, contacts }] });
+  contacts[0].z = -99;
+  expect(feedback.getPelletState().impacts.map(p => p.z)).toEqual([-2, -5]);
+  expect(Object.isFrozen(feedback.getPelletState().impacts[0])).toBe(true);
+  feedback.step(.15); expect(feedback.getPelletState().impacts).toEqual([]);
+  feedback.clear(); expect(feedback.getPelletState().impacts).toEqual([]);
+  expect(() => feedback.emit({ sequence: 2, muzzle: p, impact: null, pellets: [{ point: p, hit: false, contacts: Array.from({ length: 9 }, () => p) }] })).toThrow();
+  expect(() => feedback.emit({ sequence: 2, muzzle: p, impact: null, pellets: [{ point: p, hit: false, contacts: [{ ...p, z: NaN }] }] })).toThrow();
+});

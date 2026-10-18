@@ -19,7 +19,7 @@ export function WhiteboxMap() {
         </mesh>
       </RigidBody>
       {WHITEBOX_SOLIDS.map((solid) => (
-        <RigidBody key={solid.id} type="fixed" colliders={false} position={solid.position} rotation={[0, 0, solid.rotationZ ?? 0]}>
+        <RigidBody key={solid.id} userData={{ bulletMaterial: solid.bulletMaterial ?? 'solid' }} type="fixed" colliders={false} position={solid.position} rotation={[0, 0, solid.rotationZ ?? 0]}>
           <CuboidCollider
             args={solid.size.map((size) => size / 2) as [number, number, number]}
             {...COLLIDER_MATERIALS.solid}

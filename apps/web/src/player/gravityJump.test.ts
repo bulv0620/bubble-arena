@@ -13,7 +13,7 @@ let movement: RapierMovement;
 beforeAll(async () => { await RAPIER.init(); });
 afterEach(() => { movement?.dispose(); world?.free(); });
 
-function setup(position: [number, number, number] = [-2, 0.92, 0]) {
+function setup(position: [number, number, number] = [-2, PLAYER_CONFIG.height / 2 + PLAYER_CONFIG.spawnClearance, 0]) {
   const [x, y, z] = PHYSICS_CONFIG.gravity;
   world = new RAPIER.World({ x, y, z });
   world.timestep = PHYSICS_CONFIG.timeStep;
@@ -109,7 +109,7 @@ test.each([
 
 test('upward collision cancels velocity and gravity returns the player without ceiling penetration', () => {
   const player = setup();
-  const ceilingBottom = 2.6;
+  const ceilingBottom = PLAYER_CONFIG.height + 1; // Reachable at every supported character height.
   const ceiling = world.createCollider(RAPIER.ColliderDesc.cuboid(2, 0.25, 2)
     .setTranslation(-2, ceilingBottom + 0.25, 0).setCollisionGroups(COLLISION_GROUPS.map));
   world.step();

@@ -1,3 +1,5 @@
+import { PLAYER_CONFIG } from './player';
+import { LOCOMOTION_CONFIG } from './locomotion';
 import { WEAPON_IDS, isWeaponId, type WeaponId } from './weapons';
 import { RIFLE_SPREAD_CONFIG } from './rifleSpread';
 import { RIFLE_RECOIL_CONFIG, createRifleRecoilTuning, type RifleRecoilTuning } from './rifleRecoil';
@@ -51,5 +53,5 @@ export const BUBBLE_CONFIG = Object.freeze({ radius: .15, speed: 20, lifetime: 2
 /** Weight is a gameplay tier, not kilograms; only the held weapon determines speed. */
 export function weaponGroundSpeed(id: WeaponId, scoped = false) {
   if (!WEAPON_IDS.includes(id) || typeof scoped !== 'boolean') throw new TypeError('Invalid equipped weapon');
-  return (6 - WEAPON_HANDLING[id].weight * .5) * (id === 'sniper' && scoped ? SNIPER_SCOPE_CONFIG.speedMultiplier : 1);
+  return PLAYER_CONFIG.speed * (1 + (WEAPON_HANDLING.rifle.weight - WEAPON_HANDLING[id].weight) * LOCOMOTION_CONFIG.weightSpeedPenalty) * (id === 'sniper' && scoped ? SNIPER_SCOPE_CONFIG.speedMultiplier : 1);
 }

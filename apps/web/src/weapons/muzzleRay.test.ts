@@ -1,7 +1,7 @@
 import { afterEach, beforeAll, expect, test } from 'vitest';
 import RAPIER from '@dimforge/rapier3d-compat';
 import { Group, Vector3 } from 'three';
-import { COLLISION_GROUPS } from '@bubble-arena/shared';
+import { COLLISION_GROUPS, PLAYER_CONFIG } from '@bubble-arena/shared';
 import { queryMuzzleRay } from './muzzleRay';
 import { queryScreenAimTarget, type ScreenAimTarget } from './screenAimRay';
 import { rifleMuzzlePosition, RIFLE_PLACEHOLDER_POSE } from './riflePose';
@@ -16,16 +16,35 @@ function wall(z: number, width = 3) {
   return world.createCollider(RAPIER.ColliderDesc.cuboid(width, 2, 0.05).setTranslation(0, 1, z).setCollisionGroups(COLLISION_GROUPS.map));
 }
 function target(point = { x: 0, y: 1, z: -10 }): ScreenAimTarget {
-  return { origin: { x: 2, y: 1, z: 0 }, direction: { x: 0, y: 0, z: -1 }, range: 70,
+  return { origin: { x: 0, y: 1, z: 0 }, direction: { x: 0, y: 0, z: -1 }, range: 70,
     status: 'clear', point, distance: 70, colliderHandle: null };
 }
-test('camera sees around cover but muzzle ray stops at near wall instead of following camera hit', () => {
+test('camera sees around cover but the physical bullet hits the near wall with obstruction feedback', () => {
   setup(); const blocker = wall(-2, 0.3); world.step();
   const aim = queryScreenAimTarget(world, { origin: { x: 2, y: 1, z: 0 }, direction: { x: -2, y: 0, z: -10 }, range: Math.hypot(2, 10) })!;
   expect(aim.status).toBe('clear');
   const actual = queryMuzzleRay(world, anchor, muzzle, aim)!;
-  expect(actual.status).toBe('hit'); expect(actual.colliderHandle).toBe(blocker.handle);
-  expect(actual.point.z).toBeCloseTo(-1.95, 5); expect(actual.distance).toBeCloseTo(1.25, 5);
+  expect(actual.status).toBe('hit'); expect(actual.aimObstructed).toBe(true); expect(actual.colliderHandle).toBe(blocker.handle);
+  expect(actual.point.z).toBeCloseTo(-1.95, 5);
+  expect(actual.distance).toBeCloseTo(Math.hypot(actual.point.x-muzzle.x,actual.point.y-muzzle.y,actual.point.z-muzzle.z),5);
+});
+test('muzzle aims at the camera-selected crate point, with the same origin for collision and visuals', () => {
+  setup(); const crate = wall(-2); world.step();
+  const nearAim = queryScreenAimTarget(world, { origin: { x: .8, y: 2.4, z: 2 }, direction: { x: 0, y: -0.1, z: -1 }, range: 70 })!;
+  expect(nearAim.status).toBe('hit');
+  const nearHit = queryMuzzleRay(world, anchor, muzzle, nearAim)!;
+  const farHit = queryMuzzleRay(world, anchor, muzzle, { ...nearAim, point: { x: 0.8, y: -4.8, z: -71.95 } })!;
+  expect(nearHit.colliderHandle).toBe(crate.handle);
+  expect(nearHit.origin).toEqual(muzzle);
+  expect(nearHit.point.x).toBeCloseTo(nearAim.point.x,5);
+  expect(nearHit.point.y).toBeCloseTo(nearAim.point.y,5);
+  expect(farHit.direction).not.toEqual(nearHit.direction);
+  world.removeCollider(crate, true); world.step();
+  const clearAim = queryScreenAimTarget(world, nearAim)!;
+  const openShot = queryMuzzleRay(world, anchor, muzzle, clearAim)!;
+  expect(openShot.status).toBe('clear');
+  expect(openShot.origin).toEqual(muzzle);
+  expect(openShot.aimObstructed).toBe(false);
 });
 test.each([-0.7, -0.4])('muzzle inside or beyond thin wall z=%s is blocked by anchor-to-muzzle guard', z => {
   setup(); const blocker = wall(z); world.step();
@@ -55,6 +74,7 @@ test('capsules, dynamic bodies, sensors and unrelated groups cannot obstruct or 
 });
 test('computed muzzle matches rendered socket and facing transform at different positions/yaws', () => {
   setup();
+  expect(rifleMuzzlePosition({ x: 0, y: PLAYER_CONFIG.height / 2, z: 0 }, 0)?.y).toBeCloseTo(.85);
   const { socket, front } = RIFLE_PLACEHOLDER_POSE;
   for (const yaw of [0, Math.PI / 2, -2.3]) for (const center of [anchor, { x: 4, y: 3, z: -6 }]) {
     const visual = new Group(), weapon = new Group(), tip = new Group();
@@ -65,9 +85,9 @@ test('computed muzzle matches rendered socket and facing transform at different 
     expect(actual.x).toBeCloseTo(expected.x, 12); expect(actual.y).toBeCloseTo(expected.y, 12); expect(actual.z).toBeCloseTo(expected.z, 12);
   }
 });
-test('invalid/coincident positions reject; results freeze and repeated queries do not mutate world or input', () => {
+test('invalid positions/coincident point reject; results freeze without mutating world or input', () => {
   setup(); wall(-2); world.step(); const aim = target(), before = JSON.stringify(aim), count = [world.bodies.len(), world.colliders.len()];
-  expect(queryMuzzleRay(world, anchor, muzzle, target(muzzle))).toBeNull();
+  expect(queryMuzzleRay(world,anchor,muzzle,target(muzzle))).toBeNull();
   expect(queryMuzzleRay(world, anchor, anchor, aim)).toBeNull();
   expect(queryMuzzleRay(world, { ...anchor, x: NaN }, muzzle, aim)).toBeNull();
   expect(queryMuzzleRay(world, anchor, muzzle, aim, Infinity)).toBeNull();
@@ -102,4 +122,10 @@ test.each(['rifle','shotgun','sniper','bubble'] as const)('%s socket still block
   setup(); const center={x:0,y:1,z:0}, actual=rifleMuzzlePosition(center,0,weapon)!;
   const blocker=wall(-.3);world.step();expect(queryMuzzleRay(world,center,actual,target())?.status).toBe('blocked-muzzle');
   world.removeCollider(blocker,true);world.step();expect(queryMuzzleRay(world,center,actual,target())?.status).toBe('clear');
+});
+
+test('a camera-selected point coinciding with a muzzle inside cover still reports safety obstruction',()=>{
+ setup();const blocker=wall(-.7);world.step();
+ const result=queryMuzzleRay(world,anchor,muzzle,target(muzzle))!;
+ expect(result.status).toBe('blocked-muzzle');expect(result.aimObstructed).toBe(true);expect(result.colliderHandle).toBe(blocker.handle);
 });

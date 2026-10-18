@@ -1,0 +1,656 @@
+{
+  "mode": "temporary fixed-position DEV fixture at 2.8m; real rules; 20 bubble damage at >=30% rescue",
+  "before": "- main \"临时开发验证场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - generic: 蓝队 1 号 · 20s\n  - generic: 蓝队 2 号\n  - generic: \"100\"\n  - meter \"蓝队 2 号生命值\"\n  - generic: ✚\n  - generic: 救援中\n  - progressbar \"水球救援进度\"\n  - status \"性能状态\": 75 FPS · 0 ms\n  - list \"战斗事件\":\n    - generic: 你\n    - generic: 击倒\n    - generic: 蓝队 1 号\n    - generic: 你\n    - generic: 击倒\n    - generic: 蓝队 1 号\n  - complementary \"Blue 0, Red 0\":\n    - generic \"Blue score\": \"00\"\n    - generic \"Red score\": \"00\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - status \"踢破水球\":\n    - generic: E\n    - generic: 踢破水球\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\" [pressed]:\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\":\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:39\n  - generic: 临时开发验证 · rescue · 非自然生产对局",
+  "after": "- main \"临时开发验证场景\":\n  - generic: YOU\n  - generic: \"100\"\n  - meter \"YOU生命值\"\n  - generic: 蓝队 2 号\n  - generic: \"100\"\n  - meter \"蓝队 2 号生命值\"\n  - status \"性能状态\": 75 FPS · 0 ms\n  - list \"战斗事件\":\n    - generic: 你\n    - generic: 击倒\n    - generic: 蓝队 1 号\n    - generic: 你\n    - generic: 击倒\n    - generic: 蓝队 1 号\n    - generic: 你\n    - generic: 淘汰\n    - generic: 蓝队 1 号\n  - complementary \"Blue 0, Red 1\":\n    - generic \"Blue score\": \"00\"\n    - generic \"Red score\": \"01\"\n  - status \"自身 HP：100 / 100\":\n    - generic: HP\n    - generic: \"100\"\n  - navigation \"武器快捷栏\":\n    - button \"1 · 步枪 · 30发\" [pressed]:\n      - generic: \"1\"\n      - generic: \"30\"\n      - generic: 步枪\n    - button \"2 · 霰弹枪 · 2发\":\n      - generic: \"2\"\n      - generic: \"02\"\n      - generic: 霰弹枪\n    - button \"3 · 狙击枪 · 5发\":\n      - generic: \"3\"\n      - generic: \"05\"\n      - generic: 狙击枪\n    - button \"4 · 泡泡发射器 · 4发\":\n      - generic: \"4\"\n      - generic: \"04\"\n      - generic: 泡泡发射器\n  - complementary \"竞技场小地图\":\n    - img \"三路地图：红蓝复活区、掩体与高台\"\n  - region \"比赛状态\":\n    - strong: 04:23\n  - generic: 临时开发验证 · rescue · 非自然生产对局",
+  "logs": [
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":-1,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:03.639Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":0,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:06.160Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":23,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:06.536Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":36,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:06.759Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":47,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:06.945Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":71,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:07.346Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":95,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:07.745Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":119,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:08.146Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":120,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:08.160Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":180,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:09.160Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":203,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:09.546Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":216,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:09.760Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":227,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:09.934Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":251,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:10.346Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":275,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:10.746Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":299,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:11.146Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":300,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:11.160Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":360,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:12.160Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":383,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:12.547Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":396,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:12.760Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":407,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:12.947Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":431,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:13.347Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":455,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:13.747Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":479,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:14.147Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":480,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:14.160Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":540,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:15.161Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":563,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:15.547Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":576,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:15.761Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":587,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:15.935Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":611,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:16.347Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":635,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:16.747Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":659,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:17.148Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":660,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:17.161Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":720,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:18.161Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":743,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:18.535Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":756,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:18.762Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":767,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:18.936Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":791,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:19.335Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":815,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:19.735Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":839,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:20.135Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":840,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:20.162Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":900,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:21.162Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":923,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:21.535Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":936,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:21.762Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":947,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:21.935Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":971,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:22.336Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":995,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:22.735Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1019,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:23.136Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1020,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:23.161Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1080,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:24.162Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1103,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:24.536Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1116,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:24.763Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1127,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:24.936Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1151,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:25.336Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1175,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:25.736Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1199,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:26.136Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1200,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:26.162Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1260,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:27.163Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1283,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:27.536Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1296,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:27.763Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1307,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:27.936Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1331,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:28.337Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1355,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:28.737Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1379,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:29.137Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1380,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:29.151Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1440,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:30.164Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1463,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:30.537Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1476,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:30.751Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1487,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:30.937Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1511,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:31.337Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1535,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:31.737Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1559,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:32.138Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1560,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:32.152Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1620,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:33.152Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1643,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:33.538Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1656,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:33.751Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1667,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:33.938Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1691,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:34.338Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1715,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:34.738Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1739,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:35.138Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1740,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:35.152Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1800,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:36.152Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1823,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:36.539Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1836,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:36.752Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1847,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:36.938Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1871,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:37.339Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1895,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:37.739Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1919,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:38.139Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1920,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:38.153Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":1980,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:39.153Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2003,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:39.539Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2016,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:39.753Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2027,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:39.939Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2051,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:40.339Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2075,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.8}]}",
+      "timestamp": "2026-10-17T16:10:40.739Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2099,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:41.140Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2100,\"actor\":\"normal\",\"target\":\"normal\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":0,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:41.153Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2160,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.008333333333333333}]}",
+      "timestamp": "2026-10-17T16:10:42.154Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2183,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":300,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.2}]}",
+      "timestamp": "2026-10-17T16:10:42.540Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2196,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.30833333333333335}]}",
+      "timestamp": "2026-10-17T16:10:42.754Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2207,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.4}]}",
+      "timestamp": "2026-10-17T16:10:42.940Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2224,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":true,\"kind\":\"kick\",\"progress\":0.05555555555555555,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.5416666666666666}]}",
+      "timestamp": "2026-10-17T16:10:43.227Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2227,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":true,\"kind\":\"kick\",\"progress\":0.2222222222222222,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.5666666666666667}]}",
+      "timestamp": "2026-10-17T16:10:43.273Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2231,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":true,\"kind\":\"kick\",\"progress\":0.4444444444444444,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6}]}",
+      "timestamp": "2026-10-17T16:10:43.340Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2234,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":true,\"kind\":\"kick\",\"progress\":0.6111111111111112,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.625}]}",
+      "timestamp": "2026-10-17T16:10:43.394Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2238,\"actor\":\"normal\",\"target\":\"downed\",\"bubbleHp\":280,\"locked\":true,\"kind\":\"kick\",\"progress\":0.8333333333333334,\"kicks\":0,\"rescues\":[{\"target\":\"training-enemy-a\",\"progress\":0.6583333333333333}]}",
+      "timestamp": "2026-10-17T16:10:43.460Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2241,\"actor\":\"normal\",\"target\":\"eliminated\",\"bubbleHp\":0,\"locked\":false,\"kind\":\"kick\",\"progress\":null,\"kicks\":1,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:43.514Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    },
+    {
+      "level": "info",
+      "message": "[4.26.visual] {\"tick\":2242,\"actor\":\"normal\",\"target\":\"eliminated\",\"bubbleHp\":0,\"locked\":false,\"kind\":null,\"progress\":null,\"kicks\":1,\"rescues\":[]}",
+      "timestamp": "2026-10-17T16:10:43.536Z",
+      "url": "http://127.0.0.1:5173/src/core/InteractionVisualCheck.tsx"
+    }
+  ],
+  "errors": []
+}

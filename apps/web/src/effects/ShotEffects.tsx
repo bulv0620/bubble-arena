@@ -45,8 +45,8 @@ export function ShotEffects({ feedback, muzzleAnchor }: { feedback: ShotFeedback
     });
     impacts.current.forEach((mesh, index) => {
       if (!mesh) return;
-      const pellet = volley.pellets[index]; mesh.visible = Boolean(pellet?.hit && volley.showImpacts);
-      if (pellet) mesh.position.copy(pellet.point);
+      const point = volley.impacts[index]; mesh.visible = Boolean(point && volley.showImpacts);
+      if (point) mesh.position.copy(point);
       (mesh.material as MeshBasicMaterial).opacity = Math.max(0, 1 - volley.age / SHOT_EFFECT_CONFIG.pelletImpactDuration);
     });
   });
@@ -66,11 +66,13 @@ export function ShotEffects({ feedback, muzzleAnchor }: { feedback: ShotFeedback
         <cylinderGeometry args={[1, 1, 1, 5]} />
         <meshBasicMaterial color="#c6f4ff" transparent depthWrite={false} blending={AdditiveBlending} toneMapped={false} />
       </mesh>
-      <mesh ref={mesh => { impacts.current[index] = mesh; }} visible={false}>
+    </group>)}
+    {Array.from({ length: SHOT_EFFECT_CONFIG.impactCapacity }, (_, index) =>
+      <mesh key={index} ref={mesh => { impacts.current[index] = mesh; }} visible={false}>
         <sphereGeometry args={[SHOT_EFFECT_CONFIG.pelletImpactRadius, 8, 6]} />
         <meshBasicMaterial color="#b7fff1" transparent depthWrite={false} toneMapped={false} />
       </mesh>
-    </group>)}
+    )}
     <mesh ref={impact} visible={false}>
       <sphereGeometry args={[SHOT_EFFECT_CONFIG.impactRadius, 10, 8]} />
       <meshBasicMaterial color="#b2faff" transparent opacity={0.8} toneMapped={false} />

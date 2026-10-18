@@ -23,3 +23,5 @@ export { TeamScoreState, type TeamScoreSnapshot, type PlayerScoreLine, type Scor
 export { MatchState, type MatchSnapshot, type MatchResult } from './matchState';
 
 export { ArenaBotBrain, type BotIntent } from './arenaBotBrain';
+export { resolveBulletPenetration, type BulletContact } from './bulletPenetration';
+export { BubbleInteractionProgress, type BubbleInteractionChannel } from './bubbleInteractionProgress';

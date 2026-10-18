@@ -58,7 +58,7 @@ test('test ally times out under the same health rule; held rescue from too late 
     for (let i = 0; i < 10; i++) f.step({ ...idle, held: true });
     expect(f.session.rescue.getSnapshot().allyHealth).toMatchObject({ status: 'normal', hp: 50, eliminationReason: null, downedHp: 0, revision: 2 });
     expect(f.session.rescue.getSnapshot().channel).toBeNull(); expect(f.session.loadout.getSnapshot().rescuing).toBe(false);
-    expect(f.session.loadout.getSpeed()).toBe(4);
+    expect(f.session.loadout.getSpeed()).toBeCloseTo(4.8);
     for (let i = 0; i < 240; i++) f.step({ ...idle, held: true }); expect(f.session.rescue.getSnapshot().allyHealth?.status).toBe('normal');
   } finally { f.dispose(); }
 });

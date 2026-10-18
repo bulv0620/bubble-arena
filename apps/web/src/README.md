@@ -1,5 +1,9 @@
 # 客户端模块边界
 
+4.31现行射击架构见[WEAPON_AIM](../../../docs/spec/WEAPON_AIM.md)：每丸镜头散布选点→真实枪口路径→命中/穿透/特效，泡泡从同一枪口真实飞行；不再使用下文4.30虚拟起点与视觉补偿。
+
+4.30弹道基线：固定中心准星决定逻辑命中射线，起点在该射线的枪口深度平面，真实枪口用于视觉/独立掩体检查；泡泡飞行与碰撞同样沿逻辑准星线，视觉短衔接由LocalBubbleFlight/BubbleVisuals处理。覆盖下文历史“枪口至准星物体收敛”或“枪口始发固定远点”。见[规格](../../../docs/spec/CAMERA_FRAMING.md)。
+
 2026-10-14现行4.4.2：RescueSimulation在物理after回调推进救援，LocalRescuePractice管理可关闭的单机静止/爬行/受伤夹具，RescueInput独立采集E和中断操作，LocalLoadout.rescuing暂停武器/移动，HUD订阅进度。ready不恢复目标生命；救起待4.4.3。下文为历史交付记录。
 
 2026-10-14现行：阶段3已accepted。4.2训练会话持有LocalPlayerHealth及PlayerHealthSimulation固定物理步消费测试意图；头顶/边缘HUD以useSyncExternalStore订阅真实PlayerHealthState。Esc面板的单机生命测试槽只排队hit/down，生成身份和读取20/100伤害配置在模拟步完成。重置仅重建PhysicsWorld和会话，Canvas/Html宿主仍保持；未提前实现4.3操作门禁或完整救援/复活。下文为历史实现记录。

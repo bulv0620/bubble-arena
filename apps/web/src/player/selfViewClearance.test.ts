@@ -79,7 +79,14 @@ test('expanding the reticle hides only the own plate, which returns when the ret
       updateFollowCamera(camera,{translation:()=>({x:0,y:0,z:0})});
       expect(check(f.root,camera,width,height,health.aimCenterClearance)).toBe(false);
       expect(plate(camera,width,height,26,f.plate)).toBe(false);
-      expect(plate(camera,width,height,76,f.plate)).toBe(true);
+      expect(plate(camera,width,height,76,f.plate)).toBe(false);
+      // Default framing now clears even the large ring; exercise the same protection
+      // with an anchor placed near its outer edge (as a compressed camera can do).
+      const central = new Group();
+      central.position.set(CAMERA_CONFIG.shoulderOffset, CAMERA_CONFIG.focusHeight - .35, 0);
+      const nearPlate = { ...f.plate, anchor: central };
+      expect(plate(camera,width,height,26,nearPlate)).toBe(false);
+      expect(plate(camera,width,height,76,nearPlate)).toBe(true);
       expect(check(f.root,camera,width,height,health.aimCenterClearance)).toBe(false);
       expect(plate(camera,width,height,26,f.plate)).toBe(false);
     }

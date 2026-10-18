@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:4173/",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "screenshot": "smaller-head.png",
+  "checks": {
+    "renderedSmallerHead": true,
+    "headBarAboveHead": true,
+    "returnedToRoom": true,
+    "canvasCountAfterExit": 0
+  },
+  "errors": []
+}

@@ -32,7 +32,8 @@ function worldWall(world:RAPIER.World){world.createCollider(RAPIER.ColliderDesc.
 test('E press kicks only an in-range visible enemy bubble, credits actual finisher once and does not depend on 300 durability',()=>{
   const f=fixture();try{f.ally.setPosition({x:12,y:.92,z:12});f.enemy.setPosition({x:0,y:.92,z:-1});f.enemy.receiveCombatDamage(100,f.s.playerHealth.actor);f.step();
     f.step({...idle,held:true},false);expect(f.enemy.getSnapshot().status).toBe('downed');f.step();
-    f.step({...idle,held:true});expect(f.enemy.getSnapshot().status).toBe('eliminated');expect(f.s.interactions.getSnapshot().kickSequence).toBe(1);expect(f.s.score.getSnapshot().teams.red).toBe(1);
+    f.step({...idle,held:true});expect(f.s.loadout.getSnapshot().rescuing).toBe(true);expect(f.enemy.getSnapshot().status).toBe('downed');
+    for(let n=0;n<16;n++)f.step();expect(f.enemy.getSnapshot().status).toBe('downed');f.step();expect(f.enemy.getSnapshot().status).toBe('eliminated');expect(f.s.interactions.getSnapshot().kickSequence).toBe(1);expect(f.s.score.getSnapshot().teams.red).toBe(1);
     f.step({...idle,held:true});expect(f.s.score.getSnapshot().teams.red).toBe(1);
   }finally{f.close();}
 });
@@ -40,7 +41,72 @@ test('a real AI teammate rescues the human for two seconds; enemy AI can melee f
   const f=fixture();try{f.s.playerHealth.receiveCombatDamage(100,f.enemy.actor);f.step();for(let n=0;n<120;n++)f.step();
     expect(f.s.playerHealth.getSnapshot()).toMatchObject({status:'normal',hp:50,lifeId:1});expect(f.s.score.getSnapshot().players.find(p=>p.playerId===f.ally.actor.playerId)?.rescues).toBe(1);
     for(let n=0;n<60;n++)f.step();f.ally.setPosition({x:12,y:.92,z:12});f.enemy.setPosition({x:0,y:.92,z:-1});f.s.playerHealth.receiveCombatDamage(100,f.enemy.actor);f.step();
-    expect(f.s.playerHealth.getSnapshot().status).toBe('eliminated');expect(f.s.score.getSnapshot().teams.blue).toBe(1);
+    expect(f.s.playerHealth.getSnapshot().status).toBe('downed');expect(f.s.interactions.isActing(f.enemy.actor.playerId)).toBe(true);
+    for(let n=0;n<17;n++)f.step();expect(f.s.playerHealth.getSnapshot().status).toBe('eliminated');expect(f.s.score.getSnapshot().teams.blue).toBe(1);
     f.s.interactions.cancel();f.s.dispose();f.step({...idle,held:true});expect(f.s.loadout.getSnapshot().rescuing).toBe(false);
   }finally{f.close();}
+});
+
+
+test('a lethal hit on the final kick tick cancels the committed finish and releases all action locks',()=>{
+ const f=fixture();try{
+  f.ally.setPosition({x:12,y:.92,z:12});f.enemy.setPosition({x:0,y:.92,z:-1});f.enemy.receiveCombatDamage(100,f.s.playerHealth.actor);f.step();
+  f.step({...idle,held:true});for(let n=0;n<16;n++)f.step();
+  expect(f.s.loadout.canOperate()).toBe(false);expect(f.s.loadout.getSpeed()).toBe(0);expect(f.enemy.getSnapshot().status).toBe('downed');
+  f.s.playerHealth.receiveCombatDamage(100,f.enemy.actor);f.step();
+  expect(f.enemy.getSnapshot().status).toBe('downed');expect(f.s.interactions.getSnapshot().kickSequence).toBe(0);
+  expect(f.s.loadout.getSnapshot().rescuing).toBe(false);expect(f.s.score.getSnapshot().teams.red).toBe(0);
+ }finally{f.close();}
+});
+test('public progress belongs to the trapped player, is visible independently of the local target and disappears on interruption',()=>{
+ const f=fixture();try{
+  f.s.playerHealth.receiveCombatDamage(100,f.enemy.actor);for(let n=0;n<20;n++)f.step();
+  const publicRescue=f.s.interactions.getSnapshot().rescues[0];expect(publicRescue).toMatchObject({targetId:f.s.playerHealth.actor.playerId,rescuerId:f.ally.actor.playerId});
+  expect(publicRescue.progress).toBeGreaterThan(0);expect(publicRescue.position).toEqual(f.position);
+  f.ally.receiveCombatDamage(20,f.enemy.actor);f.step();expect(f.s.interactions.getSnapshot().rescues).toEqual([]);
+ }finally{f.close();}
+});
+
+
+test('enemy rescue progress is public while an opposing kicker may claim a separate slot',()=>{
+ const world=new RAPIER.World({x:0,y:0,z:0}),s=createTrainingSession('rifle',{arena:true,botSeats:[{teamId:'blue',slot:0},{teamId:'blue',slot:1},{teamId:'red',slot:1}]});
+ try{
+  const target=s.bots.find(b=>b.seat.teamId==='blue'&&b.seat.slot===0)!,rescuer=s.bots.find(b=>b.seat.teamId==='blue'&&b!==target)!,kicker=s.bots.find(b=>b.seat.teamId==='red')!;
+  target.setPosition({x:0,y:.92,z:0});rescuer.setPosition({x:0,y:.92,z:1});kicker.setPosition({x:10,y:.92,z:10});world.step();
+  const step=()=>{s.playerHealth.step();s.bots.forEach(b=>b.advance(s.playerHealth.getTick()));s.interactions.step(world,{x:10,y:.92,z:-10},true,idle);};
+  step();target.receiveCombatDamage(100,s.playerHealth.actor);step();step();
+  expect(s.interactions.getSnapshot().rescues[0]).toMatchObject({targetId:target.actor.playerId,rescuerId:rescuer.actor.playerId});
+  expect(s.interactions.getSnapshot().progress).toBeNull();expect(s.interactions.getSnapshot().receiving).toBeNull();
+  kicker.setPosition({x:0,y:.92,z:-1});for(let i=0;i<20;i++)step();
+  expect(s.interactions.isActing(kicker.actor.playerId)).toBe(false);expect(target.getSnapshot().status).toBe('eliminated');
+  expect(s.interactions.getSnapshot().rescues).toHaveLength(0);
+ }finally{s.dispose();world.free();}
+});
+
+
+test('damage to the bubble keeps real rescue progress; damage to the rescuer still interrupts',()=>{
+ const f=fixture();try{
+  f.ally.receiveCombatDamage(100,f.enemy.actor);for(let n=0;n<40;n++)f.step({...idle,held:true});
+  const before=f.s.interactions.getSnapshot().progress!;f.ally.receiveCombatDamage(20,f.enemy.actor);f.step({...idle,held:true});
+  expect(f.ally.getSnapshot().downedHp).toBe(280);expect(f.s.interactions.getSnapshot().progress).toBeGreaterThan(before);
+  f.s.playerHealth.receiveCombatDamage(20,f.enemy.actor);f.step({...idle,held:true});expect(f.s.interactions.getSnapshot().progress).toBeNull();
+ }finally{f.close();}
+});
+test('a 2.8m kick completes during rescue; same-tick ready actions resolve kick first without rescue score',()=>{
+ const f=fixture();try{
+  f.ally.receiveCombatDamage(100,f.enemy.actor);for(let n=0;n<102;n++)f.step({...idle,held:true});
+  f.enemy.setPosition({x:0,y:.92,z:-3.8});f.step({...idle,held:true});
+  expect(f.s.interactions.isActing(f.enemy.actor.playerId)).toBe(true);expect(f.s.interactions.getSnapshot().rescues).toHaveLength(1);
+  for(let n=0;n<17;n++)f.step({...idle,held:true});
+  expect(f.ally.getSnapshot().status).toBe('eliminated');expect(f.s.interactions.getSnapshot().rescues).toEqual([]);expect(f.s.loadout.getSnapshot().rescuing).toBe(false);
+  expect(f.s.score.getSnapshot().players.find(p=>p.playerId===f.s.playerHealth.actor.playerId)?.rescues).toBe(0);expect(f.s.score.getSnapshot().teams.blue).toBe(1);
+ }finally{f.close();}
+});
+test('rescue completing before a later kick cancels it and does not score an elimination',()=>{
+ const f=fixture();try{
+  f.ally.receiveCombatDamage(100,f.enemy.actor);for(let n=0;n<110;n++)f.step({...idle,held:true});
+  f.enemy.setPosition({x:0,y:.92,z:-3.8});for(let n=0;n<10;n++)f.step({...idle,held:true});
+  expect(f.ally.getSnapshot()).toMatchObject({status:'normal',hp:50});expect(f.s.interactions.isActing(f.enemy.actor.playerId)).toBe(false);
+  expect(f.s.interactions.getSnapshot().kickSequence).toBe(0);expect(f.s.score.getSnapshot().teams.blue).toBe(0);
+ }finally{f.close();}
 });

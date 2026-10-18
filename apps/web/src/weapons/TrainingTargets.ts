@@ -1,8 +1,10 @@
 import { Ray, QueryFilterFlags, type World } from '@dimforge/rapier3d-compat';
 import { BUBBLE_CONFIG, COLLISION_GROUPS, HIT_MAP_CLEARANCE, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, WEAPON_HANDLING, type WeaponId, type HitRegion } from '@bubble-arena/shared';
-import { calculateWeaponDamage, type TrainingHit } from '@bubble-arena/game-core';
+import { calculateWeaponDamage, type BulletContact, type TrainingHit } from '@bubble-arena/game-core';
 import { queryScreenAimTarget, type ScreenAimRay, type ScreenAimTarget } from './screenAimRay';
 import type { MuzzleRayResult } from './muzzleRay';
+import { traceBallisticRay } from './ballisticRay';
+import type { PelletVisual } from '../effects/ShotFeedback';
 export interface HitReceiver { receiveHit(hit: TrainingHit, damage?: number): boolean; applySlow(): void; isTargetable?: () => boolean }
 const flags = QueryFilterFlags.EXCLUDE_DYNAMIC;
 // Keep coincident target/map surfaces on the safe map side despite float quantization.
@@ -17,10 +19,10 @@ export class TrainingTargets {
   private newestExplosion = 0;
   dispose() { this.entries.clear(); this.explosions.clear(); }
   isRegistered = (handle: number) => { const entry = this.entries.get(handle); return Boolean(entry && (entry.enabled?.() ?? true) && (entry.target.isTargetable?.() ?? true)); };
-  private entries = new Map<number, { target: HitReceiver; region: HitRegion; enabled?: () => boolean }>();
-  register(handle: number, target: HitReceiver, region: HitRegion = 'body', enabled?: () => boolean) {
-    if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body' || enabled !== undefined && typeof enabled !== 'function') throw new TypeError('Invalid/duplicate target collider or region');
-    this.entries.set(handle, { target, region, enabled });
+  private entries = new Map<number, { target: HitReceiver; region: HitRegion; kind: 'person' | 'bubble'; enabled?: () => boolean }>();
+  register(handle: number, target: HitReceiver, region: HitRegion = 'body', enabled?: () => boolean, kind: 'person' | 'bubble' = 'person') {
+    if (!Number.isFinite(handle) || handle < 0 || this.entries.has(handle) || region !== 'head' && region !== 'body' || enabled !== undefined && typeof enabled !== 'function' || kind !== 'person' && kind !== 'bubble') throw new TypeError('Invalid/duplicate target collider or region');
+    this.entries.set(handle, { target, region, enabled, kind });
     let active = true;
     return () => { if (active) { active = false; this.entries.delete(handle); } };
   }
@@ -61,22 +63,32 @@ export class TrainingTargets {
     if (shot.sequence <= this.lastShotSequence || shot.tick < this.lastShotTick) return { impact: null, pellets: [] };
     this.lastShotSequence = shot.sequence; this.lastShotTick = shot.tick;
     const damageByTarget = new Map<HitReceiver, { damage: number; point: ScreenAimTarget['point'] }>();
-    const pellets: { point: ScreenAimTarget['point']; hit: boolean }[] = [];
+    const pellets: PelletVisual[] = [];
     for (const result of results) {
       if (!result || result.status === 'blocked-muzzle') continue;
-      const hit = this.query(world, { origin: result.origin, direction: result.direction, range: Math.min(result.distance, WEAPON_CONFIGS[weapon].range) });
-      if (!hit || result.status === 'hit' && hit.distance + mapMargin >= result.distance) {
-        if (result.point && [result.point.x, result.point.y, result.point.z].every(Number.isFinite))
-          pellets.push({ point: result.point, hit: result.status === 'hit' });
-        continue;
+      const range = WEAPON_CONFIGS[weapon].range;
+      if (![result.origin.x, result.origin.y, result.origin.z, result.direction.x, result.direction.y, result.direction.z].every(Number.isFinite)) continue;
+      const length = Math.hypot(result.direction.x, result.direction.y, result.direction.z);
+      if (!Number.isFinite(length) || length <= 0) continue;
+      const direction = { x: result.direction.x / length, y: result.direction.y / length, z: result.direction.z / length };
+      const contacts: BulletContact<HitReceiver>[] = [];
+      // Query each collider once, then core deduplicates overlapping head/body by receiver.
+      world.intersectionsWithRay(new Ray(result.origin, direction), range, true, hit => {
+        const entry = this.entries.get(hit.collider.handle);
+        if (entry && (entry.enabled?.() ?? true) && (entry.target.isTargetable?.() ?? true))
+          contacts.push({ kind: entry.kind, target: entry.target, region: entry.region, distance: hit.timeOfImpact });
+        return true;
+      }, flags, COLLISION_GROUPS.targetQuery, undefined, undefined, c => this.isRegistered(c.handle));
+      const trace = traceBallisticRay(world, { origin: result.origin, direction, range }, weapon, contacts);
+      if (!trace) continue;
+      pellets.push({ point: trace.point, hit: trace.stopped, contacts: trace.impactPoints });
+      for (const { contact, multiplier } of trace.hits) {
+        const damage = calculateWeaponDamage(WEAPON_CONFIGS[weapon].damage, WEAPON_DAMAGE_PROFILES[weapon], contact.region, contact.distance, multiplier);
+        const hitPoint = { x: result.origin.x + direction.x * contact.distance, y: result.origin.y + direction.y * contact.distance, z: result.origin.z + direction.z * contact.distance };
+        const previous = damageByTarget.get(contact.target);
+        damageByTarget.set(contact.target, { damage: (previous?.damage ?? 0) + damage, point: previous?.point ?? hitPoint });
+        if (import.meta.env.DEV) console.info('[damage.check]', JSON.stringify({ ...shot, weapon, region: contact.region, distance: contact.distance, penetration: multiplier, damage }));
       }
-      pellets.push({ point: hit.point, hit: true });
-      const entry = this.entries.get(hit.handle);
-      if (!entry) continue;
-      const damage = calculateWeaponDamage(WEAPON_CONFIGS[weapon].damage, WEAPON_DAMAGE_PROFILES[weapon], entry.region, hit.distance);
-      const previous = damageByTarget.get(entry.target);
-      damageByTarget.set(entry.target, { damage: (previous?.damage ?? 0) + damage, point: previous?.point ?? hit.point });
-      if (import.meta.env.DEV) console.info('[damage.check]', JSON.stringify({ ...shot, weapon, region: entry.region, distance: hit.distance, damage }));
     }
     let point: ScreenAimTarget['point'] | null = null;
     const resolved = { tick: shot.tick, sequence: ++this.hitSequence };

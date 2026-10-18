@@ -1,0 +1,39 @@
+- main "Bubble Arena · 游戏场景":
+  - generic: YOU
+  - generic: "100"
+  - meter "YOU生命值"
+  - status "性能状态": 75 FPS · 0 ms
+  - list "战斗事件":
+    - generic: 蓝队 1 号
+    - generic: 击倒
+    - generic: 红队 3 号
+    - generic: 蓝队 1 号
+    - generic: 淘汰
+    - generic: 红队 3 号
+  - complementary "Blue 3, Red 1":
+    - generic "Blue score": "03"
+    - generic "Red score": "01"
+  - status "自身 HP：100 / 100":
+    - generic: HP
+    - generic: "100"
+  - navigation "武器快捷栏":
+    - button "1 · 步枪 · 30发":
+      - generic: "1"
+      - generic: "30"
+      - generic: 步枪
+    - button "2 · 霰弹枪 · 2发" [pressed]:
+      - generic: "2"
+      - generic: "02"
+      - generic: 霰弹枪
+    - button "3 · 狙击枪 · 5发":
+      - generic: "3"
+      - generic: "05"
+      - generic: 狙击枪
+    - button "4 · 泡泡发射器 · 4发":
+      - generic: "4"
+      - generic: "04"
+      - generic: 泡泡发射器
+  - complementary "竞技场小地图":
+    - img "三路地图：红蓝复活区、掩体与高台"
+  - region "比赛状态":
+    - strong: 04:23

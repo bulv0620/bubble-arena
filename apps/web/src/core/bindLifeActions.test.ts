@@ -87,6 +87,6 @@ test('unsubscribe detaches old session; binding already downed closes gates and 
   event(f.global, 'keydown', { code: 'Space' });
   const rebind = bindLifeActions(f.session.playerHealth, f.session.loadout, f.actions);
   expect(f.session.loadout.canOperate()).toBe(false); expect(f.actions.keyboard.consumeJump()).toBe(false);
-  const fresh = createTrainingSession('sniper'); expect(fresh.loadout.getSpeed()).toBe(4); expect(fresh.playerHealth.getSnapshot().status).toBe('normal');
+  const fresh = createTrainingSession('sniper'); expect(fresh.loadout.getSpeed()).toBeCloseTo(4.8); expect(fresh.playerHealth.getSnapshot().status).toBe('normal');
   rebind(); f.detach.forEach(fn => fn());
 });

@@ -1,9 +1,11 @@
 import type { World } from '@dimforge/rapier3d-compat';
-import { ARENA_BOT_CONFIG, type DamageActor, type RescuePosition, type PlayerLifeStatus } from '@bubble-arena/shared';
+import { ARENA_BOT_CONFIG, WEAPON_CONFIGS, WEAPON_DAMAGE_PROFILES, type DamageActor, type RescuePosition, type PlayerLifeStatus } from '@bubble-arena/shared';
 import type { LocalPlayerHealth } from './LocalPlayerHealth';
 import type { LocalArenaOpponent } from './LocalArenaOpponent';
 import { isRescueLineClear } from './rescueLineOfSight';
-import { resolveArenaBotShot } from './arenaCombatRay';
+import { queryArenaVictim } from './arenaCombatRay';
+import { calculateWeaponDamage, type BulletContact } from '@bubble-arena/game-core';
+import { traceBallisticRay } from '../weapons/ballisticRay';
 export interface ArenaCombatant {
   readonly actor: DamageActor; readonly position: RescuePosition; readonly status: PlayerLifeStatus;
   readonly receive: (damage: number, source: DamageActor) => boolean;
@@ -20,9 +22,19 @@ export function selectArenaBotTarget(world: World, actor: DamageActor, origin: R
     .filter(({ c, distance }) => distance <= ARENA_BOT_CONFIG.viewRange && isRescueLineClear(world, { x: origin.x, y: origin.y+.5, z: origin.z }, { x: c.position.x, y: c.position.y+.15, z: c.position.z }))
     .sort((a,b)=>a.distance-b.distance || a.c.actor.playerId.localeCompare(b.c.actor.playerId))[0]?.c ?? null;
 }
-/** Resolve the nearest enemy along the accepted ray, rather than damaging the selected target through another enemy. */
+/** Same material/character attenuation as player fire, with actor attribution for every hit. */
 export function resolveArenaTeamShot(world: World, actor: DamageActor, origin: RescuePosition, direction: RescuePosition, candidates: readonly ArenaCombatant[]) {
-  const hits = candidates.filter(c => c.actor.teamId !== actor.teamId && alive(c)).map(victim => ({ victim, hit: resolveArenaBotShot(world, origin, direction, victim.position, victim.status==='downed') })).filter(e=>e.hit!==null).sort((a,b)=>a.hit!.distance-b.hit!.distance);
-  const first = hits[0];
-  return first?.hit ? { ...first.hit, victim: first.victim, accepted: first.victim.receive(first.hit.damage, actor) } : null;
+  const contacts: BulletContact<ArenaCombatant>[] = [];
+  for (const victim of candidates.filter(c => c.actor.playerId !== actor.playerId && alive(c) && (c.actor.teamId !== actor.teamId || c.status === 'downed'))) {
+    const hit = queryArenaVictim(origin, direction, victim.position, victim.status === 'downed');
+    if (hit) contacts.push({ kind: victim.status === 'downed' ? 'bubble' : 'person', target: victim, region: hit.region, distance: hit.distance });
+  }
+  const trace = traceBallisticRay(world, { origin, direction, range: WEAPON_CONFIGS.rifle.range }, 'rifle', contacts);
+  if (!trace) return null;
+  const hits = trace.hits.map(({ contact, multiplier }) => {
+    if (contact.target.actor.teamId === actor.teamId) return { victim: contact.target, damage: 0, accepted: false };
+    const damage = calculateWeaponDamage(WEAPON_CONFIGS.rifle.damage, WEAPON_DAMAGE_PROFILES.rifle, contact.region, contact.distance, multiplier);
+    return { victim: contact.target, damage, accepted: contact.target.receive(damage, actor) };
+  });
+  return { hits, pellet: { point: trace.point, hit: trace.stopped, contacts: trace.impactPoints } };
 }

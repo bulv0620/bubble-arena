@@ -65,6 +65,6 @@ test('shortened upward displacement without a ceiling does not cancel jump veloc
 
 test('jump height rises with takeoff ground speed, caps at sprint speed and never changes its impulse in flight',()=>{
  const peak=(speed:number)=>{const m=new VerticalMovement();m.refreshSupport(true);let y=0,top=0;for(let t=0;t<90;t++){y+=m.step(t===0,t===0?speed:999).y;top=Math.max(y,top);}return top;};
- expect(peak(4)).toBeGreaterThan(peak(0));expect(peak(6.75)).toBeGreaterThan(peak(4));expect(peak(999)).toBeCloseTo(peak(6.75));expect(peak(6.75)).toBeLessThan(peak(0)*1.35);
+ expect(peak(4)).toBeGreaterThan(peak(0));expect(peak(8.1)).toBeGreaterThan(peak(4));expect(peak(999)).toBeCloseTo(peak(8.1));expect(peak(8.1)).toBeLessThan(peak(0)*1.35);
  const m=new VerticalMovement();m.refreshSupport(true);const before=m.getState();expect(()=>m.step(true,NaN)).toThrow();expect(m.getState()).toEqual(before);
 });

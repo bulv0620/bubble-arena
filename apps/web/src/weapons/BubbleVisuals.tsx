@@ -12,7 +12,7 @@ export function BubbleVisuals({ bubbles }: { bubbles: LocalBubbleFlight }) {
     pool.current.forEach((mesh, index) => {
       if (!mesh) return;
       mesh.visible = index < flying.length;
-      if (flying[index]) mesh.position.set(flying[index].position.x, flying[index].position.y, flying[index].position.z);
+      if (flying[index]) mesh.position.set(flying[index].position.x,flying[index].position.y,flying[index].position.z);
     });
     if (!burst.current) return;
     const explosion = bubbles.getExplosion(); burst.current.visible = explosion !== null;

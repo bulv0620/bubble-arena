@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { WEAPON_CONFIGS, WEAPON_HANDLING, WEAPON_DAMAGE_PROFILES, PHYSICS_CONFIG, weaponGroundSpeed } from '@bubble-arena/shared';
+import { WEAPON_CONFIGS, WEAPON_HANDLING, WEAPON_DAMAGE_PROFILES, PHYSICS_CONFIG, PLAYER_CONFIG, weaponGroundSpeed } from '@bubble-arena/shared';
 import { WeaponFireState } from './weaponFireState';
 import { WeaponAccuracy } from './weaponAccuracy';
 import { calculateWeaponDamage } from './weaponDamage';
@@ -45,7 +45,7 @@ test('ground movement reaches each held-weapon speed without recreating movement
   const movement = new HorizontalMovement();
   for (const id of ['shotgun', 'rifle', 'sniper', 'bubble'] as const) {
     let result = { x: 0, y: 0, z: 0 };
-    for (let i = 0; i < 60; i++) result = movement.step({ forward: true, backward: false, left: false, right: false }, 1, 0, weaponGroundSpeed(id) / 5);
+    for (let i = 0; i < 60; i++) result = movement.step({ forward: true, backward: false, left: false, right: false }, 1, 0, weaponGroundSpeed(id) / PLAYER_CONFIG.speed);
     expect(Math.hypot(result.x, result.z) / PHYSICS_CONFIG.timeStep).toBeCloseTo(weaponGroundSpeed(id));
     expect(result.y).toBe(0);
   }

@@ -1,3 +1,4 @@
+import type { BulletMaterial } from './weaponPenetration';
 import { PLAYER_CONFIG } from './player';
 
 export interface WhiteboxSolid {
@@ -7,6 +8,7 @@ export interface WhiteboxSolid {
   size: [number, number, number];
   color: string;
   rotationZ?: number;
+  bulletMaterial?: BulletMaterial;
 }
 
 const movementTestWall: WhiteboxSolid = {
@@ -19,8 +21,8 @@ export const WHITEBOX_SOLIDS: readonly WhiteboxSolid[] = [
   movementTestWall,
   { id: 'range-backdrop', kind: 'wall', position: [12, 1.5, -9], size: [12, 3, 0.5], color: '#8f9eaa' },
   { id: 'west-wall', kind: 'wall', position: [-3.25, 1.5, -1], size: [0.5, 3, 4.5], color: '#8f9eaa' },
-  { id: 'small-box', kind: 'box', position: [5, 0.75, 5], size: [1.5, 1.5, 1.5], color: '#bba27d' },
-  { id: 'large-box', kind: 'box', position: [18, 1, 4], size: [2, 2, 1.5], color: '#ae9269' },
+  { id: 'small-box', kind: 'box', bulletMaterial: 'wood', position: [5, 0.75, 5], size: [1.5, 1.5, 1.5], color: '#bba27d' },
+  { id: 'large-box', kind: 'box', bulletMaterial: 'wood', position: [18, 1, 4], size: [2, 2, 1.5], color: '#ae9269' },
   { id: 'step-30cm', kind: 'step', position: [7, PLAYER_CONFIG.maxStepHeight / 2, -1.5], size: [2, PLAYER_CONFIG.maxStepHeight, 1.5], color: '#729eab' },
   {
     id: 'ramp-45deg', kind: 'ramp',
@@ -42,13 +44,13 @@ export const WHITEBOX_CONFIG = {
 
 // Canonical serializable collision data excludes material colors and demonstration bodies.
 export const WHITEBOX_COLLISION = {
-  schemaVersion: 2,
+  schemaVersion: 3,
   ground: {
     size: WHITEBOX_CONFIG.groundSize,
     thickness: WHITEBOX_CONFIG.groundThickness,
     topY: WHITEBOX_CONFIG.groundTopY,
   },
-  solids: WHITEBOX_SOLIDS.map(({ id, kind, position, size, rotationZ = 0 }) => ({ id, kind, position, size, rotationZ })),
+  solids: WHITEBOX_SOLIDS.map(({ id, kind, position, size, rotationZ = 0, bulletMaterial = 'solid' }) => ({ id, kind, position, size, rotationZ, bulletMaterial })),
 };
 
 /** Deterministic 64-bit FNV-1a content identity, usable in browser and Node. */

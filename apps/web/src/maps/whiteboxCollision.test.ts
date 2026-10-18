@@ -102,8 +102,11 @@ test('real capsule sweep is blocked by the physical ground during a downward que
 test('shared visible 30cm step and rotated 45-degree ramp both support walking', () => {
   const step = WHITEBOX_SOLIDS.find(solid => solid.id === 'step-30cm')!;
   const player = setup(step.position[0] - step.size[0] / 2 - 1, step.position[2]);
-  const top = run(player, { ...idle, right: true }, 35);
-  expect(top.x).toBeGreaterThan(step.position[0] - 0.5);
+  // Stop sampling at the platform center, before the faster start carries us off its far edge.
+  let top = player.body.translation();
+  for (let tick = 0; tick < 60 && top.x < step.position[0]; tick++) top = run(player, { ...idle, right: true }, 1);
+  expect(top.x).toBeGreaterThanOrEqual(step.position[0]);
+  expect(top.x).toBeLessThan(step.position[0] + .11);
   expect(top.y).toBeCloseTo(PLAYER_CONFIG.height / 2 + 0.01 + step.size[1], 2);
   adapter.dispose(); world.free();
   const ramp = WHITEBOX_SOLIDS.find(solid => solid.id === 'ramp-45deg')!;

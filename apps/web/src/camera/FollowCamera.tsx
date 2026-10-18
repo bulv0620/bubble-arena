@@ -1,6 +1,6 @@
 import { useFrame, useThree } from '@react-three/fiber';
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
-import { useEffect, useRef, useState, type RefObject } from 'react';
+import { useCallback, useEffect, useRef, useState, type RefObject } from 'react';
 import { CAMERA_CONFIG, LOCOMOTION_CONFIG, PLAYER_CONFIG, type CameraHeading } from '@bubble-arena/shared';
 import { useRapier } from '@react-three/rapier';
 import { cameraFocus, updateFollowCamera, type CameraFollowTarget } from './cameraFollowPose';
@@ -15,7 +15,7 @@ import type { LocalLoadout } from '../weapons/LocalLoadout';
 
 import type { LocalRespawn } from '../player/LocalRespawn';
 
-export function FollowCamera({ respawn, loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity, initialYaw = 0 }: { initialYaw?: number; respawn: LocalRespawn; loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
+export function FollowCamera({ respawn, loadout, target, control, clearInput, view, aim, crosshair, fire, aimTarget, targets, recoil, enabled, sensitivity, scopeSensitivity, initialYaw = 0 }: { initialYaw?: number; respawn: LocalRespawn; loadout: LocalLoadout; enabled: () => boolean; sensitivity: () => number; scopeSensitivity: () => number; target: RefObject<CameraFollowTarget | null>;
   control: PointerLockInput; clearInput: () => void; view: RefObject<CameraHeading>; aim: AimInput; crosshair: CrosshairInput; fire: FireInput; aimTarget: RefObject<ScreenAimTarget | null>; targets: TrainingTargets; recoil: RifleRecoil }) {
   const diagnostics = useRef(0);
   const previousRecoil = useRef(0);
@@ -28,10 +28,11 @@ export function FollowCamera({ respawn, loadout, target, control, clearInput, vi
   const recoveryTarget = useRef<CameraFollowTarget | null>(null);
   useEffect(() => () => { aimTarget.current = null; recoil.reset(); }, [aimTarget, recoil]);
   useEffect(() => aim.attach(canvas, window, document, () => enabled() && loadout.canOperate(), () => loadout.getSnapshot().active === 'sniper', loadout.canScope), [aim, canvas, enabled, loadout]);
+  const activeScopeSensitivity = useCallback(() => loadout.getSnapshot().scoped ? scopeSensitivity() : 1, [loadout, scopeSensitivity]);
   useEffect(() => control.attach(canvas, window, document,
-    (dx, dy) => orbit.rotate(dx, dy, sensitivity()), clearInput, () => enabled() && !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim, enabled, sensitivity]);
+    (dx, dy) => orbit.rotate(dx, dy, sensitivity(), activeScopeSensitivity()), clearInput, () => enabled() && !aim.getSnapshot()), [canvas, orbit, control, clearInput, aim, enabled, sensitivity, activeScopeSensitivity]);
   useEffect(() => orbit.attach(canvas, window, document,
-    () => enabled() && (control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported') && !aim.getSnapshot(), sensitivity), [canvas, orbit, control, aim, enabled, sensitivity]);
+    () => enabled() && (control.getSnapshot() === 'error' || control.getSnapshot() === 'unsupported'), sensitivity, activeScopeSensitivity), [canvas, orbit, control, enabled, sensitivity, activeScopeSensitivity]);
   useEffect(() => crosshair.attach(canvas, window, document), [canvas, crosshair]);
   useEffect(() => fire.attach(canvas, window, document, () => enabled() && loadout.canOperate()), [canvas, fire, enabled, loadout]);
   useFrame(({ camera }, dt) => {

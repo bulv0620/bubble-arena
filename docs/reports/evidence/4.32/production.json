@@ -1,0 +1,16 @@
+{
+  "facts": {
+    "canvasCount": 0,
+    "fixtureText": false,
+    "href": "http://127.0.0.1:5173/",
+    "startVisible": true
+  },
+  "errors": [
+    {
+      "level": "error",
+      "message": "[vite] Failed to reload /src/core/InteractionVisualCheck.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "timestamp": "2026-10-18T12:53:57.935Z",
+      "url": "http://127.0.0.1:5173/@vite/client"
+    }
+  ]
+}

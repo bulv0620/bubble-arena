@@ -32,7 +32,7 @@ test.each(WEAPON_IDS)('%s self rescue preserves weapon/ammo and world objects, r
     rescue(f);
     expect(f.session.score.getSnapshot().players.find(p => p.playerId === 'training-ally')?.rescues).toBe(1);
     expect(f.session.loadout.getSnapshot()).toMatchObject({ active: weapon, lifeStatus: 'normal', rescuing: false, ammo: { magazine: ammo } });
-    expect(f.session.loadout.getSpeed()).toBe(weapon === 'sniper' ? 4 : weapon === 'rifle' ? 5 : 5.5);
+    expect(f.session.loadout.getSpeed()).toBeCloseTo(weapon === 'sniper' ? 4.8 : weapon === 'rifle' ? 6 : 6.6);
     expect(f.session.rescue.getSnapshot().channel).toBeNull(); expect(f.session.rescue.getSnapshot().message).toContain('你已被救起');
     expect(f.world.bodies.len()).toBe(bodies); expect(f.world.colliders.len()).toBe(colliders);
     expect(f.session.playerHealth.getDamageRevision()).toBe(1); f.step(); expect(f.session.playerHealth.getDamageRevision()).toBe(1);

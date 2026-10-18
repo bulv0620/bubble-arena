@@ -137,3 +137,9 @@
 .arena-enemy-status { margin-top:10px; padding-top:8px; border-top:1px solid #ffffff26; }
 .arena-respawn-tag { background:#193e59e6; color:#c7e8ff; border-radius:6px; padding:4px 8px; font:10px sans-serif; white-space:nowrap; }
 @media(max-width:800px) { .arena-hud { right:12px; width:140px; padding:8px; } .arena-hud svg { max-height:130px; } .arena-lanes { font-size:7px; } }
+/* Public rescue progress retains the simple translucent panel appearance. */
+.bubble-rescue-progress { width: 130px; padding: 7px 10px; border: 1px solid #bffaffb3; border-radius: 8px; background: #123b5ca6; color: white; text-align: center; font: 800 11px var(--game-font); }
+.bubble-rescue-progress[hidden] { display: none; }
+.bubble-rescue-progress b { display: block; margin-bottom: 5px; }
+.bubble-rescue-progress [role=progressbar] { height: 7px; overflow: hidden; border-radius: 4px; background: #072840aa; }
+.bubble-rescue-progress i { display: block; height: 100%; background: #83f0bd; }

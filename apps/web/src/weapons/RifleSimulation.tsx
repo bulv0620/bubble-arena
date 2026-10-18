@@ -45,31 +45,33 @@ export function RifleSimulation({ playerHealth, aim, input, motion, loadout, swi
   useAfterPhysicsStep(() => {
     const currentCenter = body.current?.translation();
     const currentMuzzle = currentCenter && rifleMuzzlePosition(currentCenter, yaw.current, loadout.getSnapshot().active);
-    loadout.setMuzzleBlocked(Boolean(loadout.canOperate() && currentCenter && currentMuzzle && target.current &&
-      queryMuzzleRay(world, currentCenter, currentMuzzle, target.current, WEAPON_CONFIGS[loadout.getSnapshot().active].range)?.status === 'blocked-muzzle'));
+    const preview = loadout.canOperate() && currentCenter && currentMuzzle && target.current
+      ? queryMuzzleRay(world,currentCenter,currentMuzzle,target.current,WEAPON_CONFIGS[loadout.getSnapshot().active].range) : null;
+    loadout.setMuzzleBlocked(Boolean(preview?.aimObstructed));
     const accepted = pending.current; pending.current = null;
     if (!loadout.canOperate()) shotRay.current = null;
     if (accepted && playerHealth.canPlay()) {
       const { shot } = accepted, config = WEAPON_CONFIGS[shot.weapon], handling = WEAPON_HANDLING[shot.weapon];
       recoil.kick(shot.sequence);
-      const center = body.current?.translation(), muzzle = center && rifleMuzzlePosition(center, yaw.current, shot.weapon);
-      const point = accepted.target?.point;
+      const center = body.current?.translation();
+      const muzzle = center && rifleMuzzlePosition(center, yaw.current, shot.weapon);
       const results = accepted.samples.map(sample => {
-        const direction = muzzle && point ? spreadDirection({ x: point.x - muzzle.x, y: point.y - muzzle.y, z: point.z - muzzle.z },
+        const direction = accepted.target ? spreadDirection(accepted.target.direction,
           shot.angle, sample.radial ** handling.spread.radialPower, sample.azimuth) : null;
-        return center && muzzle && accepted.target && direction ? queryMuzzleRay(world, center, muzzle, accepted.target, config.range, direction) : null;
+        const point = accepted.target && direction ? targets.aim(world,{origin:accepted.target.origin,direction,range:config.range}) : null;
+        return center && muzzle && point ? queryMuzzleRay(world,center,muzzle,point,config.range) : null;
       });
       shotRay.current = results[0] ?? null;
       let pellets: ReturnType<TrainingTargets['resolveVolley']>['pellets'] = [];
       if (shot.weapon === 'bubble') {
         const result = results[0];
-        if (muzzle && result && result.status !== 'blocked-muzzle') bubbles.flight.spawn(shot.sequence, muzzle, result.direction);
+        if (result && result.status !== 'blocked-muzzle') bubbles.flight.spawn(shot.sequence,result.origin,result.direction);
       } else {
         const resolved = targets.resolveVolley(world, shot, results, shot.weapon);
         pellets = resolved.pellets;
       }
       if (muzzle) feedback.emit({ sequence: shot.sequence, weapon: shot.weapon, muzzle, impact: null, pellets });
-      if (import.meta.env.DEV) console.info('[shot.ray]', JSON.stringify({ ...shot, muzzle, pellets: results.length, result: shotRay.current }));
+      if (import.meta.env.DEV) console.info('[shot.ray]', JSON.stringify({ ...shot, aim: accepted.target, muzzle, pellets: results.length, result: shotRay.current }));
     }
     if (playerHealth.canPlay()) bubbles.step(world, loadout.getTick());
   });

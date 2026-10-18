@@ -984,6 +984,180 @@
       "file": "docs/TASKS/4.10.md"
     },
     {
+      "id": "4.19",
+      "title": "人物与木箱子弹穿透",
+      "acceptance": "三种弹道武器按距离依次命中人物与木箱，狙击削弱最小；重复部位/弹丸去重合并，地图材质与版本同源，玩家与AI共用规则；测试与试玩报告齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.10.1",
+        "4.17"
+      ],
+      "file": "docs/TASKS/4.19.md"
+    },
+    {
+      "id": "4.20",
+      "title": "双发快装霰弹与基础地速调优",
+      "acceptance": "霰弹2发弹匣、0.20秒击发间隔、0.65秒自动补满；玩家基础地速上调20%保留重量/奔跑/开镜/生命门禁；实际规则/物理测试和TTK、浏览器试玩步骤齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.19",
+        "4.18.5"
+      ],
+      "file": "docs/TASKS/4.20.md"
+    },
+    {
+      "id": "4.21",
+      "title": "镜头拉远与左下构图、枪口瞄准一致",
+      "acceptance": "镜头适度拉远、人物更左下；四枪模型俯仰/水平收敛与实际枪口、开火方向同源，保留墙体保护/准星血条避让；测试/浏览器与报告齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.6.1",
+        "4.20"
+      ],
+      "file": "docs/TASKS/4.21.md"
+    },
+    {
+      "id": "4.22",
+      "title": "缩小人物头部并同步碰撞与血条",
+      "acceptance": "头部直径0.7→0.6m，保持身体/地面持枪高度，玩家/AI/靶子视觉和头部sensor同源；移动胶囊/出生/血条同步，检查与浏览器截图齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.21"
+      ],
+      "file": "docs/TASKS/4.22.md"
+    },
+    {
+      "id": "4.23",
+      "title": "狙击开镜鼠标速度倍率设置",
+      "acceptance": "设置新增开镜倍率0.05～2、默认0.30，最终角速度=普通速度×开镜倍率；锁鼠标/拖动同源，低值乘积有效、普通视角不变；保存容错及浏览器检查。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.16.3"
+      ],
+      "file": "docs/TASKS/4.23.md"
+    },
+    {
+      "id": "4.24",
+      "title": "提升移动起停和变向响应",
+      "acceptance": "共享加速度90/减速度120/空中控制0.65，步枪起步4tick、停步3tick、反向8tick；保持最高速度/重量/奔跑与生命门禁，真实Rapier地形和输入释放回归、生产试玩证据。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.20"
+      ],
+      "file": "docs/TASKS/4.24.md"
+    },
+    {
+      "id": "4.25",
+      "title": "枪械恢复固定朝前持枪姿态",
+      "acceptance": "按用户澄清移除视觉枪身追踪准星世界命中点，固定身体前向姿态；四枪视觉/逻辑枪口/闪光同源，真实弹道仍瞄准准星并保留散布及近墙安全段；检查与实机证据。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.21"
+      ],
+      "file": "docs/TASKS/4.25.md"
+    },
+    {
+      "id": "4.26",
+      "title": "救援与踢泡互斥、延时击破及水球挡弹",
+      "acceptance": "踢泡18tick锁动作、执行者失能则失败；救援/踢泡共用目标独占；整球扣敌方隐藏耐久，友敌水球均终止子弹且友军免伤；全阵营可见球顶救援进度，测试/浏览器/文档齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.18.3",
+        "4.19"
+      ],
+      "file": "docs/TASKS/4.26.md"
+    },
+    {
+      "id": "4.27",
+      "title": "救援踢破并行、水主题交互和直向弹道",
+      "acceptance": "目标水球受伤不打断救援，救援/踢破分别单人占用可并行、完成竞态安全；踢破距离3m，水主题球顶进度/E提示；取消近目标收敛的弹道方向按用户确认，检查/截图/规格齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.26",
+        "4.25"
+      ],
+      "file": "docs/TASKS/4.27.md"
+    },
+    {
+      "id": "4.28",
+      "title": "恢复准星目标收敛弹道",
+      "acceptance": "四枪从静态真实枪口朝准星目标计算散布基准，保留近后方前向后备和近墙保护；4.27救援/UI保持，回归检查与规格记录齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.27"
+      ],
+      "file": "docs/TASKS/4.28.md"
+    },
+    {
+      "id": "4.29",
+      "title": "射向不受近处准星命中物影响",
+      "acceptance": "从真实枪口朝无遮挡准星射线终点计算方向；同镜头/同枪口下添加或移除箱子只改变实际交点，出膛角度不变，四枪/静态枪身/近墙保护与救援修改保持。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.28"
+      ],
+      "file": "docs/TASKS/4.29.md"
+    },
+    {
+      "id": "4.30",
+      "title": "准星射线命中与首发对齐",
+      "acceptance": "用户选择固定中心准星/准星射线命中；移除肩位固定偏差、保留正常散布/后坐力；枪口视觉出弹和掩体保护，四枪与泡泡飞行、回归/实机证据齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.29"
+      ],
+      "file": "docs/TASKS/4.30.md"
+    },
+    {
+      "id": "4.31",
+      "title": "参考实机统一准星与真实枪口弹道",
+      "acceptance": "记录泡泡战士/PUBG可核实资料与自定边界；相机射线选点、真实枪口发射并结算遮挡/穿透，镜头散布逐丸选点；外圈按角度/FOV/画幅显示，首发/后坐力时序和泡泡同源；相关检查/实机/规格齐备。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.30"
+      ],
+      "file": "docs/TASKS/4.31.md"
+    },
+    {
+      "id": "4.32",
+      "title": "恢复简洁交互浮窗并保存本地检查点",
+      "acceptance": "E提示与球顶救援条恢复简洁半透明矩形，移除水泡装饰，公共进度/遮挡与玩法保持；浏览器视觉检查、完整check、报告及授权本地提交完成。",
+      "stage": 4,
+      "status": "implemented",
+      "milestone": "M1",
+      "dependencies": [
+        "4.27",
+        "4.31"
+      ],
+      "file": "docs/TASKS/4.32.md"
+    },
+    {
       "id": "5.1",
       "title": "创建 Colyseus 服务",
       "acceptance": "独立服务启动/关闭、健康检查和配置错误有明确日志；依赖先做兼容验证，再按精确版本锁定。 定义LobbyRoom/PartyRoom/MatchRoom职责和版本握手入口，不在此实现整套大厅或权威战斗。",

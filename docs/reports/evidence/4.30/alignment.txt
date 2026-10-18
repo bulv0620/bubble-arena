@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /Users/bulv/Desktop/bubble-arena
+
+
+ Test Files  3 passed (3)
+      Tests  33 passed (33)
+   Start at  00:43:19
+   Duration  295ms (transform 302ms, setup 0ms, import 484ms, tests 129ms, environment 0ms)

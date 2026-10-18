@@ -77,17 +77,17 @@ test('right button retains the same camera pose and projection', () => {
   expect(position).toEqual({ x: 2, y: 1, z: 4 });
 });
 
-test('Bubble-style composition places a short large-headed avatar below the reticle and close to the center', () => {
+test('Bubble-style composition places a short large-headed avatar further left and down with a modestly wider follow view', () => {
   const position = { x: -2, y: PLAYER_CONFIG.height / 2 + .01, z: 0 };
   for (const aspect of [16/9, 4/3]) for (const aiming of [false,true]) {
     const camera = new PerspectiveCamera(CAMERA_CONFIG.fov,aspect,CAMERA_CONFIG.near,CAMERA_CONFIG.far);
     updateFollowCamera(camera,{translation:()=>position},undefined,aiming); camera.updateMatrixWorld();
     const point = (y: number) => { const v = new Vector3(position.x,position.y+y,position.z).project(camera); return {x:(v.x+1)/2,y:(1-v.y)/2}; };
     const head = point(BLOCK_AVATAR_CONFIG.headY), top = point(BLOCK_AVATAR_CONFIG.headY+BLOCK_AVATAR_CONFIG.headRadius), foot = point(-PLAYER_CONFIG.height/2);
-    expect(head.x).toBeGreaterThan(.38); expect(head.x).toBeLessThan(.43);
-    expect(head.y).toBeGreaterThan(.65); expect(head.y).toBeLessThan(.70);
-    expect(top.y).toBeGreaterThan(.55); expect(top.y).toBeLessThan(.60);
+    expect(head.x).toBeGreaterThan(aspect > 1.5 ? .38 : .34); expect(head.x).toBeLessThan(aspect > 1.5 ? .40 : .36);
+    expect(head.y).toBeGreaterThan(.70); expect(head.y).toBeLessThan(.72);
+    expect(top.y).toBeGreaterThan(.62); expect(top.y).toBeLessThan(.64);
     expect(foot.y).toBeGreaterThan(.92); expect(foot.y).toBeLessThan(.98);
-    expect(foot.y-top.y).toBeGreaterThan(.35); expect(foot.y-top.y).toBeLessThan(.41);
+    expect(foot.y-top.y).toBeGreaterThan(.30); expect(foot.y-top.y).toBeLessThan(.32);
   }
 });

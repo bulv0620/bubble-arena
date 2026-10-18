@@ -18,8 +18,6 @@ import { arenaBotAim } from './arenaCombatRay';
 import { BubbleAvatar } from '../visuals';
 import { OpponentOverheadHealth } from '../HUD/OverheadHealth';
 import { ShotEffects } from '../effects/ShotEffects';
-import { queryScreenAimTarget } from '../weapons/screenAimRay';
-import { WEAPON_CONFIGS } from '@bubble-arena/shared';
 export function ArenaOpponent({ opponent, health, targets, player, feedback, bots, interaction }: { interaction: LocalArenaInteractions; opponent: LocalArenaOpponent; health: LocalPlayerHealth; targets: TrainingTargets; player: RefObject<RapierRigidBody | null>; feedback: ShotFeedback; bots: readonly LocalArenaOpponent[] }) {
   const body = useRef<RapierRigidBody>(null), head = useRef<import('@dimforge/rapier3d-compat').Collider>(null), torso = useRef<import('@dimforge/rapier3d-compat').Collider>(null), visual = useRef<Group>(null);
   const bubbleSensor=useRef<import('@dimforge/rapier3d-compat').Collider>(null);
@@ -29,9 +27,10 @@ export function ArenaOpponent({ opponent, health, targets, player, feedback, bot
   const state = useSyncExternalStore(opponent.subscribe, opponent.getSnapshot), alive = state.status === 'normal' || state.status === 'downed';
   useEffect(() => { movement.current = new RapierMovement(world); return () => { movement.current?.dispose(); movement.current = null; pending.shot = null; }; }, [world, pending]);
   useEffect(() => {
-    if (!head.current || !torso.current || !bubbleSensor.current || opponent.actor.teamId === health.actor.teamId) return;
-    const h = targets.register(head.current.handle, opponent, 'head',()=>opponent.getSnapshot().status==='normal'), b = targets.register(torso.current.handle, opponent, 'body',()=>opponent.getSnapshot().status==='normal');
-    const bubble=targets.register(bubbleSensor.current.handle,opponent,'body',()=>opponent.getSnapshot().status==='downed');
+    if (!head.current || !torso.current || !bubbleSensor.current) return;
+    const enemy = opponent.actor.teamId !== health.actor.teamId;
+    const h = targets.register(head.current.handle, opponent, 'head',()=>enemy&&opponent.getSnapshot().status==='normal'), b = targets.register(torso.current.handle, opponent, 'body',()=>enemy&&opponent.getSnapshot().status==='normal');
+    const bubble=targets.register(bubbleSensor.current.handle,opponent,'body',()=>opponent.getSnapshot().status==='downed','bubble');
     return () => { h(); b(); bubble(); };
   }, [opponent, targets, health.actor.teamId]);
   useBeforePhysicsStep(() => {
@@ -52,13 +51,14 @@ export function ArenaOpponent({ opponent, health, targets, player, feedback, bot
       const dx=bubble.x-p.x,dz=bubble.z-p.z,d=Math.hypot(dx,dz),move=d>1.6;
       intent={x:move?dx/d:0,z:move?dz/d:0,yaw:Math.atan2(-dx,-dz),fire:false};
     }
+    const acting = interaction.isActing(opponent.actor.playerId);
     const policy = playerActionPolicy(status), moving = Math.hypot(intent.x, intent.z) > .01;
     const moved = controller.step(own, own.collider(0), { forward: moving && policy.canMove, backward: false, left: false, right: false }, false,
-      Math.atan2(-intent.x, -intent.z), config.speed * opponent.getSpeedMultiplier() / PLAYER_CONFIG.speed, policy.maximumSpeed ?? undefined);
+      Math.atan2(-intent.x, -intent.z), config.speed * opponent.getSpeedMultiplier() / PLAYER_CONFIG.speed, acting ? 0 : policy.maximumSpeed ?? undefined);
     opponent.grounded = moved?.grounded ?? false;
     opponent.facingYaw = intent.yaw;
     if (visual.current) visual.current.rotation.y = intent.yaw;
-    const shot = opponent.fire.step({ held: intent.fire, pressed: intent.fire }, false, policy.canUseWeapons);
+    const shot = opponent.fire.step({ held: intent.fire, pressed: intent.fire }, false, policy.canUseWeapons && !acting);
     if (shot && target) { const sequence = ++pending.sequence; opponent.onFire(sequence); pending.shot = { sequence, yaw: intent.yaw, target: target.position }; }
   });
   useAfterPhysicsStep(() => {
@@ -70,12 +70,8 @@ export function ArenaOpponent({ opponent, health, targets, player, feedback, bot
     const direction = arenaBotAim(muzzle, shot.target, shot.sequence);
     const validMuzzle = isRescueLineClear(world, { ...p, y: p.y + .1 }, muzzle);
     const hit = validMuzzle && direction ? resolveArenaTeamShot(world, opponent.actor, muzzle, direction, arenaCombatants(bots, health, q)) : null;
-    const accepted = hit && hit.accepted;
-    const map = validMuzzle && direction && !hit ? queryScreenAimTarget(world, { origin: muzzle, direction, range: WEAPON_CONFIGS.rifle.range }) : null;
-    const endpoint = hit?.point ?? map?.point;
-    feedback.emit({ sequence: shot.sequence, weapon: 'rifle', muzzle, impact: null,
-      pellets: endpoint ? [{ point: endpoint, hit: Boolean(hit || map?.status === 'hit') }] : [] });
-    if (import.meta.env.DEV) console.info('[arena.bot-shot]', JSON.stringify({ tick, sequence: shot.sequence, hit: Boolean(accepted), damage: accepted ? hit.damage : 0, health: health.getSnapshot(), from: p, to: q }));
+    feedback.emit({ sequence: shot.sequence, weapon: 'rifle', muzzle, impact: null, pellets: hit ? [hit.pellet] : [] });
+    if (import.meta.env.DEV) console.info('[arena.bot-shot]', JSON.stringify({ tick, sequence: shot.sequence, hits: hit?.hits.map(h => ({ playerId: h.victim.actor.playerId, damage: h.damage, accepted: h.accepted })), health: health.getSnapshot(), from: p, to: q }));
   });
   const spawn = opponent.spawn, red = opponent.actor.teamId === 'red';
   return <><RigidBody ref={body} type="kinematicPosition" colliders={false} position={[spawn.x, spawn.y, spawn.z]}>

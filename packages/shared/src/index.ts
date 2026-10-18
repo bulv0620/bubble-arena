@@ -33,6 +33,7 @@ export { MATCH_CONFIG, parseMatchConfig, type MatchConfig, type MatchPhase } fro
 
 export { ARENA_CONFIG, ARENA_SOLIDS, ARENA_COLLISION, ARENA_COLLISION_HASH, ARENA_SPAWNS, ARENA_SPAWN_HASH, ARENA_DEMO_ROSTER, ARENA_BOT_CONFIG, ARENA_BOT_ROUTE, type ArenaSolid } from './arena';
 export { ARENA_TEAM_SIZE, DEFAULT_ARENA_PLAYER_SEAT, DEFAULT_ARENA_BOT_SEATS, parseArenaSeat, parseArenaBotSeats, arenaBotActor, arenaActorLabel, type ArenaBotSeat } from './arenaRoster';
-export { BUBBLE_TRAP_CONFIG } from './bubbleTrap';
+export { BUBBLE_TRAP_CONFIG, BUBBLE_INTERACTION_CONFIG } from './bubbleTrap';
 export { LOCOMOTION_CONFIG } from './locomotion';
 export { TEAM_VISION_CONFIG } from './teamVision';
+export { WEAPON_PENETRATION, parseWeaponPenetration, type WeaponPenetration, type BulletMaterial } from './weaponPenetration';

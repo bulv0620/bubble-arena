@@ -1,0 +1,58 @@
+{
+  "config": {
+    "distance": 3,
+    "shoulderOffset": 0.8,
+    "aimShoulderOffset": 0.8,
+    "aimDistance": 3,
+    "aimFov": 65,
+    "focusHeight": 1.2,
+    "initialPitch": 0.13962634015954636,
+    "mouseSensitivity": 0.003,
+    "minPitch": -1.0471975511965976,
+    "maxPitch": 1.2217304763960306,
+    "obstacleRadius": 0.2,
+    "obstacleClearance": 0.05,
+    "obstacleContactEpsilon": 0.001,
+    "recoveryResponse": 5,
+    "recoveryDelay": 0.1,
+    "recoveryMaxDelta": 0.1,
+    "recoveryEpsilon": 0.005,
+    "fov": 65,
+    "near": 0.1,
+    "far": 200
+  },
+  "metrics": [
+    {
+      "aspect": 1.7777777777777777,
+      "head": {
+        "x": 38.67397045666693,
+        "y": 71.18541020450766
+      },
+      "top": {
+        "x": 38.49424021628568,
+        "y": 62.65976280047024
+      },
+      "foot": {
+        "x": 39.18097876979385,
+        "y": 95.2357542059768
+      },
+      "screenHeight": 32.575991405506564
+    },
+    {
+      "aspect": 1.3333333333333333,
+      "head": {
+        "x": 34.8986272755559,
+        "y": 71.18541020450766
+      },
+      "top": {
+        "x": 34.65898695504757,
+        "y": 62.65976280047024
+      },
+      "foot": {
+        "x": 35.57463835972513,
+        "y": 95.2357542059768
+      },
+      "screenHeight": 32.575991405506564
+    }
+  ]
+}

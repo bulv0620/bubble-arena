@@ -10,7 +10,7 @@ test('four fixed shared slots keep separate ammo/weight and respawn resets all w
     loadout.select(slot); expect(loadout.getSnapshot().active).toBe(id);
     expect(loadout.step(press)?.weapon).toBe(id);
     expect(loadout.getWeaponAmmo(id).magazine).toBe(WEAPON_CONFIGS[id].magazineSize - 1);
-    expect(loadout.getSpeed()).toBe(id === 'rifle' ? 5 : id === 'sniper' ? 4 : 5.5);
+    expect(loadout.getSpeed()).toBeCloseTo(id === 'rifle' ? 6 : id === 'sniper' ? 4.8 : 6.6);
   }
   loadout.resetForRespawn(); expect(loadout.getSnapshot().active).toBe('bubble');
   for (const id of WEAPON_IDS) expect(loadout.getWeaponAmmo(id).magazine).toBe(WEAPON_CONFIGS[id].magazineSize);

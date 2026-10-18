@@ -1,5 +1,5 @@
 import { CAMERA_CONFIG } from '@bubble-arena/shared';
-import { validMouseSpeed } from '../settings/mouseSettings';
+import { validMouseSpeed, validScopeMouseMultiplier } from '../settings/mouseSettings';
 
 export interface OrbitAngles { yaw: number; pitch: number }
 const wrap = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
@@ -10,11 +10,12 @@ export class MouseOrbit {
   constructor(initialYaw = 0) { if (!Number.isFinite(initialYaw)) throw new TypeError('Invalid initial yaw'); this.angles.yaw = wrap(initialYaw); }
   private detachCurrent?: () => void;
 
-  rotate(dx: number, dy: number, sensitivityMultiplier = 1) {
-    if (![dx, dy, sensitivityMultiplier].every(Number.isFinite) || !validMouseSpeed(sensitivityMultiplier)) return;
-    this.angles.yaw = wrap(this.angles.yaw - dx * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier);
+  rotate(dx: number, dy: number, sensitivityMultiplier = 1, scopeMultiplier = 1) {
+    if (![dx, dy].every(Number.isFinite) || !validMouseSpeed(sensitivityMultiplier) || !validScopeMouseMultiplier(scopeMultiplier)) return;
+    const speed = CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier * scopeMultiplier;
+    this.angles.yaw = wrap(this.angles.yaw - dx * speed);
     this.angles.pitch = Math.max(CAMERA_CONFIG.minPitch, Math.min(CAMERA_CONFIG.maxPitch,
-      this.angles.pitch + dy * CAMERA_CONFIG.mouseSensitivity * sensitivityMultiplier));
+      this.angles.pitch + dy * speed));
   }
 
   step(): OrbitAngles {
@@ -22,7 +23,7 @@ export class MouseOrbit {
   }
 
   attach(canvas: EventTarget, global: EventTarget, visibility: EventTarget & { hidden?: boolean },
-    enabled = () => true, sensitivity = () => 1) {
+    enabled = () => true, sensitivity = () => 1, scopeSensitivity = () => 1) {
     this.detachCurrent?.();
     let last: { x: number; y: number } | null = null;
     const clear = () => { last = null; };
@@ -36,7 +37,7 @@ export class MouseOrbit {
       const e = event as MouseEvent;
       if (!last) return;
       if (!enabled() || !(e.buttons & 1) || visibility.hidden) return clear();
-      this.rotate(e.clientX - last.x, e.clientY - last.y, sensitivity());
+      this.rotate(e.clientX - last.x, e.clientY - last.y, sensitivity(), scopeSensitivity());
       last = { x: e.clientX, y: e.clientY };
     };
     const onVisibility = () => { if (visibility.hidden) clear(); };

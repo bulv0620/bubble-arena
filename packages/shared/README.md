@@ -1,5 +1,8 @@
 # Shared
 
+4.19当前地图版本：WHITEBOX_COLLISION schema3、哈希fnv1a64:eec4606e04cf6656；ARENA_COLLISION schema2，出生目录随地图哈希派生。新增bulletMaterial并纳入哈希（木箱wood/其他solid），实际碰撞几何不变。WEAPON_PENETRATION集中配置三枪穿人/穿木保留比例和穿出上限；下文旧哈希是历史记录。
+
+
 4.4.2 rescue提供8玩家有界权威帧与全部中断意图/当tick有效受伤列表校验；trainingRescue仅阶段4单机夹具，不是客户端事实或正式出生配置。见 [RESCUE](../../docs/spec/RESCUE.md)。
 
 4.4.1 rescue提供2m距离配置、内部玩家/生命/队伍/位置/接地/连接/目标占用事实和严格深冻结解析；不是客户端坐标或救援成功消息。规则见 [RESCUE](../../docs/spec/RESCUE.md)。
@@ -26,11 +29,11 @@
 | --- | --- | --- |
 | src/physics.ts · PHYSICS_CONFIG | tickRate / Hz；timeStep / 秒 | 60；由 1/tickRate 推导，物理世界与纯运动规则共用 |
 | 同上 | gravity / m/s² | [0,-20,0]，Y 向上；垂直规则复用 Y 分量 |
-| src/player.ts · PLAYER_CONFIG | speed / m/s | 5，普通移动速度；aimSpeed=3.5 瞄准速度已接入 |
-| 同上 | acceleration / deceleration / m/s² | 25 / 30，输入加速与松键减速 |
-| 同上 | jumpSpeed / m/s；airControl / 无量纲 | 7；0.35，空中加减速系数 |
+| src/player.ts · PLAYER_CONFIG | speed / m/s | 6，普通步枪速度；aimSpeed=4.2 通用瞄准参数，实际按枪重/开镜决定（4.20） |
+| 同上 | acceleration / deceleration / m/s² | 90 / 120，输入加速与松键减速（4.24，起步约67ms/松键50ms） |
+| 同上 | jumpSpeed / m/s；airControl / 无量纲 | 7；0.65，空中加减速系数（4.24） |
 | 同上 | turnResponse / 1/s；turnMinSpeed / m/s | 12；0.05，仅视觉转向与接触噪声过滤，不改变速度/碰撞 |
-| 同上 | height / radius / capsuleHalfHeight / m | 1.8 / 0.35 / 0.55；半段长由 height/2-radius 推导 |
+| 同上 | height / radius / capsuleHalfHeight / m | 1.3 / 0.35 / 0.30；半段长由 height/2-radius 推导，头部独立半径0.30（4.22） |
 | 同上 | maxSlopeAngle / slopeAngleTolerance / 弧度 | π/4 / 0.001，约 45° 与 0.0573° 数值容差 |
 | 同上 | maxStepHeight / minStepWidth / m | 0.3 / 0.4 |
 | 同上 | groundSnapDistance / m | 0.3，仅已接地且未起跳的斜面运动使用 |

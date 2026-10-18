@@ -1,0 +1,19 @@
+{
+  "temporaryDevFixture": true,
+  "facts": {
+    "background": "rgba(18, 59, 92, 0.65)",
+    "bottomProgress": 0,
+    "hintText": "E 踢破水球",
+    "orbCount": 0,
+    "progress": [
+      {
+        "hidden": false,
+        "radius": "8px",
+        "text": "救援中",
+        "value": "6"
+      }
+    ],
+    "radius": "12px"
+  },
+  "errors": []
+}

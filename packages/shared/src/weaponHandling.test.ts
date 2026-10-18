@@ -7,9 +7,9 @@ test('all weapons have immutable tuning; weight order determines held speed and 
     expect(Object.isFrozen(WEAPON_HANDLING[id].spread)).toBe(true);
     expect(Object.isFrozen(WEAPON_HANDLING[id].recoil)).toBe(true);
   }
-  expect(weaponGroundSpeed('shotgun')).toBe(5.5); expect(weaponGroundSpeed('bubble')).toBe(5.5);
-  expect(weaponGroundSpeed('rifle')).toBe(5); expect(weaponGroundSpeed('sniper')).toBe(4);
-  expect(weaponGroundSpeed('sniper', true)).toBeCloseTo(2.8); expect(weaponGroundSpeed('rifle', true)).toBe(5);
+  expect(weaponGroundSpeed('shotgun')).toBeCloseTo(6.6); expect(weaponGroundSpeed('bubble')).toBeCloseTo(6.6);
+  expect(weaponGroundSpeed('rifle')).toBe(6); expect(weaponGroundSpeed('sniper')).toBeCloseTo(4.8);
+  expect(weaponGroundSpeed('sniper', true)).toBeCloseTo(3.36); expect(weaponGroundSpeed('rifle', true)).toBe(6);
   expect(isPrimaryWeaponId('bubble')).toBe(false); expect(isPrimaryWeaponId('sniper')).toBe(true);
   expect(isPrimaryWeaponId('laser')).toBe(false);
 });

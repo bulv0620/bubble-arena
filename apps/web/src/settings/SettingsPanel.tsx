@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { MOUSE_SETTINGS } from './mouseSettings';
+import { MOUSE_SETTINGS, SCOPE_MOUSE_SETTINGS } from './mouseSettings';
 import { HUD_SETTINGS } from './hudSettings';
 import './settings.css';
 
-export function SettingsPanel({ speed, onSpeed, hudScale, onHudScale, onExit, onReturn }: {
+export function SettingsPanel({ speed, onSpeed, scopeSpeed, onScopeSpeed, hudScale, onHudScale, onExit, onReturn }: {
+  scopeSpeed: number; onScopeSpeed: (value: number) => void;
   hudScale: number; onHudScale: (value: number) => void;
   speed: number; onSpeed: (value: number) => void; onExit: () => void; onReturn: () => void;
 }) {
@@ -22,6 +23,8 @@ export function SettingsPanel({ speed, onSpeed, hudScale, onHudScale, onExit, on
       <div className="settings-body">
       <label htmlFor="mouse-speed">鼠标速度 <output>{speed.toFixed(2)}×</output></label>
       <input id="mouse-speed" type="range" min={MOUSE_SETTINGS.min} max={MOUSE_SETTINGS.max} step={MOUSE_SETTINGS.step} value={speed} onChange={event => onSpeed(Number(event.target.value))} />
+      <label htmlFor="scope-mouse-speed">开镜速度倍率 <output>{scopeSpeed.toFixed(2)}×</output></label>
+      <input id="scope-mouse-speed" type="range" min={SCOPE_MOUSE_SETTINGS.min} max={SCOPE_MOUSE_SETTINGS.max} step={SCOPE_MOUSE_SETTINGS.step} value={scopeSpeed} onChange={event => onScopeSpeed(Number(event.target.value))} />
       <label htmlFor="hud-scale">HUD 缩放 <output>{Math.round(hudScale * 100)}%</output></label>
       <input id="hud-scale" type="range" min={HUD_SETTINGS.min} max={HUD_SETTINGS.max} step={HUD_SETTINGS.step} value={hudScale} onChange={event => onHudScale(Number(event.target.value))} />
       </div><footer className="settings-footer">
