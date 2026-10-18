@@ -844,7 +844,7 @@
       "title": "定义玩家生命状态机",
       "acceptance": "normal/downed/eliminated/respawning 状态及转换条件有测试。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "3.12"
@@ -856,7 +856,7 @@
       "title": "实现击倒状态",
       "acceptance": "生命值耗尽转为 downed 而非直接重生。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.1"
@@ -868,7 +868,7 @@
       "title": "限制倒地操作",
       "acceptance": "倒地无法正常射击/奔跑；显示提示。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.2"
@@ -880,7 +880,7 @@
       "title": "救援判定",
       "acceptance": "验证队伍、距离、角色状态和交互对象。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.3"
@@ -892,7 +892,7 @@
       "title": "救援进度",
       "acceptance": "长按交互累计进度；移出距离可中断。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.4.1"
@@ -904,7 +904,7 @@
       "title": "救援完成",
       "acceptance": "达成条件恢复正常状态和约定生命值。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.4.2"
@@ -916,7 +916,7 @@
       "title": "淘汰与倒地计时",
       "acceptance": "到时淘汰或满足补刀规则时淘汰，状态不会重复触发。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.4.3"
@@ -928,7 +928,7 @@
       "title": "复活与出生点",
       "acceptance": "延时复活、恢复生命/弹药，出生点合法。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.5"
@@ -940,7 +940,7 @@
       "title": "队伍与计分",
       "acceptance": "红蓝队 ID 与积分事件统一，不因重复事件重复得分。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.6"
@@ -952,7 +952,7 @@
       "title": "比赛计时与状态",
       "acceptance": "waiting/countdown/playing/finished 转换可测。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.7"
@@ -964,7 +964,7 @@
       "title": "胜负与结算页面",
       "acceptance": "到时间/分数上限触发结算；平局处理明确。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.8"
@@ -976,7 +976,7 @@
       "title": "完整重开",
       "acceptance": "计时、玩家、目标、得分重置，不残留上一局状态。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.9"
@@ -988,7 +988,7 @@
       "title": "人物与木箱子弹穿透",
       "acceptance": "三种弹道武器按距离依次命中人物与木箱，狙击削弱最小；重复部位/弹丸去重合并，地图材质与版本同源，玩家与AI共用规则；测试与试玩报告齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.10.1",
@@ -1001,7 +1001,7 @@
       "title": "双发快装霰弹与基础地速调优",
       "acceptance": "霰弹2发弹匣、0.20秒击发间隔、0.65秒自动补满；玩家基础地速上调20%保留重量/奔跑/开镜/生命门禁；实际规则/物理测试和TTK、浏览器试玩步骤齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.19",
@@ -1014,7 +1014,7 @@
       "title": "镜头拉远与左下构图、枪口瞄准一致",
       "acceptance": "镜头适度拉远、人物更左下；四枪模型俯仰/水平收敛与实际枪口、开火方向同源，保留墙体保护/准星血条避让；测试/浏览器与报告齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.6.1",
@@ -1027,7 +1027,7 @@
       "title": "缩小人物头部并同步碰撞与血条",
       "acceptance": "头部直径0.7→0.6m，保持身体/地面持枪高度，玩家/AI/靶子视觉和头部sensor同源；移动胶囊/出生/血条同步，检查与浏览器截图齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.21"
@@ -1039,7 +1039,7 @@
       "title": "狙击开镜鼠标速度倍率设置",
       "acceptance": "设置新增开镜倍率0.05～2、默认0.30，最终角速度=普通速度×开镜倍率；锁鼠标/拖动同源，低值乘积有效、普通视角不变；保存容错及浏览器检查。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.16.3"
@@ -1051,7 +1051,7 @@
       "title": "提升移动起停和变向响应",
       "acceptance": "共享加速度90/减速度120/空中控制0.65，步枪起步4tick、停步3tick、反向8tick；保持最高速度/重量/奔跑与生命门禁，真实Rapier地形和输入释放回归、生产试玩证据。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.20"
@@ -1063,7 +1063,7 @@
       "title": "枪械恢复固定朝前持枪姿态",
       "acceptance": "按用户澄清移除视觉枪身追踪准星世界命中点，固定身体前向姿态；四枪视觉/逻辑枪口/闪光同源，真实弹道仍瞄准准星并保留散布及近墙安全段；检查与实机证据。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.21"
@@ -1075,7 +1075,7 @@
       "title": "救援与踢泡互斥、延时击破及水球挡弹",
       "acceptance": "踢泡18tick锁动作、执行者失能则失败；救援/踢泡共用目标独占；整球扣敌方隐藏耐久，友敌水球均终止子弹且友军免伤；全阵营可见球顶救援进度，测试/浏览器/文档齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.3",
@@ -1088,7 +1088,7 @@
       "title": "救援踢破并行、水主题交互和直向弹道",
       "acceptance": "目标水球受伤不打断救援，救援/踢破分别单人占用可并行、完成竞态安全；踢破距离3m，水主题球顶进度/E提示；取消近目标收敛的弹道方向按用户确认，检查/截图/规格齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.26",
@@ -1101,7 +1101,7 @@
       "title": "恢复准星目标收敛弹道",
       "acceptance": "四枪从静态真实枪口朝准星目标计算散布基准，保留近后方前向后备和近墙保护；4.27救援/UI保持，回归检查与规格记录齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.27"
@@ -1113,7 +1113,7 @@
       "title": "射向不受近处准星命中物影响",
       "acceptance": "从真实枪口朝无遮挡准星射线终点计算方向；同镜头/同枪口下添加或移除箱子只改变实际交点，出膛角度不变，四枪/静态枪身/近墙保护与救援修改保持。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.28"
@@ -1125,7 +1125,7 @@
       "title": "准星射线命中与首发对齐",
       "acceptance": "用户选择固定中心准星/准星射线命中；移除肩位固定偏差、保留正常散布/后坐力；枪口视觉出弹和掩体保护，四枪与泡泡飞行、回归/实机证据齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.29"
@@ -1137,7 +1137,7 @@
       "title": "参考实机统一准星与真实枪口弹道",
       "acceptance": "记录泡泡战士/PUBG可核实资料与自定边界；相机射线选点、真实枪口发射并结算遮挡/穿透，镜头散布逐丸选点；外圈按角度/FOV/画幅显示，首发/后坐力时序和泡泡同源；相关检查/实机/规格齐备。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.30"
@@ -1149,7 +1149,7 @@
       "title": "恢复简洁交互浮窗并保存本地检查点",
       "acceptance": "E提示与球顶救援条恢复简洁半透明矩形，移除水泡装饰，公共进度/遮挡与玩法保持；浏览器视觉检查、完整check、报告及授权本地提交完成。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.27",
@@ -2258,7 +2258,7 @@
       "title": "三路竞技场与单机对抗 Demo",
       "acceptance": "红蓝独立安全出生区、三路与坡道掩体、地图视觉碰撞同源哈希；单机红队玩家对蓝队AI真实交火/击倒/淘汰/复活/计分/结算/重开可试玩。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.10"
@@ -2269,7 +2269,7 @@
       "id": "4.12",
       "title": "卡通水枪风格 HUD 与生成 UI 资源",
       "stage": 4,
-      "status": "in_progress",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.11"
@@ -2281,7 +2281,7 @@
       "id": "4.13",
       "title": "开始页、模拟自定义房间与游戏往返",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.12"
@@ -2306,7 +2306,7 @@
       "title": "精简战斗HUD、水球生命与四武器快捷栏",
       "acceptance": "真实FPS/0ms、透明小地图、水球HP、简化比分计时、真实战斗事件列表及1–4/滚轮/按钮四枪切换完成；移除房间与设置选枪，三视图参考入库；相关测试、浏览器验证与pnpm check通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.11",
@@ -2319,7 +2319,7 @@
       "title": "修复泡泡枪HUD图片下方残片",
       "acceptance": "泡泡枪展开与收起卡片在桌面/窄屏保留完整侧视、无下方俯视残片；typecheck/build/workspace通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.14"
@@ -2331,7 +2331,7 @@
       "title": "修复敌方掩体血条与复活后操作冻结",
       "acceptance": "敌方本体被地图完全遮挡时隐藏血条与浮字；多次敌方淘汰复活后玩家仍可移动、跳跃、切枪和开火，物理与计分继续；回归和浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.11",
@@ -2344,7 +2344,7 @@
       "title": "精简Esc设置窗口",
       "acceptance": "设置仅保留标题、鼠标速度及必要操作按钮，移除提示文案和训练调试区；保留返回、重开、回房及焦点循环行为，桌面与窄屏验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.13",
@@ -2357,7 +2357,7 @@
       "title": "扩大鼠标低速调节范围",
       "acceptance": "鼠标速度最低0.05倍，步长0.01，低速倍率在镜头和本地存储中生效；原设置兼容，验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.16"
@@ -2369,7 +2369,7 @@
       "title": "Esc 设置与局内 HUD 缩放",
       "acceptance": "HUD 缩放50%～150%、5%步长，实时预览及本地保存；重开/回房重入保留，角落锚点与计时居中，窄窗防溢出；准星/场景/设置窗口保持原尺寸；检查及浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M2",
       "dependencies": [
         "4.16.1",
@@ -2382,7 +2382,7 @@
       "title": "Esc 设置仅保留两个操作按钮",
       "acceptance": "Esc仅退出游戏/返回游戏两按钮，保留设置滑杆；返回继续游戏、退出回房并释放Canvas，检查及浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M2",
       "dependencies": [
         "4.16.2"
@@ -2394,7 +2394,7 @@
       "title": "席位式房间与手动机器人编队",
       "acceptance": "大厅房间无描述区；红蓝各4席手动添加移除机器人，单地图标准赛，编队实际入局且生命/计分/复活/往返正常，完整检查和浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.13",
@@ -2408,7 +2408,7 @@
       "title": "水世界房间、空位换座与开局准入",
       "acceptance": "水世界透明大厅/房间；移除关闭房间按钮，房主离开且无真人时自动解散；8席中央换位，右上加AI，允许与AI交换席位；双方至少1人且所有成员准备才开始，编队/队伍实际入局。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.17"
@@ -2420,7 +2420,7 @@
       "title": "困泡耐久、超时原地恢复与计分规则",
       "acceptance": "倒地隐藏300耐久；倒地超时原地恢复、不产生淘汰事实/积分；枪伤耗尽仍可淘汰，近身终结独立入口；救援2秒，基地复活规则保留。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.1"
@@ -2432,7 +2432,7 @@
       "title": "实战踢泡终结与两秒队友救援",
       "acceptance": "E按下踢爆附近敌方困泡，按住E两秒解救己方；距离/视线/目标生命/伤害/松键/状态中断和多人唯一占用，AI按相同规则做近身交互；固定tick处理，正确归属/统计。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.2"
@@ -2444,7 +2444,7 @@
       "title": "困泡表现、队伍血条与复活遮罩",
       "acceptance": "倒地角色外包水球并漂浮、自身困泡屏幕效果；困泡不显示生命条/耐久；自身绿/友方蓝/敌方红血条；淘汰遮罩中央复活倒计时、无准星。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.3"
@@ -2456,7 +2456,7 @@
       "title": "Shift奔跑与地速关联跳跃",
       "acceptance": "按住Shift且移动时奔跑，禁射/开镜及禁用准星、轻量奔跑画面效果；起跳高度按起跳当前水平速度连续变化，武器重量/减速/落地规则兼容。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.3"
@@ -2468,7 +2468,7 @@
       "title": "第三人称准星与枪口遮挡协调",
       "acceptance": "调整镜头/枪械持枪投影以减少准星与枪口视差；保留真实枪口安全段，受阻时给简洁准星反馈；墙/坡/肩位/狙击回归和浏览器视觉检查。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.4",
@@ -2481,7 +2481,7 @@
       "title": "泡泡战士式短身人物与跟随构图",
       "acceptance": "短身占位与运动/命中同步，图片参考构图量化，中心视线/避障/血条回归及生产浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M2",
       "dependencies": [
         "4.18.6"
@@ -2493,7 +2493,7 @@
       "title": "滚轮切枪修复",
       "acceptance": "复现滚轮量化/多事件/连续滚动问题；按实际方向和累积意图切换，控件区域不抢滚动、移动/跳跃/冷却/重开/离场兼容。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.1"
@@ -2505,7 +2505,7 @@
       "title": "伤害浮字离开视野后重复修复",
       "acceptance": "浮字以物理tick生命周期到期，不依赖可见性或CSS动画结束；遮挡恢复不重播旧伤害，队列容量/重开/离场清理。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.2"
@@ -2517,7 +2517,7 @@
       "title": "无限备弹展示、团队视野与Tab记分板",
       "acceptance": "隐藏枪械备弹及无限标记；敌人只有在团队当前视野中才显示地图位置；Tab按住显示半透明左地图右计分表，松开/失焦清除，不影响移动/战斗。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.1",
@@ -2531,7 +2531,7 @@
       "title": "Tab 比分列对齐与居中缩小",
       "acceptance": "两人/满4v4红蓝表头数据列对齐，面板缩小居中，窄窗可见及Tab释放正常；检查与生产浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M2",
       "dependencies": [
         "4.18.9"
@@ -2543,7 +2543,7 @@
       "title": "简洁卡通枪械表现",
       "acceptance": "参考附件的粗线条/大色块水枪感，简化HUD枪图和现有占位持枪表现，四枪轮廓明确；不冒充Blender正式模型，不新增外部生成服务。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.6"
@@ -2555,7 +2555,7 @@
       "title": "弹道曳光与随枪口击发闪光",
       "acceptance": "步枪/狙击曳光、霰弹短时八丸轨迹、枪口闪光随挂点移动；生命周期/曳光与挂点回归、完整检查及浏览器验证通过。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M2",
       "dependencies": [
         "4.18.10",
@@ -2568,7 +2568,7 @@
       "title": "测试修改项完整回归与交付",
       "acceptance": "逐条19项覆盖审计；核心/集成/完整check、浏览器实际交互/视觉/异常路径，更新报告/规格/计划/任务状态，implemented待人工验收，不自动进入联网阶段。",
       "stage": 4,
-      "status": "implemented",
+      "status": "accepted",
       "milestone": "M1",
       "dependencies": [
         "4.18.7",
